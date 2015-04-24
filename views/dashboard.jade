@@ -1,3 +1,9 @@
 //
    Created by anton_gorshenin on 24.04.2015.
 
+extends layout
+block content
+   p #{devices.device}
+   ul
+      each device in devices
+         li #{Timestamp}
