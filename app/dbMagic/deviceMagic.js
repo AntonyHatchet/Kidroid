@@ -5,7 +5,7 @@ var Device = require('../models/apk');
 
 module.exports = {
     getAllDevice: function(callback){
-        var query = Device.find({},{_id:0});
+        var query = Device.find();
         query.exec(function (err, Devices) {
             // Execute callback
             console.log(Devices);

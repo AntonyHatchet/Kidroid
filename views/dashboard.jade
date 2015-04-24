@@ -3,7 +3,7 @@
 
 extends layout
 block content
-   p #{devices.device}
+   p #{devices}
    ul
-      each device in devices
-         li #{Timestamp}
+      each _id in devices
+         li #{_id}
