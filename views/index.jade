@@ -3,3 +3,21 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  if message.lenght > 0
+    p Message #{message}
+  form(action="/login", method="post")
+    h1 Login!
+    p.subheading Please Login To Your Account
+    label Username
+    input(type="text", name="name")
+    label Password
+    input(type="password", name="password")
+    button(type="submit") login
+  form(action="/signup", method="post")
+    h1 Signup!
+    p.subheading Please Login To Your Account
+    label Username
+    input(type="text", name="name")
+    label Password
+    input(type="password", name="password")
+    button(type="submit") signup

@@ -1,16 +1,18 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+//var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var dbConfig = require('./db/db.js');
+var dbConfig = require('./config/db.js');
 var mongoose = require('mongoose');
+var session = require('express-session');
+var passport = require('passport');
+var flash = require('connect-flash');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
 mongoose.connect(dbConfig.url);
 
+require('./config/passport.js')(passport);
 var app = express();
 
 // view engine setup
@@ -24,10 +26,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
-app.use('/', routes);
-app.use('/users', users);
-
+require('./app/routes.js')(app, passport);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
