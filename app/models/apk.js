@@ -5,13 +5,16 @@ var mongoose = require('mongoose');
 
 var ApkSchema = mongoose.Schema({
     device:{
-        Timestamp: String,
+        school: String,
+        timestamp: String,
         device_id: String,
         token: String,
         latitude: Array,
         longitude: Array,
-        apk_version: Number,
-        loader_version: Number
+        apk_version: String,
+        loader_version: String,
+        name:String,
+        comment: String
     }
 });
 

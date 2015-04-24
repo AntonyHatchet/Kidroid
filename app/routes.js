@@ -26,6 +26,7 @@ module.exports = function(app, passport) {
     }));
 
     app.get('/dashboard', isLoggedIn, users.getDevice);
+    app.post('/addDevice', isLoggedIn, users.addDevice);
 
     // =====================================
     // LOGOUT ==============================
