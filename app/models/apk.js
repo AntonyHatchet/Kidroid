@@ -2,22 +2,17 @@
  * Created by anton_gorshenin on 23.04.2015.
  */
 var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt-nodejs');
 
-var apkSchema = mongoose.Schema({
-    local : {
-        name   : String,
-        password  : String
+var ApkSchema = mongoose.Schema({
+    device:{
+        Timestamp: String,
+        device_id: String,
+        token: String,
+        latitude: Array,
+        longitude: Array,
+        apk_version: Number,
+        loader_version: Number
     }
 });
 
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
-
-// checking if password is valid
-userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
-};
-
-module.exports = mongoose.model('User', apkSchema, "devices");
+module.exports = mongoose.model('Apk', ApkSchema, "devices");

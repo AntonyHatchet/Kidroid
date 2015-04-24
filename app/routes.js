@@ -1,12 +1,11 @@
 /**
  * Created by anton_gorshenin on 24.04.2015.
  */
+
+var users = require('./routes/users');
+
 module.exports = function(app, passport) {
 
-    // =====================================
-    // LOGIN ===============================
-    // =====================================
-    // show the login form
     app.get('/', function(req, res) {
 
         // render the page and pass in any flash data if it exists
@@ -26,21 +25,18 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
 
-    // =====================================
-    // PROFILE SECTION =====================
-    // =====================================
-    // we will want this protected so you have to be logged in to visit
-    // we will use route middleware to verify this (the isLoggedIn function)
-    app.get('/dashboard', isLoggedIn, function(req, res) {
-        res.render('dashboard.jade', { user : req.user, message: req.flash('loginMessage') // get the user out of session and pass to template
-        });
-    });
+    app.get('/dashboard', isLoggedIn, users.getDevice);
 
     // =====================================
     // LOGOUT ==============================
     // =====================================
     app.get('/logout', function(req, res) {
         req.logout();
+        res.redirect('/');
+    });
+
+    app.get('/api/*', function(req, res) {
+
         res.redirect('/');
     });
 };
