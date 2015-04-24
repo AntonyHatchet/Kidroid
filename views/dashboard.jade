@@ -3,7 +3,6 @@
 
 extends layout
 block content
-   p #{devices}
    ul
       each _id in devices
-         li #{_id}
+         li #{_id.device.token}
