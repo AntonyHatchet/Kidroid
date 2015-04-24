@@ -3,6 +3,32 @@
 
 extends layout
 block content
+   #{devices}
    ul
       each _id in devices
-         li #{_id.device.token}
+         li #{_id.device}
+
+
+   a(href='#add') add new device
+   a(class='overlay', id='add', href='#x')
+   .popap-add
+      p Add new device
+      form(method='post' action='/addDevice')
+         select(name='school')
+            option(value='first') school ¹1
+            option(value='second') school ¹2
+            option(value='third') school ¹3
+            option(value='fourth') school ¹4
+            option(value='fifth') school ¹5
+         br
+         select(name='apk')
+            option(value='first') 4.0
+            option(value='second') 4.2
+            option(value='third') 4.4
+         br
+         input(value='name')
+         br
+         input(value='comment')
+         br
+         button(type='submit') Add
+      a(class='close-add' href='#close-add')
