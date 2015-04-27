@@ -4,10 +4,37 @@
 extends layout
 block content
    #{devices}
-   ul
-      each _id in devices
-         li #{_id.device}
 
+
+   table
+         each _id in devices
+            tr
+               td #{_id.device.name}
+               td #{_id.device.apk_version}
+               td #{_id.device.token}
+               td #{_id.device.comment}
+               td #{_id.device.longitude}
+               td #{_id.device.latitude}
+               td
+
+                  #map
+                     //script.
+                     //   alert(document.getElementById('map').innerHTML);
+                     //   document.getElementById('map').id = "#{_id._id}";
+                     script.
+                        i="#{_id.device.longitude}"
+                        j="#{_id.device.latitude}"
+                        var map = L.map('map').setView([i, j], 12);
+                        // add an OpenStreetMap tile layer
+                        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                           attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+                        // add a marker in the given location, attach some popup content to it and open the popup
+                        L.marker([i, j]).addTo(map)
+                                .bindPopup('“ÛÚ')
+                                .openPopup();
+                     //script(src="/map/map.js")
+                  //a(href='#map') show map
 
    a(href='#add') add new device
    a(class='overlay', id='add', href='#x')
@@ -15,20 +42,26 @@ block content
       p Add new device
       form(method='post' action='/addDevice')
          select(name='school')
-            option(value='first') school π1
-            option(value='second') school π2
-            option(value='third') school π3
-            option(value='fourth') school π4
-            option(value='fifth') school π5
+            option(placeholder='first') school π1
+            option(placeholder='second') school π2
+            option(placeholder='third') school π3
+            option(placeholder='fourth') school π4
+            option(placeholder='fifth') school π5
          br
          select(name='apk')
-            option(value='first') 4.0
-            option(value='second') 4.2
-            option(value='third') 4.4
+            option(placeholder='first') 4.0
+            option(placeholder='second') 4.2
+            option(placeholder='third') 4.4
          br
-         input(name='name',value='name')
+         input(name='name',placeholder='name')
          br
-         input(name='comment',value='comment')
+         input(name='comment',placeholder='comment')
          br
          button(type='submit') Add
       a(class='close-add' href='#close-add')
+
+   //a(class='overlay', id='map', href='#x')
+   //.popap-add
+   //   #id='map'
+   //      script(src="/map/map.js")
+   //   a(class='close-add' href='#close-add')
