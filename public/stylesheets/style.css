@@ -47,7 +47,13 @@ a {
   height: 20px;
   background: #ff0000;
 }
-#map { height: 180px; width: 180px; }
+#map { height: 250px; width: 250px; }
+.no-show{
+  display: none;
+}
+.show{
+  display: block;
+}
 table, td, tr{
   border: 1px solid #000000;
   background: #ffeeff;

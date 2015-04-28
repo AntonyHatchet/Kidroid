@@ -16,7 +16,7 @@ block content
                td #{_id.device.longitude}
                td #{_id.device.latitude}
                td
-                  button(onclick='showmap('+_id.device.longitude+','+_id.device.latitude+')')
+                  button(onclick='showmap('+_id.device.longitude+','+_id.device.latitude+')') show map
 
 
    a(href='#add') add new device
@@ -36,9 +36,16 @@ block content
             option(placeholder='second') 4.2
             option(placeholder='third') 4.4
          br
-         input(name='name',placeholder='name')
-         br
-         input(name='comment',placeholder='comment')
+         input(type="number", name='number' value='1')
+         script.
+            document.getElementById('mynumber').onkeypress = function (e) {
+               if (e.charCode == 45) {
+                  this.value = -this.value; //this.value *= -1;
+                  return false;
+               }
+            };
+
+
          br
          button(type='submit') Add
       a(class='close-add' href='#close-add')
@@ -53,11 +60,12 @@ block content
             mark.setLatLng(L.latLng(i,j)).update()
             .bindPopup('“ÛÚ')
                .openPopup();
+            document.getElementById('map').classList.add('show').classList.remove('no-show');
          //console.log (i,j,map)
                }
 
 
-   #map
+   #map(class='no-show')
       script.
          var map = L.map('map').setView([55.7422, 37.5719], 12);
          // add an OpenStreetMap tile layer
