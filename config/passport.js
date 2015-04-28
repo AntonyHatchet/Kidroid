@@ -1,4 +1,3 @@
-var BasicStrategy = require('passport-http').BasicStrategy;
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../app/models/user.js');// подгружаем модель пользователя
 var Device = require('../app/models/apk');// подгружаем модель пользователя
