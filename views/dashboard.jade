@@ -9,21 +9,22 @@ block content
    table
          each _id in devices
             tr
-               td #{_id.device.name}
-               td #{_id.device.apk_version}
-               td #{_id.device.token}
-               td #{_id.device.comment}
-               td #{_id.device.longitude}
-               td #{_id.device.latitude}
+               td #{_id.device_id}
+               td #{_id.registered}
+               td #{_id.school}
+               td #{_id.timestamp}
+               td #{_id.longitude}
+               td #{_id.latitude}
+               td #{_id.apk_version}
                td
-                  button(onclick='showmap('+_id.device.longitude+','+_id.device.latitude+')') show map
+                  button(onclick='showmap('+_id.longitude+','+_id.latitude+')') show map
 
 
    a(href='#add') add new device
    a(class='overlay', id='add', href='#x')
    .popap-add
       p Add new device
-      form(method='post' action='/addDevice')
+      form(method='post' action='/createDevice')
          select(name='school')
             option(placeholder='first') school ¹1
             option(placeholder='second') school ¹2

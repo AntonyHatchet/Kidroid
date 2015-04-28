@@ -27,7 +27,7 @@ module.exports = function (app, passport) {
     }));
 
     app.get('/dashboard', isLoggedIn, users.getDevice);
-    app.post('/addDevice', isLoggedIn, users.addDevice);
+    app.post('/createDevice', isLoggedIn, users.createDevice);
 
     // =====================================
     // LOGOUT ==============================
@@ -36,8 +36,8 @@ module.exports = function (app, passport) {
         req.logout();
         res.redirect('/');
     });
-
     app.get('/api/save_data/:id&:token&:latitude&:longitude&:apk_version&:loader_version', devices.getAuthorizationDevice, devices.checkApkVersion, devices.getSaveData);
+    app.get('/api/registration/:id', devices.getRegistrationDevice);
     app.get('/api/get_apk_version/:id&:token', devices.getAuthorizationDevice, devices.getApk)
 };
 

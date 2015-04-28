@@ -1,10 +1,29 @@
 var deviceMagic = require('../dbMagic/deviceMagic');
 module.exports = {
+//Регистрация девайса
+    getRegistrationDevice: function (req, res) {
+        deviceMagic.regDevice({id: req.params.id}, function (err,next) {
+            if (err) {
+                console.log("not correct ID",err);
+            }
+            if (next === null){
+                res.json({"error":"wrong ID"});}
+            deviceMagic.registrDevice(req.params, function (err,token) {
+                if (err) {
+                    console.log(err);
+                }
+                res.json(token);
+            });
+        });
+    },
 //Авторизация планшета по ИД и токену
     getAuthorizationDevice: function (req, res, next) {
-        deviceMagic.authDevice({id: req.params.id, token: req.params.token}, function (err) {
+        deviceMagic.authDevice({id: req.params.id, token: req.params.token}, function (err,callback) {
             if (err) {
                 console.log(err);
+            }
+            if (callback === null){
+               return res.json({"error":"Wrong ID"});
             }
             return next();
         });
@@ -15,13 +34,13 @@ module.exports = {
             if (err) {
                 console.log(err);
             }
-            if (device.device.apk_version === req.params.apk_version) {
-                console.log("Same version - ", device.device.apk_version);
+            if (device.apk_version === req.params.apk_version) {
+                console.log("Same version - ", device.apk_version);
                 next();
             }
             else {
                 console.log("Different version");
-                res.json({"UPDATE_AVAILABLE": 1});
+                res.json({"apk_version": device.apk_version});
             }
         });
     },
@@ -30,8 +49,8 @@ module.exports = {
             if (err) {
                 console.log(err);
             }
-            if (device.device.apk_version === req.params.apk_version) {
-                console.log("Same version - ", device.device.apk_version);
+            if (device.apk_version === req.params.apk_version) {
+                console.log("Same version - ", device.apk_version);
                 next();
             }
             else {

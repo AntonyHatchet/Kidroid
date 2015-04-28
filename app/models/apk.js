@@ -4,7 +4,6 @@
 var mongoose = require('mongoose');
 
 var ApkSchema = mongoose.Schema({
-    device: {
         school: String,
         timestamp: String,
         device_id: String,
@@ -12,11 +11,10 @@ var ApkSchema = mongoose.Schema({
         latitude: Array,
         longitude: Array,
         apk_version: String,
-        last_apk_version: String,
         loader_version: String,
         name: String,
-        comment: String
-    }
+        comment: String,
+        registered:Boolean
 });
 
 module.exports = mongoose.model('Apk', ApkSchema, "devices");
