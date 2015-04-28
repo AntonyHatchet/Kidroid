@@ -3,5 +3,5 @@
  */
 
 module.exports = {
-    'url' : 'mongodb://172.30.116.209/kidroid'
+    'url': 'mongodb://172.30.116.209:27017/kidroid'
 };
