@@ -3,5 +3,5 @@
  */
 
 module.exports = {
-    'url': 'mongodb://172.30.116.209:27017/kidroid'
+    'url': 'mongodb://tester:tester@ds039880.mongolab.com:39880/kidroid'
 };
