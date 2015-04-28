@@ -8,11 +8,15 @@ module.exports = {
             }
             if (next === null){
                 res.json({"error":"wrong ID"});}
+            else
             deviceMagic.registrDevice(req.params, function (err,token) {
                 if (err) {
-                    console.log(err);
+                    console.log("registr err",err);
+                }else
+                if (token != null) {
+                    console.log("res token", token);
+                    res.json({"token": token});
                 }
-                res.json(token);
             });
         });
     },

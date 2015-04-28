@@ -59,7 +59,6 @@ module.exports = {
             }
             if (device != null ){
                 var token = Math.random().toString(36).substr(13);
-                console.log('No err!', device);
                 var update = {
                     "timestamp" : new Date(),
                     "token"     : token,
@@ -69,27 +68,23 @@ module.exports = {
                     if (err) {
                         console.log("not updated", err);
                     }
-                    if (updated != null )
-                    console.log("updated", updated);
+                    if (updated != null ){
                     // Execute callback passed from route
-                    callback(token)
+                    callback(null,token)}
                 });
             }
-            console.log("find err",err);
-            callback(err);
         });
-
     },
 
     updateDevice: function (deviceInfo, callback) {
         //Поиск в БД, ID полученного из запроса
+        console.log("полезло в updateDevice");
         Device.findOne({"device_id": deviceInfo.id}, function(err, device){
             if (err) {
                 throw err;
             }
             if (device != null ){
                 // Нашли такой ID, создаем дату для записи в БД.
-                console.log('No err!',device);
                 var update = {
                         "timestamp"     : new Date(),
                         "latitude"      : [deviceInfo.latitude],

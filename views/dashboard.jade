@@ -7,17 +7,25 @@ block content
 
 
    table
-         each _id in devices
-            tr
-               td #{_id.device_id}
-               td #{_id.registered}
-               td #{_id.school}
-               td #{_id.timestamp}
-               td #{_id.longitude}
-               td #{_id.latitude}
-               td #{_id.apk_version}
-               td
-                  button(onclick='showmap('+_id.longitude+','+_id.latitude+')') show map
+      tr
+         td ID
+         td Registered
+         td School
+         td Timestamp
+         td Long
+         td Lat
+         td Version
+      each _id in devices
+         tr
+            td #{_id.device_id}
+            td #{_id.registered}
+            td #{_id.school}
+            td #{_id.timestamp}
+            td #{_id.longitude}
+            td #{_id.latitude}
+            td #{_id.apk_version}
+            td
+               button(onclick='showmap('+_id.longitude+','+_id.latitude+')') show map
 
 
    a(href='#add') add new device
