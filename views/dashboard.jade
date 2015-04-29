@@ -34,6 +34,7 @@ block content
    .popap-add
       p Add new device
       form(method='post' action='/createDevice')
+         p School
          select(name='school')
             option(placeholder='first') school ¹1
             option(placeholder='second') school ¹2
@@ -41,11 +42,14 @@ block content
             option(placeholder='fourth') school ¹4
             option(placeholder='fifth') school ¹5
          br
-         select(name='apk')
-            option(placeholder='first') 200
-            option(placeholder='second') 220
-            option(placeholder='third') 230
+         //select(name='apk')
+         //   option(placeholder='first') 200
+         //   option(placeholder='second') 220
+         //   option(placeholder='third') 230
+         p Version
+         input(type="number", name='apk' min="1" value='200')
          br
+         p Amount
          input(type="number", name='number' min="1" value='1')
          script.
             document.getElementById('mynumber').onkeypress = function (e) {
