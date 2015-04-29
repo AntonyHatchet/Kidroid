@@ -6,26 +6,27 @@ block content
    //#{devices}
 
 
-   table
-      tr
-         td ID
-         td Registered
-         td School
-         td Timestamp
-         td Long
-         td Lat
-         td Version
-      each _id in devices
+   table(class='bordered')
          tr
-            td #{_id.device_id}
-            td #{_id.registered}
-            td #{_id.school}
-            td #{_id.timestamp}
-            td #{_id.longitude}
-            td #{_id.latitude}
-            td #{_id.apk_version}
-            td
-               button(onclick='showmap('+_id.longitude+','+_id.latitude+')') show map
+            th id
+            th registered
+            th school
+            th timestamp
+            th none
+            th none
+            th apk_version
+            th map
+         each _id in devices
+            tr
+               td #{_id.device_id}
+               td #{_id.registered}
+               td #{_id.school}
+               td #{_id.timestamp}
+               td #{_id.longitude}
+               td #{_id.latitude}
+               td #{_id.apk_version}
+               td
+                  button(onclick='showmap('+_id.longitude+','+_id.latitude+')') show map
 
 
    a(href='#add') add new device
@@ -41,9 +42,9 @@ block content
             option(placeholder='fifth') school π5
          br
          select(name='apk')
-            option(placeholder='first') 200
-            option(placeholder='second') 220
-            option(placeholder='third') 225
+            option(placeholder='first') 4.0
+            option(placeholder='second') 4.2
+            option(placeholder='third') 4.4
          br
          input(type="number", name='number' min="1" value='1')
          script.
@@ -69,7 +70,7 @@ block content
             mark.setLatLng(L.latLng(i,j)).update()
             .bindPopup('“ÛÚ')
                .openPopup();
-            document.getElementById('map').classList.add('show').classList.remove('no-show');
+               document.getElementById('map').classList.add('show');
          //console.log (i,j,map)
                }
 
