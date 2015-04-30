@@ -4,7 +4,8 @@
 extends layout
 block content
    //#{devices}
-
+   #add-device
+      a(href='#add') add new device
 
    table(class='bordered')
          tr
@@ -29,7 +30,7 @@ block content
                   button(onclick='showmap('+_id.longitude+','+_id.latitude+')') show map
 
 
-   a(href='#add') add new device
+
    a(class='overlay', id='add', href='#x')
    .popap-add
       p Add new device

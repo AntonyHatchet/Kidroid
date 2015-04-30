@@ -5,11 +5,11 @@ block content
     p Welcome to #{title}
     if message.lenght > 0
         p Message #{message}
-    form(action="/login", method="post")
+    form(action="/login", method="post" class="login")
         h1 Login!
         p.subheading Please Login To Your Account
         label Username
-        input(type="text", name="name")
+        input(type="text", name="name" class='username')
         label Password
-        input(type="password", name="password")
-        button(type="submit") login
+        input(type="password", name="password" class='password')
+        button(type="submit" class='submit') login
