@@ -30,11 +30,11 @@ a {
   background-image: -ms-linear-gradient(top, #3498db, #2980b9);
   background-image: -o-linear-gradient(top, #3498db, #2980b9);
   background-image: linear-gradient(to bottom, #3498db, #2980b9);
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
+  -webkit-border-radius: 5;
+  -moz-border-radius: 5;
   border-radius: 5px;
   font-family: Arial;
-  color: #ffffff;
+  color: #fff;
   font-size: 14px;
   padding: 5px 7px 5px 7px;
   text-decoration: none;
@@ -233,15 +233,9 @@ table{
   background-image: -o-linear-gradient(top, #3498db, #2980b9);
   background-image: linear-gradient(top, #3498db, #2980b9);
 
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-
-  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-
-  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 
   border-width: 1px;
   border-style: solid;
