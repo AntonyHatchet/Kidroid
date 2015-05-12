@@ -19,6 +19,35 @@ a {
   visibility: visible;
   opacity: 1;
 }
+#filter {
+
+}
+
+#filter select {
+  padding: 5px 8px;
+  width: 130px;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #777777;
+}
+
+#filter select:focus {
+  outline: none;
+}
+.search {
+  padding:6px 15px 6px 30px;
+  margin:3px;
+  background: url('img/search.png') no-repeat 5px 1px;
+  border-radius:15px;
+  -moz-border-radius:15px;
+  -webkit-border-radius:15px;
+}
+
 #add-device{
   float: right;
   margin-bottom: 20px;
@@ -30,8 +59,8 @@ a {
   background-image: -ms-linear-gradient(top, #3498db, #2980b9);
   background-image: -o-linear-gradient(top, #3498db, #2980b9);
   background-image: linear-gradient(to bottom, #3498db, #2980b9);
-  -webkit-border-radius: 5;
-  -moz-border-radius: 5;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
   border-radius: 5px;
   font-family: Arial;
   color: #fff;
@@ -90,6 +119,9 @@ a {
   background: #ff0000;
 }
 #map { height: 250px; width: 250px; }
+#map button{
+  margin-top: 280px ;
+}
 .no-show{
   display: none;
 }
