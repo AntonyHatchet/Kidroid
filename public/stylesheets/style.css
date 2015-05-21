@@ -6,7 +6,61 @@ body {
 a {
   color: #00B7FF;
 }
+#devices{
+  border: 1px solid #777777;
+  padding: 10px;
+  margin-left: 150px;
+}
+/*==============TABS===================*/
+#tab {
+  float:left;
+  width:100px;
+  padding-left:5px;
+  border-left:1px solid #ededed;
+}
 
+
+
+.content-tabs-body-right {
+  float:left;
+  width:70%;
+}
+
+ul.tabs {
+  margin: 0px;
+  padding: 0px;
+  list-style: circle;
+  width:100%;
+}
+
+ul.tabs li {
+  background: none;
+  color: #08C;
+  display: inline-block;
+  padding: 10px 15px;
+  cursor: pointer;
+  width:100%;
+}
+
+
+ul.tabs li.current{
+  background: #eee;
+  color: #08C;
+  border-bottom:2px solid #08C;
+}
+
+.tab-content{
+  display: none;
+  padding: 0 50px 50px 0;
+  opacity:0;
+}
+
+
+.tab-content.current{
+  display: block;
+  opacity:1;
+}
+/*===========================*/
 .overlay {
   top: 0;
   right: 0;
@@ -159,8 +213,8 @@ table{
   box-shadow: 0 1px 1px #ccc;
 }
 
-.bordered tr:hover {
-  background: #fbf8e9;
+tbody tr:hover {
+  background: #fbecb6;
   -o-transition: all 0.1s ease-in-out;
   -webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
@@ -328,4 +382,17 @@ table{
 {
   border: none;
 }
-
+ul {
+  padding: 0px;
+}
+ul li {
+  margin: 0 2px;
+  cursor: pointer;
+  padding: 1px 6px;
+  border: solid 1px #666;
+  display : inline;
+}
+.current {
+  background: #666;
+  color: #fff;
+}
