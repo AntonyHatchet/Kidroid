@@ -58,30 +58,30 @@ block content
                th id
                th registered
                th school
-               th timestamp
-               th none
-               th none
+               //th timestamp
+               //th none
+               //th none
                th apk_version
                th map
          tfoot
             tr
-               th id
-               th registered
+               th(colspan='2') registered
+               //th registered
                th school
-               th timestamp
-               th none
-               th none
+               //th timestamp
+               //th none
+               //th none
                th apk_version
-               th map
+               //th map
          tbody(id='userTable')
             each _id in devices
                tr
                   td #{_id.device_id}
                   td #{_id.registered}
                   td #{_id.school}
-                  td #{_id.timestamp}
-                  td #{_id.longitude}
-                  td #{_id.latitude}
+                  //td #{_id.timestamp}
+                  //td #{_id.longitude}
+                  //td #{_id.latitude}
                   td #{_id.apk_version}
                   td
                      button(onclick='showmap('+_id.longitude+','+_id.latitude+')') show map
