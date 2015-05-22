@@ -3,17 +3,13 @@ var deviceMagic = require('../dbMagic/deviceMagic');
 module.exports = {
 
     // Get shop home page
-    getDevice: function (req, res) {
-        deviceMagic.getAllDevice(function (err, Devices) {
+    getDevice: function (callback,count) {
+        deviceMagic.getDeviceByCount(function (err, Devices) {
             if (err) {
                 console.log(err);
             }
-            console.log(Devices);
-            res.render('dashboard', {
-                devices: Devices
-            });
-        })
-
+            callback(null, Devices);
+        },count);
     },
 
     createDevice: function (req, res) {
