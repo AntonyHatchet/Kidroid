@@ -4,6 +4,8 @@ extends layout
 block content
    //#{devices}
    //#{devices._id.device_id}
+   script.
+    alert(devices);
    #tab
       ul(class='tabs')
          li(class='tab-link current' data-tab='tab-1') Devices
@@ -51,7 +53,7 @@ block content
       //   option(value='201') 201
       //   option(value='202') 202
       //   option(value='203') 203
-      p#test
+
 
       table(class='bordered' id='paged')
          thead(id='target')
@@ -75,153 +77,4 @@ block content
                th apk_version
                //th map
          tbody(id='userTable')
-            each _id in devices
-               tr
-                  td #{_id.device_id}
-                  td #{_id.registered}
-                  td #{_id.school}
-                  //td #{_id.timestamp}
-                  //td #{_id.longitude}
-                  //td #{_id.latitude}
-                  td #{_id.apk_version}
-                  td
-                     button(onclick='showmap('+_id.longitude+','+_id.latitude+')') show map
-
-      //script.
-         pagedTable(
-                 document.getElementById("paged"),
-                 10,
-                 {
-                    toStart:"START",
-                    toPrev:"PREV",
-                    toNext:"NEXT",
-                    toEnd:"END",
-                    linkPerPage:10,
-                    linkTag : "li",
-                    template : "<span class='summary'>Page: %p from %c (users: %r)</span><ul class='page-nav'>%n</ul>",
-                    onAfterInit : function (table) {
-                       table.tBodies[0].style.display = "";
-                    }/* ,
-                  Ёто событие будет отрабатывать
-                  каждый каз при клике на элементе постраничной навигации
-                  если вернуть из ф-ции "false" то переход на страницу не произойдет.
-                  onNavClick : function (pageId) {
-                  // «апрещаем переход на четные страницы
-                  return (pageId+1) % 2 ? true : false;
-                  } */
-                 }
-         );
-
-      //script(src="/js/tableF.js")
-      //script.
-         $(document).ready(function () {
-            $('#paged').DataTable({
-               "dom": '<"top"ifl>rt<"bottom"p><"clear">'
-            });
-         });
-      //script.
-         $(document).ready(function () {
-            // Setup - add a text input to each footer cell
-            $('#paged tfoot th').each(function () {
-               var title = $('#paged thead th').eq($(this).index()).text();
-               $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-            });
-            // DataTable
-            var table = $('#paged').DataTable({
-               "dom": '<"top"ifl>rt<"bottom"p><"clear">'
-            });
-            // Apply the search
-            table.columns().every(function () {
-               var that = this;
-               $('input', this.footer()).on('keyup change', function () {
-                  that
-                          .search(this.value)
-                          .draw();
-               });
-            });
-         });
-      script.
-         $(document).ready(function () {
-            $('#paged').DataTable({
-               initComplete: function () {
-                  this.api().columns().every(function () {
-                     var column = this;
-                     var select = $('<select><option value=""></option></select>')
-                             .appendTo($(column.footer()).empty())
-                             .on('change', function () {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                );
-                                column
-                                        .search(val ? '^' + val + '$' : '', true, false)
-                                        .draw();
-                             });
-                     column.data().unique().sort().each(function (d, j) {
-                        select.append('<option value="' + d + '">' + d + '</option>')
-                     });
-                  });
-               }
-            });
-         });
-      a(class='overlay', id='add', href='#x')
-      .popap-add
-         p Add new device
-         form(method='post' action='/createDevice')
-            p School
-            select(name='school')
-               option(placeholder='first') school &#8470;1
-               option(placeholder='second') school &#8470;2
-               option(placeholder='third') school &#8470;3
-               option(placeholder='fourth') school &#8470;4
-               option(placeholder='fifth') school &#8470;5
-            br
-            //select(name='apk')
-            //   option(placeholder='first') 200
-            //   option(placeholder='second') 220
-            //   option(placeholder='third') 230
-            p Version
-            input(type="number", name='apk' min="1" value='200')
-            br
-            p Amount
-            input(type="number", name='number' min="1" value='1')
-            script.
-               document.getElementById('mynumber').onkeypress = function (e) {
-                  if (e.charCode == 45) {
-                     this.value = -this.value;
-                     return false;
-                  }
-               };
-
-
-            br
-            button(type='submit') Add
-         a(class='close-add' href='#close-add')
-
-         //a(class='overlay', id='map', href='#x')
-         //.popap-add
-         //   #id='map'
-         //      script(src="/map/map.js")
-         //   a(class='close-add' href='#close-add')
-      script.
-         function showmap(i,j){
-               mark.setLatLng(L.latLng(i,j)).update()
-               .bindPopup('“ут')
-                  .openPopup();
-                  document.getElementById('map').classList.add('show');
-            //console.log (i,j,map)
-                  }
-
-
-      #map(class='no-show')
-         script.
-            var map = L.map('map').setView([55.7422, 37.5719], 12);
-            // add an OpenStreetMap tile layer
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-               attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-            // add a marker in the given location, attach some popup content to it and open the popup
-            var mark = L.marker([55.7422, 37.5719]);
-            mark.addTo(map)
-                    .bindPopup('“ут')
-                    .openPopup();
-         button(onclick='closwmap()') close
+             td
