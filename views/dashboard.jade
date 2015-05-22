@@ -2,14 +2,19 @@
    Created by anton_gorshenin on 24.04.2015.
 extends layout
 block content
+   script.
+    socket.on('message', function(msg){
+                $('#test').append($('<li>').text(msg));
+            });
    //#{devices}
    //#{devices._id.device_id}
    #tab
       ul(class='tabs')
          li(class='tab-link current' data-tab='tab-1') Devices
-         li(class='tab-link' data-tab='tab-2') Users
+         li(class='tab-link' data-tab='tab-2' onclick="socket.emit('test')") Users
          li(class='tab-link' data-tab='tab-3') Filters
          li(class='tab-link' data-tab='tab-3') Settings
+
 
 
    #devices
@@ -50,7 +55,7 @@ block content
       //   option(value='201') 201
       //   option(value='202') 202
       //   option(value='203') 203
-
+      p#test
 
       table(class='bordered' id='paged')
          thead(id='target')
