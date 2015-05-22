@@ -37,7 +37,7 @@ module.exports = function (app, passport) {
         res.redirect('/');
     });
     app.post('/api/save_data/', devices.getAuthorizationDevice, devices.checkApkVersion, devices.getSaveData);
-    app.post('/api/registration/:id', devices.getRegistrationDevice);
+    app.post('/api/registration/*', devices.getRegistrationDevice);
     app.get('/api/get_apk_version/:id&:token', devices.getAuthorizationDevice, devices.getApk)
 };
 
