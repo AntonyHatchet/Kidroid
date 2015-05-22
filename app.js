@@ -10,6 +10,7 @@ var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
 
+
 mongoose.connect(dbConfig.url);
 
 require('./config/passport.js')(passport);
