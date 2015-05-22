@@ -17,7 +17,6 @@ module.exports = function (server) {
         },10);
 
         socket.on('disconnect', function(){
-
             console.log('user disconnected');}
         );
 

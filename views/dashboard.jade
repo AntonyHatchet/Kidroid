@@ -2,20 +2,6 @@
    Created by anton_gorshenin on 24.04.2015.
 extends layout
 block content
-    script.
-        var devices = 0;
-        function init() {
-            var sessionId = '';
-            socket.on('connect', function (data) {
-                sessionId = socket.io.engine.id;
-                console.log('Connected ' + sessionId);
-            });
-            socket.on('firstData', function (data) {
-                window.devices = data;
-                return devices;
-            });
-        }
-        $(document).on('ready', init);
    //#{devices}
    //#{devices._id.device_id}
    #tab
