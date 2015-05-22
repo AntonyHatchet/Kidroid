@@ -4,6 +4,7 @@
 
 var users = require('./routes/users');
 var devices = require("./routes/device");
+var io = require("./socketIO/dashboardIO").io;
 
 module.exports = function (app, passport) {
 
@@ -27,7 +28,13 @@ module.exports = function (app, passport) {
     }));
 
     app.get('/dashboard', isLoggedIn, function(req,res){
-        res.render('dashboard.jade');
+        users.getDevice(function (err, Devices) {
+            if (err) {
+                console.log(err);
+            }
+            console.log(Devices);
+            res.render('dashboard.jade',{devices:Devices});
+        },10);
     });
     app.post('/createDevice', isLoggedIn, users.createDevice);
 
