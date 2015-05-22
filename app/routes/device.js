@@ -2,6 +2,8 @@ var deviceMagic = require('../dbMagic/deviceMagic');
 module.exports = {
 //Регистрация девайса
     getRegistrationDevice: function (req, res) {
+        console.log(req.body.id,"Body.id");
+        console.log(req.body,"Body");
         deviceMagic.regDevice({id: req.body.id}, function (err,next) {
             if (err) {
                 console.log("not correct ID",err);
