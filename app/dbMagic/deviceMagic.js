@@ -4,7 +4,7 @@
 var Device = require('../models/apk');
 
 module.exports = {
-    getDeviceByCount: function (callback,count) {
+    getDevice: function (callback,count) {
         var query = Device.find().limit(count);
         query.exec(function (err, Devices) {
             // Execute callback
@@ -17,7 +17,8 @@ module.exports = {
             if (err) throw err;
             callback(null, device);
         });
-    },authDevice: function (deviceInfo, callback) {
+    },
+    authDevice: function (deviceInfo, callback) {
         var device = Device;
         device.findOne({"device_id": deviceInfo.id, "token": deviceInfo.token, "registered":true}, function (err, device) {
             if (err) return console.log(err);

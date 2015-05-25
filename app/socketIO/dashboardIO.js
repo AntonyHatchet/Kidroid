@@ -8,29 +8,28 @@ module.exports = function (server) {
 
     io.on('connection', function(socket){
 
-
-        user.getDevice(function (err, Devices) {
+    //Стартовая отправка первых 10 планшетов нужно переделать на использование сокета  getDevicesByCount
+        user.getDeviceByCount(function (err, Devices) {
             if (err) {
                 console.log(err);
             }
             io.emit('displayData', Devices);
         },10);
 
-
-        socket.on('disconnect', function(){
-            console.log('user disconnected');}
-        );
-
-        socket.on('getDevices', function(count){
+    // Запрос устройств на страницу по колличеству
+        socket.on('getDevicesByCount', function(count){
                 console.log(count,"count");
-                user.getDevice(function (err, Devices) {
+                user.getDeviceByCount(function (err, Devices) {
                        if (err) {
                            console.log(err);
                        }
                    io.emit('displayData', Devices);
                },count);
             }
-        )
-
+        );
+    //Отключение пользователя
+        socket.on('disconnect', function(){
+                console.log('user disconnected');}
+        );
     });
 };

@@ -3,8 +3,8 @@ var deviceMagic = require('../dbMagic/deviceMagic');
 module.exports = {
 
     // Get shop home page
-    getDevice: function (callback,count) {
-        deviceMagic.getDeviceByCount(function (err, Devices) {
+    getDeviceByCount: function (callback,count) {
+        deviceMagic.getDevice(function (err, Devices) {
             if (err) {
                 console.log(err);
             }

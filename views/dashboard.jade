@@ -7,7 +7,7 @@ block content
    #tab
       ul(class='tabs')
          li(class='tab-link current' data-tab='tab-1') Devices
-         li(class='tab-link' data-tab='tab-2' onclick="socket.emit('getDevices',2)") Users
+         li(class='tab-link' data-tab='tab-2' onclick="socket.emit('getDevicesByCount',2)") Users
          li(class='tab-link' data-tab='tab-3') Filters
          li(class='tab-link' data-tab='tab-3') Settings
 
@@ -16,42 +16,6 @@ block content
    #devices
       #add-device
          a(href='#add') add new device
-      //thead
-      //   form(id='filter')
-      //      input(id='id-name' type='text' class="search" placeholder="Device name/ID/Serial")
-      //      select(name='search-online')
-      //         option(value='online') online
-      //         option(value='ofline') ofline
-      //      select(name='search-online')
-      //         option(value='1') school &#8470;1
-      //         option(value='2') school &#8470;2
-      //         option(value='3') school &#8470;3
-      //         option(value='4') school &#8470;4
-      //         option(value='5') school &#8470;5
-      //      select(name='search-online')
-      //         option(value='200') apk version 200
-      //         option(value='201') apk version 201
-      //         option(value='202') apk version 202
-      //         option(value='203') apk version 203
-      //      input(type='button' value="find")
-      //input(id='id-name' type='text' class="search" placeholder="Device name/ID/Serial")
-      //select(id='online-filtre')
-      //   option(value='') Online
-      //   option(value='true') true
-      //   option(value='false') false
-      //select(id='school-filtre')
-      //   option(value='') number school
-      //   option(value='school &#8470;1') 1
-      //   option(value='school &#8470;2') 2
-      //   option(value='school &#8470;3') 3
-      //   option(value='school &#8470;4') 4
-      //select(id='apk-filtre')
-      //   option(value='') apk_version
-      //   option(value='200') 200
-      //   option(value='201') 201
-      //   option(value='202') 202
-      //   option(value='203') 203
-
 
       table(class='bordered' id='paged')
          thead(id='target')
@@ -59,20 +23,97 @@ block content
                th id
                th registered
                th school
-               //th timestamp
-               //th none
-               //th none
                th apk_version
                th map
          tfoot
-             tr
-                 th id
-                 th registered
-                 th school
-                 //th timestamp
-                 //th none
-                 //th none
-                 th apk_version
-                 th map
+            tr
+               th(colspan='2') registered
+               th school
+               th apk_version
+               //th map
+
          tbody(id='userTable')
-   script(src="/js/socketTableData.js")
+
+      script.
+         $(document).ready(function () {
+            $('#paged').DataTable({
+               initComplete: function () {
+                  this.api().columns().every(function () {
+                     var column = this;
+                     var select = $('<select><option value=""></option></select>')
+                             .appendTo($(column.footer()).empty())
+                             .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                );
+                                column
+                                        .search(val ? '^' + val + '$' : '', true, false)
+                                        .draw();
+                             });
+                     column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                     });
+                  });
+               }
+            });
+         });
+      a(class='overlay', id='add', href='#x')
+      .popap-add
+         p Add new device
+         form(method='post' action='/createDevice')
+            p School
+            select(name='school')
+               option(placeholder='first') school &#8470;1
+               option(placeholder='second') school &#8470;2
+               option(placeholder='third') school &#8470;3
+               option(placeholder='fourth') school &#8470;4
+               option(placeholder='fifth') school &#8470;5
+            br
+            p Version
+            input(type="number", name='apk' min="1" value='200')
+            br
+            p Amount
+            input(type="number", name='number' min="1" value='1')
+            script.
+               document.getElementById('mynumber').onkeypress = function (e) {
+                  if (e.charCode == 45) {
+                     this.value = -this.value;
+                     return false;
+                  }
+               };
+
+
+            br
+            button(type='submit') Add
+         a(class='close-add' href='#close-add')
+
+         //a(class='overlay', id='map', href='#x')
+         //.popap-add
+         //   #id='map'
+         //      script(src="/map/map.js")
+         //   a(class='close-add' href='#close-add')
+      script.
+         function showmap(i,j){
+               mark.setLatLng(L.latLng(i,j)).update()
+               .bindPopup('“ÛÚ')
+                  .openPopup();
+                  document.getElementById('map').classList.add('show');
+            //console.log (i,j,map)
+                  }
+
+
+      #map(class='no-show')
+         script.
+            var map = L.map('map').setView([55.7422, 37.5719], 12);
+            // add an OpenStreetMap tile layer
+            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+               attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            // add a marker in the given location, attach some popup content to it and open the popup
+            var mark = L.marker([55.7422, 37.5719]);
+            mark.addTo(map)
+                    .bindPopup('“ÛÚ')
+                    .openPopup();
+         button(onclick='closwmap()') close
+
+      script(src="/js/socketTableData.js")
