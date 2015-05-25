@@ -27,7 +27,12 @@ module.exports = function (app, passport) {
     }));
 
     app.get('/dashboard', isLoggedIn, function(req,res){
-        res.render('dashboard.jade');
+        users.getDevice(function (err, Devices) {
+            if (err) {
+                console.log(err);
+            }
+            res.render('dashboard.jade', {devices: Devices});
+        },10)
     });
     app.post('/createDevice', isLoggedIn, users.createDevice);
 

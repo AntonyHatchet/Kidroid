@@ -8,7 +8,12 @@ module.exports = function (server) {
 
     io.on('connection', function(socket){
 
-
+        user.getDevice(function (err, Devices) {
+            if (err) {
+                console.log(err);
+            }
+            io.emit('displayData', Devices);
+        },10);
         socket.on('disconnect', function(){
             console.log('user disconnected');}
         );
