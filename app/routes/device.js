@@ -43,7 +43,7 @@ module.exports = {
     },
     // сверка необходимости обновления версии АПК
     checkApkVersion: function (req, res, next) {
-        deviceMagic.findVersion({id: req.body.id, version: req.body.apk_version}, function (err, device) {
+        deviceMagic.findVersion({id: req.body.device_id, version: req.body.apk_version}, function (err, device) {
 
             if (err) {
                 console.log(err);
