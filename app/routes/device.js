@@ -26,7 +26,7 @@ module.exports = {
     },
 //Авторизация планшета по ИД и токену
     getAuthorizationDevice: function (req, res, next) {
-        console.log(req.body,"token");
+        console.log(req.body.token,"token");
         var id = !req.param.id ? req.body.device_id:req.params.id;
         var token = !req.param.token ? req.body.token:req.params.token;
         console.log(id,"id",token,"token");
