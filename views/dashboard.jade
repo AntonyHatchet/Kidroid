@@ -7,7 +7,7 @@ block content
    #tab
       ul(class='tabs')
          li(class='tab-link current' data-tab='tab-1') Devices
-         li(class='tab-link' data-tab='tab-2' onclick="socket.emit('getDevicesByCount',2)") Users
+         li(class='tab-link' data-tab='tab-2' onclick="socket.emit('getDevicesByCount',15)") Users
          li(class='tab-link' data-tab='tab-3') Filters
          li(class='tab-link' data-tab='tab-3') Settings
 
@@ -16,6 +16,7 @@ block content
    #devices
       #add-device
          a(href='#add') add new device
+      p#test
 
       table(class='bordered' id='paged')
          thead(id='target')
