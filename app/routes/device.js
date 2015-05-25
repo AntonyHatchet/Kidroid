@@ -26,23 +26,20 @@ module.exports = {
     },
 //Авторизация планшета по ИД и токену
     getAuthorizationDevice: function (req, res, next) {
-        console.log(req.body.device_id,"Device_ id");
-        console.log(req.body.token,"token");
-        //var id = !req.param.id ? req.body.device_id:req.params.id;
-        //var token = !req.param.token ? req.body.token:req.params.token;
-        //console.log(id,"id",token,"token");
-        //deviceMagic.authDevice({id: id, token: token}, function (err,callback) {
-        //
-        //    if (err) {
-        //        console.log(err);
-        //    }
-        //    if (callback === null){
-        //       return res.json({"error":"Wrong ID"});
-        //    }
-        //
-        //    return next();
-        //
-        //});
+        var id = !req.param.id ? req.body.device_id:req.params.id;
+        var token = !req.param.token ? req.body.token:req.params.token;
+        deviceMagic.authDevice({id: id, token: token}, function (err,callback) {
+
+            if (err) {
+                console.log(err);
+            }
+            if (callback === null){
+               return res.json({"error":"Wrong ID"});
+            }
+
+            return next();
+
+        });
     },
     // сверка необходимости обновления версии АПК
     checkApkVersion: function (req, res, next) {
