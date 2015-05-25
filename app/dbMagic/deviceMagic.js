@@ -4,6 +4,7 @@
 var Device = require('../models/apk');
 
 module.exports = {
+    // Получаем из БД общее колличество записей
     getQuantity: function (callback) {
         var query = Device.count();
         query.exec(function (err, Devices) {
@@ -12,16 +13,24 @@ module.exports = {
             callback(null, Devices);
         });
     },
-    getDevice: function (callback,count, id) {
-        var query = id;
-        var options =
-        console.log(count,id, "id из get Device");
-        var query = Device.find().limit(count);
+    //Поиск устройств согласно запросам
+    getDevice: function (callback,name,status,school,version) {
+
+        var query = {};
+
+        query.device_id = (!name)?{$exists:true}:name;
+        query.registered = (!status)?{$exists:true}:status;
+        query.school = (!school)?{$exists:true}:school;
+        query.apk_version = (!version)?{$exists:true}:version;
+
+        var query = Device.find(query).limit(10);
         query.exec(function (err, Devices) {
             // Execute callback
             callback(null, Devices);
         });
+
     },
+    // Проверка на наличее ID и флага не зарегестрирован в БД
     regDevice: function (id, callback) {
         var device = Device;
         device.findOne({"device_id": id.id, "registered": false}, function (err, device) {
@@ -29,6 +38,7 @@ module.exports = {
             callback(null, device);
         });
     },
+    //Авторизация планшета
     authDevice: function (deviceInfo, callback) {
         var device = Device;
         device.findOne({"device_id": deviceInfo.id, "token": deviceInfo.token, "registered":true}, function (err, device) {
@@ -36,6 +46,7 @@ module.exports = {
             callback(null, device);
         });
     },
+    // Находим версию по ИД устройства
     findVersion: function (deviceInfo, callback) {
         var device = Device;
         device.findOne({"device_id": deviceInfo.id}, {
@@ -46,6 +57,7 @@ module.exports = {
             callback(null, device);
         });
     },
+    //Сохраняем дату от девайса
     saveDevice: function (deviceInfo, callback) {
         var newDevice = new Device({
                 school      : deviceInfo.school,
@@ -90,7 +102,6 @@ module.exports = {
 
     updateDevice: function (deviceInfo, callback) {
         //Поиск в БД, ID полученного из запроса
-        console.log("полезло в updateDevice");
         Device.findOne({"device_id": deviceInfo.id}, function(err, device){
             if (err) {
                 throw err;
@@ -117,8 +128,10 @@ module.exports = {
         });
 
     },
+    //TODO Переписать, сейчас возможны дубликаты при множественной генерации id
     createDeviceId: function (callback) {
         var find = Device.find();
+
         find.exec(function (err, id) {
             if (err) {
                 throw err;

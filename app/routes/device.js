@@ -2,9 +2,9 @@ var deviceMagic = require('../dbMagic/deviceMagic');
 module.exports = {
 //Регистрация девайса
     getRegistrationDevice: function (req, res) {
-        console.log(req.body.id,"Body.id");
-        console.log(req.body,"Body");
+
         deviceMagic.regDevice({id: req.body.id}, function (err,next) {
+
             if (err) {
                 console.log("not correct ID",err);
             }
@@ -12,6 +12,7 @@ module.exports = {
                 res.json({"error":"wrong ID"});}
 
             deviceMagic.registrDevice(req.body, function (err,token) {
+
                 if (err) {
                     console.log("registr err",err);
                 }
@@ -19,26 +20,33 @@ module.exports = {
                     console.log("res token", token);
                     res.json({"token": token});
                 }
+
             });
         });
     },
 //Авторизация планшета по ИД и токену
     getAuthorizationDevice: function (req, res, next) {
+
         var id = !req.param? req.body.id:req.params.id;
         var token = !req.param? req.body.token:req.params.token;
+        console.log(id,"id",token,"token");
         deviceMagic.authDevice({id: id, token: token}, function (err,callback) {
+
             if (err) {
                 console.log(err);
             }
             if (callback === null){
                return res.json({"error":"Wrong ID"});
             }
+
             return next();
+
         });
     },
     // сверка необходимости обновления версии АПК
     checkApkVersion: function (req, res, next) {
         deviceMagic.findVersion({id: req.body.id, version: req.body.apk_version}, function (err, device) {
+
             if (err) {
                 console.log(err);
             }
@@ -50,10 +58,12 @@ module.exports = {
                 console.log("Different version");
                 res.json({"apk_version": device.apk_version});
             }
+
         });
     },
     getApk: function (req, res, next) {
         deviceMagic.findVersion({id: req.params.id, version: req.params.apk_version}, function (err, device) {
+
             if (err) {
                 console.log(err);
             }
@@ -65,11 +75,11 @@ module.exports = {
                 console.log("Different version");
                 res.json({"UPDATE_AVAILABLE": 1});
             }
+
         });
     },
     //Сохранение данных полученных от планшета
     getSaveData: function (req, res) {
-        console.log("save device info");
         deviceMagic.updateDevice(req.body, function (err) {
             if (err) {
                 console.log(err);

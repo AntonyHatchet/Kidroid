@@ -10,16 +10,16 @@ module.exports = {
             callback(null, Quantity);
         });
     },
-    // Запускаем поиск устройств по колличеству(count),
-    getDevice: function (callback,count) {
+    // Запускаем поиск устройств c параметрами count
+    getDevice: function (callback) {
         deviceMagic.getDevice(function (err, Devices) {
             if (err) {
                 console.log(err);
             }
             callback(null, Devices);
-        },count);
+        });
     },
-
+    //Создаем запросы к БД на добавление устройств
     createDevice: function (req, res) {
         uploader(0);
         function uploader(i) {

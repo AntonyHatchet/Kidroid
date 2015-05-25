@@ -8,7 +8,6 @@ var devices = require("./routes/device");
 module.exports = function (app, passport) {
 
     app.get('/', function (req, res) {
-
         // render the page and pass in any flash data if it exists
         res.render('index.jade', {message: req.flash('loginMessage')});
     });

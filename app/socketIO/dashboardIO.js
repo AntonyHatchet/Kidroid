@@ -14,18 +14,18 @@ module.exports = function (server) {
             }
             io.emit('quantity', Quantity);
         });
-    //Стартовая отправка первых 10 планшетов нужно переделать на использование сокета  getDevicesByCount
+    //Стартовая отправка первых 10 планшетов
         user.getDevice(function (err, Devices) {
             if (err) {
                 console.log(err);
             }
             io.emit('displayData', Devices);
-        },10);
+        });
 
     // Запрос устройств на страницу по колличеству
         socket.on('getDevicesByCount', function(count){
                 console.log(count,"count");
-                user.getDeviceByCount(function (err, Devices) {
+                user.getDevice(function (err, Devices) {
                        if (err) {
                            console.log(err);
                        }
