@@ -45,45 +45,25 @@ block content
             br
             p Amount
             input(type="number", name='number' min="1" value='1')
-            script.
-               document.getElementById('mynumber').onkeypress = function (e) {
-                  if (e.charCode == 45) {
-                     this.value = -this.value;
-                     return false;
-                  }
-               };
-
 
             br
             button(type='submit') Add
+         a(class='close-add' href='#close-add')
       a(class='overlay', id='editCategory', href='#x')
       .popap-add
-         p Add new device
+         p Edit category:
          form(action='/createDevice')
-            p School
-            select(name='school')
-               option(placeholder='first') school &#8470;1
-               option(placeholder='second') school &#8470;2
-               option(placeholder='third') school &#8470;3
-               option(placeholder='fourth') school &#8470;4
-               option(placeholder='fifth') school &#8470;5
-            br
-            p Version
-            input(type="number", name='apk' min="1" value='200')
-            br
-            p Amount
-            input(type="number", name='number' min="1" value='1')
-            script.
-               document.getElementById('mynumber').onkeypress = function (e) {
-                  if (e.charCode == 45) {
-                     this.value = -this.value;
-                     return false;
-                  }
-               };
 
+            input(type="input", name='category' value='category')
+            button(type='submit') Edit
+         a(class='close-add' href='#close-add')
+      a(class='overlay', id='createCategory', href='#x')
+      .popap-add
+         p Add new category:
+         form(action='/createDevice')
 
-            br
-            button(type='submit') Add
+            input(type="input", name='category' value='')
+            button( onclick="socket.emit('createCategory',category)") Add
          a(class='close-add' href='#close-add')
 
          //a(class='overlay', id='map', href='#x')
@@ -118,6 +98,8 @@ block content
       script(src="/js/socketTableData.js")
 
    #filters
+      #add-category
+         a(href='#createCategory') add new category...
       table
          thead
             tr
