@@ -26,10 +26,8 @@ module.exports = {
     },
 //Авторизация планшета по ИД и токену
     getAuthorizationDevice: function (req, res, next) {
-        console.log(req.body,"token");
         var id = !req.param.id ? req.body.device_id:req.params.id;
         var token = !req.param.token ? req.body.token:req.params.token;
-        console.log(id,"id",token,"token");
         deviceMagic.authDevice({id: id, token: token}, function (err,callback) {
 
             if (err) {
@@ -45,12 +43,12 @@ module.exports = {
     },
     // сверка необходимости обновления версии АПК
     checkApkVersion: function (req, res, next) {
-        deviceMagic.findVersion({id: req.body.id, version: req.body.apk_version}, function (err, device) {
+        deviceMagic.findVersion({id: req.body.device_id, version: req.body.apk_version}, function (err, device) {
 
             if (err) {
                 console.log(err);
             }
-            if (device.apk_version === req.body.apk_version) {
+            if (device.apk_version == req.body.apk_version) {
                 console.log("Same version - ", device.apk_version);
                 next();
             }

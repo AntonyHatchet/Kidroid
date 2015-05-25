@@ -49,6 +49,7 @@ module.exports = {
     // Находим версию по ИД устройства
     findVersion: function (deviceInfo, callback) {
         var device = Device;
+        console.log("deviceInfo", deviceInfo);
         device.findOne({"device_id": deviceInfo.id}, {
             "_id": 1,
             "apk_version": 1
