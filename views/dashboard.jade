@@ -6,10 +6,10 @@ block content
    //#{devices._id.device_id}
    #tab
       ul(class='tabs')
-         li(class='tab-link current' data-tab='tab-1') Devices
-         li(class='tab-link' data-tab='tab-2' onclick="socket.emit('getDevicesByCount',15)") Users
-         li(class='tab-link' data-tab='tab-3') Filters
-         li(class='tab-link' data-tab='tab-3') Settings
+         li(class='tab-link current' data-tab='devices') Devices
+         li(class='tab-link' data-tab='tab-2' onclick="socket.emit('getDevicesByCount',50)") Users
+         li(class='tab-link' data-tab='filters') Filters
+         li(class='tab-link' data-tab='settings') Settings
 
 
 
@@ -25,42 +25,41 @@ block content
                th school
                th apk_version
                th map
-         tfoot
-            tr
-               th(colspan='2') registered
-               th school
-               th apk_version
-               //th map
 
          tbody(id='userTable')
-
-      script.
-         $(document).ready(function () {
-            $('#paged').DataTable({
-               initComplete: function () {
-                  this.api().columns().every(function () {
-                     var column = this;
-                     var select = $('<select><option value=""></option></select>')
-                             .appendTo($(column.footer()).empty())
-                             .on('change', function () {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                );
-                                column
-                                        .search(val ? '^' + val + '$' : '', true, false)
-                                        .draw();
-                             });
-                     column.data().unique().sort().each(function (d, j) {
-                        select.append('<option value="' + d + '">' + d + '</option>')
-                     });
-                  });
-               }
-            });
-         });
+      div(id='pagination')
       a(class='overlay', id='add', href='#x')
       .popap-add
          p Add new device
          form(method='post' action='/createDevice')
+            p School
+            select(name='school')
+               option(placeholder='first') school &#8470;1
+               option(placeholder='second') school &#8470;2
+               option(placeholder='third') school &#8470;3
+               option(placeholder='fourth') school &#8470;4
+               option(placeholder='fifth') school &#8470;5
+            br
+            p Version
+            input(type="number", name='apk' min="1" value='200')
+            br
+            p Amount
+            input(type="number", name='number' min="1" value='1')
+            script.
+               document.getElementById('mynumber').onkeypress = function (e) {
+                  if (e.charCode == 45) {
+                     this.value = -this.value;
+                     return false;
+                  }
+               };
+
+
+            br
+            button(type='submit') Add
+      a(class='overlay', id='editCategory', href='#x')
+      .popap-add
+         p Add new device
+         form(action='/createDevice')
             p School
             select(name='school')
                option(placeholder='first') school &#8470;1
@@ -117,3 +116,10 @@ block content
          button(onclick='closwmap()') close
 
       script(src="/js/socketTableData.js")
+
+   #filters
+      table
+         thead
+            tr
+               th(colspan='2') Categoty name
+         tbody(id='tableFilter')
