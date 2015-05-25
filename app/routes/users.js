@@ -1,9 +1,17 @@
 var deviceMagic = require('../dbMagic/deviceMagic');
 //var app = require('../routes.js').app();
 module.exports = {
-
-    // Get shop home page
-    getDeviceByCount: function (callback,count) {
+    // ¬ыводим общее количество устройств
+    getAllDeviceQuantity: function (callback) {
+        deviceMagic.getQuantity(function (err, Quantity) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, Quantity);
+        });
+    },
+    // «апускаем поиск устройств по колличеству(count),
+    getDevice: function (callback,count) {
         deviceMagic.getDevice(function (err, Devices) {
             if (err) {
                 console.log(err);

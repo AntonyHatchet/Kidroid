@@ -8,8 +8,14 @@ module.exports = function (server) {
 
     io.on('connection', function(socket){
 
+        user.getAllDeviceQuantity(function (err, Quantity) {
+            if (err) {
+                console.log(err);
+            }
+            io.emit('quantity', Quantity);
+        });
     //Стартовая отправка первых 10 планшетов нужно переделать на использование сокета  getDevicesByCount
-        user.getDeviceByCount(function (err, Devices) {
+        user.getDevice(function (err, Devices) {
             if (err) {
                 console.log(err);
             }

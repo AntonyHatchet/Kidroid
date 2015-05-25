@@ -4,12 +4,5 @@
 var User = require('../models/user');
 
 module.exports = {
-    getAllDevice: function (callback) {
-        var query = Device.find();
-        query.exec(function (err, Devices) {
-            // Execute callback
-            console.log(Devices);
-            callback(null, Devices);
-        });
-    }
+
 };
