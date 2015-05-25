@@ -48,7 +48,7 @@ module.exports = {
             if (err) {
                 console.log(err);
             }
-            if (device.apk_version === req.body.apk_version) {
+            if (device.apk_version == req.body.apk_version) {
                 console.log("Same version - ", device.apk_version);
                 next();
             }

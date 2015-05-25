@@ -54,6 +54,7 @@ module.exports = {
             "apk_version": 1
         }, function (err, device) {
             if (err) return console.log(err);
+            console.log("Нашли девайс и его версию", device);
             callback(null, device);
         });
     },
