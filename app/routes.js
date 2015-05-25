@@ -27,7 +27,12 @@ module.exports = function (app, passport) {
     }));
 
     app.get('/dashboard', isLoggedIn, function(req,res){
-        res.render('dashboard.jade');
+        users.getDevice(function (err, Devices) {
+            if (err) {
+                console.log(err);
+            }
+            res.render('dashboard.jade', {devices: Devices});
+        },10)
     });
     app.post('/createDevice', isLoggedIn, users.createDevice);
 
@@ -39,7 +44,7 @@ module.exports = function (app, passport) {
         res.redirect('/');
     });
     app.post('/api/save_data/', devices.getAuthorizationDevice, devices.checkApkVersion, devices.getSaveData);
-    app.post('/api/registration/:id', devices.getRegistrationDevice);
+    app.post('/api/registration/*', devices.getRegistrationDevice);
     app.get('/api/get_apk_version/:id&:token', devices.getAuthorizationDevice, devices.getApk)
 };
 

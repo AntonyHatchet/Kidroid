@@ -20,12 +20,13 @@ module.exports = function (server) {
             console.log('user disconnected');}
         );
 
-        socket.on('test', function(count){
+        socket.on('getDevices', function(count){
+                console.log(count,"count");
                 user.getDevice(function (err, Devices) {
                        if (err) {
                            console.log(err);
                        }
-                   io.emit('firstData', Devices);
+                   io.emit('displayData', Devices);
                },count);
             }
         )

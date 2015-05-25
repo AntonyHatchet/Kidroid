@@ -4,12 +4,10 @@ extends layout
 block content
    //#{devices}
    //#{devices._id.device_id}
-   script.
-    alert(devices);
    #tab
       ul(class='tabs')
          li(class='tab-link current' data-tab='tab-1') Devices
-         li(class='tab-link' data-tab='tab-2' onclick="socket.emit('test')") Users
+         li(class='tab-link' data-tab='tab-2' onclick="socket.emit('getDevices',2)") Users
          li(class='tab-link' data-tab='tab-3') Filters
          li(class='tab-link' data-tab='tab-3') Settings
 
@@ -67,14 +65,14 @@ block content
                th apk_version
                th map
          tfoot
-            tr
-               th(colspan='2') registered
-               //th registered
-               th school
-               //th timestamp
-               //th none
-               //th none
-               th apk_version
-               //th map
+             tr
+                 th id
+                 th registered
+                 th school
+                 //th timestamp
+                 //th none
+                 //th none
+                 th apk_version
+                 th map
          tbody(id='userTable')
-             td
+   script(src="/js/socketTableData.js")
