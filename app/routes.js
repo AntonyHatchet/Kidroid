@@ -4,6 +4,7 @@
 
 var users = require('./routes/users');
 var devices = require("./routes/device");
+var ApkReader = require('node-apk-parser');
 
 module.exports = function (app, passport) {
 
@@ -29,6 +30,12 @@ module.exports = function (app, passport) {
             res.render('dashboard.jade');
     });
     app.post('/createDevice', isLoggedIn, users.createDevice);
+    app.post('/uploadFile', isLoggedIn, function(req,res){
+        console.log(req.files);
+        var reader = ApkReader.readFile(req.files.category.path);
+        var manifest = reader.readManifestSync();
+        console.log(reader,"manifest")
+    });
 
     // =====================================
     // LOGOUT ==============================

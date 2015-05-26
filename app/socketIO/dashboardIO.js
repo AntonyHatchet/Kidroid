@@ -29,6 +29,13 @@ module.exports = function (server) {
             io.emit('category', categories);
         });
 
+        user.findVersion(function (err, version) {
+            if (err) {
+                console.log(err);
+            }
+            io.emit('version', version);
+        });
+
         // «апрос устройств на страницу по колличеству
         socket.on('getDevices', function (params) {
 

@@ -111,10 +111,15 @@ block content
       a(class='overlay', id='createCategory', href='#x')
       .popap-add
          p Add new category:
-         form
-            input(type="input" id="newCategory" name='category')
-            //button( type="button" onclick="socket.emit('createCategory',{name:'test26'})") Add
-            button(onclick="createNewCategory()") Add
+         form(action='/createDevice')
+
+             input(type="input" id="newCategory" name='category')
+             button(onclick="createNewCategory()") Add
+         p Add new Apk version:
+         form(method="post" action='/uploadFile' enctype="multipart/form-data")
+
+            input(type="file", name='category' value='')
+            button( type="submit") Add
          a(class='close-add' href='#close-add')
 
       a(class='overlay', id='editCategory', href='#x')
