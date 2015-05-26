@@ -26,6 +26,7 @@ module.exports = {
     },
 //Авторизация планшета по ИД и токену
     getAuthorizationDevice: function (req, res, next) {
+        console.log(req.body,"req body");
         var id = !req.param.id ? req.body.device_id:req.params.id;
         var token = !req.param.token ? req.body.token:req.params.token;
         deviceMagic.authDevice({id: id, token: token}, function (err,callback) {
@@ -34,6 +35,7 @@ module.exports = {
                 console.log(err);
             }
             if (callback === null){
+                console.log(callback);
                return res.json({"error":"Wrong ID"});
             }
 
