@@ -103,17 +103,17 @@ block content
       a(class='overlay', id='createCategory', href='#x')
       .popap-add
          p Add new category:
-         form(action='/createDevice')
-
-            input(type="input", name='category' value='')
-            button( type="button" onclick="socket.emit('createCategory',{id:'556454058cdcccf18376d2ed',name:'test'})") Add
+         form
+            input(type="input" id="newCategory" name='category')
+            //button( type="button" onclick="socket.emit('createCategory',{name:'test26'})") Add
+            button(onclick="createNewCategory()") Add
          a(class='close-add' href='#close-add')
 
       a(class='overlay', id='editCategory', href='#x')
       .popap-add
          p Edit category:
-         form(action='/editCategory')
+         form
+            input(type="input" name='category')
+            //button( type="button" onclick="socket.emit('editCategory')") Edit
 
-            input(type="input", name='category' value='')
-            button( type="button" onclick="socket.emit('editCategory')") Edit
          a(class='close-add' href='#close-add')
