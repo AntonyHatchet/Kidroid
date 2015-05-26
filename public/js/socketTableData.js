@@ -8,9 +8,9 @@
         $("#userTable").html(html);
     });
 
-        socket.on('quantity', function (pg) {
+        socket.on('quantity', function (data) {
             html = '';
-            Page=Math.ceil(pg/10);
+            Page=Math.ceil(data/10);
             for (var j = 1; j <=Page ; j++)
                 html += "<li><a onclick='socket.emit(\"pageNumder\"," + j*10 + ")'>" + j + "</a></li>";
             $("#pagination").html(html);
@@ -18,7 +18,9 @@
 
         socket.on('category', function (school) {
             html = '';
-            for (i in school)
-                html += "<tr><td>"+school[i].device_id+"</td><td><a onclick=\"socket.emit('categoryDel')\")>remove</a> / <a href='editCategory'>edit</a></td></tr>";
+            for (var i=0; i< school.length;i++){
+                console.log(school[i]);
+                html += "<tr><td>"+school[i].school+"</td><td><a onclick=\"socket.emit('categoryDel')\")>remove</a> / <a href='editCategory'>edit</a></td></tr>";
+            }
             $("#tableFilter").html(html);
     });

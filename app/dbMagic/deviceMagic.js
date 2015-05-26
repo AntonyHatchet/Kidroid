@@ -18,7 +18,7 @@ module.exports = {
 
         var query = {};
 
-        query.device_id = (!name)?{$exists:true}:name;
+        query.device_id = (!name)?{$exists:true}:{$gt:name};
         query.registered = (!status)?{$exists:true}:status;
         query.school = (!school)?{$exists:true}:school;
         query.apk_version = (!version)?{$exists:true}:version;
@@ -32,11 +32,14 @@ module.exports = {
     },
     // Проверка на наличее ID и флага не зарегестрирован в БД
     regDevice: function (id, callback) {
+
         var device = Device;
+
         device.findOne({"device_id": id.id, "registered": false}, function (err, device) {
             if (err) throw err;
             callback(null, device);
         });
+
     },
     //Авторизация планшета
     authDevice: function (deviceInfo, callback) {
