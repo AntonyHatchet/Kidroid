@@ -25,11 +25,20 @@
             $("#tableFilter").html(html);
     });
 
-        socket.on('version', function (date) {
+        socket.on('category', function (date) {
             console.log(date,"category");
             html = '<option></option>';
             for (var i=0; i < date.length; i++){
                 html += "<option onclick=\'socket.emit(\"getDevicesBySchool\"," +date[i].name+ ")\'>" +date[i].name+ "</option>";
             }
             $("#selectCategory").html(html);
+        });
+
+        socket.on('version', function (date) {
+            //console.log(school,"category");
+            html = '<option></option>';
+            for (var i=0; i < date.length; i++){
+                html += "<option onclick=\'socket.emit(\"getDevicesByVersion\"," +date[i].version+ ")\'>" +date[i].version+ "</option>";
+            }
+            $("#selectVersion").html(html);
         });
