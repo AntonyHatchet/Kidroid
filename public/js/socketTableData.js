@@ -24,3 +24,12 @@
             }
             $("#tableFilter").html(html);
     });
+
+        socket.on('category', function (date) {
+            //console.log(school,"category");
+            html = '<option></option>';
+            for (var i=0; i < date.length; i++){
+                html += "<option onclick=\'socket.emit(\"getDevicesBySchool\"," +date[i].name+ ")\'>" +date[i].name+ "</option>";
+            }
+            $("#selectCategory").html(html);
+        });
