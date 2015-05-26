@@ -90,24 +90,24 @@ ul.tabs li.current{
   border: 1px solid #777777;
 }
 
-#filter select:focus {
-  outline: none;
-}
-.search {
-  padding:6px 15px 6px 30px;
-  margin:3px;
-  background: url('img/search.png') no-repeat 5px 1px;
-  border-radius:15px;
-  -moz-border-radius:15px;
-  -webkit-border-radius:15px;
-}
+/*#filter select:focus {*/
+  /*outline: none;*/
+/*}*/
+/*.search {*/
+  /*padding:6px 15px 6px 30px;*/
+  /*margin:3px;*/
+  /*background: url('img/search.png') no-repeat 5px 1px;*/
+  /*border-radius:15px;*/
+  /*-moz-border-radius:15px;*/
+  /*-webkit-border-radius:15px;*/
+/*}*/
 
 #add-device{
   float: right;
   margin-bottom: 20px;
 }
 
-.popap-add, .popap-add1 {
+.popap-add {
   z-index: 10;
   display: block;
   visibility: hidden;
@@ -131,7 +131,7 @@ ul.tabs li.current{
   -webkit-box-shadow:
   0 0 2px rgba(0, 0, 0, 0.2);
 }
-.popap-add:before, .popap-add1:before{
+.popap-add:before{
   content: '';
   position: absolute;
   z-index: -1;
@@ -144,7 +144,7 @@ ul.tabs li.current{
   -webkit-box-shadow: 0 0 0 1px #fff;
   box-shadow: 0 0 0 1px #fff;
 }
-.overlay:target+.popap-add, .overlay:target+.popap-add1 {
+.overlay:target+.popap-add {
   top: 20%;
   visibility: visible;
   opacity: 1;

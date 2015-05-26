@@ -14,6 +14,9 @@ block content
 
 
    #devices(class='tab-content current')
+      #filter
+         form(class='form-search')
+            input(type="text" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial')
       #add-device
          a(href='#add')
             button(class='btn btn-primary') add new device
@@ -28,7 +31,7 @@ block content
                th map
 
          tbody(id='userTable')
-      div(id='pagination' class='pagination')
+      div(id='pagination' class='pagination pagination-centered')
       a(class='overlay', id='add', href='#x')
       .popap-add
          p Add new device

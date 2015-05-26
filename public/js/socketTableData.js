@@ -4,7 +4,7 @@
     socket.on('displayData', function (data) {
         html = '';
         for (i in data)
-            html += "<tr><td>"+data[i].device_id+"</td><td>"+data[i].registered+"</td><td>"+data[i].school+"</td><td>"+data[i].apk_version+"</td><td><button onclick='showmap("+data[i].longitude+","+data[i].latitude+")'>show map</button></td></tr>";
+            html += "<tr><td>"+data[i].device_id+"</td><td>"+data[i].registered+"</td><td>"+data[i].school+"</td><td>"+data[i].apk_version+"</td><td><button class='btn' onclick='showmap("+data[i].longitude+","+data[i].latitude+")'>show map</button></td></tr>";
         $("#userTable").html(html);
     });
 
@@ -20,7 +20,7 @@
             console.log(school,"category");
             html = '';
             for (var i=0; i< school.length;i++){
-                html += "<tr><td>"+school[i].name+"</td><td><button type='button' onclick=\"socket.emit('removeCategory','test')\")>remove</button> / <button href='editCategory'>edit</button></td></tr>";
+                html += "<tr><td>"+school[i]._id+"</td><td><button class='btn' type='button' onclick=\"socket.emit('removeCategory','test')\")>remove</button> / <a href=\'#editCategory\'><button class='btn'>edit</button></a></td></tr>";
             }
             $("#tableFilter").html(html);
     });
