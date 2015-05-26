@@ -1,6 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../app/models/user.js');// подгружаем модель пользователя
-var Device = require('../app/models/apk');// подгружаем модель пользователя
+var Device = require('../app/models/device');// подгружаем модель пользователя
 
 module.exports = function (passport) {
     passport.serializeUser(function (user, done) {

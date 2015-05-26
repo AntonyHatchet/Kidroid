@@ -20,7 +20,7 @@
             console.log(school,"category");
             html = '';
             for (var i=0; i< school.length;i++){
-                html += "<tr><td>"+school[i]._id+"</td><td><button class='btn' type='button' onclick=\"socket.emit('removeCategory','test')\")>remove</button> / <a href=\'#editCategory\'><button class='btn'>edit</button></a></td></tr>";
+                html += "<tr><td>"+school[i]._id+"</td><td>"+school[i].name+"</td><td><button class='btn' type='button' onclick=\"socket.emit('removeCategory','test')\")>remove</button> / <a href=\'#editCategory\'><button class='btn'>edit</button></a></td></tr>";
             }
             $("#tableFilter").html(html);
     });

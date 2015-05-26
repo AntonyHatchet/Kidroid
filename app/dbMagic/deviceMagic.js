@@ -1,7 +1,7 @@
 /**
  * Created by anton_gorshenin on 24.04.2015.
  */
-var Device = require('../models/apk');
+var Device = require('../models/device');
 
 module.exports = {
     // Получаем из БД общее колличество записей

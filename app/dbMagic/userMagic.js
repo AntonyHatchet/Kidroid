@@ -18,13 +18,14 @@ module.exports = {
         });
     },
     createSchoolCategory: function (data, callback) {
-        Category.findOne({"_id": data.id}, function (err, category) {
+        console.log(data.name);
+        Category.findOne({"name": data.name}, function (err, category) {
             if (err) {
-                throw err;
+                callback(null,err);
             }
-            if (category != null) {
+            if (category == null) {
                 var newCategory = new Category({
-                    name: data
+                    name: data.name
                 });
 
                 newCategory.save(function (err) {

@@ -2,6 +2,9 @@ var deviceMagic = require('../dbMagic/deviceMagic');
 var userMagic = require('../dbMagic/userMagic');
 
 module.exports = {
+    // ВЕРСИИ
+
+    // УСТРОЙСТВА
     // Выводим общее количество устройств
     getAllDeviceQuantity: function (callback) {
         deviceMagic.getQuantity(function (err, Quantity) {
@@ -18,39 +21,6 @@ module.exports = {
                 console.log(err);
             }
             callback(null, Devices);
-        });
-    },
-    //Создаем запросы к БД на добавление категорий
-    createCategory: function (category, callback) {
-        userMagic.createSchoolCategory(category, function (err, category) {
-            if (err) {
-                console.log(err);
-            }
-            callback(null, category);
-        });
-    },
-    updateCategory: function (params, callback) {
-        userMagic.updateSchoolCategory(params, function (err, category) {
-            if (err) {
-                console.log(err);
-            }
-            callback(null, category);
-        });
-    },
-    removeCategory: function (category, callback) {
-        userMagic.removeSchoolCategory(category, function (err, category) {
-            if (err) {
-                console.log(err);
-            }
-            callback(null, category);
-        });
-    },
-    findCategory: function (callback) {
-        userMagic.findAllCategory(function (err, category) {
-            if (err) {
-                console.log(err);
-            }
-            callback(null, category);
         });
     },
     //Создаем запросы к БД на добавление устройств
@@ -81,17 +51,42 @@ module.exports = {
         }
         setTimeout(function(){res.redirect("/dashboard")}, 2000);
     },
-    //Создаем запросы к БД на добавление пользователя
-    createUser: function (userData, callback) {
-                    userMagic.saveUser({
-                                name:cb,
-                                password:userData.password
-                            },
-                            function (err) {
-                                if (err) {
-                                    console.log(err);
-                                }
-                                callback(null,true)
-                            })
+
+    //КАТЕГОРИИ
+    //Добавление категорий
+    createCategory: function (category, callback) {
+        userMagic.createSchoolCategory(category, function (err, category) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, category);
+        });
+    },
+    //Обновление категорий
+    updateCategory: function (params, callback) {
+        userMagic.updateSchoolCategory(params, function (err, category) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, category);
+        });
+    },
+    //Удаление категорий
+    removeCategory: function (category, callback) {
+        userMagic.removeSchoolCategory(category, function (err, category) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, category);
+        });
+    },
+    //Поиск всех категорий
+    findCategory: function (callback) {
+        userMagic.findAllCategory(function (err, category) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, category);
+        });
     }
 };
