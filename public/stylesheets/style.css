@@ -393,6 +393,12 @@ ul li {
   display : inline;
 }
 .current {
-  background: #666;
-  color: #fff;
+}
+.tab-content{
+  display: none;
+  padding: 15px;
+}
+
+.tab-content.current{
+  display: inherit;
 }

@@ -13,7 +13,7 @@ block content
 
 
 
-   #devices
+   #devices(class='tab-content current')
       #add-device
          a(href='#add') add new device
 
@@ -50,17 +50,7 @@ block content
             button(type='submit') Add
          a(class='close-add' href='#close-add')
       a(class='overlay', id='editCategory', href='#x')
-      .popap-add
-         p Edit category:
-         form(action='/createDevice')
 
-            input(type="input", name='category' value='category')
-            button(type='submit') Edit
-         a(class='close-add' href='#close-add')
-      a(class='overlay', id='createCategory', href='#x')
-      .popap-add
-         p Add new category:
-         form(action='/createDevice')
 
             input(type="input", name='category' value='')
             button( type="button" onclick="socket.emit('createCategory','test')") Add
@@ -97,7 +87,7 @@ block content
 
       script(src="/js/socketTableData.js")
 
-   #filters
+   #filters(class='tab-content')
       #add-category
          a(href='#createCategory') add new category...
       table
@@ -105,3 +95,19 @@ block content
             tr
                th(colspan='2') Categoty name
          tbody(id='tableFilter')
+
+      .popap-add
+         p Edit category:
+         form(action='/createDevice')
+
+            input(type="input", name='category' value='category')
+            button(type='submit') Edit
+         a(class='close-add' href='#close-add')
+      a(class='overlay', id='createCategory', href='#x')
+      .popap-add
+         p Add new category:
+         form(action='/createDevice')
+
+            input(type="input", name='category' value='')
+            a( onclick="socket.emit('createCategory',category)") Add
+         a(class='close-add' href='#close-add')
