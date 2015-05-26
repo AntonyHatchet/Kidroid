@@ -9,7 +9,7 @@
     });
 
         socket.on('quantity', function (data) {
-            html = '';
+            html = '<ul>';
             Page=Math.ceil(data/10);
             for (var j = 1; j <=Page ; j++)
                 html += "<li><a onclick='socket.emit(\"pageNumder\"," + j*10 + ")'>" + j + "</a></li>";
@@ -20,7 +20,7 @@
             console.dir(school);
             html = '';
             for (var i=0; i< school.length;i++){
-                html += "<tr><td>"+school[i]._id+"</td><td><button type='button' onclick=\"socket.emit('removeCategory','test')\")>remove</button> / <button href='editCategory'>edit</button></td></tr>";
+                html += "<tr><td>"+school[i]._id+"</td><td><button type='button' onclick=\"socket.emit('removeCategory','test')\")>remove</button> / <a href=\'#editCategory\'><button>edit</button></a></td></tr>";
             }
             $("#tableFilter").html(html);
     });

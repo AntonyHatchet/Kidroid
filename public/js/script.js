@@ -14,3 +14,7 @@ $(document).ready(function(){
     })
 
 })
+
+function editCategory() {
+    document.getElementById('editCategory').classList.remove('overlay');
+}
