@@ -17,5 +17,10 @@ $(document).ready(function(){
 function createNewCategory(){
     var nameCategory = $("#newCategory").val();
     socket.emit('createCategory',{name:"" + nameCategory + ""})
-    console.log(nameCategory);
+    //console.log(nameCategory);
+}
+function findNameId(){
+    var DeviceNameIDSerial = $("#DeviceNameIDSerial").val();
+    socket.emit('getDevicesByName',{name:"" + DeviceNameIDSerial + ""})
+    //console.log(DeviceNameIDSerial);
 }

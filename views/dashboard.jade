@@ -16,7 +16,15 @@ block content
    #devices(class='tab-content current')
       #filter
          form(class='form-search')
-            input(type="text" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial')
+            input(type="text" id="DeviceNameIDSerial" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial' keyup="findNameId()")
+            select()
+               option()
+               option(value='0' onclick="socket.emit('getDevicesByStatus',0)") Ofline
+               option(value='1' onclick="socket.emit('getDevicesByStatus',1)") Online
+            select(id="selectCategory")
+            select(id="selectVersion")
+
+
       #add-device
          a(href='#add')
             button(class='btn btn-primary') add new device
