@@ -29,7 +29,7 @@ module.exports = function (server) {
             io.emit('category', categories);
         });
 
-        user.findVersion(function (err, version) {
+        user.findAllVersion(function (err, version) {
             if (err) {
                 console.log(err);
             }

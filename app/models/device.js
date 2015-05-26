@@ -6,15 +6,17 @@ var mongoose = require('mongoose');
 var DeviceSchema = mongoose.Schema({
         school: String,
         timestamp: String,
-        device_id: String,
+        device_id: Number,
         token: String,
         latitude: Array,
         longitude: Array,
-        apk_version: String,
-        loader_version: String,
+        apk_version: Number,
+        apk_to_update: Number,
+        loader_version: Number,
         name: String,
         comment: String,
-        registered:Boolean
+        registered:Boolean,
+        update_required: Boolean
 });
 
 module.exports = mongoose.model('Device', DeviceSchema, "devices");
