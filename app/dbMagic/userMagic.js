@@ -3,7 +3,7 @@
  */
 var User = require('../models/user');
 var Category = require('../models/category');
-var Version = require('../models/category');
+var Version = require('../models/apk_models');
 
 module.exports = {
     findAllCategory: function(callback){
