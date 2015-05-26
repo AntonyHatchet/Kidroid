@@ -14,12 +14,19 @@ module.exports = function (server) {
             }
             io.emit('quantity', Quantity);
         });
-        //Стартовая отправка первых 10 планшетов
+        //Стартовая отправка первых 10 устройств
         user.getDevice(function (err, Devices) {
             if (err) {
                 console.log(err);
             }
             io.emit('displayData', Devices);
+        });
+        
+        user.findCategory(function (err, categories) {
+            if (err) {
+                console.log(err);
+            }
+            io.emit('category', categories);
         });
 
         // Запрос устройств на страницу по колличеству
@@ -31,17 +38,25 @@ module.exports = function (server) {
                     }
                     io.emit('displayData', Devices);
                 }, params);
-
             }
         );
-
+        // Создаем категорию
         socket.on('createCategory', function (categoryName) {
 
                 user.createCategory(categoryName, function (err, category) {
                     if (err) {
                         console.log(err);
                     }
-                    console.log(category,"category callback");
+                    io.emit('category', category);
+                });
+            }
+        );
+        socket.on('removeCategory', function (categoryID) {
+
+                user.removeCategory(categoryID, function (err, category) {
+                    if (err) {
+                        console.log(err);
+                    }
                     io.emit('category', category);
                 });
             }
@@ -56,17 +71,6 @@ module.exports = function (server) {
                 });
             }
         );
-        socket.on('createUser', function (userData) {
-
-                user.createUser(userData, function (err, cb) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    io.emit('userCreated', cb);
-                });
-            }
-        );
-
         //Отключение пользователя
         socket.on('disconnect', function () {
                 console.log('user disconnected');

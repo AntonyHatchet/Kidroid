@@ -29,6 +29,22 @@ module.exports = {
             callback(null, category);
         });
     },
+    removeCategory: function (category, callback) {
+        userMagic.removeSchoolCategory(category, function (err, category) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, category);
+        });
+    },
+    findCategory: function (callback) {
+        userMagic.findAllCategory(function (err, category) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, category);
+        });
+    },
     //Создаем запросы к БД на добавление устройств
     createDevice: function (req, res) {
         uploader(0);

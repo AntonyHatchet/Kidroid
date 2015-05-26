@@ -5,29 +5,34 @@ var User = require('../models/user');
 var Category = require('../models/category');
 
 module.exports = {
-    createSchoolCategory: function (data, callback) {
-        console.log(data,"data");
-        Category.findOne({"category": data}, function(err, category) {
+    findAllCategory: function(callback){
+        Category.find("", function(err, category) {
 
             if (err) {
                 throw err;
             }
 
-            if (category == null) {
+            if (category != null) {
+                callback(null, category)
+            }
+        });
+    },
+    createSchoolCategory: function (data, callback) {
+
                 var newCategory = new Category({
-                    school : data
+                    _id : data
                 });
 
                 newCategory.save(function (err) {
 
                     if (err) {
-                        throw err;
+                        callback(null,err);
                     }
 
                     Category.find("", function(err, category) {
 
                         if (err) {
-                            throw err;
+                            callback(null,err);
                         }
 
                         if (category != null) {
@@ -35,7 +40,28 @@ module.exports = {
                         }
                     });
                 });
+    },
+    removeSchoolCategory: function (data, callback) {
+        Category.remove({"_id": data}, function(err, category) {
 
+            if (err) {
+                throw err;
+            }
+
+            if (category != null) {
+
+                Category.find("", function(err, category) {
+
+                    if (err) {
+                        throw err;
+                    }
+
+                    if (category != null) {
+
+                        callback(null, category)
+
+                    }
+                });
             }
         });
     }

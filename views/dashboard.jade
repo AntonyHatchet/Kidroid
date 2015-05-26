@@ -52,8 +52,7 @@ block content
       a(class='overlay', id='editCategory', href='#x')
 
 
-            input(type="input", name='category' value='')
-            button( type="button" onclick="socket.emit('createCategory','test')") Add
+
          a(class='close-add' href='#close-add')
 
          //a(class='overlay', id='map', href='#x')
@@ -109,5 +108,5 @@ block content
          form(action='/createDevice')
 
             input(type="input", name='category' value='')
-            a( onclick="socket.emit('createCategory',category)") Add
+            button( type="button" onclick="socket.emit('createCategory','test3')") Add
          a(class='close-add' href='#close-add')

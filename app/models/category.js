@@ -4,7 +4,7 @@
 var mongoose = require('mongoose');
 
 var CategorySchema = mongoose.Schema({
-    school: String
+    _id: String
 });
 
 module.exports = mongoose.model('Category', CategorySchema, "category");
