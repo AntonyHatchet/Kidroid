@@ -6,7 +6,7 @@ var userMagic = require('../dbMagic/userMagic');
 module.exports = {
     // ВЕРСИИ
     createVersion: function (category, callback) {
-        userMagic.createSchoolCategory(category, function (err, category) {
+        userMagic.createVersion(category, function (err, category) {
             if (err) {
                 console.log(err);
             }
@@ -14,16 +14,16 @@ module.exports = {
         });
     },
     removeVersion: function (category, callback) {
-        userMagic.removeSchoolCategory(category, function (err, category) {
+        userMagic.removeVersion(category, function (err, category) {
             if (err) {
                 console.log(err);
             }
             callback(null, category);
         });
     },
-    //Поиск всех категорий
+    //Поиск всех версий
     findAllVersion: function (callback) {
-        userMagic.findAllCategory(function (err, category) {
+        userMagic.findAllVersion(function (err, category) {
             if (err) {
                 console.log(err);
             }

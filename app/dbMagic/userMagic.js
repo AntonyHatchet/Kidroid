@@ -3,6 +3,7 @@
  */
 var User = require('../models/user');
 var Category = require('../models/category');
+var Version = require('../models/category');
 
 module.exports = {
     findAllCategory: function(callback){
@@ -98,7 +99,7 @@ module.exports = {
         });
     },
     findAllVersion: function(callback){
-        Category.find("", function(err, category) {
+        Version.find("", function(err, category) {
 
             if (err) {
                 throw err;
@@ -110,23 +111,24 @@ module.exports = {
         });
     },
     createVersion: function (data, callback) {
-        console.log(data.name);
-        Category.findOne({"name": data.name}, function (err, category) {
+        Version.findOne({"version_apk": data.version}, function (err, category) {
             if (err) {
                 callback(null,err);
             }
             if (category == null) {
-                var newCategory = new Category({
-                    name: data.name
+                var newVersion = new Category({
+                    version_apk: data.version,
+                    link: data.link,
+                    update_required: false
                 });
 
-                newCategory.save(function (err) {
+                newVersion.save(function (err) {
 
                     if (err) {
                         callback(null, err);
                     }
 
-                    Category.find("", function (err, category) {
+                    Version.find("", function (err, category) {
 
                         if (err) {
                             callback(null, err);
@@ -141,8 +143,8 @@ module.exports = {
             callback(null, category)
         })
     },
-    removeSchoolCategory: function (data, callback) {
-        Category.remove({"_id": data}, function(err, category) {
+    removeVersion: function (data, callback) {
+        Version.remove({"_id": data}, function(err, category) {
 
             if (err) {
                 throw err;
