@@ -114,7 +114,7 @@ block content
          form(action='/createDevice')
 
              input(type="input" id="newCategory" name='category')
-             button(onclick="createNewCategory()") Add
+             button(type="button" onclick="createNewCategory()") Add
          p Add new Apk version:
          form(method="post" action='/uploadFile' enctype="multipart/form-data")
 

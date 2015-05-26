@@ -23,11 +23,11 @@ module.exports = {
     },
     //Поиск всех версий
     findAllVersion: function (callback) {
-        userMagic.findAllVersion(function (err, category) {
+        userMagic.findAllVersion(function (err, version) {
             if (err) {
                 console.log(err);
             }
-            callback(null, category);
+            callback(null, version);
         });
     },
     // УСТРОЙСТВА

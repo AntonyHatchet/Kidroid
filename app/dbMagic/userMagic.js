@@ -99,14 +99,14 @@ module.exports = {
         });
     },
     findAllVersion: function(callback){
-        Version.find("", function(err, category) {
-
+        Version.find("", function(err, version) {
+            console.log(version);
             if (err) {
                 throw err;
             }
 
-            if (category != null) {
-                callback(null, category)
+            if (version != null) {
+                callback(null, version)
             }
         });
     },

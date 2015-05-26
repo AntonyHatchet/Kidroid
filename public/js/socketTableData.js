@@ -25,8 +25,8 @@
             $("#tableFilter").html(html);
     });
 
-        socket.on('category', function (date) {
-            //console.log(school,"category");
+        socket.on('version', function (date) {
+            console.log(date,"category");
             html = '<option></option>';
             for (var i=0; i < date.length; i++){
                 html += "<option onclick=\'socket.emit(\"getDevicesBySchool\"," +date[i].name+ ")\'>" +date[i].name+ "</option>";
