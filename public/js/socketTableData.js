@@ -17,10 +17,10 @@
     });
 
         socket.on('category', function (school) {
-            console.dir(school);
+            console.log(school,"category");
             html = '';
             for (var i=0; i< school.length;i++){
-                html += "<tr><td>"+school[i]._id+"</td><td><button type='button' onclick=\"socket.emit('removeCategory','test')\")>remove</button> / <button href='editCategory'>edit</button></td></tr>";
+                html += "<tr><td>"+school[i].name+"</td><td><button type='button' onclick=\"socket.emit('removeCategory','test')\")>remove</button> / <button href='editCategory'>edit</button></td></tr>";
             }
             $("#tableFilter").html(html);
     });

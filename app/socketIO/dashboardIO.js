@@ -51,6 +51,16 @@ module.exports = function (server) {
                 });
             }
         );
+        socket.on('updateCategory', function (categoryParams) {
+
+                user.updateCategory(categoryParams, function (err, category) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('category', category);
+                });
+            }
+        );
         socket.on('removeCategory', function (categoryID) {
 
                 user.removeCategory(categoryID, function (err, category) {

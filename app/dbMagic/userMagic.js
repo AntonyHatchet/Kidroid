@@ -18,21 +18,25 @@ module.exports = {
         });
     },
     createSchoolCategory: function (data, callback) {
-
+        Category.findOne({"_id": data.id}, function (err, category) {
+            if (err) {
+                throw err;
+            }
+            if (category != null) {
                 var newCategory = new Category({
-                    _id : data
+                    name: data
                 });
 
                 newCategory.save(function (err) {
 
                     if (err) {
-                        callback(null,err);
+                        callback(null, err);
                     }
 
-                    Category.find("", function(err, category) {
+                    Category.find("", function (err, category) {
 
                         if (err) {
-                            callback(null,err);
+                            callback(null, err);
                         }
 
                         if (category != null) {
@@ -40,6 +44,33 @@ module.exports = {
                         }
                     });
                 });
+            }
+            callback(null, category)
+        })
+    },
+    updateSchoolCategory: function (data, callback) {
+
+        Category.findOne({"_id": data.id}, function(err, category){
+            if (err) {
+                throw err;
+            }
+            if (category != null ){
+                // Нашли такой ID, создаем дату для записи в БД.
+                var update = {
+                    "name"     : data.newName
+                };
+                //Пишем в БД к ID из запроса
+                Category.update({"_id": data.id }, {$set: update},function (err, updated) {
+                    if (err) {
+                        console.log("not updated", err);
+                    }
+                    callback(updated);
+                    // Execute callback passed from route
+                });
+            }
+            console.log("find err",err);
+            callback(err);
+        });
     },
     removeSchoolCategory: function (data, callback) {
         Category.remove({"_id": data}, function(err, category) {

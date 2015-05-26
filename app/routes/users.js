@@ -29,6 +29,14 @@ module.exports = {
             callback(null, category);
         });
     },
+    updateCategory: function (params, callback) {
+        userMagic.updateSchoolCategory(params, function (err, category) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, category);
+        });
+    },
     removeCategory: function (category, callback) {
         userMagic.removeSchoolCategory(category, function (err, category) {
             if (err) {
