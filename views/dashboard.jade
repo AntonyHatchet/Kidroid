@@ -105,8 +105,8 @@ block content
          p Add new category:
          form(action='/createDevice')
 
-            input(type="input", name='category' value='')
-            button( type="button" onclick="socket.emit('createCategory',{name:'test222'})") Add
+             input(type="input" id="newCategory" name='category')
+             button(onclick="createNewCategory()") Add
          p Add new Apk version:
          form(method="post" action='/uploadFile' enctype="multipart/form-data")
 
@@ -117,8 +117,8 @@ block content
       a(class='overlay', id='editCategory', href='#x')
       .popap-add
          p Edit category:
-         form(action='/editCategory')
+         form
+            input(type="input" name='category')
+            //button( type="button" onclick="socket.emit('editCategory')") Edit
 
-            input(type="input", name='category' value='')
-            button( type="button" onclick="socket.emit('editCategory')") Edit
          a(class='close-add' href='#close-add')

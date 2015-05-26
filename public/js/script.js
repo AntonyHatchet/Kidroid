@@ -13,8 +13,9 @@ $(document).ready(function(){
         $("#"+tab_id).addClass('current');
     })
 
-})
-
-function editCategory() {
-    document.getElementById('editCategory').classList.remove('overlay');
+});
+function createNewCategory(){
+    var nameCategory = $("#newCategory").val();
+    socket.emit('createCategory',{name:"" + nameCategory + ""})
+    console.log(nameCategory);
 }
