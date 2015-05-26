@@ -96,5 +96,73 @@ module.exports = {
                 });
             }
         });
+    },
+    findAllVersion: function(callback){
+        Category.find("", function(err, category) {
+
+            if (err) {
+                throw err;
+            }
+
+            if (category != null) {
+                callback(null, category)
+            }
+        });
+    },
+    createVersion: function (data, callback) {
+        console.log(data.name);
+        Category.findOne({"name": data.name}, function (err, category) {
+            if (err) {
+                callback(null,err);
+            }
+            if (category == null) {
+                var newCategory = new Category({
+                    name: data.name
+                });
+
+                newCategory.save(function (err) {
+
+                    if (err) {
+                        callback(null, err);
+                    }
+
+                    Category.find("", function (err, category) {
+
+                        if (err) {
+                            callback(null, err);
+                        }
+
+                        if (category != null) {
+                            callback(null, category)
+                        }
+                    });
+                });
+            }
+            callback(null, category)
+        })
+    },
+    removeSchoolCategory: function (data, callback) {
+        Category.remove({"_id": data}, function(err, category) {
+
+            if (err) {
+                throw err;
+            }
+
+            if (category != null) {
+
+                Category.find("", function(err, category) {
+
+                    if (err) {
+                        throw err;
+                    }
+
+                    if (category != null) {
+
+                        callback(null, category)
+
+                    }
+                });
+            }
+        });
     }
 };

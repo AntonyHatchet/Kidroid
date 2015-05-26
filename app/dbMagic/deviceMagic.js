@@ -23,7 +23,7 @@ module.exports = {
         query.school = (!school)?{$exists:true}:school;
         query.apk_version = (!version)?{$exists:true}:version;
 
-        var query = Device.find(query).limit(10);
+        query = Device.find(query).limit(10);
         query.exec(function (err, Devices) {
             // Execute callback
             callback(null, Devices);
@@ -106,7 +106,8 @@ module.exports = {
 
     updateDevice: function (deviceInfo, callback) {
         //Поиск в БД, ID полученного из запроса
-        Device.findOne({"device_id": deviceInfo.id}, function(err, device){
+        console.log(deviceInfo.device_id);
+        Device.findOne({"device_id": deviceInfo.device_id}, function(err, device){
             if (err) {
                 throw err;
             }
@@ -119,7 +120,7 @@ module.exports = {
                         "loader_version": deviceInfo.loader_version
                 };
                 //Пишем в БД к ID из запроса
-                Device.update({"device_id": deviceInfo.id }, {$set: update},{ upsert: true }, function (err, updated) {
+                Device.update({"device_id": deviceInfo.device_id }, {$set: update},{ upsert: true }, function (err, updated) {
                     if (err) {
                         console.log("not updated", err);
                     }

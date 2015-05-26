@@ -1,9 +1,35 @@
 var deviceMagic = require('../dbMagic/deviceMagic');
 var userMagic = require('../dbMagic/userMagic');
 
+
+// TODO при рефакторинге перепесиать повторяющиеся функции создания и удаления на одну функцию с указанием типа данных.
 module.exports = {
     // ВЕРСИИ
-
+    createVersion: function (category, callback) {
+        userMagic.createSchoolCategory(category, function (err, category) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, category);
+        });
+    },
+    removeVersion: function (category, callback) {
+        userMagic.removeSchoolCategory(category, function (err, category) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, category);
+        });
+    },
+    //Поиск всех категорий
+    findAllVersion: function (callback) {
+        userMagic.findAllCategory(function (err, category) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, category);
+        });
+    },
     // УСТРОЙСТВА
     // Выводим общее количество устройств
     getAllDeviceQuantity: function (callback) {

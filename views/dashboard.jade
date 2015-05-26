@@ -106,7 +106,12 @@ block content
          form(action='/createDevice')
 
             input(type="input", name='category' value='')
-            button( type="button" onclick="socket.emit('createCategory',{id:'556454058cdcccf18376d2ed',name:'test'})") Add
+            button( type="button" onclick="socket.emit('createCategory',{name:'test222'})") Add
+         p Add new Apk version:
+         form(method="post" action='/uploadFile' enctype="multipart/form-data")
+
+            input(type="file", name='category' value='')
+            button( type="submit") Add
          a(class='close-add' href='#close-add')
 
       a(class='overlay', id='editCategory', href='#x')
