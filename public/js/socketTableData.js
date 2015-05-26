@@ -9,7 +9,7 @@
     });
 
         socket.on('quantity', function (data) {
-            html = '';
+            html = '<ul>';
             Page=Math.ceil(data/10);
             for (var j = 1; j <=Page ; j++)
                 html += "<li><a onclick='socket.emit(\"pageNumder\"," + j*10 + ")'>" + j + "</a></li>";
