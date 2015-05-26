@@ -6,7 +6,7 @@ body {
 a {
   color: #00B7FF;
 }
-#devices{
+#devices, #filters{
   border: 1px solid #777777;
   padding: 10px;
   margin-left: 150px;
@@ -73,22 +73,19 @@ ul.tabs li.current{
   visibility: visible;
   opacity: 1;
 }
-#filter {
 
-}
-
-#filter select {
-  padding: 5px 8px;
-  width: 130px;
-  border: none;
-  box-shadow: none;
-  background-color: transparent;
-  background-image: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: 1px solid #777777;
-}
+/*#filter select {*/
+  /*padding: 5px 8px;*/
+  /*width: 130px;*/
+  /*border: none;*/
+  /*box-shadow: none;*/
+  /*background-color: transparent;*/
+  /*background-image: none;*/
+  /*-webkit-appearance: none;*/
+  /*-moz-appearance: none;*/
+  /*appearance: none;*/
+  /*border: 1px solid #777777;*/
+/*}*/
 
 /*#filter select:focus {*/
   /*outline: none;*/
