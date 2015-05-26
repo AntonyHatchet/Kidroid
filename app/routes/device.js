@@ -82,7 +82,7 @@ module.exports = {
             if (err) {
                 console.log(err);
             }
-            res.end();
+            res.json({update_required: false, version: 0, link: null });
         });
     }
 };
