@@ -44,4 +44,5 @@ function addDevice() {
     device.version = $("#addSelectVersion").val();
     device.numberDevise = $("#amountDevice").val();
     socket.emit('createDevice', device);
+    console.log(device);
 };

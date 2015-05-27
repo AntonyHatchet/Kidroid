@@ -7,7 +7,7 @@ block content
     #header
         #logo
         #usermenu
-            #username() UserName
+            #username
 
 
 
@@ -56,6 +56,7 @@ block content
                         th school
                         th apk_version
                         th map
+                        th remove
 
                 tbody(id='userTable')
             div(id='pagination' class='pagination pagination-centered')
@@ -73,7 +74,7 @@ block content
                     input(id='amountDevice' type="number", name='number' min="1" value='1')
 
                     br
-                    button(onclick='addDevice') Add
+                    button(onclick='addDevice()') Add
                 a(class='close-add' href='#close-add')
 
 
