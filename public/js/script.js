@@ -29,3 +29,13 @@ function find() {
     device.version = $("#selectVersion").val();
     socket.emit('getDevicesByParams', device);
 };
+function page(i) {
+    var device = {};
+    device.id = $("#DeviceNameIDSerial").val();
+    device.status = $("#selectStatus").val();
+    device.category = $("#selectCategory").val();
+    device.version = $("#selectVersion").val();
+    device.page = i;
+    socket.emit('getDevicesByParams', device);
+    console.log(device);
+};

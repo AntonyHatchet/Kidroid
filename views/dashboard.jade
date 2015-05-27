@@ -75,39 +75,11 @@ block content
                     br
                     button(type='submit') Add
                 a(class='close-add' href='#close-add')
-
-
-
-                a(class='close-add' href='#close-add')
-
-                //a(class='overlay', id='map', href='#x')
-                //.popap-add
-                //   #id='map'
-                //      script(src="/map/map.js")
-                //   a(class='close-add' href='#close-add')
             script.
                 function showmap(i, j) {
                     mark.setLatLng(L.latLng(i, j)).update()
                             .bindPopup('“ÛÚ')
                             .openPopup();
-                    //document.getElementById('maps').classList.add('show');
-                    //console.log (i,j,map)
-                }
-
-
-            //#map(class='no-show')
-               script.
-                  var map = L.map('map').setView([55.7422, 37.5719], 12);
-                  // add an OpenStreetMap tile layer
-                  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                  }).addTo(map);
-                  // add a marker in the given location, attach some popup content to it and open the popup
-                  var mark = L.marker([55.7422, 37.5719]);
-                  mark.addTo(map)
-                          .bindPopup('“ÛÚ')
-                          .openPopup();
-               button(onclick='closwmap()') close
 
             script(src="/js/socketTableData.js")
 
