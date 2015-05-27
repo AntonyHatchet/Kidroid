@@ -6,8 +6,8 @@ var Category = require('../models/category');
 var Version = require('../models/apk_models');
 
 module.exports = {
-    findAllCategory: function(callback){
-        Category.find("", function(err, category) {
+    findAllCategory: function (callback) {
+        Category.find("", function (err, category) {
 
             if (err) {
                 throw err;
@@ -22,7 +22,7 @@ module.exports = {
         console.log(data.name);
         Category.findOne({"name": data.name}, function (err, category) {
             if (err) {
-                callback(null,err);
+                callback(null, err);
             }
             if (category == null) {
                 var newCategory = new Category({
@@ -52,17 +52,17 @@ module.exports = {
     },
     updateSchoolCategory: function (data, callback) {
 
-        Category.findOne({"_id": data.id}, function(err, category){
+        Category.findOne({"_id": data.id}, function (err, category) {
             if (err) {
                 throw err;
             }
-            if (category != null ){
+            if (category != null) {
                 // Нашли такой ID, создаем дату для записи в БД.
                 var update = {
-                    "name"     : data.newName
+                    "name": data.newName
                 };
                 //Пишем в БД к ID из запроса
-                Category.update({"_id": data.id }, {$set: update},function (err, updated) {
+                Category.update({"_id": data.id}, {$set: update}, function (err, updated) {
                     if (err) {
                         console.log("not updated", err);
                     }
@@ -70,12 +70,12 @@ module.exports = {
                     // Execute callback passed from route
                 });
             }
-            console.log("find err",err);
+            console.log("find err", err);
             callback(err);
         });
     },
     removeSchoolCategory: function (data, callback) {
-        Category.remove({"_id": data}, function(err, category) {
+        Category.remove({"_id": data}, function (err, category) {
 
             if (err) {
                 throw err;
@@ -83,7 +83,7 @@ module.exports = {
 
             if (category != null) {
 
-                Category.find("", function(err, category) {
+                Category.find("", function (err, category) {
 
                     if (err) {
                         throw err;
@@ -98,8 +98,8 @@ module.exports = {
             }
         });
     },
-    findAllVersion: function(callback){
-        Version.find("", function(err, version) {
+    findAllVersion: function (callback) {
+        Version.find("", function (err, version) {
             console.log(version);
             if (err) {
                 throw err;
@@ -113,7 +113,7 @@ module.exports = {
     createVersion: function (data, callback) {
         Version.findOne({"version_apk": data.version}, function (err, category) {
             if (err) {
-                callback(null,err);
+                callback(null, err);
             }
             if (category == null) {
                 var newVersion = new Category({
@@ -144,7 +144,7 @@ module.exports = {
         })
     },
     removeVersion: function (data, callback) {
-        Version.remove({"_id": data}, function(err, category) {
+        Version.remove({"_id": data}, function (err, category) {
 
             if (err) {
                 throw err;
@@ -152,7 +152,7 @@ module.exports = {
 
             if (category != null) {
 
-                Category.find("", function(err, category) {
+                Category.find("", function (err, category) {
 
                     if (err) {
                         throw err;

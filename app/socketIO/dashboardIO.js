@@ -21,7 +21,7 @@ module.exports = function (server) {
             }
             io.emit('displayData', Devices);
         });
-        
+
         user.findCategory(function (err, categories) {
             if (err) {
                 console.log(err);
@@ -38,13 +38,13 @@ module.exports = function (server) {
 
         // Запрос устройств на страницу по колличеству
         socket.on('getDevicesByParams', function (params) {
-                console.log(params, "getDevicesByParams");
+                //console.log(params, "getDevicesByParams");
                 user.getDevice(function (err, Devices) {
                     if (err) {
                         console.log(err);
                     }
                     io.emit('displayData', Devices);
-                }, params);
+                },params);
             }
         );
         // Создаем категорию

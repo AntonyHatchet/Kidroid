@@ -5,6 +5,8 @@
 var users = require('./routes/users');
 var devices = require("./routes/device");
 var ApkReader = require('node-apk-parser');
+var util = require('util');
+
 
 module.exports = function (app, passport) {
 
@@ -26,15 +28,19 @@ module.exports = function (app, passport) {
         failureFlash: true // allow flash messages
     }));
 
-    app.get('/dashboard', isLoggedIn, function(req,res){
-            res.render('dashboard.jade');
+    app.get('/dashboard', isLoggedIn, function (req, res) {
+        res.render('dashboard.jade');
     });
     app.post('/createDevice', isLoggedIn, users.createDevice);
-    app.post('/uploadFile', isLoggedIn, function(req,res){
-        console.log(req.files);
+    app.post('/uploadFile', isLoggedIn, function (req, res) {
+
         var reader = ApkReader.readFile(req.files.category.path);
         var manifest = reader.readManifestSync();
-        console.log(reader,"manifest")
+        manifest.inspect = function(depth) {
+            return this.versionCode ;
+        };
+        console.log(util.inspect(manifest));
+
     });
 
     // =====================================

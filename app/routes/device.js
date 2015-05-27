@@ -3,18 +3,19 @@ module.exports = {
 //Регистрация девайса
     getRegistrationDevice: function (req, res) {
 
-        deviceMagic.regDevice({id: req.body.id}, function (err,next) {
+        deviceMagic.regDevice({id: req.body.id}, function (err, next) {
 
             if (err) {
-                console.log("not correct ID",err);
+                console.log("not correct ID", err);
             }
-            if (next === null){
-                res.json({"error":"wrong ID"});}
+            if (next === null) {
+                res.json({"error": "wrong ID"});
+            }
 
-            deviceMagic.registrDevice(req.body, function (err,token) {
+            deviceMagic.registrDevice(req.body, function (err, token) {
 
                 if (err) {
-                    console.log("registr err",err);
+                    console.log("registr err", err);
                 }
                 if (token != null) {
                     console.log("res token", token);
@@ -26,17 +27,17 @@ module.exports = {
     },
 //Авторизация планшета по ИД и токену
     getAuthorizationDevice: function (req, res, next) {
-        console.log(req.body,"req body");
-        var id = !req.param.id ? req.body.device_id:req.params.id;
-        var token = !req.param.token ? req.body.token:req.params.token;
-        deviceMagic.authDevice({id: id, token: token}, function (err,callback) {
+        console.log(req.body, "req body");
+        var id = !req.param.id ? req.body.device_id : req.params.id;
+        var token = !req.param.token ? req.body.token : req.params.token;
+        deviceMagic.authDevice({id: id, token: token}, function (err, callback) {
 
             if (err) {
                 console.log(err);
             }
-            if (callback === null){
+            if (callback === null) {
                 console.log(callback);
-               return res.json({"error":"Wrong ID"});
+                return res.json({"error": "Wrong ID"});
             }
 
             return next();
@@ -84,7 +85,7 @@ module.exports = {
             if (err) {
                 console.log(err);
             }
-            res.json({update_required: false, version: 0, link: null });
+            res.json({update_required: false, version: 0, link: null});
         });
     }
 };

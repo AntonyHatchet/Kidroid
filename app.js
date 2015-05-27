@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-//var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -9,8 +8,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
-var multer  = require('multer');
-
+var multer = require('multer');
 
 mongoose.connect(dbConfig.url);
 
@@ -24,10 +22,7 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(multer({
-    dest: './public/uploads/',
-    rename: function (fieldname,filename) {
-        return filename.toLowerCase()
-    }
+    dest: './public/uploads/'
 }));
 app.use(logger('dev'));
 app.use(bodyParser.json());

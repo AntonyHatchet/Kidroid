@@ -41,13 +41,13 @@ module.exports = {
         });
     },
     // Запускаем поиск устройств c параметрами
-    getDevice: function (callback) {
+    getDevice: function (callback,params) {
         deviceMagic.getDevice(function (err, Devices) {
             if (err) {
                 console.log(err);
             }
             callback(null, Devices);
-        });
+        },params);
     },
     //Создаем запросы к БД на добавление устройств
     createDevice: function (req, res) {
@@ -75,7 +75,10 @@ module.exports = {
                 )
             }
         }
-        setTimeout(function(){res.redirect("/dashboard")}, 2000);
+
+        setTimeout(function () {
+            res.redirect("/dashboard")
+        }, 2000);
     },
 
     //КАТЕГОРИИ

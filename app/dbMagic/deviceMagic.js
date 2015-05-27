@@ -9,20 +9,19 @@ module.exports = {
         var query = Device.count();
         query.exec(function (err, Devices) {
             // Execute callback
-            console.log(Devices);
             callback(null, Devices);
         });
     },
     //Поиск устройств согласно запросам
-    getDevice: function (callback,name,status,school,version) {
-
+    getDevice: function (callback,params) {
+        console.log(params);
         var query = {};
-
-        query.device_id = (!name)?{$exists:true}:{$gt:name};
-        query.registered = (!status)?{$exists:true}:status;
-        query.school = (!school)?{$exists:true}:school;
-        query.apk_version = (!version)?{$exists:true}:version;
-
+        if (params!=undefined) {
+            query.device_id = (!params.id) ? {$exists: true} : {$gte: params.id};
+            query.registered = (!params.status) ? {$exists: true} : params.status;
+            query.school = (!params.category) ? {$exists: true} : params.category;
+            query.apk_version = (!params.version) ? {$exists: true} : params.version;
+        }
         query = Device.find(query).limit(10);
         query.exec(function (err, Devices) {
             // Execute callback
@@ -44,7 +43,11 @@ module.exports = {
     //Авторизация планшета
     authDevice: function (deviceInfo, callback) {
         var device = Device;
-        device.findOne({"device_id": deviceInfo.id, "token": deviceInfo.token, "registered":true}, function (err, device) {
+        device.findOne({
+            "device_id": deviceInfo.id,
+            "token": deviceInfo.token,
+            "registered": true
+        }, function (err, device) {
             if (err) return console.log(err);
             callback(null, device);
         });
@@ -64,11 +67,11 @@ module.exports = {
     //Сохраняем дату от девайса
     saveDevice: function (deviceInfo, callback) {
         var newDevice = new Device({
-                school      : deviceInfo.school,
-                timestamp   : deviceInfo.timestamp,
-                device_id   : deviceInfo.deviceID,
-                registered  : deviceInfo.registered,
-                apk_version : deviceInfo.apk
+            school: deviceInfo.school,
+            timestamp: deviceInfo.timestamp,
+            device_id: deviceInfo.deviceID,
+            registered: deviceInfo.registered,
+            apk_version: deviceInfo.apk
 
         });
         newDevice.save(function (err) {
@@ -81,24 +84,25 @@ module.exports = {
     },
 
     registrDevice: function (deviceInfo, callback) {
-        Device.findOne({"device_id": deviceInfo.id,"registered":false}, function(err, device){
+        Device.findOne({"device_id": deviceInfo.id, "registered": false}, function (err, device) {
             if (err) {
                 throw err;
             }
-            if (device != null ){
+            if (device != null) {
                 var token = Math.random().toString(36).substr(13);
                 var update = {
-                    "timestamp" : new Date(),
-                    "token"     : token,
+                    "timestamp": new Date(),
+                    "token": token,
                     "registered": true
                 };
                 Device.update({"device_id": deviceInfo.id}, {$set: update}, {upsert: true}, function (err, updated) {
                     if (err) {
                         console.log("not updated", err);
                     }
-                    if (updated != null ){
-                    // Execute callback passed from route
-                    callback(null,token)}
+                    if (updated != null) {
+                        // Execute callback passed from route
+                        callback(null, token)
+                    }
                 });
             }
         });
@@ -107,20 +111,20 @@ module.exports = {
     updateDevice: function (deviceInfo, callback) {
         //Поиск в БД, ID полученного из запроса
         console.log(deviceInfo.device_id);
-        Device.findOne({"device_id": deviceInfo.device_id}, function(err, device){
+        Device.findOne({"device_id": deviceInfo.device_id}, function (err, device) {
             if (err) {
                 throw err;
             }
-            if (device != null ){
+            if (device != null) {
                 // Нашли такой ID, создаем дату для записи в БД.
                 var update = {
-                        "timestamp"     : new Date(),
-                        "latitude"      : [deviceInfo.latitude],
-                        "longitude"     : [deviceInfo.longitude],
-                        "loader_version": deviceInfo.loader_version
+                    "timestamp": new Date(),
+                    "latitude": [deviceInfo.latitude],
+                    "longitude": [deviceInfo.longitude],
+                    "loader_version": deviceInfo.loader_version
                 };
                 //Пишем в БД к ID из запроса
-                Device.update({"device_id": deviceInfo.device_id }, {$set: update},{ upsert: true }, function (err, updated) {
+                Device.update({"device_id": deviceInfo.device_id}, {$set: update}, {upsert: true}, function (err, updated) {
                     if (err) {
                         console.log("not updated", err);
                     }
@@ -128,7 +132,7 @@ module.exports = {
                     // Execute callback passed from route
                 });
             }
-            console.log("find err",err);
+            console.log("find err", err);
             callback(err);
         });
 
