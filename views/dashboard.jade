@@ -10,14 +10,14 @@ block content
             #username
 
 
-
+    #tab
+        ul(class='tabs')
+            li(class='tab-link current' data-tab='devices') Devices
+            li(class='tab-link' data-tab='tab-2' onclick="socket.emit('getDevicesByCount',50)") Users
+            li(class='tab-link' data-tab='filters') Filters
+            li(class='tab-link' data-tab='settings') Settings
     #conteiner
-        #tab
-            ul(class='tabs')
-                li(class='tab-link current' data-tab='devices') Devices
-                li(class='tab-link' data-tab='tab-2' onclick="socket.emit('getDevicesByCount',50)") Users
-                li(class='tab-link' data-tab='filters') Filters
-                li(class='tab-link' data-tab='settings') Settings
+
 
 
         #maps
