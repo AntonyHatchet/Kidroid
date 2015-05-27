@@ -7,14 +7,15 @@ var Version = require('../models/apk_models');
 
 module.exports = {
     findAllUsers: function (callback) {
-        User.find("",{"name":1}, function (err, category) {
+        User.find("",{"local.name":1}, function (err, data) {
 
             if (err) {
                 throw err;
             }
 
-            if (category != null) {
-                callback(null, category)
+            if (data != null) {
+                console.log(data);
+                callback(null, data)
             }
         });
     },
