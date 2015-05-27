@@ -37,5 +37,11 @@ function page(i) {
     device.version = $("#selectVersion").val();
     device.page = i*10-10;
     socket.emit('getDevicesByParams', device);
-    console.log(device);
+};
+function addDevice() {
+    var device = {};
+    device.category = $("#addSelectCategory").val();
+    device.version = $("#addSelectVersion").val();
+    device.numberDevise = $("#amountDevice").val();
+    socket.emit('createDevice', device);
 };

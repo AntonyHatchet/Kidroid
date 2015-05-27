@@ -62,7 +62,7 @@ block content
             a(class='overlay', id='add', href='#x')
             .popap-add
                 p Add new device
-                form(method='post' action='/createDevice')
+                form
                     p School
                     select(id="addSelectCategory")
                     br
@@ -70,10 +70,10 @@ block content
                     select(id="addSelectVersion")
                     br
                     p Amount
-                    input(type="number", name='number' min="1" value='1')
+                    input(id='amountDevice' type="number", name='number' min="1" value='1')
 
                     br
-                    button(type='submit') Add
+                    button(onclick='addDevice') Add
                 a(class='close-add' href='#close-add')
 
 
