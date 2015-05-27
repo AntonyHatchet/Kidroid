@@ -16,14 +16,17 @@ $(document).ready(function(){
 });
 function createNewCategory(){
     var nameCategory = $("#newCategory").val();
-    socket.emit('createCategory',{name:"" + nameCategory + ""})
+    socket.emit('createCategory',{name:nameCategory});
     //console.log(nameCategory);
 }
+
 function Find(){
-    var DeviceNameIDSerial = $("#DeviceNameIDSerial").val();
-    var selectStatus = $("#selectStatus").val();
-    var selectCategory = $("#selectCategory").val();
-    var selectVersion = $("#selectVersion").val();
-    socket.emit('getDevicesByParams',{name:"" + DeviceNameIDSerial + "", status: "" + selectStatus + "", category:"" + selectCategory + "", version:"" + selectVersion + ""})
+    console.log("find ");
+    var device = {};
+    device.DeviceNameIDSerial = $("#DeviceNameIDSerial").val();
+    device.selectStatus = $("#selectStatus").val();
+    device.selectCategory = $("#selectCategory").val();
+    device.selectVersion = $("#selectVersion").val();
+    socket.emit('getDevicesByParams',device);
     //console.log(DeviceNameIDSerial);
 }

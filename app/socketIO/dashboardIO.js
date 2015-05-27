@@ -37,8 +37,8 @@ module.exports = function (server) {
         });
 
         // «апрос устройств на страницу по колличеству
-        socket.on('getDevices', function (params) {
-
+        socket.on('getDevicesByParams', function (params) {
+                console.log(params, "getDevicesByParams");
                 user.getDevice(function (err, Devices) {
                     if (err) {
                         console.log(err);
