@@ -20,10 +20,11 @@ function createNewCategory(){
     console.log(nameCategory);
 };
 function find(){
-    var DeviceNameIDSerial = $("#DeviceNameIDSerial").val();
-    var selectStatus = $("#selectStatus").val();
-    var selectCategory = $("#selectCategory").val();
-    var selectVersion = $("#selectVersion").val();
-    socket.emit('getDevicesByParams',{name:"" + DeviceNameIDSerial + "", status: "" + selectStatus + "", category:"" + selectCategory + "", version:"" + selectVersion + ""})
-    console.log(DeviceNameIDSerial, selectStatus, selectCategory, selectVersion);
+    var device = {};
+    device.DeviceNameIDSerial = $("#DeviceNameIDSerial").val();
+    device.selectStatus = $("#selectStatus").val();
+    device.selectCategory = $("#selectCategory").val();
+    device.selectVersion = $("#selectVersion").val();
+    socket.emit('getDevicesByParams',{device})
+    console.log(device);
 }
