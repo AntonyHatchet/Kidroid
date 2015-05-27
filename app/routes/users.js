@@ -68,10 +68,10 @@ module.exports = {
         },params);
     },
     //Создаем запросы к БД на добавление устройств
-    createDevice: function (req, res) {
+    createDevice: function (params, callback) {
         uploader(0);
         function uploader(i) {
-            if (i < req.body.number) {
+            if (i < params.numberDevice) {
                 deviceMagic.createDeviceId(function (err, id) {
                         if (err) {
                             console.log(err, "id get errr")
@@ -79,8 +79,8 @@ module.exports = {
                         deviceMagic.saveDevice({
                                 timestamp: new Date(),
                                 deviceID: id,
-                                school: req.body.school,
-                                update: req.body.apk,
+                                school: params.category,
+                                update: params.version,
                                 registered: false
                             },
                             function (err) {
@@ -93,10 +93,6 @@ module.exports = {
                 )
             }
         }
-
-        setTimeout(function () {
-            res.redirect("/dashboard")
-        }, 2000);
     },
 
     //КАТЕГОРИИ

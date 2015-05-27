@@ -32,7 +32,6 @@ module.exports = function (app, passport) {
     app.get('/dashboard', isLoggedIn, function (req, res) {
         res.render('dashboard.jade');
     });
-    app.post('/createDevice', isLoggedIn, users.createDevice);
     app.post('/uploadFile', isLoggedIn, function (req, res, next) {
 
         var reader = ApkReader.readFile(req.files.category.path);

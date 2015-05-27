@@ -86,8 +86,8 @@ module.exports = function (server) {
             }
         );
         socket.on('createDevice', function (paramsDevice) {
-
-                user.createCategory(paramsDevice, function (err, params) {
+                console.log(paramsDevice);
+                user.createDevice(paramsDevice, function (err, params) {
                     if (err) {
                         console.log(err);
                     }

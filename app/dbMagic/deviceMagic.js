@@ -17,12 +17,14 @@ module.exports = {
         //console.log(params);
         var query = {};
         if (params!=undefined) {
-            query.device_id = (!params.id) ? {$exists: true} : {$gte: params.id};
+
+            query.device_id = (!params.id) ? {$exists: true} : {$gte:+params.id};
             query.registered = (!params.status) ? {$exists: true} : params.status;
             query.school = (!params.category) ? {$exists: true} : params.category;
             query.apk_version = (!params.version) ? {$exists: true} : params.version;
         }
-        query = Device.find(query).limit(10);
+        console.log(query);
+        query = Device.find(query).limit(10).sort({device_id:1});
         query.exec(function (err, Devices) {
             // Execute callback
             callback(null, Devices);
@@ -71,7 +73,8 @@ module.exports = {
             timestamp: deviceInfo.timestamp,
             device_id: deviceInfo.deviceID,
             registered: deviceInfo.registered,
-            apk_to_update: deviceInfo.update
+            apk_to_update: deviceInfo.update,
+            apk_version: 0
 
         });
         newDevice.save(function (err) {

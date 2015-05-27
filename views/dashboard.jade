@@ -35,7 +35,7 @@ block content
         #devices(class='tab-content current')
             #filter
                 form(class='form-search')
-                    input(type="text" id="DeviceNameIDSerial" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial' onclick="find()")
+                    input(type="text" id="DeviceNameIDSerial" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial' onkeyup="find()")
                     select(id='selectStatus' onchange="find()")
                         option()
                         option(value='0') Ofline
@@ -74,7 +74,7 @@ block content
                     input(id='amountDevice' type="number", name='number' min="1" value='1')
 
                     br
-                    button(onclick='addDevice()') Add
+                    button(type="button" onclick='addDevice()') Add
                 a(class='close-add' href='#close-add')
 
 

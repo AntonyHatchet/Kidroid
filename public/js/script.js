@@ -42,7 +42,7 @@ function addDevice() {
     var device = {};
     device.category = $("#addSelectCategory").val();
     device.version = $("#addSelectVersion").val();
-    device.numberDevise = $("#amountDevice").val();
+    device.numberDevice = $("#amountDevice").val();
     socket.emit('createDevice', device);
     console.log(device);
 };
