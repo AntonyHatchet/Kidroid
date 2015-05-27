@@ -17,13 +17,13 @@ $(document).ready(function(){
 function createNewCategory(){
     var nameCategory = $("#newCategory").val();
     socket.emit('createCategory',{name:"" + nameCategory + ""})
-    //console.log(nameCategory);
-}
+    console.log(nameCategory);
+};
 function find(){
     var DeviceNameIDSerial = $("#DeviceNameIDSerial").val();
     var selectStatus = $("#selectStatus").val();
     var selectCategory = $("#selectCategory").val();
     var selectVersion = $("#selectVersion").val();
     socket.emit('getDevicesByParams',{name:"" + DeviceNameIDSerial + "", status: "" + selectStatus + "", category:"" + selectCategory + "", version:"" + selectVersion + ""})
-    //console.log(DeviceNameIDSerial);
+    console.log(DeviceNameIDSerial, selectStatus, selectCategory, selectVersion);
 }
