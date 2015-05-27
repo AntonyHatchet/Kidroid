@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  /*padding: 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -10,6 +10,29 @@ a {
   border: 1px solid #777777;
   padding: 10px;
   margin-left: 150px;
+  width: 60%;
+}
+#conteiner{
+  /*padding: 50px;*/
+}
+#usermenu{
+  text-align: right;
+  padding-right: 20px;
+  color: #fff;
+}
+#maps {
+  height: 350px;
+  width: 30%;
+  float: right;
+}
+#map button{
+  margin-top: 280px ;
+}
+#header{
+  background: #408EBA;
+  width: 100%;
+  height: 70px;
+  margin-bottom:20px ;
 }
 /*==============TABS===================*/
 #tab {
@@ -154,10 +177,7 @@ ul.tabs li.current{
   height: 20px;
   background: #ff0000;
 }
-#map { height: 250px; width: 250px; }
-#map button{
-  margin-top: 280px ;
-}
+
 .no-show{
   display: none;
 }

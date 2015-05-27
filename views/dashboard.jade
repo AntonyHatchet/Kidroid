@@ -4,86 +4,35 @@ extends layout
 block content
    //#{devices}
    //#{devices._id.device_id}
-   #tab
-      ul(class='tabs')
-         li(class='tab-link current' data-tab='devices') Devices
-         li(class='tab-link' data-tab='tab-2' onclick="socket.emit('getDevicesByCount',50)") Users
-         li(class='tab-link' data-tab='filters') Filters
-         li(class='tab-link' data-tab='settings') Settings
+   #header
+      #logo
+      #usermenu
+         #username(class='btn-group')
+            button(class="btn dropdown-toggle" data-toggle="dropdown") user Name
+               span(class='caret')
+            ul(class='dropdown-menu')
+               li
+                  a(href="#") Profile
+               li
+                  a(href="#") Setting
+               li(class="divider")
+               li
+                  a(href="#") Logout
 
 
 
-   #devices(class='tab-content current')
-      #filter
-         form(class='form-search')
-            input(type="text" id="DeviceNameIDSerial" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial' keyup="Find()")
-            select(id='selectStatus')
-               option()
-               option(value='0' onclick="Find()") Ofline
-               option(value='1' onclick="Find()") Online
-            select(id="selectCategory")
-            select(id="selectVersion")
+   #conteiner
+      #tab
+         ul(class='tabs')
+            li(class='tab-link current' data-tab='devices') Devices
+            li(class='tab-link' data-tab='tab-2' onclick="socket.emit('getDevicesByCount',50)") Users
+            li(class='tab-link' data-tab='filters') Filters
+            li(class='tab-link' data-tab='settings') Settings
 
 
-      #add-device
-         a(href='#add')
-            button(class='btn btn-primary') add new device
-
-      table(class='table table-hover table-bordered' id='paged')
-         thead(id='target')
-            tr
-               th id
-               th registered
-               th school
-               th apk_version
-               th map
-
-         tbody(id='userTable')
-      div(id='pagination' class='pagination pagination-centered')
-      a(class='overlay', id='add', href='#x')
-      .popap-add
-         p Add new device
-         form(method='post' action='/createDevice')
-            p School
-            select(name='school')
-               option(placeholder='first') school &#8470;1
-               option(placeholder='second') school &#8470;2
-               option(placeholder='third') school &#8470;3
-               option(placeholder='fourth') school &#8470;4
-               option(placeholder='fifth') school &#8470;5
-            br
-            p Version
-            input(type="number", name='apk' min="1" value='200')
-            br
-            p Amount
-            input(type="number", name='number' min="1" value='1')
-
-            br
-            button(type='submit') Add
-         a(class='close-add' href='#close-add')
-
-
-
-         a(class='close-add' href='#close-add')
-
-         //a(class='overlay', id='map', href='#x')
-         //.popap-add
-         //   #id='map'
-         //      script(src="/map/map.js")
-         //   a(class='close-add' href='#close-add')
-      script.
-         function showmap(i,j){
-               mark.setLatLng(L.latLng(i,j)).update()
-               .bindPopup('“ÛÚ')
-                  .openPopup();
-                  document.getElementById('map').classList.add('show');
-            //console.log (i,j,map)
-                  }
-
-
-      #map(class='no-show')
+      #maps
          script.
-            var map = L.map('map').setView([55.7422, 37.5719], 12);
+            var map = L.map('maps').setView([55.7422, 37.5719], 1);
             // add an OpenStreetMap tile layer
             L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -93,40 +42,120 @@ block content
             mark.addTo(map)
                     .bindPopup('“ÛÚ')
                     .openPopup();
-         button(onclick='closwmap()') close
-
-      script(src="/js/socketTableData.js")
-
-   #filters(class='tab-content')
-      #add-category
-         a(href='#createCategory')
-            button(class='btn btn-primary') add new category...
-      table(class='table table-hover table-bordered')
-         thead
-            tr
-               th(colspan='2') Category name
-         tbody(id='tableFilter')
+      #devices(class='tab-content current')
+         #filter
+            form(class='form-search')
+               input(type="text" id="DeviceNameIDSerial" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial' keyup="Find()")
+               select(id='selectStatus')
+                  option()
+                  option(value='0' onclick="Find()") Ofline
+                  option(value='1' onclick="Find()") Online
+               select(id="selectCategory")
+               select(id="selectVersion")
 
 
-      a(class='overlay', id='createCategory', href='#x')
-      .popap-add
-         p Add new category:
-         form(action='/createDevice')
+         #add-device
+            a(href='#add')
+               button(class='btn btn-primary') add new device
 
-             input(type="input" id="newCategory" name='category')
-             button(type="button" onclick="createNewCategory()") Add
-         p Add new Apk version:
-         form(method="post" action='/uploadFile' enctype="multipart/form-data")
+         table(class='table table-hover table-bordered' id='paged')
+            thead(id='target')
+               tr
+                  th id
+                  th registered
+                  th school
+                  th apk_version
+                  th map
 
-            input(type="file", name='category' value='')
-            button( type="submit") Add
-         a(class='close-add' href='#close-add')
+            tbody(id='userTable')
+         div(id='pagination' class='pagination pagination-centered')
+         a(class='overlay', id='add', href='#x')
+         .popap-add
+            p Add new device
+            form(method='post' action='/createDevice')
+               p School
+               select(name='school')
+                  option(placeholder='first') school &#8470;1
+                  option(placeholder='second') school &#8470;2
+                  option(placeholder='third') school &#8470;3
+                  option(placeholder='fourth') school &#8470;4
+                  option(placeholder='fifth') school &#8470;5
+               br
+               p Version
+               input(type="number", name='apk' min="1" value='200')
+               br
+               p Amount
+               input(type="number", name='number' min="1" value='1')
 
-      a(class='overlay', id='editCategory', href='#x')
-      .popap-add
-         p Edit category:
-         form
-            input(type="input" name='category')
-            //button( type="button" onclick="socket.emit('editCategory')") Edit
+               br
+               button(type='submit') Add
+            a(class='close-add' href='#close-add')
 
-         a(class='close-add' href='#close-add')
+
+
+            a(class='close-add' href='#close-add')
+
+            //a(class='overlay', id='map', href='#x')
+            //.popap-add
+            //   #id='map'
+            //      script(src="/map/map.js")
+            //   a(class='close-add' href='#close-add')
+         script.
+            function showmap(i,j){
+                  mark.setLatLng(L.latLng(i,j)).update()
+                  .bindPopup('“ÛÚ')
+                     .openPopup();
+                     //document.getElementById('maps').classList.add('show');
+               //console.log (i,j,map)
+                     }
+
+
+         //#map(class='no-show')
+            script.
+               var map = L.map('map').setView([55.7422, 37.5719], 12);
+               // add an OpenStreetMap tile layer
+               L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+               }).addTo(map);
+               // add a marker in the given location, attach some popup content to it and open the popup
+               var mark = L.marker([55.7422, 37.5719]);
+               mark.addTo(map)
+                       .bindPopup('“ÛÚ')
+                       .openPopup();
+            button(onclick='closwmap()') close
+
+         script(src="/js/socketTableData.js")
+
+      #filters(class='tab-content')
+         #add-category
+            a(href='#createCategory')
+               button(class='btn btn-primary') add new category...
+         table(class='table table-hover table-bordered')
+            thead
+               tr
+                  th(colspan='2') Category name
+            tbody(id='tableFilter')
+
+
+         a(class='overlay', id='createCategory', href='#x')
+         .popap-add
+            p Add new category:
+            form(action='/createDevice')
+
+                input(type="input" id="newCategory" name='category')
+                button(type="button" onclick="createNewCategory()") Add
+            p Add new Apk version:
+            form(method="post" action='/uploadFile' enctype="multipart/form-data")
+
+               input(type="file", name='category' value='')
+               button( type="submit") Add
+            a(class='close-add' href='#close-add')
+
+         a(class='overlay', id='editCategory', href='#x')
+         .popap-add
+            p Edit category:
+            form
+               input(type="input" name='category')
+               //button( type="button" onclick="socket.emit('editCategory')") Edit
+
+            a(class='close-add' href='#close-add')
