@@ -19,8 +19,11 @@ function createNewCategory(){
     socket.emit('createCategory',{name:"" + nameCategory + ""})
     //console.log(nameCategory);
 }
-function findNameId(){
+function find(){
     var DeviceNameIDSerial = $("#DeviceNameIDSerial").val();
-    socket.emit('getDevicesByName',{name:"" + DeviceNameIDSerial + ""})
+    var selectStatus = $("#selectStatus").val();
+    var selectCategory = $("#selectCategory").val();
+    var selectVersion = $("#selectVersion").val();
+    socket.emit('getDevicesByParams',{name:"" + DeviceNameIDSerial + "", status: "" + selectStatus + "", category:"" + selectCategory + "", version:"" + selectVersion + ""})
     //console.log(DeviceNameIDSerial);
 }

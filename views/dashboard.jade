@@ -16,11 +16,11 @@ block content
    #devices(class='tab-content current')
       #filter
          form(class='form-search')
-            input(type="text" id="DeviceNameIDSerial" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial' keyup="findNameId()")
-            select()
+            input(type="text" id="DeviceNameIDSerial" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial' keyup="Find()")
+            select(id='selectStatus')
                option()
-               option(value='0' onclick="socket.emit('getDevicesByStatus',0)") Ofline
-               option(value='1' onclick="socket.emit('getDevicesByStatus',1)") Online
+               option(value='0' onclick="Find()") Ofline
+               option(value='1' onclick="Find()") Online
             select(id="selectCategory")
             select(id="selectVersion")
 
