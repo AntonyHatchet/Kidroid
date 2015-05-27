@@ -35,7 +35,7 @@ function page(i) {
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
     device.version = $("#selectVersion").val();
-    device.page = i;
+    device.page = i*10;
     socket.emit('getDevicesByParams', device);
     console.log(device);
 };
