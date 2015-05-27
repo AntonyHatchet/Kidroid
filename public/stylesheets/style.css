@@ -1,6 +1,7 @@
 body {
     /*padding: 50px;*/
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background: rgb(236, 240, 245);
 }
 
 a {
@@ -8,14 +9,15 @@ a {
 }
 
 #devices, #filters {
-    border: 1px solid #777777;
+    border-radius: 10px;
     padding: 10px;
     margin-left: 150px;
     width: 60%;
+    background: #fff;
 }
 
 #conteiner {
-    /*padding: 50px;*/
+    padding-right: 20px;
 }
 
 #usermenu {
@@ -40,7 +42,10 @@ a {
     height: 70px;
     margin-bottom: 20px;
 }
-
+#filter{
+    position: relative;
+    float: left;
+}
 /*==============TABS===================*/
 #tab {
     float: left;

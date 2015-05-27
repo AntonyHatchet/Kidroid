@@ -7,17 +7,7 @@ block content
     #header
         #logo
         #usermenu
-            #username(class='btn-group')
-                button(class="btn dropdown-toggle" data-toggle="dropdown") user Name
-                    span(class='caret')
-                ul(class='dropdown-menu')
-                    li
-                        a(href="#") Profile
-                    li
-                        a(href="#") Setting
-                    li(class="divider")
-                    li
-                        a(href="#") Logout
+            #username() UserName
 
 
 
@@ -74,15 +64,10 @@ block content
                 p Add new device
                 form(method='post' action='/createDevice')
                     p School
-                    select(name='school')
-                        option(placeholder='first') school &#8470;1
-                        option(placeholder='second') school &#8470;2
-                        option(placeholder='third') school &#8470;3
-                        option(placeholder='fourth') school &#8470;4
-                        option(placeholder='fifth') school &#8470;5
+                    select(id="addSelectCategory")
                     br
                     p Version
-                    input(type="number", name='apk' min="1" value='200')
+                    select(id="addSelectVersion")
                     br
                     p Amount
                     input(type="number", name='number' min="1" value='1')

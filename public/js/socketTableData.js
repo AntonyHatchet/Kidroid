@@ -31,7 +31,7 @@ socket.on('category', function (date) {
     for (var i = 0; i < date.length; i++) {
         html += "<option>" + date[i].name + "</option>";
     }
-    $("#selectCategory").html(html);
+    $("#selectCategory, #addSelectCategory").html(html);
 });
 
 socket.on('version', function (date) {
@@ -40,7 +40,7 @@ socket.on('version', function (date) {
     for (var i = 0; i < date.length; i++) {
         html += "<option>" + date[i].version_apk + "</option>";
     }
-    $("#selectVersion").html(html);
+    $("#selectVersion, #addSelectVersion").html(html);
 });
 
 socket.on('error', function (date) {
