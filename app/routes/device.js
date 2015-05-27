@@ -1,4 +1,5 @@
 var deviceMagic = require('../dbMagic/deviceMagic');
+var user = require('../routes/users.js');
 module.exports = {
 //Регистрация девайса
     getRegistrationDevice: function (req, res) {
@@ -27,7 +28,7 @@ module.exports = {
     },
 //Авторизация планшета по ИД и токену
     getAuthorizationDevice: function (req, res, next) {
-        console.log(req.body, "req body");
+        console.log(req.body, "Authorization Data");
         var id = !req.param.id ? req.body.device_id : req.params.id;
         var token = !req.param.token ? req.body.token : req.params.token;
         deviceMagic.authDevice({id: id, token: token}, function (err, callback) {
@@ -36,7 +37,6 @@ module.exports = {
                 console.log(err);
             }
             if (callback === null) {
-                console.log(callback);
                 return res.json({"error": "Wrong ID"});
             }
 
@@ -51,13 +51,18 @@ module.exports = {
             if (err) {
                 console.log(err);
             }
-            if (device.apk_version == req.body.apk_version) {
+            if (device.apk_to_update == req.body.apk_version) {
                 console.log("Same version - ", device.apk_version);
                 next();
             }
             else {
-                console.log("Different version");
-                res.json({"apk_version": device.apk_version});
+                user.findLink(device.apk_to_update,function(callback){
+                    console.log("Different version", callback);
+                    if (err) {
+                        console.log(err);
+                    }
+                    res.json({update_required: true, version: device.apk_to_update, link: callback});
+                })
             }
 
         });
@@ -68,13 +73,17 @@ module.exports = {
             if (err) {
                 console.log(err);
             }
-            if (device.apk_version === req.params.apk_version) {
+            if (device.apk_to_update === req.params.apk_version) {
                 console.log("Same version - ", device.apk_version);
                 next();
             }
             else {
-                console.log("Different version");
-                res.json({"UPDATE_AVAILABLE": 1});
+                user.findLink(device.apk_to_update,function(callback){
+                    if (err) {
+                        console.log(err);
+                    }
+                    res.json({update_required: true, version: device.apk_to_update, link: callback});
+                })
             }
 
         });

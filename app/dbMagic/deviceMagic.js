@@ -14,7 +14,7 @@ module.exports = {
     },
     //Поиск устройств согласно запросам
     getDevice: function (callback,params) {
-        console.log(params);
+        //console.log(params);
         var query = {};
         if (params!=undefined) {
             query.device_id = (!params.id) ? {$exists: true} : {$gte: params.id};
@@ -58,7 +58,7 @@ module.exports = {
         console.log("deviceInfo", deviceInfo);
         device.findOne({"device_id": deviceInfo.id}, {
             "_id": 1,
-            "apk_version": 1
+            "apk_to_update": 1
         }, function (err, device) {
             if (err) return console.log(err);
             callback(null, device);
@@ -71,7 +71,7 @@ module.exports = {
             timestamp: deviceInfo.timestamp,
             device_id: deviceInfo.deviceID,
             registered: deviceInfo.registered,
-            apk_version: deviceInfo.apk
+            apk_to_update: deviceInfo.update
 
         });
         newDevice.save(function (err) {
@@ -110,7 +110,7 @@ module.exports = {
 
     updateDevice: function (deviceInfo, callback) {
         //Поиск в БД, ID полученного из запроса
-        console.log(deviceInfo.device_id);
+        console.log(deviceInfo.device_id,"update Device");
         Device.findOne({"device_id": deviceInfo.device_id}, function (err, device) {
             if (err) {
                 throw err;
@@ -121,7 +121,8 @@ module.exports = {
                     "timestamp": new Date(),
                     "latitude": [deviceInfo.latitude],
                     "longitude": [deviceInfo.longitude],
-                    "loader_version": deviceInfo.loader_version
+                    "loader_version": deviceInfo.loader_version,
+                    "apk_version": deviceInfo.apk_version
                 };
                 //Пишем в БД к ID из запроса
                 Device.update({"device_id": deviceInfo.device_id}, {$set: update}, {upsert: true}, function (err, updated) {

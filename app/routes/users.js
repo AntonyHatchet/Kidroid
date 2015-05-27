@@ -40,6 +40,14 @@ module.exports = {
             callback(null, version);
         });
     },
+    findLink: function (version,callback) {
+        userMagic.findLink(version,function (err, link) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, link);
+        });
+    },
     // УСТРОЙСТВА
     // Выводим общее количество устройств
     getAllDeviceQuantity: function (callback) {
@@ -72,7 +80,7 @@ module.exports = {
                                 timestamp: new Date(),
                                 deviceID: id,
                                 school: req.body.school,
-                                apk: req.body.apk,
+                                update: req.body.apk,
                                 registered: false
                             },
                             function (err) {

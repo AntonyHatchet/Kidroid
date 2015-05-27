@@ -50,8 +50,7 @@ module.exports = function (app, passport) {
             if (callback == false) {
                 res.redirect('back');
             }
-            console.log("version "+ apk + " uploaded");
-            res.end();
+            res.render('dashboard.jade');
         });
     });
 

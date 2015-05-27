@@ -31,7 +31,7 @@ module.exports = {
         });
     },
     createSchoolCategory: function (data, callback) {
-        console.log(data.name);
+        //console.log(data.name);
         Category.findOne({"name": data.name}, function (err, category) {
             if (err) {
                 callback(null, err);
@@ -112,13 +112,25 @@ module.exports = {
     },
     findAllVersion: function (callback) {
         Version.find("", function (err, version) {
-            console.log(version);
+            //console.log(version);
             if (err) {
                 throw err;
             }
 
             if (version != null) {
                 callback(null, version)
+            }
+        });
+    },
+    findLink: function (version,callback) {
+        Version.find({'version_apk':version},{"_id":0,"link":1}, function (err, data) {
+            console.log(data,"Link data");
+            if (err) {
+                throw err;
+            }
+
+            if (data != null) {
+                callback(null, data)
             }
         });
     },
