@@ -50,7 +50,7 @@ module.exports = function (app, passport) {
             if (callback == false) {
                 res.redirect('back');
             }
-            res.render('dashboard.jade');
+            res.redirect('back');
         });
     });
 

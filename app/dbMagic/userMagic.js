@@ -143,7 +143,7 @@ module.exports = {
             if (category == null) {
                 var newVersion = new Version({
                     version_apk: data.version,
-                    link: data.link
+                    link: "http://46.101.146.34:3000/" + data.link
                 });
 
                 newVersion.save(function (err) {
