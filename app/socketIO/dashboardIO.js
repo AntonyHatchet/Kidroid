@@ -8,90 +8,101 @@ module.exports = function (server) {
 
     io.on('connection', function (socket) {
 
-        user.getAllDeviceQuantity(function (err, Quantity) {
+        user.getAllDeviceQuantity(function (err, data) {
             if (err) {
                 console.log(err);
             }
-            io.emit('quantity', Quantity);
+            io.emit('quantity', data);
         });
         //Стартовая отправка первых 10 устройств
-        user.getDevice(function (err, Devices) {
+        user.getDevice(function (err, data) {
             if (err) {
                 console.log(err);
             }
-            io.emit('displayData', Devices);
+            io.emit('displayData', data);
         });
 
-        user.findCategory(function (err, categories) {
+        user.findCategory(function (err, data) {
             if (err) {
                 console.log(err);
             }
-            io.emit('category', categories);
+            io.emit('category', data);
         });
 
-        user.findAllVersion(function (err, version) {
+        user.findAllVersion(function (err, data) {
             if (err) {
                 console.log(err);
             }
-            console.log('version',version);
-            io.emit('version', version);
+            console.log('version',data);
+            io.emit('version', data);
         });
-        user.findAllUsers(function (err, version) {
+        user.findAllUsers(function (err, data) {
             if (err) {
                 console.log(err);
             }
-            io.emit('users', version);
+            io.emit('users', data);
         });
 
         // Запрос устройств на страницу по колличеству
         socket.on('getDevicesByParams', function (params) {
                 //console.log(params, "getDevicesByParams");
-                user.getDevice(function (err, Devices) {
+                user.getDevice(function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('displayData', Devices);
+                    io.emit('displayData', callback);
                 },params);
             }
         );
         // Создаем категорию
         socket.on('createCategory', function (categoryName) {
 
-                user.createCategory(categoryName, function (err, category) {
+                user.createCategory(categoryName, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('category', category);
+                    io.emit('category', callback);
                 });
             }
         );
         socket.on('updateCategory', function (categoryParams) {
 
-                user.updateCategory(categoryParams, function (err, category) {
+                user.updateCategory(categoryParams, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('category', category);
+                    io.emit('category', callback);
                 });
             }
         );
         socket.on('removeCategory', function (categoryID) {
 
-                user.removeCategory(categoryID, function (err, category) {
+                user.removeCategory(categoryID, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('category', category);
+                    io.emit('category', callback);
+                });
+            }
+        );
+        socket.on('removeUsers', function (userID) {
+
+                user.removeUsers(userID, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('removeUsers', callback);
                 });
             }
         );
         socket.on('createDevice', function (paramsDevice) {
                 console.log(paramsDevice);
-                user.createDevice(paramsDevice, function (err, params) {
+                user.createDevice(paramsDevice, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('category', params);
+                    console.log(callback,"callback create device");
+                    io.emit('displayData', callback);
                 });
             }
         );

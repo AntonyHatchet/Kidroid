@@ -14,6 +14,14 @@ module.exports = {
             callback(null, data);
         });
     },
+    removeUsers: function (category, callback) {
+        userMagic.removeVersion(category, function (err, category) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, category);
+        });
+    },
     // бепяхх
     createVersion: function (version, callback) {
         userMagic.createVersion(version, function (err, version) {
@@ -87,6 +95,12 @@ module.exports = {
                                 if (err) {
                                     console.log(err);
                                 }
+                                deviceMagic.getDevice(function(err,data){
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                    callback(null,data)
+                                });
                                 uploader(i + 1);
                             })
                     }

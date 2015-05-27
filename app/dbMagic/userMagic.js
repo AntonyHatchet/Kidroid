@@ -18,6 +18,30 @@ module.exports = {
             }
         });
     },
+    removeUsers: function (data, callback) {
+        User.remove({"_id": data}, function (err, category) {
+
+            if (err) {
+                throw err;
+            }
+
+            if (category != null) {
+
+                User.find("", function (err, category) {
+
+                    if (err) {
+                        throw err;
+                    }
+
+                    if (category != null) {
+
+                        callback(null, category)
+
+                    }
+                });
+            }
+        });
+    },
     findAllCategory: function (callback) {
         Category.find("", function (err, category) {
 
@@ -176,7 +200,7 @@ module.exports = {
 
             if (category != null) {
 
-                Category.find("", function (err, category) {
+                Version.find("", function (err, category) {
 
                     if (err) {
                         throw err;
