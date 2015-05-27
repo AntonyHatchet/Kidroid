@@ -6,6 +6,18 @@ var Category = require('../models/category');
 var Version = require('../models/apk_models');
 
 module.exports = {
+    findAllUsers: function (callback) {
+        User.find("",{"name":1}, function (err, category) {
+
+            if (err) {
+                throw err;
+            }
+
+            if (category != null) {
+                callback(null, category)
+            }
+        });
+    },
     findAllCategory: function (callback) {
         Category.find("", function (err, category) {
 
@@ -140,7 +152,7 @@ module.exports = {
                     });
                 });
             }
-            callback(null, category)
+            callback(null, 0)
         })
     },
     removeVersion: function (data, callback) {

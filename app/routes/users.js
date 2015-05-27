@@ -4,6 +4,16 @@ var userMagic = require('../dbMagic/userMagic');
 
 // TODO при рефакторинге перепесиать повторяющиеся функции создания и удаления на одну функцию с указанием типа данных.
 module.exports = {
+    //ПОЛЬЗОВАТЕЛИ
+    //Поиск всех пользователей
+    findAllUsers: function (callback) {
+        userMagic.findAllUsers(function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, data);
+        });
+    },
     // ВЕРСИИ
     createVersion: function (version, callback) {
         userMagic.createVersion(version, function (err, version) {

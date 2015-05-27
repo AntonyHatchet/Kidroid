@@ -42,3 +42,7 @@ socket.on('version', function (date) {
     }
     $("#selectVersion").html(html);
 });
+
+socket.on('error', function (date) {
+    console.log(date,"error");
+});

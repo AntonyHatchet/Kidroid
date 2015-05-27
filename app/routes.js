@@ -6,6 +6,7 @@ var users = require('./routes/users');
 var devices = require("./routes/device");
 var ApkReader = require('node-apk-parser');
 var util = require('util');
+var io = require('./socketIO/dashboardIO');
 
 
 module.exports = function (app, passport) {
@@ -46,9 +47,8 @@ module.exports = function (app, passport) {
             if (err) {
                 console.log(err);
             }
-            if (callback === null) {
-                console.log("callback is " + callback);
-                res.render('dashboard.jade');
+            if (callback == false) {
+                res.redirect('back');
             }
             console.log("version "+ apk + " uploaded");
             res.end();

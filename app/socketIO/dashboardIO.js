@@ -35,6 +35,12 @@ module.exports = function (server) {
             }
             io.emit('version', version);
         });
+        user.findAllUsers(function (err, version) {
+            if (err) {
+                console.log(err);
+            }
+            io.emit('users', version);
+        });
 
         // «апрос устройств на страницу по колличеству
         socket.on('getDevicesByParams', function (params) {
