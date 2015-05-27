@@ -28,7 +28,7 @@ socket.on('category', function (school) {
 
 socket.on('category', function (date) {
     //console.log(date, "category");
-    html = '<option></option>';
+    html = '<option value="" disabled selected>Select school</option>';
     for (var i = 0; i < date.length; i++) {
         html += "<option>" + date[i].name + "</option>";
     }
@@ -37,7 +37,7 @@ socket.on('category', function (date) {
 
 socket.on('version', function (date) {
     //console.log(school,"category");
-    html = '<option></option>';
+    html = '<option value="" disabled selected>Select version</option>';
     for (var i = 0; i < date.length; i++) {
         html += "<option>" + date[i].version_apk + "</option>";
     }

@@ -37,7 +37,7 @@ block content
                 form(class='form-search')
                     input(type="text" id="DeviceNameIDSerial" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial' onkeyup="find()")
                     select(id='selectStatus' onchange="find()")
-                        option()
+                        option(value="" disabled selected) Select status
                         option(value='0') Ofline
                         option(value='1') Online
                     select(id="selectCategory" onchange="find()")
