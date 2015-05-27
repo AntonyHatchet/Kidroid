@@ -74,7 +74,7 @@ module.exports = {
                 console.log(err);
             }
             if (device.apk_to_update === req.params.apk_version) {
-                console.log("Same version - ", device.apk_version);
+                console.log("Same version - ", device.apk_to_update);
                 next();
             }
             else {

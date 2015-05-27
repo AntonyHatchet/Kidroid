@@ -33,6 +33,7 @@ module.exports = function (server) {
             if (err) {
                 console.log(err);
             }
+            console.log('version',version);
             io.emit('version', version);
         });
         user.findAllUsers(function (err, version) {

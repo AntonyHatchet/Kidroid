@@ -38,7 +38,7 @@ socket.on('version', function (date) {
     //console.log(school,"category");
     html = '<option></option>';
     for (var i = 0; i < date.length; i++) {
-        html += "<option>" + date[i].version + "</option>";
+        html += "<option>" + date[i].version_apk + "</option>";
     }
     $("#selectVersion").html(html);
 });

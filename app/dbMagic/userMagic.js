@@ -111,7 +111,7 @@ module.exports = {
         });
     },
     findAllVersion: function (callback) {
-        Version.find("", function (err, version) {
+        Version.find("",{"_id":0,"version_apk":1}, function (err, version) {
             //console.log(version);
             if (err) {
                 throw err;
