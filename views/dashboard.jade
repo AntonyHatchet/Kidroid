@@ -75,12 +75,16 @@ block content
                     br
                     button(type='submit') Add
                 a(class='close-add' href='#close-add')
+
+
+
+                a(class='close-add' href='#close-add')
             script.
                 function showmap(i, j) {
                     mark.setLatLng(L.latLng(i, j)).update()
                             .bindPopup('“ÛÚ')
                             .openPopup();
-
+                }
             script(src="/js/socketTableData.js")
 
         #filters(class='tab-content')
