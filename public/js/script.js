@@ -19,7 +19,7 @@ function createNewCategory(){
     socket.emit('createCategory',{name:"" + nameCategory + ""})
     //console.log(nameCategory);
 }
-function Find(){
+function find(){
     var DeviceNameIDSerial = $("#DeviceNameIDSerial").val();
     var selectStatus = $("#selectStatus").val();
     var selectCategory = $("#selectCategory").val();

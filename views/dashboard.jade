@@ -45,11 +45,11 @@ block content
       #devices(class='tab-content current')
          #filter
             form(class='form-search')
-               input(type="text" id="DeviceNameIDSerial" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial' keyup="Find()")
+               input(type="text" id="DeviceNameIDSerial" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial' keyup="find()")
                select(id='selectStatus')
                   option()
-                  option(value='0' onclick="Find()") Ofline
-                  option(value='1' onclick="Find()") Online
+                  option(value='0' onclick="find()") Ofline
+                  option(value='1' onclick="find()") Online
                select(id="selectCategory")
                select(id="selectVersion")
 

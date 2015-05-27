@@ -29,7 +29,7 @@
             console.log(date,"category");
             html = '<option></option>';
             for (var i=0; i < date.length; i++){
-                html += "<option 'onclick=Find()'>" +date[i].name+ "</option>";
+                html += "<option 'onclick=find()'>" +date[i].name+ "</option>";
             }
             $("#selectCategory").html(html);
         });
@@ -38,7 +38,7 @@
             //console.log(school,"category");
             html = '<option></option>';
             for (var i=0; i < date.length; i++){
-                html += "<option onclick='Find()'>" +date[i].version+ "</option>";
+                html += "<option onclick='find()'>" +date[i].version+ "</option>";
             }
             $("#selectVersion").html(html);
         });
