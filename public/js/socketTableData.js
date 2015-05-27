@@ -6,7 +6,7 @@ socket.on('displayData', function (data) {
     html = '';
     for (i in data)
         html += "<tr><td>" + data[i].device_id + "</td><td>" + data[i].registered + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td><button class='btn' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>show map</button></td><td><button class='btn' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].device_id + "\")\')>delete</button></td></tr>";
-    $("#userTable").html(html);
+    $("#deviceTable").html(html);
 });
 
 socket.on('quantity', function (data) {
@@ -42,6 +42,14 @@ socket.on('version', function (date) {
         html += "<option>" + date[i].version_apk + "</option>";
     }
     $("#selectVersion, #addSelectVersion").html(html);
+});
+
+socket.on('users', function (data) {
+    console.log(data);
+    html = '';
+    for (i in data)
+        html += "<tr><td>" + data[i]._id + "</td><td>" + data[i].name + "</td></tr>";
+    $("#userTable").html(html);
 });
 
 socket.on('error', function (date) {
