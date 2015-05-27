@@ -48,7 +48,7 @@ socket.on('users', function (data) {
     console.log(data);
     html = '';
     for (i in data)
-        html += "<tr><td>" + data[i]._id + "</td><td>" + data[i].name + "</td></tr>";
+        html += "<tr><td>" + data[i]._id + "</td><td>" + data[i].local.name + "</td></tr>";
     $("#userTable").html(html);
 });
 
