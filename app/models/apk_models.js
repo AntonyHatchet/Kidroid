@@ -4,7 +4,7 @@
 var mongoose = require('mongoose');
 
 var ApkSchema = mongoose.Schema({
-    version: Number,
+    version_apk: Number,
     link: String
 });
 

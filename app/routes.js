@@ -32,15 +32,27 @@ module.exports = function (app, passport) {
         res.render('dashboard.jade');
     });
     app.post('/createDevice', isLoggedIn, users.createDevice);
-    app.post('/uploadFile', isLoggedIn, function (req, res) {
+    app.post('/uploadFile', isLoggedIn, function (req, res, next) {
 
         var reader = ApkReader.readFile(req.files.category.path);
         var manifest = reader.readManifestSync();
         manifest.inspect = function(depth) {
             return this.versionCode ;
         };
-        console.log(util.inspect(manifest));
-
+        var apk = {};
+        apk.version = util.inspect(manifest);
+        apk.link = req.files.category.path;
+        users.createVersion(apk, function(err,callback){
+            if (err) {
+                console.log(err);
+            }
+            if (callback === null) {
+                console.log("callback is " + callback);
+                res.render('dashboard.jade');
+            }
+            console.log("version "+ apk + " uploaded");
+            res.end();
+        });
     });
 
     // =====================================

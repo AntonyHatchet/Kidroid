@@ -111,15 +111,15 @@ module.exports = {
         });
     },
     createVersion: function (data, callback) {
+        console.log(data,"version start saving to db");
         Version.findOne({"version_apk": data.version}, function (err, category) {
             if (err) {
                 callback(null, err);
             }
             if (category == null) {
-                var newVersion = new Category({
+                var newVersion = new Version({
                     version_apk: data.version,
-                    link: data.link,
-                    update_required: false
+                    link: data.link
                 });
 
                 newVersion.save(function (err) {

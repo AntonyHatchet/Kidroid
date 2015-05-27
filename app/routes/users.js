@@ -5,12 +5,12 @@ var userMagic = require('../dbMagic/userMagic');
 // TODO при рефакторинге перепесиать повтор€ющиес€ функции создани€ и удалени€ на одну функцию с указанием типа данных.
 module.exports = {
     // ¬≈–—»»
-    createVersion: function (category, callback) {
-        userMagic.createVersion(category, function (err, category) {
+    createVersion: function (version, callback) {
+        userMagic.createVersion(version, function (err, version) {
             if (err) {
                 console.log(err);
             }
-            callback(null, category);
+            callback(null, version);
         });
     },
     removeVersion: function (category, callback) {
