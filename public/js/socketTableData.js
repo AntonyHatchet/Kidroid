@@ -20,7 +20,7 @@ socket.on('category', function (school) {
     //console.log(school,"category");
     html = '';
     for (var i = 0; i < school.length; i++) {
-        html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td>" + school[i].name + "</td><td><button class='btn btn-default' type='button' onclick=\'socket.emit(\"removeCategory\",\"" + school[i]._id + "\")\')>remove</button> / <a href='#editCategory'><button class='btn btn-default' type='button' onclick='renameCategoryId(\"" + school[i]._id + "\")'>Edit</button></a></td></tr>";
+        html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td>" + school[i].name + "</td><td><button class='btn btn-default' type='button' onclick=\'socket.emit(\"removeCategory\",\"" + school[i]._id + "\")\')>remove</button> / <a href='#editCategory' role='button' class='btn btn-primary' data-toggle='modal' onclick='renameCategoryId(\"" + school[i]._id + "\")'>Edit</a></td></tr>";
     }
     $("#tableFilter").html(html);
 });

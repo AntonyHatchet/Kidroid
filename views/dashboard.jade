@@ -46,8 +46,8 @@ block content
 
 
             #add-device
-                a(href='#add')
-                    button(class='btn btn-primary') add new device
+                a(data-target="#myModal" role="button" class="btn btn-primary" data-toggle="modal") add new device
+                    //button(class='btn btn-primary')
 
             table(class='table table-hover table-bordered table-striped' id='paged')
                 thead(id='target')
@@ -61,22 +61,25 @@ block content
 
                 tbody(id='deviceTable')
             div(id='pagination' class='pagination pagination-centered')
-            a(class='overlay', id='add', href='#x')
-            .popap-add
-                p Add new device
-                form
-                    p School
-                    select(id="addSelectCategory")
-                    br
-                    p Version
-                    select(id="addSelectVersion")
-                    br
-                    p Amount
-                    input(id='amountDevice' type="number", name='number' min="1" value='1')
+            div(class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                        i(class="icon-remove")
+                    h3 Add new device
+                div(class="modal-body")
+                    form
+                        p School
+                        select(id="addSelectCategory")
+                        br
+                        p Version
+                        select(id="addSelectVersion")
+                        br
+                        p Amount
+                        input(id='amountDevice' type="number", name='number' min="1" value='1')
 
-                    br
-                    button(type="button" onclick='addDevice()') Add
-                a(class='close-add' href='#close-add')
+                div(class="modal-footer")
+                    //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                    button(class="btn btn-primary" onclick='addDevice()') Add
 
 
 
@@ -91,8 +94,8 @@ block content
         #filters(class='tab-content')
             h2 School category
             #add-category
-                a(href='#createCategory')
-                    button(class='btn btn-primary') add new category...
+                a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") add new category...
+                    //button(class='btn btn-primary') add new category...
             table(class='table table-hover table-bordered table-striped')
                 thead
                     tr
@@ -100,33 +103,38 @@ block content
                 tbody(id='tableFilter')
 
 
-            a(class='overlay', id='createCategory', href='#x')
-            .popap-add
-                p Add new category:
-                form(action='/createDevice')
+            div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                        i(class="icon-remove")
+                    h3 Create new category
+                div(class="modal-body")
+                    form(action='/createDevice')
+                        div(class="input-append")
+                            input(style='height: 34px' class="span3" size="16" id="newCategory" name='category')
+                            button(class="btn btn-primary" onclick="createNewCategory()") Create
+                        hr
+                        p Add new Apk version:
+                    form(method="post" action='/uploadFile' enctype="multipart/form-data")
 
-                    input(type="input" id="newCategory" name='category')
-                    button(type="button" onclick="createNewCategory()") Add
-                p Add new Apk version:
-                form(method="post" action='/uploadFile' enctype="multipart/form-data")
+                        input(type="file", name='category' value='')
+                        button( type="submit" class="btn btn-primary") Add
 
-                    input(type="file", name='category' value='')
-                    button( type="submit") Add
-                a(class='close-add' href='#close-add')
-
-            a(class='overlay', id='editCategory', href='#x')
-            .popap-add
-                p Edit category:
-                form
-                    input(type="input" id='newNameCategory')
-                    button( type="button" onclick="inputNewNameCategory()") Edit
-                a(class='close-add' href='#close-add')
+            div(class="modal" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                        i(class="icon-remove")
+                    h3 Add new device
+                div(class="modal-body")
+                    form
+                        input(type="input" id='newNameCategory')
+                        button( type="button" onclick="inputNewNameCategory()") Edit
 
         #users(class='tab-content')
             h2 Users
             #add-users
-                a(href='#addUsers')
-                    button(class='btn btn-primary') add new user
+                a(href='#addUsers' role="button" class="btn btn-primary" data-toggle="modal") add new user
+                    //button(class='btn btn-primary') add new user
             table(class='table table-hover table-bordered table-striped')
                 thead
                     tr
@@ -134,14 +142,16 @@ block content
                         th name
                         th remove
                 tbody(id='userTable')
-            a(class='overlay', id='addUsers', href='#x')
-            .popap-add
-                p Add user:
-                form
-                    input(type="input")
-                    //button( type="button" onclick="socket.emit('editCategory')") Edit
+            div(class="modal" id="addUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                        i(class="icon-remove")
+                    h3 Add new device
+                div(class="modal-body")
+                    form
+                        input(type="input")
+                        button( type="button" onclick="socket.emit('editCategory')") Edit
 
-                a(class='close-add' href='#close-add')
         #settings(class='tab-content')
             h2 Settings
 
