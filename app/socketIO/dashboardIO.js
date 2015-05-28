@@ -91,7 +91,7 @@ module.exports = function (server) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('removeUsers', callback);
+                    io.emit('users', callback);
                 });
             }
         );
@@ -101,7 +101,16 @@ module.exports = function (server) {
                     if (err) {
                         console.log(err);
                     }
-                    console.log(callback,"callback create device");
+                    io.emit('displayData', callback);
+                });
+            }
+        );
+        socket.on('removeDevice', function (id) {
+                console.log(id);
+                user.removeDevice(id, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
                     io.emit('displayData', callback);
                 });
             }

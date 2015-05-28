@@ -150,8 +150,33 @@ module.exports = {
                 throw err;
             }
             // Execute callback
+            console.log(id,"create ID");
             id = id.length += 1;
             callback(null, id);
+        });
+    },
+    removeDevice: function (data, callback) {
+        Device.remove({"device_id": +data}, function (err, category) {
+
+            if (err) {
+                throw err;
+            }
+
+            if (category != null) {
+
+                Device.find("", function (err, category) {
+
+                    if (err) {
+                        throw err;
+                    }
+
+                    if (category != null) {
+
+                        callback(null, category)
+
+                    }
+                });
+            }
         });
     }
 };

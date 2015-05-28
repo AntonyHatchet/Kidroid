@@ -103,7 +103,18 @@ module.exports = {
                     if (err) {
                         console.log("not updated", err);
                     }
-                    callback(updated);
+                    if (callback != null){
+                        Category.find("", function (err, category) {
+
+                            if (err) {
+                                callback(null, err);
+                            }
+
+                            if (category != null) {
+                                callback(null, category)
+                            }
+                        });
+                    }
                     // Execute callback passed from route
                 });
             }

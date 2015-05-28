@@ -14,12 +14,12 @@ module.exports = {
             callback(null, data);
         });
     },
-    removeUsers: function (category, callback) {
-        userMagic.removeVersion(category, function (err, category) {
+    removeUsers: function (id, callback) {
+        userMagic.removeUsers(id, function (err, data) {
             if (err) {
                 console.log(err);
             }
-            callback(null, category);
+            callback(null, data);
         });
     },
     // ВЕРСИИ
@@ -64,6 +64,15 @@ module.exports = {
                 console.log(err);
             }
             callback(null, Quantity);
+        });
+    },
+    //Удаляем девайс
+    removeDevice: function (id, callback) {
+        deviceMagic.removeDevice(id, function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, data);
         });
     },
     // Запускаем поиск устройств c параметрами
