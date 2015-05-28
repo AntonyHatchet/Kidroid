@@ -1,5 +1,6 @@
 var deviceMagic = require('../dbMagic/deviceMagic');
 var user = require('../routes/users.js');
+var server = require('../../config/server.js').address;
 module.exports = {
 //Регистрация девайса
     getRegistrationDevice: function (req, res) {
@@ -61,7 +62,7 @@ module.exports = {
                     if (err) {
                         console.log(err);
                     }
-                    res.json({update_required: true, version: device.apk_to_update, link: callback});
+                    res.json({update_required: true, version: device.apk_to_update, link: server + callback});
                 })
             }
 
