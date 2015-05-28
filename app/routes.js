@@ -49,7 +49,7 @@ module.exports = function (app, passport) {
             if (callback == false) {
                 res.redirect('back');
             }
-            res.redirect('back');
+            res.end('back');
         });
     });
 
