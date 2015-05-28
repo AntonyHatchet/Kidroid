@@ -21,6 +21,22 @@ function createNewCategory() {
     console.log(nameCategory);
 };
 
+var newNameId;
+
+function renameCategoryId(x) {
+    newNameId=x;
+};
+
+
+function inputNewNameCategory() {
+    var device = {};
+    device.id = newNameId;
+    device.newName = $("#newNameCategory").val();
+    socket.emit('editCategory', device);
+    console.log(device);
+};
+
+
 function find() {
     var device = {};
     device.id = $("#DeviceNameIDSerial").val();

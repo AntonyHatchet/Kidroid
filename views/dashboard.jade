@@ -118,13 +118,15 @@ block content
             .popap-add
                 p Edit category:
                 form
-                    input(type="input" name='category')
-                    //button( type="button" onclick="socket.emit('editCategory')") Edit
-
+                    input(type="input" id='newNameCategory')
+                    button( type="button" onclick="inputNewNameCategory()") Edit
                 a(class='close-add' href='#close-add')
 
         #users(class='tab-content')
             h2 Users
+            #add-users
+                a(href='#addUsers')
+                    button(class='btn btn-primary') add new user
             table(class='table table-hover table-bordered table-striped')
                 thead
                     tr
@@ -132,6 +134,14 @@ block content
                         th name
                         th remove
                 tbody(id='userTable')
+            a(class='overlay', id='addUsers', href='#x')
+            .popap-add
+                p Add user:
+                form
+                    input(type="input")
+                    //button( type="button" onclick="socket.emit('editCategory')") Edit
+
+                a(class='close-add' href='#close-add')
         #settings(class='tab-content')
             h2 Settings
 
