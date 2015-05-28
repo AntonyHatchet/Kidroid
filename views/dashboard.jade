@@ -19,42 +19,43 @@ block content
     #conteiner
 
 
+        #mapPanel(class="panel panel-default")
+            div(class="panel-heading") Maps
+            #maps(class="panel-body")
+                script.
+                    var map = L.map('maps').setView([55.7422, 37.5719], 1);
+                    // add an OpenStreetMap tile layer
+                    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(map);
+                    // add a marker in the given location, attach some popup content to it and open the popup
+                    var mark = L.marker([55.7422, 37.5719]);
+                    mark.addTo(map)
 
-        #maps
-            script.
-                var map = L.map('maps').setView([55.7422, 37.5719], 1);
-                // add an OpenStreetMap tile layer
-                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(map);
-                // add a marker in the given location, attach some popup content to it and open the popup
-                var mark = L.marker([55.7422, 37.5719]);
-                mark.addTo(map)
-                        .bindPopup('“ÛÚ')
-                        .openPopup();
         #devices(class='tab-content current')
+            h2 Devices
             #filter
                 form(class='form-search')
                     input(type="text" id="DeviceNameIDSerial" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial' onkeyup="find()")
-                    select(id='selectStatus' onchange="find()")
-                        option(value="") Select status
+                    select(id='selectStatus' class="span2" onchange="find()")
+                        option(value="" style='color:#cccccc') Select status
                         option(value='0') Ofline
                         option(value='1') Online
-                    select(id="selectCategory" onchange="find()")
-                    select(id="selectVersion" onchange="find()")
+                    select(id="selectCategory" class="span2" onchange="find()")
+                    select(id="selectVersion" class="span2" onchange="find()")
 
 
             #add-device
                 a(href='#add')
                     button(class='btn btn-primary') add new device
 
-            table(class='table table-hover table-bordered' id='paged')
+            table(class='table table-hover table-bordered table-striped' id='paged')
                 thead(id='target')
                     tr
-                        th id
-                        th registered
+                        th(onclick='socket.emit("regularizeId",)') id
+                        th status
                         th school
-                        th apk_version
+                        th version
                         th map
                         th remove
 
@@ -83,16 +84,16 @@ block content
             script.
                 function showmap(i, j) {
                     mark.setLatLng(L.latLng(i, j)).update()
-                            .bindPopup('“ÛÚ')
-                            .openPopup();
+
                 }
             script(src="/js/socketTableData.js")
 
         #filters(class='tab-content')
+            h2 School category
             #add-category
                 a(href='#createCategory')
                     button(class='btn btn-primary') add new category...
-            table(class='table table-hover table-bordered')
+            table(class='table table-hover table-bordered table-striped')
                 thead
                     tr
                         th(colspan='2') Category name
@@ -123,10 +124,14 @@ block content
                 a(class='close-add' href='#close-add')
 
         #users(class='tab-content')
-            table(class='table table-hover table-bordered')
+            h2 Users
+            table(class='table table-hover table-bordered table-striped')
                 thead
                     tr
                         th id
                         th name
+                        th remove
                 tbody(id='userTable')
+        #settings(class='tab-content')
+            h2 Settings
 
