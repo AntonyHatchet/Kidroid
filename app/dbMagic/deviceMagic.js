@@ -22,10 +22,8 @@ module.exports = {
     },
     //Поиск устройств согласно запросам
     getDevice: function (callback,params) {
-        //console.log(params);
         var query = {};
         if (params!=undefined) {
-            //console.log(params.page);
             query.device_id = (!params.id && !params.page) ? {$exists: true} : (!params.page)?{$gte:+params.id}:{$gte:+params.page};
             query.registered = (!params.status) ? {$exists: true} : params.status;
             query.school = (!params.category) ? {$exists: true} : params.category;
