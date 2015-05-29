@@ -8,8 +8,7 @@ block content
         #logo
         #usermenu
             #username
-
-
+        //=====LEFT MENU===============
     #tab
         ul(class='tabs')
             li(class='tab-link current close' data-tab='devices') Devices
@@ -20,9 +19,9 @@ block content
                 i(class='icon-chevron-left')
             li(class='tab-link close' data-tab='settings') Settings
                 i(class='icon-chevron-left')
+
     #conteiner
-
-
+        //=======MAPS=============
         #mapPanel(class="panel panel-default")
             div(class="panel-heading") Maps
             #maps(class="panel-body")
@@ -35,7 +34,7 @@ block content
                     // add a marker in the given location, attach some popup content to it and open the popup
                     var mark = L.marker([55.7422, 37.5719]);
 
-
+        //===========TABS DEVICES=======================
         #devices(class='tab-content current')
             h2 Devices
             #filter
@@ -50,7 +49,7 @@ block content
 
 
             #add-device
-                a(data-target="#myModal" role="button" class="btn btn-primary" data-toggle="modal") add new device
+                a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") add new device
                     //button(class='btn btn-primary')
 
             table(class='table table-hover table-bordered table-striped' id='paged')
@@ -65,7 +64,8 @@ block content
 
                 tbody(id='deviceTable')
             div(id='pagination' class='pagination pagination-centered')
-            div(class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+            //============MODAL Add new device=====================
+            div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 div(class="modal-header")
                     button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
                         i(class="icon-remove")
@@ -80,28 +80,40 @@ block content
                         br
                         p Amount
                         input(id='amountDevice' type="number", name='number' min="1" value='1')
-
                 div(class="modal-footer")
                     //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                    div(id='errorAddDevice' class='alert no-show')
+                        //button(type="button" class="close" data-dismiss="alert") &times;
+                        p All fields must be filled out
                     button(class="btn btn-primary" onclick='addDevice()') Add
-
-
-
-                a(class='close-add' href='#close-add')
+            //============MODAL delete device=====================
+            div(class="modal" id="deleteDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                        i(class="icon-remove")
+                    h3 Delete device
+                div(class="modal-body")
+                div(class="modal-footer")
+                    //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                    div(id='errorAddDevice' class='alert no-show')
+                        //button(type="button" class="close" data-dismiss="alert") &times;
+                        p All fields must be filled out
+                    button(class="btn btn-primary" onclick='addDevice()') Add
+            //===========Script maps========================
             script.
                 function showmap(i, j) {
                     mark.addTo(map)
-                    map.setView([i, j], 11);
+                    map.setView([i, j], 12);
                     mark.setLatLng(L.latLng(i, j)).update()
-
-
                 }
-            script(src="/js/socketTableData.js")
 
+            script(src="/js/socketTableData.js")
+        //============NABS FILTERS========================
         #filters(class='tab-content')
             h2 School category
             #add-category
                 a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") add new category...
+                a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
                     //button(class='btn btn-primary') add new category...
             table(class='table table-hover table-bordered table-striped')
                 thead
@@ -109,24 +121,38 @@ block content
                         th(colspan='2') Category name
                 tbody(id='tableFilter')
 
-
+            //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 div(class="modal-header")
                     button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
                         i(class="icon-remove")
                     h3 Create new category
                 div(class="modal-body")
-                    form(action='/createDevice')
+                    form
                         div(class="input-append")
                             input(style='height: 34px' class="span3" size="16" id="newCategory" name='category')
-                            button(class="btn btn-primary" onclick="createNewCategory()") Create
-                        hr
-                        p Add new Apk version:
+                            button(class="btn btn-primary" onclick="createNewCategory()" type="button") Create
+                            div(id='errorCreateCategory' class='alert no-show')
+                                //button(type="button" class="close" data-dismiss="alert") &times;
+                                p All fields must be filled out
+                    //============MODAL Add new Apk version=====================
+            div(class="modal" id="addApkVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                        i(class="icon-remove")
+                    h3 Add new Apk version
+                div(class="modal-body")
                     form(method="post" action='/uploadFile' enctype="multipart/form-data")
-
-                        input(type="file", name='category' value='')
-                        button( type="submit" class="btn btn-primary") Add
-
+                        div(class="input-append")
+                            input(type="file", name='category' value='')
+                            button( type="submit" class="btn btn-primary") Add
+                    //    hr
+                    //    p Add new Apk version:
+                    //form(method="post" action='/uploadFile' enctype="multipart/form-data")
+                    //
+                    //    input(type="file", name='category' value='')
+                    //    button( type="submit" class="btn btn-primary") Add
+            //============MODAL Edit category=====================
             div(class="modal" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 div(class="modal-header")
                     button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
@@ -136,7 +162,7 @@ block content
                     form
                         input(type="input" id='newNameCategory')
                         button( type="button" onclick="inputNewNameCategory()") Edit
-
+        //==========USERS TABS===================
         #users(class='tab-content')
             h2 Users
             #add-users
@@ -149,6 +175,7 @@ block content
                         th name
                         th remove
                 tbody(id='userTable')
+            //============MODAL Add new user=====================
             div(class="modal" id="addUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 div(class="modal-header")
                     button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
@@ -159,14 +186,14 @@ block content
                         div(class="control-group")
                             label(class="control-label") Name
                             div(class="controls")
-                                input(style='height: 34px' class="span3" name='name' size="16" type="input")
+                                input(style='height: 34px' class="span3" name='name' size="16" type="input" required)
                         div(class="control-group")
                             label(class="control-label") Password
                             div(class="controls")
-                                input(style='height: 34px' class="span3" name='password' size="16" type="input")
+                                input(style='height: 34px' class="span3" name='password' size="16" type="input" required)
                         div(class="controls")
-                            button(class="btn btn-primary" type='submit') Edit
-
+                            button(class="btn btn-primary" type='submit') Add user
+        //===========TABS SETTINGS================
         #settings(class='tab-content')
             h2 Settings
 
