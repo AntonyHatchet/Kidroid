@@ -16,7 +16,8 @@ var DeviceSchema = mongoose.Schema({
     name: String,
     comment: String,
     registered: Boolean,
-    update_required: Boolean
+    update_required: Boolean,
+    online: Boolean
 });
 
 module.exports = mongoose.model('Device', DeviceSchema, "devices");

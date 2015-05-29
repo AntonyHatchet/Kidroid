@@ -159,13 +159,13 @@ module.exports = {
         });
     },
     findLink: function (version,callback) {
-        Version.find({'version_apk':version},{"_id":0,"link":1}, function (err, data) {
-            console.log(data,"Link data");
+        console.log(version,"try find version");
+        Version.find({'version_apk':+version},{"_id":0,"link":1}, function (err, data) {
             if (err) {
                 throw err;
             }
-
             if (data != null) {
+                console.log(data,"Link data");
                 callback(null, data)
             }
         });

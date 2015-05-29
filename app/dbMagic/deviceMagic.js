@@ -22,6 +22,7 @@ module.exports = {
             query.registered = (!params.status) ? {$exists: true} : params.status;
             query.school = (!params.category) ? {$exists: true} : params.category;
             query.apk_version = (!params.version) ? {$exists: true} : params.version;
+            query.online = (!params.status) ? {$exists: true} : params.status;
         }
         console.log(query);
         query = Device.find(query).limit(10).sort({device_id:1});
@@ -57,8 +58,7 @@ module.exports = {
     // Находим версию по ИД устройства
     findVersion: function (deviceInfo, callback) {
         var device = Device;
-        console.log("deviceInfo", deviceInfo);
-        device.findOne({"device_id": deviceInfo.id}, {
+        device.findOne({"device_id": +deviceInfo.id}, {
             "_id": 1,
             "apk_to_update": 1
         }, function (err, device) {
@@ -70,12 +70,13 @@ module.exports = {
     saveDevice: function (deviceInfo, callback) {
         var newDevice = new Device({
             school: deviceInfo.school,
-            timestamp: deviceInfo.timestamp,
+            timestamp: new Date(),
             device_id: deviceInfo.deviceID,
-            registered: deviceInfo.registered,
+            registered: false,
             apk_to_update: deviceInfo.update,
-            apk_version: 0
-
+            apk_version: 0,
+            "update_required": true,
+            "online": false
         });
         newDevice.save(function (err) {
             if (err) {
@@ -125,7 +126,9 @@ module.exports = {
                     "latitude": [deviceInfo.latitude],
                     "longitude": [deviceInfo.longitude],
                     "loader_version": deviceInfo.loader_version,
-                    "apk_version": deviceInfo.apk_version
+                    "apk_version": deviceInfo.apk_version,
+                    "update_required": false,
+                    "online":true
                 };
                 //Пишем в БД к ID из запроса
                 Device.update({"device_id": deviceInfo.device_id}, {$set: update}, {upsert: true}, function (err, updated) {
