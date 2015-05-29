@@ -12,10 +12,14 @@ block content
 
     #tab
         ul(class='tabs')
-            li(class='tab-link current' data-tab='devices') Devices
-            li(class='tab-link' data-tab='users') Users
-            li(class='tab-link' data-tab='filters') Filters
-            li(class='tab-link' data-tab='settings') Settings
+            li(class='tab-link current close' data-tab='devices') Devices
+                    i(class='icon-chevron-left')
+            li(class='tab-link close' data-tab='users') Users
+                i(class='icon-chevron-left')
+            li(class='tab-link close' data-tab='filters') Filters
+                i(class='icon-chevron-left')
+            li(class='tab-link close' data-tab='settings') Settings
+                i(class='icon-chevron-left')
     #conteiner
 
 
@@ -124,7 +128,7 @@ block content
                 div(class="modal-header")
                     button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
                         i(class="icon-remove")
-                    h3 Add new device
+                    h3 Edit category
                 div(class="modal-body")
                     form
                         input(type="input" id='newNameCategory')
@@ -146,11 +150,12 @@ block content
                 div(class="modal-header")
                     button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
                         i(class="icon-remove")
-                    h3 Add new device
+                    h3 Add new user
                 div(class="modal-body")
-                    form
-                        input(type="input")
-                        button( type="button" onclick="socket.emit('editCategory')") Edit
+                    form(method='post' action="/signup")
+                        div(class="input-append")
+                            input(style='height: 34px' class="span3" size="16" type="input")
+                            button(class="btn btn-primary" onclick="socket.emit('editCategory')") Edit
 
         #settings(class='tab-content')
             h2 Settings

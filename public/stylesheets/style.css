@@ -117,7 +117,12 @@ ul.tabs li.current {
     visibility: visible;
     opacity: 1;
 }
-
+.tabs i{
+    float: right;
+}
+#tab li:hover{
+    color: #6E6E6E;
+}
 /*#filter select {*/
 /*padding: 5px 8px;*/
 /*width: 130px;*/
