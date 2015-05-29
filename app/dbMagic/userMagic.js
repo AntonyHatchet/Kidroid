@@ -159,7 +159,8 @@ module.exports = {
         });
     },
     findLink: function (version,callback) {
-        Version.find({'version_apk':version},{"_id":0,"link":1}, function (err, data) {
+        console.log(version,"try find version");
+        Version.find({'version_apk':+version},{"_id":0,"link":1}, function (err, data) {
             console.log(data,"Link data");
             if (err) {
                 throw err;
