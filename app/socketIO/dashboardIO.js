@@ -33,7 +33,7 @@ module.exports = function (server) {
             if (err) {
                 console.log(err);
             }
-            console.log('version',data);
+            //console.log('version',data);
             io.emit('version', data);
         });
         user.findAllUsers(function (err, data) {
@@ -107,7 +107,7 @@ module.exports = function (server) {
             }
         );
         socket.on('createDevice', function (paramsDevice) {
-                console.log(paramsDevice);
+                //console.log(paramsDevice);
                 user.createDevice(paramsDevice, function (err, callback) {
                     if (err) {
                         console.log(err);
@@ -117,7 +117,7 @@ module.exports = function (server) {
             }
         );
         socket.on('removeDevice', function (id) {
-                console.log(id);
+                //console.log(id);
                 user.removeDevice(id, function (err, callback) {
                     if (err) {
                         console.log(err);
