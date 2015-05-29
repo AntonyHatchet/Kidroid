@@ -55,12 +55,13 @@ block content
             table(class='table table-hover table-bordered table-striped' id='paged')
                 thead(id='target')
                     tr
-                        th(onclick='socket.emit("regularizeId",)') id
-                        th status
-                        th school
-                        th version
-                        th map
-                        th remove
+                        th(onclick='socket.emit("regularizeId",)') Device
+                        th APK version
+                        th Loader version
+                        th Device status
+                        th School
+                        th Options
+                        //th remove
 
                 tbody(id='deviceTable')
             div(id='pagination' class='pagination pagination-centered')
@@ -125,19 +126,31 @@ block content
                 }
 
             script(src="/js/socketTableData.js")
-        //============NABS FILTERS========================
+        //============TABS FILTERS========================
         #filters(class='tab-content')
-            h2 School category
-            #add-category
-                a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") add new category...
-                a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
-                    //button(class='btn btn-primary') add new category...
-            table(class='table table-hover table-bordered table-striped')
-                thead
-                    tr
-                        th(colspan='2') Category name
-                tbody(id='tableFilter')
-
+            h2 Filters
+            div(class='tabbable')
+                ul(class='nav nav-tabs')
+                    li(class='active')
+                        a(href="#filtersSchool" data-toggle="tab") School
+                    li
+                        a(href='#filtersVersion' data-toggle="tab") Version
+                #add-category
+                    a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") add new category...
+                    a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
+                        //button(class='btn btn-primary') add new category...
+                table(class='table table-hover table-bordered table-striped')
+                    thead
+                        tr
+                            th(colspan='2') Category name
+                    tbody(id='tableFilter')
+                table(class='table table-hover table-bordered table-striped')
+                    thead
+                        tr
+                            th id
+                            th version
+                            th remove
+                    tbody(id='versionTable')
             //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 div(class="modal-header")
