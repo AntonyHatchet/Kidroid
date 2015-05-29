@@ -8,7 +8,7 @@ module.exports = {
     getQuantity: function (callback,params) {
         var query = {};
         if (params!=undefined) {
-            query.device_id = (!params.id && !params.page) ? {$exists: true} : (!params.page)?{$gte:+params.id}:{$gte:+params.page};
+            query.device_id = (!params.id) ? {$exists: true} : {$gte:+params.id};
             query.registered = (!params.status) ? {$exists: true} : params.status;
             query.school = (!params.category) ? {$exists: true} : params.category;
             query.apk_version = (!params.version) ? {$exists: true} : params.version;
@@ -24,13 +24,14 @@ module.exports = {
     getDevice: function (callback,params) {
         var query = {};
         if (params!=undefined) {
-            query.device_id = (!params.id && !params.page) ? {$exists: true} : (!params.page)?{$gte:+params.id}:{$gte:+params.page};
+            var page = (!params.page)? "" : +params.page;
+            query.device_id = (!params.id) ? {$exists: true} : {$gte:+params.id};
             query.registered = (!params.status) ? {$exists: true} : params.status;
             query.school = (!params.category) ? {$exists: true} : params.category;
             query.apk_version = (!params.version) ? {$exists: true} : params.version;
             query.online = (!params.status) ? {$exists: true} : params.status;
         }
-        query = Device.find(query).limit(10).sort({device_id:1});
+        query = Device.find(query).skip( page ).limit(10).sort({device_id:1});
         query.exec(function (err, Devices) {
             // Execute callback
             //console.log(Devices);
