@@ -47,12 +47,13 @@ module.exports = {
     },
     // сверка необходимости обновления версии АПК
     checkApkVersion: function (req, res, next) {
-        deviceMagic.findVersion({id: req.body.device_id, version: req.body.apk_version}, function (err, device) {
-
+        deviceMagic.findVersion({id: req.body.device_id}, function (err, device) {
+            console.log(req.body.device_id,"that device check version");
+            console.log(device,"callback from DB");
             if (err) {
                 console.log(err);
             }
-            if (device.apk_to_update == req.body.apk_version) {
+            if (device.update_required === false) {
                 console.log("Same version - ", device.apk_version);
                 next();
             }
@@ -69,12 +70,12 @@ module.exports = {
         });
     },
     getApk: function (req, res, next) {
-        deviceMagic.findVersion({id: req.params.id, version: req.params.apk_version}, function (err, device) {
+        deviceMagic.findVersion({id: req.params.id}, function (err, device) {
 
             if (err) {
                 console.log(err);
             }
-            if (device.apk_to_update === req.params.apk_version) {
+            if (device.update_required === false) {
                 console.log("Same version - ", device.apk_to_update);
                 next();
             }

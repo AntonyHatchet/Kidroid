@@ -57,6 +57,32 @@ module.exports = {
         });
     },
     // УСТРОЙСТВА
+    // Проверяем когда последний раз устройства делали отстук
+    checkStatus: function(){
+        deviceMagic.getDevice(function(err,data){
+            if (err) {
+                console.log(err);
+            }
+            callback(null,data)
+        });
+        uploader(0);
+        function uploader(i) {
+            if (i < params.numberDevice) {
+                deviceMagic.saveDevice({
+                        deviceID: id,
+                        school: params.category,
+                        update: params.version
+                    },
+                    function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+
+                        uploader(i + 1);
+                    })
+            }
+        }
+    },
     // Выводим общее количество устройств
     getAllDeviceQuantity: function (callback) {
         deviceMagic.getQuantity(function (err, Quantity) {
@@ -94,11 +120,9 @@ module.exports = {
                             console.log(err, "id get errr")
                         }
                         deviceMagic.saveDevice({
-                                timestamp: new Date(),
                                 deviceID: id,
                                 school: params.category,
-                                update: params.version,
-                                registered: false
+                                update: params.version
                             },
                             function (err) {
                                 if (err) {
