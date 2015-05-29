@@ -53,6 +53,7 @@ module.exports = {
             if (err) {
                 console.log(err);
             }
+            console.log(link, "Link on user.js");
             callback(null, link);
         });
     },

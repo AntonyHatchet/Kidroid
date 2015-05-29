@@ -58,7 +58,7 @@ module.exports = {
                 next();
             }
             else {
-                user.findLink(device.apk_to_update,function(callback){
+                user.findLink(device.apk_to_update,function(err,callback){
                     console.log("Different version", callback);
                     if (err) {
                         console.log(err);
