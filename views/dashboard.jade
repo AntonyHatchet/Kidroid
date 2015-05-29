@@ -34,7 +34,7 @@ block content
                     }).addTo(map);
                     // add a marker in the given location, attach some popup content to it and open the popup
                     var mark = L.marker([55.7422, 37.5719]);
-                    mark.addTo(map)
+
 
         #devices(class='tab-content current')
             h2 Devices
@@ -90,7 +90,10 @@ block content
                 a(class='close-add' href='#close-add')
             script.
                 function showmap(i, j) {
+                    mark.addTo(map)
+                    map.setView([i, j], 11);
                     mark.setLatLng(L.latLng(i, j)).update()
+
 
                 }
             script(src="/js/socketTableData.js")
@@ -152,10 +155,17 @@ block content
                         i(class="icon-remove")
                     h3 Add new user
                 div(class="modal-body")
-                    form(method='post' action="/signup")
-                        div(class="input-append")
-                            input(style='height: 34px' class="span3" size="16" type="input")
-                            button(class="btn btn-primary" onclick="socket.emit('editCategory')") Edit
+                    form(class="form-horizontal" method='post' action="/signup")
+                        div(class="control-group")
+                            label(class="control-label") Name
+                            div(class="controls")
+                                input(style='height: 34px' class="span3" name='name' size="16" type="input")
+                        div(class="control-group")
+                            label(class="control-label") Password
+                            div(class="controls")
+                                input(style='height: 34px' class="span3" name='password' size="16" type="input")
+                        div(class="controls")
+                            button(class="btn btn-primary" type='submit') Edit
 
         #settings(class='tab-content')
             h2 Settings
