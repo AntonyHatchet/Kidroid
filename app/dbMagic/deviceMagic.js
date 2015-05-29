@@ -5,8 +5,16 @@ var Device = require('../models/device');
 
 module.exports = {
     // Получаем из БД общее колличество записей
-    getQuantity: function (callback) {
-        var query = Device.count();
+    getQuantity: function (callback,params) {
+        var query = {};
+        if (params!=undefined) {
+            query.device_id = (!params.id) ? {$exists: true} : (!params.page)?{$gte:+params.id}:{$gte:+params.page};
+            query.registered = (!params.status) ? {$exists: true} : params.status;
+            query.school = (!params.category) ? {$exists: true} : params.category;
+            query.apk_version = (!params.version) ? {$exists: true} : params.version;
+            query.online = (!params.status) ? {$exists: true} : params.status;
+        }
+        query = Device.count(query);
         query.exec(function (err, Devices) {
             // Execute callback
             callback(null, Devices);
@@ -17,14 +25,12 @@ module.exports = {
         //console.log(params);
         var query = {};
         if (params!=undefined) {
-
-            query.device_id = (!params.id) ? {$exists: true} : {$gte:+params.id};
+            query.device_id = (!params.id) ? {$exists: true} : (!params.page)?{$gte:+params.id}:{$gte:+params.page};
             query.registered = (!params.status) ? {$exists: true} : params.status;
             query.school = (!params.category) ? {$exists: true} : params.category;
             query.apk_version = (!params.version) ? {$exists: true} : params.version;
             query.online = (!params.status) ? {$exists: true} : params.status;
         }
-        console.log(query);
         query = Device.find(query).limit(10).sort({device_id:1});
         query.exec(function (err, Devices) {
             // Execute callback
@@ -148,15 +154,14 @@ module.exports = {
     createDeviceId: function (callback) {
         var find = Device.find();
 
-        find.exec(function (err, id) {
+       find.exec(function (err, id) {
             if (err) {
                 throw err;
             }
             // Execute callback
-            console.log(id,"create ID");
-            id = id.length += 1;
-            callback(null, id);
-        });
+            id = (!id[id.length - 1])? id = 1:id[id.length - 1].device_id += 1;
+            callback(null,id)
+        })
     },
     removeDevice: function (data, callback) {
         Device.remove({"device_id": +data}, function (err, category) {

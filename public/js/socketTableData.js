@@ -2,6 +2,7 @@
  * Created by anton_gorshenin on 25.05.2015.
  */
 socket.on('displayData', function (data) {
+    console.log(data.length);
     html = '';
     for (i in data)
         html += "<tr><td>" + data[i].device_id + "</td><td>" + data[i].registered + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td><button class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>show map</button></td><td><button class='btn btn-default' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].device_id + "\")\')>delete</button></td></tr>";

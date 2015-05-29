@@ -54,6 +54,17 @@ module.exports = function (server) {
                 },params);
             }
         );
+        socket.on('getDevicesQuantityByParams', function (params) {
+                //console.log(params, "getDevicesByParams");
+                user.getAllDeviceQuantity(function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log(callback);
+                    io.emit('quantity', callback);
+                },params);
+            }
+        );
         // Создаем категорию
         socket.on('createCategory', function (categoryName) {
 

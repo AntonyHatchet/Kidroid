@@ -85,13 +85,13 @@ module.exports = {
         }
     },
     // Выводим общее количество устройств
-    getAllDeviceQuantity: function (callback) {
+    getAllDeviceQuantity: function (callback,params) {
         deviceMagic.getQuantity(function (err, Quantity) {
             if (err) {
                 console.log(err);
             }
             callback(null, Quantity);
-        });
+        },params);
     },
     //Удаляем девайс
     removeDevice: function (id, callback) {
@@ -116,29 +116,28 @@ module.exports = {
         uploader(0);
         function uploader(i) {
             if (i < params.numberDevice) {
-                deviceMagic.createDeviceId(function (err, id) {
-                        if (err) {
-                            console.log(err, "id get errr")
-                        }
-                        deviceMagic.saveDevice({
-                                deviceID: id,
-                                school: params.category,
-                                update: params.version
-                            },
-                            function (err) {
+                deviceMagic.createDeviceId(function(err,id){
+                    if (err) {
+                        throw err;
+                    }
+                    deviceMagic.saveDevice({
+                            deviceID: id,
+                            school: params.category,
+                            update: params.version
+                        },
+                        function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            deviceMagic.getDevice(function(err,data){
                                 if (err) {
                                     console.log(err);
                                 }
-                                deviceMagic.getDevice(function(err,data){
-                                    if (err) {
-                                        console.log(err);
-                                    }
-                                    callback(null,data)
-                                });
-                                uploader(i + 1);
-                            })
-                    }
-                )
+                                callback(null,data)
+                            });
+                            uploader(i + 1);
+                        })
+                });
             }
         }
     },
