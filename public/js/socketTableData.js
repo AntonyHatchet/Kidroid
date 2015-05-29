@@ -2,14 +2,15 @@
  * Created by anton_gorshenin on 25.05.2015.
  */
 socket.on('displayData', function (data) {
-    console.log(data.length);
+    //console.log(data.length);
     html = '';
     for (i in data)
-        html += "<tr><td>" + data[i].device_id + "</td><td>" + data[i].registered + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td><button class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>show map</button></td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].device_id + "\")\')>Delete</button></td></tr>";
+        html += "<tr><td>" + data[i].device_id + "</td><td>" + data[i].registered + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td><a href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>show map</a></td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].device_id + "\")\')>Delete</button></td></tr>";
     $("#deviceTable").html(html);
 });
 
 socket.on('quantity', function (data) {
+    console.log(data);
     html = '<ul>';
     Page = Math.ceil(data / 10);
     for (var j = 1; j <= Page; j++)
@@ -45,7 +46,7 @@ socket.on('version', function (date) {
 });
 
 socket.on('users', function (data) {
-    console.log(data);
+    //console.log(data);
     html = '';
     for (i in data)
         html += "<tr><td>" + data[i]._id + "</td><td>" + data[i].local.name + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeUsers\",\"" + data[i]._id + "\")\')>Delete</button></td></tr>";

@@ -22,7 +22,7 @@ block content
 
     #conteiner
         //=======MAPS=============
-        #mapPanel(class="panel panel-default")
+        //#mapPanel(class="panel panel-default")
             div(class="panel-heading") Maps
             #maps(class="panel-body")
                 script.
@@ -99,6 +99,23 @@ block content
                         //button(type="button" class="close" data-dismiss="alert") &times;
                         p All fields must be filled out
                     button(class="btn btn-primary" onclick='addDevice()') Add
+            //============MODAL maps=====================
+            div(class="modal" id="map" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                        i(class="icon-remove")
+                    h3 Maps
+                div(class="modal-body")
+                    #maps(class="panel-body")
+                        script.
+                            var map = L.map('maps').setView([55.7422, 37.5719], 1);
+                            // add an OpenStreetMap tile layer
+                            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            }).addTo(map);
+                            // add a marker in the given location, attach some popup content to it and open the popup
+                            var mark = L.marker([55.7422, 37.5719]);
+
             //===========Script maps========================
             script.
                 function showmap(i, j) {
