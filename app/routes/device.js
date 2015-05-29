@@ -64,7 +64,7 @@ module.exports = {
                         console.log(err);
                     }
                     console.log("response to device", callback[0].link);
-                    res.json({update_required: true, version: device.apk_to_update, link: server + callback.link});
+                    res.json({update_required: true, version: device.apk_to_update, link: server + callback[0].link});
                 })
             }
 
