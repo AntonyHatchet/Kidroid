@@ -41,7 +41,7 @@ function inputNewNameCategory() {
     device.id = newNameId;
     device.newName = $("#newNameCategory").val();
     socket.emit('editCategory', device);
-    console.log(device);
+    //console.log(device);
 };
 
 
@@ -52,6 +52,7 @@ function find() {
     device.category = $("#selectCategory").val();
     device.version = $("#selectVersion").val();
     socket.emit('getDevicesByParams', device);
+    socket.emit('getDevicesQuantityByParams', device);
 };
 function page(i) {
     var device = {};
@@ -59,8 +60,10 @@ function page(i) {
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
     device.version = $("#selectVersion").val();
-    device.page = i*10-10;
+    device.page = i*10;
     socket.emit('getDevicesByParams', device);
+    socket.emit('getDevicesQuantityByParams', device);
+    console.log(device);
 };
 function addDevice() {
     var device = {};
