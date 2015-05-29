@@ -117,91 +117,20 @@ ul.tabs li.current {
     visibility: visible;
     opacity: 1;
 }
-
-/*#filter select {*/
-/*padding: 5px 8px;*/
-/*width: 130px;*/
-/*border: none;*/
-/*box-shadow: none;*/
-/*background-color: transparent;*/
-/*background-image: none;*/
-/*-webkit-appearance: none;*/
-/*-moz-appearance: none;*/
-/*appearance: none;*/
-/*border: 1px solid #777777;*/
-/*}*/
-
-/*#filter select:focus {*/
-/*outline: none;*/
-/*}*/
-/*.search {*/
-/*padding:6px 15px 6px 30px;*/
-/*margin:3px;*/
-/*background: url('img/search.png') no-repeat 5px 1px;*/
-/*border-radius:15px;*/
-/*-moz-border-radius:15px;*/
-/*-webkit-border-radius:15px;*/
-/*}*/
+.tabs i{
+    float: right;
+}
+#tab li:hover{
+    color: #6E6E6E;
+}
 
 #add-device, #add-users, #add-category {
     float: right;
     margin-bottom: 20px;
 }
-
-/*.popap-add {*/
-    /*z-index: 10;*/
-    /*display: block;*/
-    /*visibility: hidden;*/
-    /*position: fixed;*/
-    /*background-color: #fff;*/
-    /*background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));*/
-    /*background-image: -webkit-linear-gradient(top, #fff, #eee);*/
-    /*background-image: -moz-linear-gradient(top, #fff, #eee);*/
-    /*background-image: -ms-linear-gradient(top, #fff, #eee);*/
-    /*background-image: -o-linear-gradient(top, #fff, #eee);*/
-    /*background-image: linear-gradient(top, #fff, #eee);*/
-    /*height: 300px;*/
-    /*width: 400px;*/
-    /*/!*margin: -150px 0 0 -230px;*!/*/
-    /*padding: 30px;*/
-    /*top: 50%;*/
-    /*left: 50%;*/
-    /*-moz-border-radius: 3px;*/
-    /*-webkit-border-radius: 3px;*/
-    /*border-radius: 3px;*/
-    /*-webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);*/
-/*}*/
-
-/*.popap-add:before {*/
-    /*content: '';*/
-    /*position: absolute;*/
-    /*z-index: -1;*/
-    /*border: 1px dashed #ccc;*/
-    /*top: 5px;*/
-    /*bottom: 5px;*/
-    /*left: 5px;*/
-    /*right: 5px;*/
-    /*-moz-box-shadow: 0 0 0 1px #fff;*/
-    /*-webkit-box-shadow: 0 0 0 1px #fff;*/
-    /*box-shadow: 0 0 0 1px #fff;*/
-/*}*/
-
-/*.overlay:target + .popap-add {*/
-    /*top: 20%;*/
-    /*visibility: visible;*/
-    /*opacity: 1;*/
-/*}*/
-
-/*.close-add {*/
-    /*position: absolute;*/
-    /*top: -10px;*/
-    /*right: -10px;*/
-    /*padding: 0;*/
-    /*width: 20px;*/
-    /*height: 20px;*/
-    /*background: #ff0000;*/
-/*}*/
-
+#add-category a{
+    margin-left: 20px;
+}
 .no-show {
     display: none;
 }
@@ -209,7 +138,13 @@ ul.tabs li.current {
 .show {
     display: block;
 }
-
+#errorAddDevice, #errorCreateCategory{
+    width: 80%;
+    float: left;
+    text-align: left;
+    margin: 0;
+    font-size: 14px;
+}
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;

@@ -17,8 +17,16 @@ $(document).ready(function () {
 
 function createNewCategory() {
     var nameCategory = $("#newCategory").val();
-    socket.emit('createCategory', {name: "" + nameCategory + ""});
-    console.log(nameCategory);
+    if(nameCategory !=0){
+        console.log('yes');
+        socket.emit('createCategory', {name: "" + nameCategory + ""});
+        $('#errorCreateCategory').addClass('no-show');
+    }else{
+        console.log('no');
+        $('#errorCreateCategory').removeClass('no-show');
+    }
+
+    //console.log(nameCategory);
 };
 
 var newNameId;
@@ -59,6 +67,11 @@ function addDevice() {
     device.category = $("#addSelectCategory").val();
     device.version = $("#addSelectVersion").val();
     device.numberDevice = $("#amountDevice").val();
+    if (device.category != 0 && device.version !=0)  {
     socket.emit('createDevice', device);
-    console.log(device);
+    $('#errorAddDevice').addClass('no-show');
+    //console.log('yes');
+    } else{
+        $('#errorAddDevice').removeClass('no-show');
+    }
 };
