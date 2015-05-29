@@ -5,7 +5,7 @@ socket.on('displayData', function (data) {
     //console.log(data.length);
     html = '';
     for (i in data)
-        html += "<tr><td>" + data[i].device_id + "</td><td>" + data[i].registered + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td><a href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>show map</a></td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].device_id + "\")\')>Delete</button></td></tr>";
+        html += "<tr><td>" + data[i].device_id + "</td><td>" + data[i].apk_version + "</td><td>loader version</td><td>" + data[i].registered + "</td><td>" + data[i].school + "</td><td><a href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>show map</a> <button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].device_id + "\")\')>Delete</button></td></tr>";
     $("#deviceTable").html(html);
 });
 
@@ -43,6 +43,14 @@ socket.on('version', function (date) {
         html += "<option>" + date[i].version_apk + "</option>";
     }
     $("#selectVersion, #addSelectVersion").html(html);
+});
+socket.on('version', function (date) {
+    //console.log(school,"category");
+    html = '';
+    for (var i = 0; i < date.length; i++) {
+        html += "<tr><td>" + date[i]._id + "</td><td>" + date[i].version_apk + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeVersion\",\"" + date[i]._id + "\")\')>Delete</button>";
+    }
+    $("#versionTable").html(html);
 });
 
 socket.on('users', function (data) {
