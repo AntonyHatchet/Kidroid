@@ -55,12 +55,13 @@ function editDeviceWriteIdToken(id, token){
 }
 function editDevice(){
     var device = {};
+    device.id = idDevice;
     device.category = $("#editDeviceCategory").val();
     device.version = $("#editDeviceVersion").val();
     device.name = $("#newNameUser").val();
     device.comments = $("#newComment").val();
     socket.emit('updateDevice', device);
-    //console.log(device);
+    console.log(device);
 }
 
 function find() {
