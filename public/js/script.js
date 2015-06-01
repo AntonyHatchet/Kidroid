@@ -44,7 +44,6 @@ function inputNewNameCategory() {
     //console.log(device);
 };
 
-
 function find() {
     var device = {};
     device.id = $("#DeviceNameIDSerial").val();

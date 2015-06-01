@@ -101,7 +101,7 @@ block content
                         p All fields must be filled out
                     button(class="btn btn-primary" onclick='addDevice()') Add
             //============MODAL maps=====================
-            div(class="modal" id="map" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+            div(class="modal" id="map" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: -1;")
                 div(class="modal-header")
                     button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
                         i(class="icon-remove")
@@ -109,7 +109,7 @@ block content
                 div(class="modal-body")
                     #maps(class="panel-body")
                         script.
-                            var map = L.map('maps').setView([55.7422, 37.5719], 1);
+                            var map = L.map('maps').setView([55.7422, 37.5719], 10);
                             // add an OpenStreetMap tile layer
                             L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -123,6 +123,7 @@ block content
                     mark.addTo(map)
                     map.setView([i, j], 12);
                     mark.setLatLng(L.latLng(i, j)).update()
+                    $('.map').css('z-index', '1050');
                 }
 
             script(src="/js/socketTableData.js")

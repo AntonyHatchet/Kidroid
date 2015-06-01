@@ -841,6 +841,7 @@
           that.$element
             .addClass('in')
             .attr('aria-hidden', false)
+            .css('z-index','1050')
 
           that.enforceFocus()
 
@@ -868,9 +869,11 @@
 
         $(document).off('focusin.modal')
 
+
         this.$element
           .removeClass('in')
           .attr('aria-hidden', true)
+          .css('z-index','-1')
 
         $.support.transition && this.$element.hasClass('fade') ?
           this.hideWithTransition() :
