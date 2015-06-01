@@ -113,12 +113,28 @@ module.exports = function (server) {
                         console.log(err);
                     }
                     io.emit('displayData', callback);
+                    io.emit('allDeviceCreated', callback);
+                },function(err,end){
+                    if (err)throw err;
+                    if (end){
+                    io.emit("allDeviceCreated", "Finish")
+                        }
                 });
             }
         );
         socket.on('removeDevice', function (id) {
                 //console.log(id);
                 user.removeDevice(id, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('displayData', callback);
+                });
+            }
+        );
+        socket.on('updateDevice', function (params) {
+                console.log(params);
+                user.updateDevice(params, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }

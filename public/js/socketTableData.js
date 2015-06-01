@@ -61,6 +61,10 @@ socket.on('users', function (data) {
     $("#userTable").html(html);
 });
 
+socket.on('allDeviceCreated', function (data) {
+    console.log(data);
+});
+
 socket.on('error', function (date) {
     console.log(date,"error");
 });

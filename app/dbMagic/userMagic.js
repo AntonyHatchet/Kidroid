@@ -4,6 +4,8 @@
 var User = require('../models/user');
 var Category = require('../models/category');
 var Version = require('../models/apk_models');
+var Device = require('../models/device');
+
 
 module.exports = {
     findAllUsers: function (callback) {
@@ -39,6 +41,43 @@ module.exports = {
                         callback(null, category)
 
                     }
+                });
+            }
+        });
+    },
+    updateDeviceInfo: function (data, callback) {
+
+        Device.findOne({"device_id": data.id}, function (err, category) {
+            if (err) {
+                throw err;
+            }
+            if (category != null) {
+                // Нашли такой ID, создаем дату для записи в БД.
+                var update = {
+                    "name": data.name,
+                    "comment": data.comments,
+                    "school": data.category,
+                    "apk_to_update": data.version,
+                    "update_required" : true
+                };
+                //Пишем в БД к ID из запроса
+                Device.update({"device_id": data.id}, {$set: update},{$upsert: true}, function (err, updated) {
+                    if (err) {
+                        console.log("not updated", err);
+                    }
+                    if (updated != null){
+                        Device.find("", function (err, category) {
+
+                            if (err) {
+                               console.log(err,"find error ");
+                            }
+
+                            if (category != null) {
+                                return callback(null, category)
+                            }
+                        });
+                    }
+                    // Execute callback passed from route
                 });
             }
         });

@@ -1,7 +1,19 @@
 var deviceMagic = require('../dbMagic/deviceMagic');
 var user = require('../routes/users.js');
 var server = require('../../config/server.js').address;
+
 module.exports = {
+    // ѕровер€ем когда последний раз устройства делали отстук
+    checkStatus: function(){
+        deviceMagic.getAllDevice(function(err,data){
+            if (err) {
+                console.log(err);
+            }
+            data.forEach(function(device){
+                console.log(device.timestamp)
+            })
+        });
+    },
 //–егистраци€ девайса
     getRegistrationDevice: function (req, res) {
 

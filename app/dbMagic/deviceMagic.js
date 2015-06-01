@@ -21,6 +21,14 @@ module.exports = {
         });
     },
     //Поиск устройств согласно запросам
+    getAllDevice: function (callback) {
+        Device.find("",function (err, Devices) {
+            // Execute callback
+            //console.log(Devices);
+            callback(null, Devices);
+        }).sort({device_id:1});
+
+    },
     getDevice: function (callback,params) {
         var query = {};
         if (params!=undefined) {

@@ -58,32 +58,6 @@ module.exports = {
         });
     },
     // УСТРОЙСТВА
-    // Проверяем когда последний раз устройства делали отстук
-    checkStatus: function(){
-        deviceMagic.getDevice(function(err,data){
-            if (err) {
-                console.log(err);
-            }
-            callback(null,data)
-        });
-        uploader(0);
-        function uploader(i) {
-            if (i < params.numberDevice) {
-                deviceMagic.saveDevice({
-                        deviceID: id,
-                        school: params.category,
-                        update: params.version
-                    },
-                    function (err) {
-                        if (err) {
-                            console.log(err);
-                        }
-
-                        uploader(i + 1);
-                    })
-            }
-        }
-    },
     // Выводим общее количество устройств
     getAllDeviceQuantity: function (callback,params) {
         deviceMagic.getQuantity(function (err, Quantity) {
@@ -112,7 +86,7 @@ module.exports = {
         },params);
     },
     //Создаем запросы к БД на добавление устройств
-    createDevice: function (params, callback) {
+    createDevice: function (params, callback,end) {
         uploader(0);
         function uploader(i) {
             if (i < params.numberDevice) {
@@ -133,15 +107,26 @@ module.exports = {
                                 if (err) {
                                     console.log(err);
                                 }
-                                callback(null,data)
+                                callback(null,data);
+                                if (i == params.numberDevice){
+                                    console.log("Use end callback");
+                                    end(null,true);
+                                }
                             });
-                            uploader(i + 1);
-                        })
+                            uploader(++i);
+                        });
                 });
             }
         }
     },
-
+    updateDevice: function (params, callback) {
+       userMagic.updateDeviceInfo(params, function (err, devices) {
+            if (err) {
+                console.log(err);
+            }
+            callback(null, devices);
+        });
+    },
     //КАТЕГОРИИ
     //Добавление категорий
     createCategory: function (category, callback) {

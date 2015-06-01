@@ -9,6 +9,7 @@ var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
 var multer = require('multer');
+var cron = require('./app/service/cron.js');
 
 mongoose.connect(dbConfig.url);
 
