@@ -30,6 +30,8 @@ function createNewCategory() {
 };
 
 var newNameId;
+var idDevice;
+var tokenDevice;
 
 function renameCategoryId(x) {
     newNameId=x;
@@ -43,6 +45,23 @@ function inputNewNameCategory() {
     socket.emit('editCategory', device);
     //console.log(device);
 };
+
+function editDeviceWriteIdToken(id, token){
+    idDevice=id;
+    tokenDevice=token;
+    //console.log(id,token);
+    document.getElementById('idDeviceModal').innerHTML=id;
+    document.getElementById('tokenDeviceModal').innerHTML=token;
+}
+function editDevice(){
+    var device = {};
+    device.category = $("#editDeviceCategory").val();
+    device.version = $("#editDeviceVersion").val();
+    device.name = $("#newNameUser").val();
+    device.comments = $("#newComment").val();
+    socket.emit('updateDevice', device);
+    //console.log(device);
+}
 
 function find() {
     var device = {};

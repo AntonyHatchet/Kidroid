@@ -94,12 +94,38 @@ block content
                         i(class="icon-remove")
                     h3 Delete device
                 div(class="modal-body")
+
                 div(class="modal-footer")
                     //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
                     div(id='errorAddDevice' class='alert no-show')
                         //button(type="button" class="close" data-dismiss="alert") &times;
                         p All fields must be filled out
                     button(class="btn btn-primary" onclick='addDevice()') Add
+            //============MODAL EDIT device=====================
+            div(class="modal" id="editDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                        i(class="icon-remove")
+                    h3 Edit device
+                    div id
+                        div(id='idDeviceModal')
+                    div token
+                        div(id='tokenDeviceModal')
+                div(class="modal-body")
+                    form
+                        select(id="editDeviceCategory")
+                        br
+                        select(id="editDeviceVersion")
+                        br
+                        input(type='text' id="newNameUser" name='category' placeholder='Name User')
+                        br
+                        input(type='text' id="newComment" name='category' placeholder='Comments')
+                div(class="modal-footer")
+                    //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                    div(id='errorAddDevice' class='alert no-show')
+                        //button(type="button" class="close" data-dismiss="alert") &times;
+                        p All fields must be filled out
+                    button(class="btn btn-primary" onclick='editDevice()') Edit
             //============MODAL maps=====================
             div(class="modal" id="map" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: -1;")
                 div(class="modal-header")
