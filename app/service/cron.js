@@ -3,7 +3,7 @@ var device = require('../routes/device.js');
 
 module.exports = {
     startCheckStatus: function(rule) {
-        schedule.scheduleJob({second:rule}, function () {
+        schedule.scheduleJob({minutes:rule}, function () {
             device.checkStatus()
         })
     },
