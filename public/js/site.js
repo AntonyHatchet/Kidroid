@@ -11,9 +11,7 @@ $(document).ready( function() {
   var thisMonth = moment().format('YYYY-MM');
 
   var eventArray = [
-    { startDate: thisMonth + '-10', endDate: thisMonth + '-14', title: 'Multi-Day Event' },
-    { startDate: thisMonth + '-21', endDate: thisMonth + '-23', title: 'Another Multi-Day Event' },
-    { date: thisMonth + '-27', title: 'Single Day Event' }
+    {}
   ];
 
   // the order of the click handlers is predictable.
