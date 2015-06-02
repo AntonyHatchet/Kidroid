@@ -5,7 +5,7 @@ socket.on('displayData', function (data) {
     //console.log(data.length);
     html = '';
     for (i in data)
-        html += "<tr><td>" + data[i].device_id + "</td><td>" + data[i].apk_version + "</td><td>loader version</td><td>" + data[i].registered + "</td><td>" + data[i].school + "</td><td><a href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>show map</a> <a href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(" + data[i].device_id + "," + data[i].token + ")'>Edit</a> <button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].device_id + "\")\')>Delete</button></td></tr>";
+        html += "<tr><td>" + data[i].device_id + "</td><td>" + data[i].apk_version + "</td><td>loader version</td><td>" + ((data[i].online)? 'Online':'Offline') + "</td><td>" + data[i].school + "</td><td><a href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>show map</a> <a href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(" + data[i].device_id + "," + data[i].token + ")'>Edit</a> <button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].device_id + "\")\')>Delete</button></td></tr>";
     $("#deviceTable").html(html);
 });
 

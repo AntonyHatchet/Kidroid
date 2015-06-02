@@ -1,3 +1,4 @@
+'use strict';
 var deviceMagic = require('../dbMagic/deviceMagic');
 var userMagic = require('../dbMagic/userMagic');
 

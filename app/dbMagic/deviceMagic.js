@@ -9,7 +9,6 @@ module.exports = {
         var query = {};
         if (params!=undefined) {
             query.device_id = (!params.id) ? {$exists: true} : {$gte:+params.id};
-            query.registered = (!params.status) ? {$exists: true} : params.status;
             query.school = (!params.category) ? {$exists: true} : params.category;
             query.apk_version = (!params.version) ? {$exists: true} : params.version;
             query.online = (!params.status) ? {$exists: true} : params.status;
@@ -22,9 +21,8 @@ module.exports = {
     },
     //Поиск устройств согласно запросам
     getAllDevice: function (callback) {
-        Device.find("",function (err, Devices) {
+        Device.find({"online":true},function (err, Devices) {
             // Execute callback
-            //console.log(Devices);
             callback(null, Devices);
         }).sort({device_id:1});
 
@@ -34,7 +32,6 @@ module.exports = {
         if (params!=undefined) {
             var page = (!params.page)? "" : +params.page;
             query.device_id = (!params.id) ? {$exists: true} : {$gte:+params.id};
-            query.registered = (!params.status) ? {$exists: true} : params.status;
             query.school = (!params.category) ? {$exists: true} : params.category;
             query.apk_version = (!params.version) ? {$exists: true} : params.version;
             query.online = (!params.status) ? {$exists: true} : params.status;
@@ -85,7 +82,7 @@ module.exports = {
     saveDevice: function (deviceInfo, callback) {
         var newDevice = new Device({
             school: deviceInfo.school,
-            timestamp: new Date(),
+            timestamp: new Date().getTime(),
             device_id: deviceInfo.deviceID,
             registered: false,
             apk_to_update: deviceInfo.update,
@@ -158,6 +155,15 @@ module.exports = {
             callback(err);
         });
 
+    },
+    updateDeviceStatus: function (deviceInfo) {
+                Device.update({"_id": deviceInfo}, {$set:{"online":false}}, function (err, updated) {
+                    if (err) {
+                        console.log("not updated", err);
+                    }
+                    console.log("This device is offline status updated", updated);
+                    // Execute callback passed from route
+                })
     },
     //TODO Переписать, сейчас возможны дубликаты при множественной генерации id
     createDeviceId: function (callback) {

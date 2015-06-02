@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 
 var DeviceSchema = mongoose.Schema({
     school: String,
-    timestamp: String,
+    timestamp: Date,
     device_id: Number,
     token: String,
     latitude: Array,

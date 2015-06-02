@@ -10,7 +10,10 @@ module.exports = {
                 console.log(err);
             }
             data.forEach(function(device){
-                console.log(device.timestamp)
+                var time = (new Date - device.timestamp)/60000;
+                if (time > 30){
+                    deviceMagic.updateDeviceStatus(device._id);
+                }
             })
         });
     },
