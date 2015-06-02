@@ -28,7 +28,7 @@ function createNewCategory() {
 
     //console.log(nameCategory);
 };
-
+//TO DO =====================
 var newNameId;
 var idDevice;
 var tokenDevice;

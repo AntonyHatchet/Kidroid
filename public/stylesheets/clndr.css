@@ -1,0 +1,161 @@
+
+.calendar {
+  margin: 30px auto;
+  max-width: 600px;
+  font-family: 'Droid Sans Mono';
+  font-size: 14px;
+}
+.calendar .clndr .clndr-controls {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  margin-bottom: 10px;
+}
+.calendar .clndr .clndr-controls .month {
+  float: left;
+  width: 33%;
+  text-align: center;
+}
+.calendar .clndr .clndr-controls .clndr-control-button {
+  float: left;
+  width: 33%;
+}
+.calendar .clndr .clndr-controls .clndr-control-button.rightalign {
+  text-align: right;
+  width: 34%;
+}
+.calendar .clndr .clndr-controls .clndr-control-button .clndr-next-button {
+  cursor: pointer;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+.calendar .clndr .clndr-controls .clndr-control-button .clndr-next-button:hover {
+  background: #ddd;
+}
+.calendar .clndr .clndr-controls .clndr-control-button .clndr-next-button.inactive {
+  opacity: 0.5;
+}
+.calendar .clndr .clndr-controls .clndr-control-button .clndr-next-button.inactive:hover {
+  background: none;
+  cursor: default;
+}
+.calendar .clndr .clndr-controls .clndr-control-button .clndr-previous-button {
+  cursor: pointer;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+.calendar .clndr .clndr-controls .clndr-control-button .clndr-previous-button:hover {
+  background: #ddd;
+}
+.calendar .clndr .clndr-controls .clndr-control-button .clndr-previous-button.inactive {
+  opacity: 0.5;
+}
+.calendar .clndr .clndr-controls .clndr-control-button .clndr-previous-button.inactive:hover {
+  background: none;
+  cursor: default;
+}
+.calendar .clndr .clndr-table {
+  table-layout: fixed;
+  width: 100%;
+}
+.calendar .clndr .clndr-table .header-days {
+  height: 30px;
+  font-size: 10px;
+  background: #0D70A6;
+}
+.calendar .clndr .clndr-table .header-days .header-day {
+  vertical-align: middle;
+  text-align: center;
+  border-left: 1px solid #000000;
+  border-top: 1px solid #000000;
+  color: #fff;
+}
+.calendar .clndr .clndr-table .header-days .header-day:last-child {
+  border-right: 1px solid #000000;
+}
+.calendar .clndr .clndr-table tr {
+  height: 85px;
+}
+.calendar .clndr .clndr-table tr td {
+  vertical-align: top;
+}
+.calendar .clndr .clndr-table tr .day {
+  border-left: 1px solid #000000;
+  border-top: 1px solid #000000;
+  width: 100%;
+  height: inherit;
+}
+.calendar .clndr .clndr-table tr .day:hover {
+  background: #eee;
+}
+.calendar .clndr .clndr-table tr .day.today,
+.calendar .clndr .clndr-table tr .day.my-today {
+  background: #9AD6E3;
+}
+.calendar .clndr .clndr-table tr .day.today:hover,
+.calendar .clndr .clndr-table tr .day.my-today:hover {
+  background: #72c6d8;
+}
+.calendar .clndr .clndr-table tr .day.today.event,
+.calendar .clndr .clndr-table tr .day.my-today.event {
+  background: #a7dbc1;
+}
+.calendar .clndr .clndr-table tr .day.event,
+.calendar .clndr .clndr-table tr .day.my-event {
+  background: #B4E09F;
+}
+.calendar .clndr .clndr-table tr .day.event:hover,
+.calendar .clndr .clndr-table tr .day.my-event:hover {
+  background: #96d478;
+}
+.calendar .clndr .clndr-table tr .day.inactive,
+.calendar .clndr .clndr-table tr .day.my-inactive {
+  background: #ddd;
+}
+.calendar .clndr .clndr-table tr .day:last-child {
+  border-right: 1px solid #000000;
+}
+.calendar .clndr .clndr-table tr .day .day-contents {
+  box-sizing: border-box;
+  padding: 8px;
+  font-size: 12px;
+  text-align: right;
+}
+.calendar .clndr .clndr-table tr .empty,
+.calendar .clndr .clndr-table tr .adjacent-month,
+.calendar .clndr .clndr-table tr .my-empty,
+.calendar .clndr .clndr-table tr .my-adjacent-month {
+  border-left: 1px solid #000000;
+  border-top: 1px solid #000000;
+  width: 100%;
+  height: inherit;
+  background: #eee;
+}
+.calendar .clndr .clndr-table tr .empty:hover,
+.calendar .clndr .clndr-table tr .adjacent-month:hover,
+.calendar .clndr .clndr-table tr .my-empty:hover,
+.calendar .clndr .clndr-table tr .my-adjacent-month:hover {
+  background: #ddd;
+}
+.calendar .clndr .clndr-table tr .empty:last-child,
+.calendar .clndr .clndr-table tr .adjacent-month:last-child,
+.calendar .clndr .clndr-table tr .my-empty:last-child,
+.calendar .clndr .clndr-table tr .my-adjacent-month:last-child {
+  border-right: 1px solid #000000;
+}
+.calendar .clndr .clndr-table tr:last-child .day,
+.calendar .clndr .clndr-table tr:last-child .my-day {
+  border-bottom: 1px solid #000000;
+}
+.calendar .clndr .clndr-table tr:last-child .empty,
+.calendar .clndr .clndr-table tr:last-child .my-empty {
+  border-bottom: 1px solid #000000;
+}
