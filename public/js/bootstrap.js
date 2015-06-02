@@ -842,6 +842,7 @@
             .addClass('in')
             .attr('aria-hidden', false)
             .css('z-index','1050')
+            .css('opacity','1')
 
           that.enforceFocus()
 
@@ -874,6 +875,7 @@
           .removeClass('in')
           .attr('aria-hidden', true)
           .css('z-index','-1')
+          .css('opacity','0')
 
         $.support.transition && this.$element.hasClass('fade') ?
           this.hideWithTransition() :
