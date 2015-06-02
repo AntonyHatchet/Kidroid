@@ -11,12 +11,9 @@ module.exports = {
     findAllUsers: function (callback) {
         User.find("",{"local.name":1}, function (err, data) {
 
-            if (err) {
-                throw err;
-            }
+            if (err) return console.log(err,"findAllUsers User.find err");
 
             if (data != null) {
-                console.log(data);
                 callback(null, data)
             }
         });
@@ -24,9 +21,7 @@ module.exports = {
     removeUsers: function (data, callback) {
         User.remove({"_id": data}, function (err, category) {
 
-            if (err) {
-                throw err;
-            }
+            if (err) return console.log(err,"removeUsers User.remove err");
 
             if (category != null) {
 
@@ -48,9 +43,9 @@ module.exports = {
     updateDeviceInfo: function (data, callback) {
 
         Device.findOne({"device_id": data.id}, function (err, category) {
-            if (err) {
-                throw err;
-            }
+
+            if (err) return console.log(err,"updateDeviceInfo Device.findOne err");
+
             if (category != null) {
                 // Нашли такой ID, создаем дату для записи в БД.
                 var update = {
@@ -62,15 +57,13 @@ module.exports = {
                 };
                 //Пишем в БД к ID из запроса
                 Device.update({"device_id": data.id}, {$set: update},{$upsert: true}, function (err, updated) {
-                    if (err) {
-                        console.log("not updated", err);
-                    }
+
+                    if (err) return console.log(err,"updateDeviceInfo Device.update err");
+
                     if (updated != null){
                         Device.find("", function (err, category) {
 
-                            if (err) {
-                               console.log(err,"find error ");
-                            }
+                            if (err) return console.log(err,"updateDeviceInfo Device.find err");
 
                             if (category != null) {
                                 return callback(null, category)
@@ -85,9 +78,7 @@ module.exports = {
     findAllCategory: function (callback) {
         Category.find("", function (err, category) {
 
-            if (err) {
-                throw err;
-            }
+            if (err) return console.log(err,"findAllCategory Category.find err");
 
             if (category != null) {
                 callback(null, category)
@@ -95,11 +86,10 @@ module.exports = {
         });
     },
     createSchoolCategory: function (data, callback) {
-        //console.log(data.name);
         Category.findOne({"name": data.name}, function (err, category) {
-            if (err) {
-                callback(null, err);
-            }
+
+            if (err) return console.log(err,"createSchoolCategory Category.findOne err");
+
             if (category == null) {
                 var newCategory = new Category({
                     name: data.name
@@ -107,15 +97,11 @@ module.exports = {
 
                 newCategory.save(function (err) {
 
-                    if (err) {
-                        callback(null, err);
-                    }
+                    if (err) return console.log(err,"createSchoolCategory newCategory.save err");
 
                     Category.find("", function (err, category) {
 
-                        if (err) {
-                            callback(null, err);
-                        }
+                        if (err) return console.log(err,"createSchoolCategory Category.find err");
 
                         if (category != null) {
                             callback(null, category)
@@ -127,54 +113,34 @@ module.exports = {
         })
     },
     updateSchoolCategory: function (data, callback) {
+        //Пишем в БД к ID из запроса
+        Category.update({"_id": data.id}, {$set: {"name": data.newName}}, function (err, updated) {
 
-        Category.findOne({"_id": data.id}, function (err, category) {
-            if (err) {
-                throw err;
-            }
-            if (category != null) {
-                // Нашли такой ID, создаем дату для записи в БД.
-                var update = {
-                    "name": data.newName
-                };
-                //Пишем в БД к ID из запроса
-                Category.update({"_id": data.id}, {$set: update}, function (err, updated) {
-                    if (err) {
-                        console.log("not updated", err);
+            if (err) return console.log(err,"updateSchoolCategory Category.update err");
+
+            if (updated != null){
+                Category.find("", function (err, category) {
+
+                    if (err) return console.log(err,"updateSchoolCategory Category.find err");
+
+                    if (category != null) {
+                        callback(null, category)
                     }
-                    if (callback != null){
-                        Category.find("", function (err, category) {
-
-                            if (err) {
-                                callback(null, err);
-                            }
-
-                            if (category != null) {
-                                callback(null, category)
-                            }
-                        });
-                    }
-                    // Execute callback passed from route
                 });
             }
-            console.log("find err", err);
-            callback(err);
+            // Execute callback passed from route
         });
     },
     removeSchoolCategory: function (data, callback) {
         Category.remove({"_id": data}, function (err, category) {
 
-            if (err) {
-                throw err;
-            }
+            if (err) return console.log(err,"removeSchoolCategory Category.remove err");
 
             if (category != null) {
 
                 Category.find("", function (err, category) {
 
-                    if (err) {
-                        throw err;
-                    }
+                    if (err) return console.log(err,"removeSchoolCategory Category.find err");
 
                     if (category != null) {
 
@@ -187,10 +153,8 @@ module.exports = {
     },
     findAllVersion: function (callback) {
         Version.find("",{"_id":0,"version_apk":1}, function (err, version) {
-            //console.log(version);
-            if (err) {
-                throw err;
-            }
+
+            if (err) return console.log(err,"findAllVersion Version.find err");
 
             if (version != null) {
                 callback(null, version)
@@ -198,11 +162,11 @@ module.exports = {
         });
     },
     findLink: function (version,callback) {
-        console.log(version,"try find version");
+
         Version.find({'version_apk':+version},{"_id":0,"link":1}, function (err, data) {
-            if (err) {
-                throw err;
-            }
+
+            if (err) return console.log(err,"findLink Version.find err");
+
             if (data != null) {
                 console.log(data,"Link data");
                 callback(null, data)
@@ -210,11 +174,11 @@ module.exports = {
         });
     },
     createVersion: function (data, callback) {
-        console.log(data,"version start saving to db");
+
         Version.findOne({"version_apk": data.version}, function (err, category) {
-            if (err) {
-                callback(null, err);
-            }
+
+            if (err) return console.log(err,"createVersion Version.findOne err");
+
             if (category == null) {
                 var newVersion = new Version({
                     version_apk: data.version,
@@ -223,15 +187,11 @@ module.exports = {
 
                 newVersion.save(function (err) {
 
-                    if (err) {
-                        callback(null, err);
-                    }
+                    if (err) return console.log(err,"createVersion newVersion.save err");
 
                     Version.find("", function (err, category) {
 
-                        if (err) {
-                            callback(null, err);
-                        }
+                        if (err) return console.log(err,"createVersion Version.find err");
 
                         if (category != null) {
                             callback(null, category)
@@ -245,17 +205,13 @@ module.exports = {
     removeVersion: function (data, callback) {
         Version.remove({"_id": data}, function (err, category) {
 
-            if (err) {
-                throw err;
-            }
+            if (err) return console.log(err,"removeVersion Version.remove err");
 
             if (category != null) {
 
                 Version.find("", function (err, category) {
 
-                    if (err) {
-                        throw err;
-                    }
+                    if (err) return console.log(err,"removeVersion Version.find err");
 
                     if (category != null) {
 

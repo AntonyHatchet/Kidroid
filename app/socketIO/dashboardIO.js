@@ -4,6 +4,7 @@
 
 module.exports = function (server) {
     var user = require('../routes/users.js');
+    var cron = require('../dbMagic/cronMagic.js');
     var io = require('socket.io').listen(server);
 
     io.on('connection', function (socket) {
@@ -33,7 +34,6 @@ module.exports = function (server) {
             if (err) {
                 console.log(err);
             }
-            //console.log('version',data);
             io.emit('version', data);
         });
         user.findAllUsers(function (err, data) {
@@ -45,7 +45,6 @@ module.exports = function (server) {
 
         // «апрос устройств на страницу по колличеству
         socket.on('getDevicesByParams', function (params) {
-                //console.log(params, "getDevicesByParams");
                 user.getDevice(function (err, callback) {
                     if (err) {
                         console.log(err);
@@ -55,7 +54,6 @@ module.exports = function (server) {
             }
         );
         socket.on('getDevicesQuantityByParams', function (params) {
-                //console.log(params, "getDevicesByParams");
                 user.getAllDeviceQuantity(function (err, callback) {
                     if (err) {
                         console.log(err);
@@ -133,12 +131,47 @@ module.exports = function (server) {
             }
         );
         socket.on('updateDevice', function (params) {
-                console.log(params);
                 user.updateDevice(params, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
                     io.emit('displayData', callback);
+                });
+            }
+        );
+        socket.on('getDeviceForSchedule', function (params) {
+                cron.newScheduleDevice(params, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('deviceScheduled', callback);
+                });
+            }
+        );
+        socket.on('createSchedule', function (params) {
+                cron.newSchedule(params, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('allSchedule', callback);
+                });
+            }
+        );
+        socket.on('updateSchedule', function (params) {
+                cron.updateSchedule(params, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('allSchedule', callback);
+                });
+            }
+        );
+        socket.on('checkScheduleStatus', function (id) {
+                cron.checkScheduleStatus(id, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('deviceScheduled', callback);
                 });
             }
         );

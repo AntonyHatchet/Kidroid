@@ -1,13 +1,8 @@
 var schedule = require('node-schedule');
 var device = require('../routes/device.js');
+var Cron = require('../dbMagic/cronMagic');
 
-module.exports = {
-    startCheckStatus: function(rule) {
-        schedule.scheduleJob({minutes:rule}, function () {
-            device.checkStatus()
-        })
-    },
-    newTaskScheduled: function(data, callback){
-
-    }
-};
+schedule.scheduleJob({minutes:[0,20,40]}, function () {
+    device.checkStatus();
+    Cron.checkScheduleStart();
+});

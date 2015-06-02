@@ -43,9 +43,9 @@ module.exports = function (app, passport) {
         apk.version = util.inspect(manifest);
         apk.link = req.files.category.path;
         users.createVersion(apk, function(err,callback){
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err," app.post('/uploadFile'..  users.createVersion err");
+
             if (callback == false) {
                 res.redirect('back');
             }

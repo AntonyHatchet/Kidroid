@@ -9,52 +9,51 @@ module.exports = {
     //Поиск всех пользователей
     findAllUsers: function (callback) {
         userMagic.findAllUsers(function (err, data) {
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err,"findAllUsers userMagic.findAllUsers err");
+
             callback(null, data);
         });
     },
     removeUsers: function (id, callback) {
         userMagic.removeUsers(id, function (err, data) {
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err,"removeUsers userMagic.removeUsers err");
+
             callback(null, data);
         });
     },
     // ВЕРСИИ
     createVersion: function (version, callback) {
         userMagic.createVersion(version, function (err, version) {
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err,"createVersion userMagic.createVersion err");
+
             callback(null, version);
         });
     },
     removeVersion: function (category, callback) {
         userMagic.removeVersion(category, function (err, category) {
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err,"removeVersion userMagic.removeVersion err");
+
             callback(null, category);
         });
     },
     //Поиск всех версий
     findAllVersion: function (callback) {
         userMagic.findAllVersion(function (err, version) {
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err,"findAllVersion userMagic.findAllVersion err");
+
             callback(null, version);
         });
     },
     findLink: function (version,callback) {
         userMagic.findLink(version,function (err, link) {
-            if (err) {
-                console.log(err);
-            }
-            console.log(link, "Link on user.js");
+
+            if (err) return console.log(err,"findLink userMagic.findLink err");
+
             callback(null, link);
         });
     },
@@ -62,27 +61,27 @@ module.exports = {
     // Выводим общее количество устройств
     getAllDeviceQuantity: function (callback,params) {
         deviceMagic.getQuantity(function (err, Quantity) {
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err,"getAllDeviceQuantity deviceMagic.getQuantity err");
+
             callback(null, Quantity);
         },params);
     },
     //Удаляем девайс
     removeDevice: function (id, callback) {
         deviceMagic.removeDevice(id, function (err, data) {
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err,"removeDevice deviceMagic.removeDevice err");
+
             callback(null, data);
         });
     },
     // Запускаем поиск устройств c параметрами
     getDevice: function (callback,params) {
         deviceMagic.getDevice(function (err, Devices) {
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err,"getDevice deviceMagic.getDevice err");
+
             callback(null, Devices);
         },params);
     },
@@ -92,22 +91,22 @@ module.exports = {
         function uploader(i) {
             if (i < params.numberDevice) {
                 deviceMagic.createDeviceId(function(err,id){
-                    if (err) {
-                        throw err;
-                    }
+
+                    if (err) return console.log(err,"createDevice deviceMagic.createDeviceId err");
+
                     deviceMagic.saveDevice({
                             deviceID: id,
                             school: params.category,
                             update: params.version
                         },
                         function (err) {
-                            if (err) {
-                                console.log(err);
-                            }
+
+                            if (err) return console.log(err,"createDevice deviceMagic.saveDevice err");
+
                             deviceMagic.getDevice(function(err,data){
-                                if (err) {
-                                    console.log(err);
-                                }
+
+                                if (err) return console.log(err,"createDevice deviceMagic.getDevice err");
+
                                 callback(null,data);
                                 if (i == params.numberDevice){
                                     console.log("Use end callback");
@@ -122,9 +121,9 @@ module.exports = {
     },
     updateDevice: function (params, callback) {
        userMagic.updateDeviceInfo(params, function (err, devices) {
-            if (err) {
-                console.log(err);
-            }
+
+           if (err) return console.log(err,"updateDevice userMagic.updateDeviceInfo err");
+
             callback(null, devices);
         });
     },
@@ -132,36 +131,36 @@ module.exports = {
     //Добавление категорий
     createCategory: function (category, callback) {
         userMagic.createSchoolCategory(category, function (err, category) {
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err,"createCategory  userMagic.createSchoolCategory err");
+
             callback(null, category);
         });
     },
     //Обновление категорий
     updateCategory: function (params, callback) {
         userMagic.updateSchoolCategory(params, function (err, category) {
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err,"updateCategory  userMagic.updateSchoolCategory err");
+
             callback(null, category);
         });
     },
     //Удаление категорий
     removeCategory: function (category, callback) {
         userMagic.removeSchoolCategory(category, function (err, category) {
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err,"removeCategory  userMagic.removeSchoolCategory err");
+
             callback(null, category);
         });
     },
     //Поиск всех категорий
     findCategory: function (callback) {
         userMagic.findAllCategory(function (err, category) {
-            if (err) {
-                console.log(err);
-            }
+
+            if (err) return console.log(err,"findCategory  userMagic.findAllCategory err");
+
             callback(null, category);
         });
     }

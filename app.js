@@ -9,9 +9,9 @@ var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
 var multer = require('multer');
-//Старт проверки на Online
+
 var cron = require('./app/service/cron.js');
-cron.startCheckStatus([0,20,40]);
+var test = require('./tests/cronTest.js');
 
 mongoose.connect(dbConfig.url);
 

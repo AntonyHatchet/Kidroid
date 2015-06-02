@@ -15,6 +15,7 @@ module.exports = {
         }
         query = Device.count(query);
         query.exec(function (err, Devices) {
+            if (err) return console.log(err,"getQuantity Device.count err");
             // Execute callback
             callback(null, Devices);
         });
@@ -22,6 +23,7 @@ module.exports = {
     //Поиск устройств согласно запросам
     getAllDevice: function (callback) {
         Device.find({"online":true},function (err, Devices) {
+            if (err) return console.log(err,"getAllDevice Device.find err");
             // Execute callback
             callback(null, Devices);
         }).sort({device_id:1});
@@ -38,8 +40,7 @@ module.exports = {
         }
         query = Device.find(query).skip( page ).limit(10).sort({device_id:1});
         query.exec(function (err, Devices) {
-            // Execute callback
-            //console.log(Devices);
+            if (err) return console.log(err,"getDevice Device.find err");
             callback(null, Devices);
         });
 
@@ -50,7 +51,7 @@ module.exports = {
         var device = Device;
 
         device.findOne({"device_id": id.id, "registered": false}, function (err, device) {
-            if (err) throw err;
+            if (err) return console.log(err,"regDevice device.findOne err");
             callback(null, device);
         });
 
@@ -63,7 +64,7 @@ module.exports = {
             "token": deviceInfo.token,
             "registered": true
         }, function (err, device) {
-            if (err) return console.log(err);
+            if (err) return console.log(err,"authDevice device.findOne err");
             callback(null, device);
         });
     },
@@ -74,7 +75,7 @@ module.exports = {
             "_id": 1,
             "apk_to_update": 1
         }, function (err, device) {
-            if (err) return console.log(err);
+            if (err) return console.log(err,"findVersion device.findOne err");
             callback(null, device);
         });
     },
@@ -91,9 +92,7 @@ module.exports = {
             "online": false
         });
         newDevice.save(function (err) {
-            if (err) {
-                throw err;
-            }
+            if (err) return console.log(err,"saveDevice newDevice.save err");
             // Execute callback passed from route
             callback(null, newDevice);
         });
@@ -101,9 +100,8 @@ module.exports = {
 
     registrDevice: function (deviceInfo, callback) {
         Device.findOne({"device_id": deviceInfo.id, "registered": false}, function (err, device) {
-            if (err) {
-                throw err;
-            }
+            if (err) return console.log(err,"registrDevice Device.findOne err");
+
             if (device != null) {
                 var token = Math.random().toString(36).substr(13);
                 var update = {
@@ -112,9 +110,9 @@ module.exports = {
                     "registered": true
                 };
                 Device.update({"device_id": deviceInfo.id}, {$set: update}, {upsert: true}, function (err, updated) {
-                    if (err) {
-                        console.log("not updated", err);
-                    }
+
+                    if (err) return console.log(err,"registrDevice Device.update err");
+
                     if (updated != null) {
                         // Execute callback passed from route
                         callback(null, token)
@@ -125,12 +123,11 @@ module.exports = {
     },
 
     updateDevice: function (deviceInfo, callback) {
+
         //Поиск в БД, ID полученного из запроса
-        console.log(deviceInfo.device_id,"update Device");
         Device.findOne({"device_id": deviceInfo.device_id}, function (err, device) {
-            if (err) {
-                throw err;
-            }
+            if (err) return console.log(err,"updateDevice Device.findOne err");
+
             if (device != null) {
                 // Нашли такой ID, создаем дату для записи в БД.
                 var update = {
@@ -142,13 +139,11 @@ module.exports = {
                     "update_required": false,
                     "online":true
                 };
+
                 //Пишем в БД к ID из запроса
                 Device.update({"device_id": deviceInfo.device_id}, {$set: update}, {upsert: true}, function (err, updated) {
-                    if (err) {
-                        console.log("not updated", err);
-                    }
+                    if (err) return console.log(err,"updateDevice Device.update err");
                     console.log("updated", updated);
-                    // Execute callback passed from route
                 });
             }
             console.log("find err", err);
@@ -157,37 +152,31 @@ module.exports = {
 
     },
     updateDeviceStatus: function (deviceInfo) {
-                Device.update({"_id": deviceInfo}, {$set:{"online":false}}, function (err, updated) {
-                    if (err) {
-                        console.log("not updated", err);
-                    }
-                    console.log("This device is offline status updated", updated);
-                    // Execute callback passed from route
-                })
+        Device.update({"_id": deviceInfo}, {$set:{"online":false}}, function (err, updated) {
+            if (err) return console.log(err,"updateDeviceStatus err");
+            console.log("This device is offline status updated", updated);
+        })
     },
     //TODO Переписать, сейчас возможны дубликаты при множественной генерации id
     createDeviceId: function (callback) {
         var find = Device.find();
 
        find.exec(function (err, id) {
-            if (err) {
-                throw err;
-            }
+           if (err) return console.log(err,"createDeviceId exec");
+
             // Execute callback
             id = (!id[id.length - 1])? id = 1:id[id.length - 1].device_id += 1;
             callback(null,id)
         })
     },
     removeDevice: function (data, callback) {
-        Device.remove({"device_id": +data}, function (err, category) {
+        Device.remove({"device_id": +data}, function (err, Device) {
 
-            if (err) {
-                throw err;
-            }
+            if (err) return console.log(err,"removeDevice err");
 
-            if (category != null) {
+            if (Device != null) {
 
-                Device.find("", function (err, category) {
+                Device.find("", function (err, Device) {
 
                     if (err) {
                         throw err;
@@ -195,11 +184,12 @@ module.exports = {
 
                     if (category != null) {
 
-                        callback(null, category)
+                        callback(null, Device)
 
                     }
                 });
             }
+            return console.log("removeDevice Device is " + Device);
         });
     }
 };
