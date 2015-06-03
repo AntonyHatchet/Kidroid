@@ -5,12 +5,13 @@ socket.on('displayData', function (data) {
     //console.log(data.length);
     html = '';
     for (i in data)
-        html += "<tr><td>" + data[i].device_id + "</td><td>" + data[i].apk_version + "</td><td>loader version</td><td>" + ((data[i].online)? 'Online':'Offline') + "</td><td>" + data[i].school + "</td><td><a href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>show map</a> <a href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(" + data[i].device_id + "," + data[i].token + ")'>Edit</a> <button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].device_id + "\")\')>Delete</button></td></tr>";
+        html += "<tr><td># " + data[i].device_id + " ("+ data[i].name + ")" + "<p>  Android v." +data[i].android +"</p></td><td>" + data[i].apk_version + "</td><td>"+ data[i].loader_version +"</td><td>" + ((data[i].online)? 'Online':'Offline') + "</td><td>" + data[i].school + "</td><td><a href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>show map</a> <a href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(" + data[i].device_id + "," + data[i].token + ")'>Edit</a> <button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].device_id + "\")\')>Delete</button></td></tr>";
     $("#deviceTable").html(html);
 });
 
 socket.on('quantity', function (data) {
     console.log(data);
+    $("caption h4").html(data + " devices found:");
     html = '<ul>';
     Page = Math.ceil(data / 10);
     for (var j = 1; j <= Page; j++)

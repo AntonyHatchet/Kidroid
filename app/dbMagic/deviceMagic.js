@@ -79,7 +79,6 @@ module.exports = {
             callback(null, device);
         });
     },
-    //Сохраняем дату от девайса
     saveDevice: function (deviceInfo, callback) {
         var newDevice = new Device({
             school: deviceInfo.school,
@@ -88,8 +87,11 @@ module.exports = {
             registered: false,
             apk_to_update: deviceInfo.update,
             apk_version: 0,
+            loader_version: 0,
             "update_required": true,
-            "online": false
+            "online": false,
+            "name": "Test Name",
+            "android": 0
         });
         newDevice.save(function (err) {
             if (err) return console.log(err,"saveDevice newDevice.save err");
@@ -137,7 +139,8 @@ module.exports = {
                     "loader_version": deviceInfo.loader_version,
                     "apk_version": deviceInfo.apk_version,
                     "update_required": false,
-                    "online":true
+                    "online":true,
+                    "android": +deviceInfo.android
                 };
 
                 //Пишем в БД к ID из запроса
@@ -170,26 +173,25 @@ module.exports = {
         })
     },
     removeDevice: function (data, callback) {
-        Device.remove({"device_id": +data}, function (err, Device) {
+        Device.remove({"device_id": +data}, function (err, data) {
 
             if (err) return console.log(err,"removeDevice err");
 
-            if (Device != null) {
+            if (data != null) {
 
-                Device.find("", function (err, Device) {
+                Device.find("", function (err, device) {
 
                     if (err) {
                         throw err;
                     }
 
-                    if (category != null) {
+                    if (device != null) {
 
-                        callback(null, Device)
+                        callback(null, device)
 
                     }
                 });
             }
-            return console.log("removeDevice Device is " + Device);
         });
     }
 };

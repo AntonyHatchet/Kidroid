@@ -359,3 +359,17 @@ input[type="number"]::-webkit-inner-spin-button:active {
 .tab-content.current {
     display: inherit;
 }
+.form-search select{
+    margin-left: 30px;
+}
+.form-search select{
+    margin-left: 30px;
+}
+#paged th, td{
+    padding: 5px 15px!important;
+    vertical-align: middle!important;
+}
+#paged caption h4{
+    margin-top: 0px;
+    float: left;
+}
