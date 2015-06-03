@@ -105,8 +105,6 @@ function finsDeviceSchedule(){
             end: $('#idEnd').val()
         }
     };
-    device.id.start = $('#idStart').val();
-    device.id.end = $('#idEnd').val();
     device.school = $('#scheduleDeviceCategory').val();
     device.version = $('#scheduleDeviceVersionFilter').val();
     socket.emit('getDeviceForSchedule', device)
