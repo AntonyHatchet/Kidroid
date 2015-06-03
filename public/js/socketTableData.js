@@ -74,6 +74,6 @@ socket.on('deviceScheduled', function (data) {
     //console.log(data);
     html = '';
     for (i in data)
-        html += "<tr><input type='checkbox' name=''><td><input type='checkbox'></td><td>" + data[i].device_id + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
+        html += "<tr><td><input type='checkbox' id='checkSchedule" + data[i].device_id + "' class='checkSchedule' value='" + data[i].device_id + "'></td><td>" + data[i].device_id + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
     $("#tableSchedule").html(html);
 });

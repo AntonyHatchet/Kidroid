@@ -99,31 +99,39 @@ function addDevice() {
 };
 
 function finsDeviceSchedule(){
-    var device ={};
-    device.idStart = $('#idStart').val();
-    device.idEnd = $('#idEnd').val();
+    var device ={
+        id:{
+            start: $('#idStart').val(),
+            end: $('#idEnd').val()
+        }
+    };
+    device.id.start = $('#idStart').val();
+    device.id.end = $('#idEnd').val();
     device.school = $('#scheduleDeviceCategory').val();
     device.version = $('#scheduleDeviceVersionFilter').val();
     socket.emit('getDeviceForSchedule', device)
     console.log(device);
 }
-function checkAll(obj) {
-    'use strict';
-    // Получаем NodeList дочерних элементов input формы:
-    var items = obj.form.getElementsByTagName("input"),
-        len, i;
-    // Здесь, увы цикл по элементам формы:
-    for (i = 0, len = items.length; i < len; i += 1) {
-        // Если текущий элемент является чекбоксом...
-        if (items.item(i).type && items.item(i).type === "checkbox") {
-            // Дальше логика простая: если checkbox "Выбрать всё" - отмечен
-            if (obj.checked) {
-                // Отмечаем все чекбоксы...
-                items.item(i).checked = true;
-            } else {
-                // Иначе снимаем отметки со всех чекбоксов:
-                items.item(i).checked = false;
-            }
+$(document).ready( function() {
+    $("#checkAllSchedule").click( function() {
+        if($('#checkAllSchedule').attr('checked')){
+            $('.checkSchedule:enabled').attr('checked', true);
+        } else {
+            $('.checkSchedule:enabled').attr('checked', false);
+        }
+    });
+});
+
+function createSchedule(){
+    start = $('#idStart').val();
+    end = $('#idEnd').val();
+    length = end-start;
+
+    var device ={};
+    for (var i = 0; i < length; i++){
+        if($('#checkSchedule').attr('checked')){
+            device.id = $('#checkSchedule').val();
         }
     }
+    console.log(device);
 }
