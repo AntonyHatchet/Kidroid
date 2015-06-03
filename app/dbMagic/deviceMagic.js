@@ -9,9 +9,9 @@ module.exports = {
         var query = {};
         if (params!=undefined) {
             query.name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
-            query.device_id = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
+            query.deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             query.school = (!params.category) ? {$exists: true} : params.category;
-            query.apk_version = (!params.version) ? {$exists: true} : params.version;
+            query.apk_version.build = (!params.version) ? {$exists: true} : params.version;
             query.online = (!params.status) ? {$exists: true} : params.status;
         }
         query = Device.count(query);
@@ -27,7 +27,7 @@ module.exports = {
             if (err) return console.log(err,"getAllDevice Device.find err");
             // Execute callback
             callback(null, Devices);
-        }).sort({device_id:1});
+        }).sort({deviceId:1});
 
     },
     getDevice: function (callback,params) {
@@ -35,12 +35,12 @@ module.exports = {
         if (params!=undefined) {
             var page = (!params.page)? "" : +params.page;
             query.name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
-            query.device_id = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
+            query.deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             query.school = (!params.category) ? {$exists: true} : params.category;
-            query.apk_version = (!params.version) ? {$exists: true} : params.version;
+            query.apk.build = (!params.version) ? {$exists: true} : params.version;
             query.online = (!params.status) ? {$exists: true} : params.status;
         }
-        query = Device.find(query).skip( page ).limit(10).sort({device_id:1});
+        query = Device.find(query).skip( page ).limit(10).sort({deviceId:1});
         query.exec(function (err, Devices) {
             if (err) return console.log(err,"getDevice Device.find err");
             callback(null, Devices);
@@ -52,7 +52,7 @@ module.exports = {
 
         var device = Device;
 
-        device.findOne({"device_id": id.id, "registered": false}, function (err, device) {
+        device.findOne({"deviceId": id.id, "registered": false}, function (err, device) {
             if (err) return console.log(err,"regDevice device.findOne err");
             callback(null, device);
         });
@@ -62,7 +62,7 @@ module.exports = {
     authDevice: function (deviceInfo, callback) {
         var device = Device;
         device.findOne({
-            "device_id": deviceInfo.id,
+            "deviceId": deviceInfo.id,
             "token": deviceInfo.token,
             "registered": true
         }, function (err, device) {
@@ -73,9 +73,9 @@ module.exports = {
     // Находим версию по ИД устройства
     findVersion: function (deviceInfo, callback) {
         var device = Device;
-        device.findOne({"device_id": +deviceInfo.id}, {
+        device.findOne({"deviceId": +deviceInfo.id}, {
             "_id": 1,
-            "apk_to_update": 1
+            "apkToUpdate": 1
         }, function (err, device) {
             if (err) return console.log(err,"findVersion device.findOne err");
             callback(null, device);
@@ -85,15 +85,21 @@ module.exports = {
         var newDevice = new Device({
             school: deviceInfo.school,
             timestamp: new Date().getTime(),
-            device_id: deviceInfo.deviceID,
+            deviceId: deviceInfo.deviceID,
             registered: false,
-            apk_to_update: deviceInfo.update,
-            apk_version: 0,
-            loader_version: 0,
-            "update_required": true,
-            "online": false,
+            apkToUpdate:{
+                version: deviceInfo.version,
+                build: deviceInfo.build
+            },
+            apk: {
+                version: 0,
+                build: 0
+            },
+            loader: 0,
+            "updateRequired": true,
+            "status": "Unregistered",
             "name": "Test Name",
-            "android": 0
+            "android": 4.4
         });
         newDevice.save(function (err) {
             if (err) return console.log(err,"saveDevice newDevice.save err");
@@ -103,7 +109,7 @@ module.exports = {
     },
 
     registrDevice: function (deviceInfo, callback) {
-        Device.findOne({"device_id": deviceInfo.id, "registered": false}, function (err, device) {
+        Device.findOne({"deviceId": deviceInfo.id, "registered": false}, function (err, device) {
             if (err) return console.log(err,"registrDevice Device.findOne err");
 
             if (device != null) {
@@ -111,9 +117,10 @@ module.exports = {
                 var update = {
                     "timestamp": new Date(),
                     "token": token,
-                    "registered": true
+                    "registered": true,
+                    "status":"Registered"
                 };
-                Device.update({"device_id": deviceInfo.id}, {$set: update}, {upsert: true}, function (err, updated) {
+                Device.update({"deviceId": deviceInfo.id}, {$set: update}, {upsert: true}, function (err, updated) {
 
                     if (err) return console.log(err,"registrDevice Device.update err");
 
@@ -129,7 +136,7 @@ module.exports = {
     updateDevice: function (deviceInfo, callback) {
 
         //Поиск в БД, ID полученного из запроса
-        Device.findOne({"device_id": deviceInfo.device_id}, function (err, device) {
+        Device.findOne({"deviceId": deviceInfo.device_id}, function (err, device) {
             if (err) return console.log(err,"updateDevice Device.findOne err");
 
             if (device != null) {
@@ -138,15 +145,16 @@ module.exports = {
                     "timestamp": new Date(),
                     "latitude": [deviceInfo.latitude],
                     "longitude": [deviceInfo.longitude],
-                    "loader_version": deviceInfo.loader_version,
-                    "apk_version": deviceInfo.apk_version,
+                    "loader": deviceInfo.loader_version,
+                    "apk.version": deviceInfo.apk_version,
+                    "apk.build": deviceInfo.apk_build,
                     "update_required": false,
                     "online":true,
                     "android": +deviceInfo.android
                 };
 
                 //Пишем в БД к ID из запроса
-                Device.update({"device_id": deviceInfo.device_id}, {$set: update}, {upsert: true}, function (err, updated) {
+                Device.update({"deviceId": deviceInfo.device_id}, {$set: update}, {upsert: true}, function (err, updated) {
                     if (err) return console.log(err,"updateDevice Device.update err");
                     console.log("updated", updated);
                 });
@@ -170,12 +178,12 @@ module.exports = {
            if (err) return console.log(err,"createDeviceId exec");
 
             // Execute callback
-            id = (!id[id.length - 1])? id = 1:id[id.length - 1].device_id += 1;
+            id = (!id[id.length - 1])? id = 1:id[id.length - 1].deviceId += 1;
             callback(null,id)
         })
     },
     removeDevice: function (data, callback) {
-        Device.remove({"device_id": +data}, function (err, data) {
+        Device.remove({"deviceId": +data}, function (err, data) {
 
             if (err) return console.log(err,"removeDevice err");
 

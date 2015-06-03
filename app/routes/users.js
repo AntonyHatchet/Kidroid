@@ -97,7 +97,8 @@ module.exports = {
                     deviceMagic.saveDevice({
                             deviceID: id,
                             school: params.category,
-                            update: params.version
+                            version: params.version,
+                            build: params.build
                         },
                         function (err,savedDevice) {
 

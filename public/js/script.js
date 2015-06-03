@@ -84,7 +84,8 @@ function page(i) {
 function addDevice() {
     var device = {};
     device.category = $("#addSelectCategory").val();
-    device.version = $("#addSelectVersion").val();
+    device.version = $("#addSelectVersion").val().split(' ')[0];
+    device.build = $("#addSelectVersion").val().split(' ')[1];
     device.numberDevice = $("#amountDevice").val();
     if (device.category != 0 && device.version !=0)  {
     socket.emit('createDevice', device);

@@ -36,11 +36,19 @@ module.exports = function (app, passport) {
 
         var reader = ApkReader.readFile(req.files.category.path);
         var manifest = reader.readManifestSync();
-        manifest.inspect = function(depth) {
-            return this.versionCode ;
+        manifest.inspect = function() {
+            Object.defineProperty(this,{
+                versionCode: function() {
+                    return this.versionCode;
+                },
+                versionName: function() {
+                    return this.versionName;
+                }
+            });
         };
         var apk = {};
-        apk.version = util.inspect(manifest);
+        apk.version = util.inspect(manifest.versionName).slice(0,4);
+        apk.build = util.inspect(manifest.versionCode);
         apk.link = req.files.category.path;
         users.createVersion(apk, function(err,callback){
 

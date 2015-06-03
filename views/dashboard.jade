@@ -176,26 +176,30 @@ block content
         #filters(class='tab-content')
             h2 Filters
             div(class='tabbable')
-                ul(class='nav nav-tabs')
-                    li(class='active')
-                        a(href="#filtersSchool" data-toggle="tab") School
-                    li
-                        a(href='#filtersVersion' data-toggle="tab") Version
+                .col-sm-12
+                    ul(class='nav nav-tabs')
+                        li(class='active')
+                            a(href="#filtersSchool" data-toggle="tab") School
+                        li
+                            a(href='#filtersVersion' data-toggle="tab") Version
                 #add-category
                     a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") add new category...
                     a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
                         //button(class='btn btn-primary') add new category...
-                table(class='table table-hover table-bordered table-striped')
-                    thead
-                        tr
-                            th(colspan='2') Category name
-                    tbody(id='tableFilter')
-                table(class='table table-hover table-bordered table-striped')
-                    thead
-                        tr
-                            th version
-                            th remove
-                    tbody(id='versionTable')
+                .col-sm-12
+                    table(class='table table-hover table-bordered table-striped')
+                        thead
+                            tr
+                                th(colspan='2') Category name
+                        tbody(id='tableFilter')
+                .col-sm-12
+                    table(class='table table-hover table-bordered table-striped')
+                        thead
+                            tr
+                                th version
+                                th build
+                                th remove
+                        tbody(id='versionTable')
             //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 div(class="modal-header")

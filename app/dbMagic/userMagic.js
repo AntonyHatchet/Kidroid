@@ -42,7 +42,7 @@ module.exports = {
     },
     updateDeviceInfo: function (data, callback) {
 
-        Device.findOne({"device_id": data.id}, function (err, category) {
+        Device.findOne({"deviceId": data.id}, function (err, category) {
 
             if (err) return console.log(err,"updateDeviceInfo Device.findOne err");
 
@@ -52,11 +52,11 @@ module.exports = {
                     "name": data.name,
                     "comment": data.comments,
                     "school": data.category,
-                    "apk_to_update": data.version,
-                    "update_required" : true
+                    "apkToUpdate": data.version,
+                    "updateRequired" : true
                 };
                 //Пишем в БД к ID из запроса
-                Device.update({"device_id": data.id}, {$set: update},{$upsert: true}, function (err, updated) {
+                Device.update({"deviceId": data.id}, {$set: update},{$upsert: true}, function (err, updated) {
 
                     if (err) return console.log(err,"updateDeviceInfo Device.update err");
 
@@ -152,7 +152,7 @@ module.exports = {
         });
     },
     findAllVersion: function (callback) {
-        Version.find("",{"_id":0,"version_apk":1}, function (err, version) {
+        Version.find("",{"_id":0,"apk":1}, function (err, version) {
 
             if (err) return console.log(err,"findAllVersion Version.find err");
 
@@ -161,9 +161,9 @@ module.exports = {
             }
         });
     },
-    findLink: function (version,callback) {
+    findLink: function (build,callback) {
 
-        Version.find({'version_apk':+version},{"_id":0,"link":1}, function (err, data) {
+        Version.find({'apk.build':+build},{"_id":0,"link":1}, function (err, data) {
 
             if (err) return console.log(err,"findLink Version.find err");
 
@@ -175,13 +175,16 @@ module.exports = {
     },
     createVersion: function (data, callback) {
 
-        Version.findOne({"version_apk": data.version}, function (err, category) {
+        Version.findOne({"apk.build": data.build}, function (err, category) {
 
             if (err) return console.log(err,"createVersion Version.findOne err");
 
             if (category == null) {
                 var newVersion = new Version({
-                    version_apk: data.version,
+                    apk: {
+                        build: +data.build,
+                        version: +data.version.slice(1)
+                    },
                     link: data.link
                 });
 
