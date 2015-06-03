@@ -373,6 +373,12 @@ input[type="number"]::-webkit-inner-spin-button:active {
     margin-top: 0px;
     float: left;
 }
-.modal-body textarea{
-    display: none;
+.form-horizontal .control-label{
+    text-align:left !important;
+}
+.modal-sm {
+    width: 400px!important;
+}
+.margin-top-5{
+    margin-top: 10px;
 }

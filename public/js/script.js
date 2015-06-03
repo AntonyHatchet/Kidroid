@@ -49,9 +49,6 @@ function inputNewNameCategory() {
 function editDeviceWriteIdToken(id, token){
     idDevice=id;
     tokenDevice=token;
-    //console.log(id,token);
-    document.getElementById('idDeviceModal').innerHTML=id;
-    document.getElementById('tokenDeviceModal').innerHTML=token;
 }
 function editDevice(){
     var device = {};

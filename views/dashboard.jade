@@ -4,11 +4,11 @@ extends layout
 block content
     //#{devices}
     //#{devices._id.device_id}
-    #header
-        #logo
-        #usermenu
-            #username
-        //=====LEFT MENU===============
+    //#header
+    //    #logo
+    //    #usermenu
+    //        #username
+    //    //=====LEFT MENU===============
     #tab
         ul(class='tabs')
             li(class='tab-link current close' data-tab='devices') Devices
@@ -38,14 +38,14 @@ block content
         #devices(class='tab-content current')
             h2 Devices
             #filter
-                form(class='form-search')
-                    input(type="text" id="DeviceNameIDSerial" class='input-medium search-query input-xlarge' placeholder='Device name/ID/Serial' onkeyup="find()")
-                    select(id='selectStatus' class="span2" onchange="find()")
+                form(class='form-search form-inline')
+                    input(type="text" id="DeviceNameIDSerial" class='form-control' placeholder='Device name/ID/Serial' onkeyup="find()")
+                    select(id='selectStatus' class="span2 form-control" onchange="find()")
                         option(value="" style='color:#cccccc') Select status
                         option(value='0') Offline
                         option(value='1') Online
-                    select(id="selectCategory" class="span2" onchange="find()")
-                    select(id="selectVersion" class="span2" onchange="find()")
+                    select(id="selectCategory" class="span2 form-control" onchange="find()")
+                    select(id="selectVersion" class="span2 form-control" onchange="find()")
 
 
             #add-device
@@ -58,94 +58,109 @@ block content
                     h4
                 thead(id='target')
                     tr
-                        th(onclick='socket.emit("regularizeId",)') Device
+                        th
+                            input(type="checkbox" id="checkboxWarning" value="option1")
+                        th(onclick='socket.emit("regularizeId",)') ID#
+                        th Device Name
                         th APK version
                         th Loader version
                         th Device status
-                        th School
                         th Options
-                        //th remove
 
                 tbody(id='deviceTable')
-            div(id='pagination' class='pagination pagination-centered')
+            div(id='pagination' class="text-center")
             //============MODAL Add new device=====================
             div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
-                div(class="modal-header")
-                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-                        i(class="icon-remove")
-                    h3 Add new device
-                div(class="modal-body")
-                    textarea
-                    form
-                        p School
-                        select(id="addSelectCategory")
-                        br
-                        p Version
-                        select(id="addSelectVersion")
-                        br
-                        p Amount
-                        input(id='amountDevice' type="number", name='number' min="1" value='1')
-                div(class="modal-footer")
-                    //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
-                    div(id='errorAddDevice' class='alert no-show')
-                        //button(type="button" class="close" data-dismiss="alert") &times;
-                        p All fields must be filled out
-                    button(class="btn btn-primary" onclick='addDevice()') Add
+                .modal-dialog.modal-sm
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h2 Add new device(s)
+                        div(class="modal-body")
+                            form.form-horizontal
+                                .form-group
+                                    label(for="addSelectCategory").col-sm-3.control-label School:
+                                    .col-sm-9
+                                        select(id="addSelectCategory" class="form-control")
+                                .form-group
+                                    label(for="addSelectVersion").col-sm-4.control-label APK version *:
+                                    .col-sm-8
+                                        select(id="addSelectVersion" class="form-control")
+                                .form-group
+                                    label(for="amountDevice").col-sm-5.control-label Device amount *:
+                                    .col-sm-7
+                                        input(id='amountDevice' type="number", name='number' min="1" value='1' class="form-control")
+                                .form-group
+                                    label(for="commentDevice").col-sm-5.control-label Comment:
+                                    .col-sm-12.margin-top-5
+                                        textarea(id='commentDevice' class="form-control" rows="3")
+                        div(class="modal-footer")
+                            //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                            div(id='errorAddDevice' class='alert no-show')
+                                //button(type="button" class="close" data-dismiss="alert") &times;
+                                p All fields must be filled out
+                            button(class="btn btn-primary" onclick='addDevice()') Add
+
             //============MODAL delete device=====================
             div(class="modal" id="deleteDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
-                div(class="modal-header")
-                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-                        i(class="icon-remove")
-                    h3 Delete device
-                div(class="modal-body")
+                .modal-dialog
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h3 Delete device
+                        div(class="modal-body")
 
-                div(class="modal-footer")
-                    //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
-                    div(id='errorAddDevice' class='alert no-show')
-                        //button(type="button" class="close" data-dismiss="alert") &times;
-                        p All fields must be filled out
-                    button(class="btn btn-primary" onclick='addDevice()') Add
+                        div(class="modal-footer")
+                            //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                            div(id='errorAddDevice' class='alert no-show')
+                                //button(type="button" class="close" data-dismiss="alert") &times;
+                                p All fields must be filled out
+                            button(class="btn btn-primary" onclick='addDevice()') Add
             //============MODAL EDIT device=====================
             div(class="modal" id="editDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
-                div(class="modal-header")
-                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-                        i(class="icon-remove")
-                    h3 Edit device
-                    div id
-                        div(id='idDeviceModal')
-                    div token
-                        div(id='tokenDeviceModal')
-                div(class="modal-body")
-                    form
-                        select(id="editDeviceCategory")
-                        br
-                        select(id="editDeviceVersion")
-                        br
-                        input(type='text' id="newNameUser" name='category' placeholder='Name User')
-                        br
-                        input(type='text' id="newComment" name='category' placeholder='Comments')
-                div(class="modal-footer")
-                    //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
-                    div(id='errorAddDevice' class='alert no-show')
-                        //button(type="button" class="close" data-dismiss="alert") &times;
-                        p All fields must be filled out
-                    button(class="btn btn-primary" onclick='editDevice()') Edit
+                .modal-dialog.modal-sm
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h3 Edit device
+                        div(class="modal-body")
+                            form
+                                .form-group
+                                select(id="editDeviceCategory" class="form-control")
+                                .form-group
+                                select(id="editDeviceVersion" class="form-control")
+                                .form-group
+                                input(type='text' id="newNameUser" name='category' placeholder='Name User' class="form-control")
+                                .form-group
+                                    .col-sm-12.margin-top-5
+                                        input(type='text' id="newComment" name='category' placeholder='Comments' class="form-control")
+                        div(class="modal-footer")
+                            //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                            div(id='errorAddDevice' class='alert no-show')
+                                //button(type="button" class="close" data-dismiss="alert") &times;
+                                p All fields must be filled out
+                            button(class="btn btn-primary" onclick='editDevice()') Edit
             //============MODAL maps=====================
             div(class="modal" id="map" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: -1; opacity: 0 ")
-                div(class="modal-header")
-                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-                        i(class="icon-remove")
-                    h3 Maps
-                div(class="modal-body")
-                    #maps(class="panel-body")
-                        script.
-                            var map = L.map('maps').setView([55.7422, 37.5719], 10);
-                            // add an OpenStreetMap tile layer
-                            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                            }).addTo(map);
-                            // add a marker in the given location, attach some popup content to it and open the popup
-                            var mark = L.marker([55.7422, 37.5719]);
+                .modal-dialog
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h3 Maps
+                        div(class="modal-body")
+                            #maps(class="panel-body")
+                                script.
+                                    var map = L.map('maps').setView([55.7422, 37.5719], 10);
+                                    // add an OpenStreetMap tile layer
+                                    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                    }).addTo(map);
+                                    // add a marker in the given location, attach some popup content to it and open the popup
+                                    var mark = L.marker([55.7422, 37.5719]);
 
             //===========Script maps========================
             script.
@@ -190,7 +205,7 @@ block content
                 div(class="modal-body")
                     form
                         div(class="input-append")
-                            input(style='height: 34px' class="span3" size="16" id="newCategory" name='category')
+                            input(style='height: 34px' class="span3 form-control" size="16" id="newCategory" name='category')
                             button(class="btn btn-primary" onclick="createNewCategory()" type="button") Create
                             div(id='errorCreateCategory' class='alert no-show')
                                 //button(type="button" class="close" data-dismiss="alert") &times;

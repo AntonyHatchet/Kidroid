@@ -17,7 +17,7 @@ var DeviceSchema = mongoose.Schema({
     comment: String,
     registered: Boolean,
     update_required: Boolean,
-    online: Boolean,
+    status: String,
     android: Number
 });
 
