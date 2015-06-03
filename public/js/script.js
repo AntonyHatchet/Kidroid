@@ -66,7 +66,7 @@ function editDevice(){
 
 function find() {
     var device = {};
-    device.id = $("#DeviceNameIDSerial").val();
+    device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
     device.version = $("#selectVersion").val();
@@ -75,7 +75,7 @@ function find() {
 };
 function page(i) {
     var device = {};
-    device.id = $("#DeviceNameIDSerial").val();
+    device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
     device.version = $("#selectVersion").val();
@@ -104,7 +104,7 @@ function finsDeviceSchedule(){
     device.idEnd = $('#idEnd').val();
     device.school = $('#scheduleDeviceCategory').val();
     device.version = $('#scheduleDeviceVersionFilter').val();
-    socket.emit('getDeviceForSchedule', device)
+    socket.emit('getDeviceForSchedule', device);
     console.log(device);
 }
 function checkAll(obj) {
