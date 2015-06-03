@@ -33,7 +33,7 @@ socket.on('category', function (date) {
     for (var i = 0; i < date.length; i++) {
         html += "<option>" + date[i].name + "</option>";
     }
-    $("#selectCategory, #addSelectCategory, #editDeviceCategory").html(html);
+    $("#selectCategory, #addSelectCategory, #editDeviceCategory, #scheduleDeviceCategory").html(html);
 });
 
 socket.on('version', function (date) {
@@ -42,7 +42,7 @@ socket.on('version', function (date) {
     for (var i = 0; i < date.length; i++) {
         html += "<option>" + date[i].version_apk + "</option>";
     }
-    $("#selectVersion, #addSelectVersion, #editDeviceVersion").html(html);
+    $("#selectVersion, #addSelectVersion, #editDeviceVersion, #scheduleDeviceVersion, #scheduleDeviceVersionFilter").html(html);
 });
 socket.on('version', function (date) {
     //console.log(school,"category");
@@ -67,4 +67,12 @@ socket.on('allDeviceCreated', function (data) {
 
 socket.on('error', function (date) {
     console.log(date,"error");
+});
+
+socket.on('deviceScheduled', function (data) {
+    //console.log(data);
+    html = '';
+    for (i in data)
+        html += "<tr><input type='checkbox' name=''><td><input type='checkbox'></td><td>" + data[i].device_id + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
+    $("#tableSchedule").html(html);
 });

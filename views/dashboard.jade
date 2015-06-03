@@ -260,5 +260,37 @@ block content
                         <div class="month"><%= month %></div>
                         <div class="clndr-next-button">&rsaquo;</div>
                     </div>
+            //============MODAL EDIT device=====================
+
+            div(class="modal" id="editSchedule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+               div(class="modal-header")
+                   button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                       i(class="icon-remove")
+                   h3 Edit Schedule
+                   div(class="modal-body")
+                       div(id='dateSchedule')
+                       input(type='time')
+                       select(id="scheduleDeviceVersion")
+                       hr
+                       form
+                           input(class="input-mini" type='text' id='idStart' placeholder='start id')
+                           input(class="input-mini" type='text' id='idEnd' placeholder='end id')
+                           select(id="scheduleDeviceCategory")
+                           select(id="scheduleDeviceVersionFilter")
+                       button(class="btn btn-primary" onclick='finsDeviceSchedule()') Find
+                       hr
+                       table(class='table table-hover table-bordered table-striped')
+                           thead
+                                tr
+                                    th
+                                        input(type='checkbox' onclick='checkAll(this)')
+                                    th id
+                                    th school
+                                    th apk_version
+                                    th update
+                                    th status
+                           tbody(id='tableSchedule')
+
+
 
 

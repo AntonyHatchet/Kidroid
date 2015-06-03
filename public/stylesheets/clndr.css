@@ -1,7 +1,7 @@
 
 .calendar {
   margin: 30px auto;
-  max-width: 600px;
+  max-width: 100%;
   font-family: 'Droid Sans Mono';
   font-size: 14px;
 }

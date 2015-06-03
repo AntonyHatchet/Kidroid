@@ -27,7 +27,13 @@ $(document).ready( function() {
     // },
     clickEvents: {
       click: function(target) {
-        console.log(target);
+        console.log(target.date._i);
+        $('#editSchedule').addClass('in')
+            .attr('aria-hidden', false)
+            .css('z-index','1050')
+            .css('opacity','1')
+            .css('display','block');
+        document.getElementById('dateSchedule').innerHTML= '<input type="date" value="' + target.date._i + '">';
         // if you turn the `constraints` option on, try this out:
         // if($(target.element).hasClass('inactive')) {
         //   console.log('not a valid datepicker date.');
