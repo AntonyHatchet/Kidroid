@@ -49,7 +49,7 @@ socket.on('version', function (date) {
     //console.log(school,"category");
     html = '';
     for (var i = 0; i < date.length; i++) {
-        html += "<tr><td>" + date[i]._id + "</td><td>" + date[i].version_apk + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeVersion\",\"" + date[i]._id + "\")\')>Delete</button>";
+        html += "<tr><td>" + date[i].version_apk + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeVersion\",\"" + date[i]._id + "\")\')>Delete</button>";
     }
     $("#versionTable").html(html);
 });
@@ -63,7 +63,10 @@ socket.on('users', function (data) {
 });
 
 socket.on('allDeviceCreated', function (data) {
-    console.log(data);
+    if (data.device_id){
+        $(".modal-body textarea").append("ID " +data.device_id+"\n")
+    }
+    $(".modal-body textarea, .modal-body textarea p").css({"display":"block"})
 });
 
 socket.on('error', function (date) {

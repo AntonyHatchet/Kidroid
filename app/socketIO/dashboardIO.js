@@ -106,12 +106,12 @@ module.exports = function (server) {
         );
         socket.on('createDevice', function (paramsDevice) {
                 //console.log(paramsDevice);
-                user.createDevice(paramsDevice, function (err, callback) {
+                user.createDevice(paramsDevice, function (err, allDevice,savedDevice) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('displayData', callback);
-                    io.emit('allDeviceCreated', callback);
+                    io.emit('displayData', allDevice);
+                    io.emit('allDeviceCreated', savedDevice);
                 },function(err,end){
                     if (err)throw err;
                     if (end){
