@@ -99,7 +99,7 @@ module.exports = {
                             school: params.category,
                             update: params.version
                         },
-                        function (err) {
+                        function (err,savedDevice) {
 
                             if (err) return console.log(err,"createDevice deviceMagic.saveDevice err");
 
@@ -107,7 +107,7 @@ module.exports = {
 
                                 if (err) return console.log(err,"createDevice deviceMagic.getDevice err");
 
-                                callback(null,data);
+                                callback(null,data,savedDevice);
                                 if (i == params.numberDevice){
                                     console.log("Use end callback");
                                     end(null,true);
