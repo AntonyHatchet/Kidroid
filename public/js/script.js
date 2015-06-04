@@ -76,14 +76,48 @@ function editDevice(){
     console.log(device);
 }
 
-function sort() {
-    var data = {};
-    data.id = $(".tableFloatingHeaderOriginal th:nth-child(2)").data('value');
-    find(this.data);
+function sort(place) {
+    var params = {};
+    var apk = {};
+    var elem = document.getElementById('paged').getElementsByTagName('th');
+    switch (+place.dataset.id) {
+        case 1:
+            (+elem[1].dataset.sort == 1)? elem[1].dataset.sort = -1 : elem[1].dataset.sort = 1;
+            params = {
+                "deviceId" : +elem[1].dataset.sort
+            };
+            break;
+        case 2:
+            (+elem[2].dataset.sort == 1) ? elem[2].dataset.sort = -1 : elem[2].dataset.sort = 1;
+            params = {
+                "name" : +elem[2].dataset.sort,
+            };
+            break;
+        case 3:
+            (+elem[3].dataset.sort == 1) ? elem[3].dataset.sort = -1 : elem[3].dataset.sort = 1;
+            params = {
+                "apk.build" :  +elem[3].dataset.sort
+            };
+            break;
+        case 4:
+            (+elem[4].dataset.sort == 1) ? elem[4].dataset.sort = -1 : elem[4].dataset.sort = 1;
+            params = {
+                "loader" : +elem[4].dataset.sort
+            };
+            break;
+        case 5:
+            (+elem[5].dataset.sort == 1) ? elem[5].dataset.sort = -1 : elem[5].dataset.sort = 1;
+            params = {
+                "status" : +elem[5].dataset.sort
+            };
+            break;
+    }
+
+    return params
 }
-;function find(atr) {
-    console.log(atr);
+;function find(sort) {
     var device = {};
+    device.sort = (!sort)?{}:sort;
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
@@ -91,7 +125,6 @@ function sort() {
     device.build = $("#selectVersion").val().split(' ')[1];
     socket.emit('getDevicesByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
-    console.log(device);
 };
 function page(i) {
     var device = {};

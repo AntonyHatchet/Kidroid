@@ -44,11 +44,11 @@ block content
                         tr
                             th
                                 input(type="checkbox" id="checkboxWarning" value="option1")
-                            th(onclick='sort(this)',data-value="0") ID#
-                            th Device Name
-                            th APK version
-                            th Loader version
-                            th Device status
+                            th(onclick='find(sort(this))',data-sort="1",data-id="1") ID#
+                            th(onclick='find(sort(this))',data-sort="1",data-id="2") Device Name
+                            th(onclick='find(sort(this))',data-sort="1",data-id="3") APK version
+                            th(onclick='find(sort(this))',data-sort="1",data-id="4") Loader version
+                            th(onclick='find(sort(this))',data-sort="1",data-id="5") Device status
                             th Options
                     tbody(id='deviceTable')
             div(id='pagination' class="text-center")

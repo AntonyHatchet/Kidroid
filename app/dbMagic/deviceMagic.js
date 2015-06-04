@@ -46,6 +46,8 @@ module.exports = {
             var status = params.status;
             var page = params.page;
             var limit = params.limit;
+            var sort = params.sort;
+            console.log(sort)
         }
         Device
             .find({})
@@ -56,7 +58,7 @@ module.exports = {
             .where('apk.build').equals((!build)?{$exists: true}:build)
             .limit(10)
             .skip(page)
-            .sort('deviceId')
+            .sort(sort)
             .select({})
             .exec(function (err, Devices) {
                 if (err) return console.log(err,"getQuantity Device.count err");
