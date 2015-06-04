@@ -11,16 +11,19 @@ $(document).ready( function() {
   var thisDate = moment().format('YYYY-MM');
 
   socket.on('allSchedule', function (data) {
-
-    html = '<ul>';
-    for (i in data)
-      html += "<li>" + data[i].devices + "</li><li>" + data[i].status + "</li><li>" + data[i].timeStart + "</li> <hr>";
-    $("#allSchedule").html(html);
-    console.log(data[i].devices);
+    var eventArray=[];
+    for (var i in data){
+      eventArray.push({date:data[i].timeStart, title: data[i].status});
+    }
+    calendars.clndr1.setEvents(eventArray);
+    console.log(eventArray);
   });
-  var eventArray = [
-    { date: thisDate + '-27', title: 'Single Day Event' }
-  ];
+  //var eventArray = [
+  //  { date: thisDate + '-27', title: 'Single Day Event' }
+  //];
+  //var eventArray2= [
+  //  { date: thisDate + '-20', title: 'Single Day Event' }
+  //];
 
 
   // the order of the click handlers is predictable.
@@ -29,7 +32,6 @@ $(document).ready( function() {
   // finally onYearChange (if the year changed).
 
   calendars.clndr1 = $('.calendar').clndr({
-    events: eventArray,
     // constraints: {
     //   startDate: '2013-11-01',
     //   endDate: '2013-11-15'
