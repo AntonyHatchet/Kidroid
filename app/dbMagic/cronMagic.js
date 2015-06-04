@@ -64,7 +64,7 @@ module.exports = {
 
     },
     getAllSchedule: function (callback,status){
-        status = (!status)? {$exist:true}:status;
+        status = (!status)? {$exists:true}:status;
         Cron.find({"status":status}, function (err, jobs) {
             if (err) return console.log(err, "getAllSchedule");
             callback(null, jobs);
