@@ -197,10 +197,15 @@ function createSchedule(){
     t = $('#timeSchedule').val();
     var neDate = Date.parse(da+'T'+t);
     device.date = neDate;
-    device.devices =[];
-    device.devices.push($( "input:checked" ).val());
+    device.devices = [];
+        device.devices.push($("input:checked").val());
     device.Version =$('#scheduleDeviceVersion').val();
-    socket.emit('createSchedule', device)
+    if (device.devices ==0){
+        alert("error no id")
+    }
+    else {
+        socket.emit('createSchedule', device)
+    }
     console.log(device);
 }
 $(document).ready(function () {
