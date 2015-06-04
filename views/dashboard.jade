@@ -9,7 +9,7 @@ block content
     //    #usermenu
     //        #username
     //    //=====LEFT MENU===============
-    #tab
+    aside#tab
         ul(class='tabs')
             li(class='tab-link current close' data-tab='devices') Devices
                     i(class='icon-chevron-left')
@@ -24,36 +24,38 @@ block content
         //===========TABS DEVICES=======================
         #devices(class='tab-content current')
             h2 Devices
-            #filter
+            fieldset
+                legend Filter:
+                #filter.col-sm-12
+                    form(class='form-search form-inline col-sm-9')
+                        input(type="text" id="DeviceNameIDSerial" class='form-control' placeholder='Device name/ID/Serial' onkeyup="find()")
+                        select(id='selectStatus' class="span2 form-control" onchange="find()")
+                            option(value="" style='color:#cccccc') Select status
+                            option(value='0') Offline
+                            option(value='1') Online
+                        select(id="selectCategory" class="span2 form-control" onchange="find()")
+                        select(id="selectVersion" class="span2 form-control" onchange="find()")
+                    #add-device
+                        a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") add new device
+            #deployApk
+                h2 APK Deploy:
                 form(class='form-search form-inline')
-                    input(type="text" id="DeviceNameIDSerial" class='form-control' placeholder='Device name/ID/Serial' onkeyup="find()")
-                    select(id='selectStatus' class="span2 form-control" onchange="find()")
-                        option(value="" style='color:#cccccc') Select status
-                        option(value='0') Offline
-                        option(value='1') Online
-                    select(id="selectCategory" class="span2 form-control" onchange="find()")
-                    select(id="selectVersion" class="span2 form-control" onchange="find()")
-
-
-            #add-device
-                a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") add new device
-
-            table(class='table table-hover table-bordered table-striped' id='paged')
-                caption
-                    h4
-                thead(id='target')
-                    tr
-                        th
-                            input(type="checkbox" id="checkboxWarning" value="option1")
-                        th(onclick='socket.emit("regularizeId",)') ID#
-                        th Device Name
-                        th APK version
-                        th Loader version
-                        th Device status
-                        th Options
-
-                tbody(id='deviceTable')
-            div(id='pagination' class="text-center")
+                    input(type="checkbox" value="option")
+                    label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query ()
+            .container-fluid.container-tab
+                table(class='table table-hover table-bordered table-striped' id='paged')
+                    thead(id='target')
+                        tr
+                            th
+                                input(type="checkbox" id="checkboxWarning" value="option1")
+                            th(onclick='socket.emit("regularizeId",)') ID#
+                            th Device Name
+                            th APK version
+                            th Loader version
+                            th Device status
+                            th Options
+                    tbody(id='deviceTable')
+                div(id='pagination' class="text-center")
             //============MODAL Add new device=====================
             div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm

@@ -1,6 +1,9 @@
 /**
  * Created by nikolay_ivanisenko on 25.05.2015.
  */
+
+$('#paged').stickyTableHeaders();
+
 $(document).ready(function () {
 
     $('ul.tabs li').click(function () {
