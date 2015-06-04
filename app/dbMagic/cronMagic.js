@@ -5,18 +5,22 @@ var Cron = require('../models/cron');
 var Device = require('../models/device');
 module.exports = {
     newScheduleDevice: function(params, callback){
-        var query = {};
 
-        query.device_id = (!params.id) ? {$exists: true} : {$gte: +params.id.start,$lte: +params.id.end};
-        query.school = (!params.category) ? {$exists: true} : params.category;
-        query.apk_version = (!params.version) ? {$exists: true} : params.version;
+        var deviceId = {$gte:+params.search};
+        var school = params.category;
+        var build=  +params.build;
 
-        query = Device.find(query).sort({device_id:1});
+        Device
+            .find({})
+            .where('deviceId').equals((!deviceId)?{$exists: true}:deviceId)
+            .where('school').equals((!school)?{$exists: true}:school)
+            .where('apk.build').equals((!build)?{$exists: true}:build)
+            .exec(function (err, Devices) {
+                if (err) return console.log(err,"newScheduleDevice Device.find err");
+                // Execute callback
+                callback(null, Devices);
+            });
 
-        query.exec(function (err, Devices) {
-
-            callback(null, Devices);
-        });
     },
     newSchedule: function (job, callback) {
 
@@ -75,7 +79,7 @@ module.exports = {
 
             if (err) return console.log(err,"checkScheduleStatus findOne");
 
-            Device.find({"device_id": {$gte:job.devices[0],$lte:job.devices[job.devices.length]}},function(err,data){
+            Device.find({"deviceId": {$gte:job.devices[0],$lte:job.devices[job.devices.length]}},function(err,data){
                 if (err) return console.log(err,"checkScheduleStatus find");
                 callback(null,data)
             });
@@ -101,7 +105,7 @@ module.exports = {
         Updater(0);
         function Updater(i){
             if (i < id.length){
-                Device.update({"device_id":+id[i]},{$set:{"apk_to_update":+version,"update_required":true}}, function (err, updated) {
+                Device.update({"deviceId":+id[i]},{$set:{"apkToUpdate":+version,"updateRequired":true}}, function (err, updated) {
                     if (err) return console.log(err,"ScheduleStart Device.update err");
                     console.log("This device " + id[i] + "is updated");
                 });
