@@ -206,8 +206,8 @@ function createSchedule(){
     else {
         socket.emit('createSchedule', device)
     }
-    console.log(device);
-}
+    //console.log(device);
+
 $(document).ready(function () {
     $('#closeScheduleModal').click(function(){
        $('#editSchedule').removeClass('.in')
