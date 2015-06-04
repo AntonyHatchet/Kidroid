@@ -55,7 +55,7 @@ socket.on('version', function (date) {
     for (var i = 0; i < date.length; i++) {
         html += "<option>" + date[i].apk.version +" "+ date[i].apk.build +"</option>";
     }
-    $("#selectVersion, #addSelectVersion, #editDeviceVersion, #scheduleDeviceVersion, #scheduleDeviceVersionFilter").html(html);
+    $("#selectVersion,#selectVersionToDeploy, #addSelectVersion, #editDeviceVersion, #scheduleDeviceVersion, #scheduleDeviceVersionFilter").html(html);
 });
 socket.on('version', function (date) {
     //console.log(school,"category");

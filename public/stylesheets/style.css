@@ -411,7 +411,6 @@ input[type="number"]::-webkit-inner-spin-button:active {
     display: block!important;
 }
 .deployApk{
-    margin-bottom: 25px;
     margin-left: 10px;
 }
 .deployApk input[type=checkbox]{

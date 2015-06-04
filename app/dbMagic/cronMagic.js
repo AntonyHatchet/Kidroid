@@ -100,17 +100,19 @@ module.exports = {
         },"New");
     },
     ScheduleStart: function (task){
+        console.log("ScheduleStart");
         var id = task.devices;
         var version = task.version;
         Updater(0);
         function Updater(i){
-            if (i < id.length){
+            if (i!=null && i < id.length){
                 Device.update({"deviceId":+id[i]},{$set:{"apkToUpdate":+version,"updateRequired":true}}, function (err, updated) {
                     if (err) return console.log(err,"ScheduleStart Device.update err");
                     console.log("This device " + id[i] + "is updated");
                 });
                 Updater(++i)
             }
+            console.log("END")
         }
     }
 };

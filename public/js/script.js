@@ -114,8 +114,9 @@ function sort(place) {
     }
 
     return params
-}
-;function find(sort) {
+};
+
+function find(sort) {
     var device = {};
     device.sort = (!sort)?{}:sort;
     device.search = $("#DeviceNameIDSerial").val();

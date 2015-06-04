@@ -11,7 +11,6 @@ var flash = require('connect-flash');
 var multer = require('multer');
 
 var cron = require('./app/service/cron.js');
-var test = require('./tests/cronTest.js');
 
 mongoose.connect(dbConfig.url);
 
