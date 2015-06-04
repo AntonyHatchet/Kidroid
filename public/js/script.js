@@ -5,7 +5,9 @@
 
 
 $(document).ready(function () {
+
     $("#paged").stickyTableHeaders({ scrollableArea: $(".container-tab")[0], "fixedOffset": 0 });
+
     $('ul.tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');
 
@@ -75,42 +77,45 @@ function editDevice(){
     socket.emit('updateDevice', device);
     console.log(device);
 }
-
+var params = {};
 function sort(place) {
-    var params = {};
-    var apk = {};
     var elem = document.getElementById('paged').getElementsByTagName('th');
-    switch (+place.dataset.id) {
-        case 1:
-            (+elem[1].dataset.sort == 1)? elem[1].dataset.sort = -1 : elem[1].dataset.sort = 1;
-            params = {
-                "deviceId" : +elem[1].dataset.sort
-            };
-            break;
-        case 2:
-            (+elem[2].dataset.sort == 1) ? elem[2].dataset.sort = -1 : elem[2].dataset.sort = 1;
-            params = {
-                "name" : +elem[2].dataset.sort,
-            };
-            break;
-        case 3:
-            (+elem[3].dataset.sort == 1) ? elem[3].dataset.sort = -1 : elem[3].dataset.sort = 1;
-            params = {
-                "apk.build" :  +elem[3].dataset.sort
-            };
-            break;
-        case 4:
-            (+elem[4].dataset.sort == 1) ? elem[4].dataset.sort = -1 : elem[4].dataset.sort = 1;
-            params = {
-                "loader" : +elem[4].dataset.sort
-            };
-            break;
-        case 5:
-            (+elem[5].dataset.sort == 1) ? elem[5].dataset.sort = -1 : elem[5].dataset.sort = 1;
-            params = {
-                "status" : +elem[5].dataset.sort
-            };
-            break;
+    if (place) {
+        switch (+place.dataset.id) {
+            case 1:
+                (+elem[1].dataset.sort == 1) ? elem[1].dataset.sort = -1 : elem[1].dataset.sort = 1;
+                params = {
+                    "deviceId": +elem[1].dataset.sort
+                };
+                break;
+            case 2:
+                (+elem[2].dataset.sort == 1) ? elem[2].dataset.sort = -1 : elem[2].dataset.sort = 1;
+                params = {
+                    "name": +elem[2].dataset.sort
+                };
+                break;
+            case 3:
+                (+elem[3].dataset.sort == 1) ? elem[3].dataset.sort = -1 : elem[3].dataset.sort = 1;
+                params = {
+                    "apk.build": +elem[3].dataset.sort
+                };
+                break;
+            case 4:
+                (+elem[4].dataset.sort == 1) ? elem[4].dataset.sort = -1 : elem[4].dataset.sort = 1;
+                params = {
+                    "loader": +elem[4].dataset.sort
+                };
+                break;
+            case 5:
+                (+elem[5].dataset.sort == 1) ? elem[5].dataset.sort = -1 : elem[5].dataset.sort = 1;
+                params = {
+                    "status": +elem[5].dataset.sort
+                };
+                break;
+            default:
+                return params
+        }
+        return params
     }
 
     return params
@@ -129,6 +134,8 @@ function find(sort) {
 };
 function page(i) {
     var device = {};
+    device.sort = sort();
+    console.log(device.sort,"page");
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
@@ -208,6 +215,7 @@ function createSchedule(){
         socket.emit('createSchedule', device)
     }
     //console.log(device);
+}
 
 $(document).ready(function () {
     $('#closeScheduleModal').click(function(){
@@ -217,5 +225,5 @@ $(document).ready(function () {
            .css('opacity','0')
            .css('display','none');
     });
-});
+})
 

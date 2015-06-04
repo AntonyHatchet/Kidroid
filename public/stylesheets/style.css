@@ -412,7 +412,19 @@ input[type="number"]::-webkit-inner-spin-button:active {
 }
 .deployApk{
     margin-left: 10px;
+    margin-top: -12px;
+}
+.deployApk label{
+    margin-top: 10px;
 }
 .deployApk input[type=checkbox]{
     float: left;
+    margin-top: 10px;
+}
+.glyphicon{
+    float: right;
+    cursor: pointer;
+}
+.pagination li{
+    cursor: pointer;
 }

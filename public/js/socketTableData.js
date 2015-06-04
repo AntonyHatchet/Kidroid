@@ -12,7 +12,7 @@ socket.on('displayData', function (data) {
         var apkVersion = "<td>" + data[i].apk.version +" (Build "+data[i].apk.build + ")<p>"+ update +"</p></td>";
         var loaderVersion = "<td>"+ data[i].loader +"</td>";
         var status = "<td>" + data[i].status + "</td>";
-        var map = "<button href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>show map</button>";
+        var map = "<button href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>Show map</button>";
         var edit = "<button href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(" + data[i].deviceId +")'>Edit</button> ";
         var deleteDevice = "<button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].deviceId + "\")\')>Delete</button>";
         var options = "<td>" + map + edit + deleteDevice + "</td>";

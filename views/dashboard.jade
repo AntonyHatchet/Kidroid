@@ -36,7 +36,7 @@ block content
                         select(id="selectCategory" class="span2 form-control" onchange="find()")
                         select(id="selectVersion" class="span2 form-control" onchange="find()")
                     #add-device
-                        a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") add new device
+                        a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") Add New Device
             h4
             .container-fluid.container-tab
                 table(class='table table-hover table-bordered table-striped' id='paged')
@@ -45,21 +45,29 @@ block content
                             th
                                 input(type="checkbox" id="checkboxWarning" value="option1")
                             th(onclick='find(sort(this))',data-sort="1",data-id="1") ID#
+                                .glyphicon.glyphicon-sort
                             th(onclick='find(sort(this))',data-sort="1",data-id="2") Device Name
+                                .glyphicon.glyphicon-sort
                             th(onclick='find(sort(this))',data-sort="1",data-id="3") APK version
+                                .glyphicon.glyphicon-sort
                             th(onclick='find(sort(this))',data-sort="1",data-id="4") Loader version
+                                .glyphicon.glyphicon-sort
                             th(onclick='find(sort(this))',data-sort="1",data-id="5") Device status
+                                .glyphicon.glyphicon-sort
                             th Options
                     tbody(id='deviceTable')
             div(id='pagination' class="text-center")
             #deployApk
                 fieldset
                     legend APK Deploy:
-                    form(class='deployApk form-inline')
-                        input(type="checkbox" value="option")
+                    form(class='deployApk form-inline col-sm-12')
+                        input.col-sm-1(type="checkbox" value="option")
                         label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
-                             span(id="deployCount") test
-                        select(id="selectVersionToDeploy" class="span2 form-control" onchange="find()")
+                             span(id="deployCount")
+                        .col-sm-8
+                            .col-sm-3
+                                select(id="selectVersionToDeploy" class="span2 form-control" onchange="find()")
+                            button(class="col-sm-2 btn btn-primary" onclick='addDevice()') Deploy
             //============MODAL Add new device=====================
             div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -180,7 +188,7 @@ block content
                         li(class='tab-link close' data-tab='filtersVersion') Version
                 #filtersSchool(class='nav-tab-content current')
                     #add-category
-                        a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") add new category...
+                        a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") Add new category...
                             //button(class='btn btn-primary') add new category...
                     .col-sm-12
                         table(class='table table-hover table-bordered table-striped')
