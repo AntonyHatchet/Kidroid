@@ -11,7 +11,7 @@ $(document).ready( function() {
   var thisMonth = moment().format('YYYY-MM');
 
   var eventArray = [
-    {}
+    { date: thisMonth + '-27', title: 'Single Day Event' }
   ];
 
   // the order of the click handlers is predictable.
@@ -33,7 +33,7 @@ $(document).ready( function() {
             .css('z-index','1050')
             .css('opacity','1')
             .css('display','block');
-        document.getElementById('dateSchedule').innerHTML= '<input type="date" value="' + target.date._i + '">';
+        document.getElementById('dateSchedule').innerHTML= '<input id="dateScheduleId" type="date" value="' + target.date._i + '">';
         // if you turn the `constraints` option on, try this out:
         // if($(target.element).hasClass('inactive')) {
         //   console.log('not a valid datepicker date.');

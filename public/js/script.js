@@ -119,15 +119,31 @@ $(document).ready( function() {
 });
 
 function createSchedule(){
+    //var checked = [];
     start = $('#idStart').val();
     end = $('#idEnd').val();
     length = end-start;
+    var i = 0;
+    //while(++i <= length) {
+    //    if (document.getElementsByName(i).checked) {
+    //        checked.push(i);
+    //    }
+    //}
 
     var device ={};
-    for (var i = 0; i < length; i++){
-        if($('#checkSchedule').attr('checked')){
-            device.id = $('#checkSchedule').val();
-        }
-    }
+    //for (var i = 0; i < length; i++){
+    //    if($('#checkSchedule').attr('checked')){
+    //        device.id = $('#checkSchedule').val();
+    //    }
+    //}
+    da = $('#dateScheduleId').val();
+    t = $('#timeSchedule').val();
+    var neDate = Date.parse(da+'T'+t);
+    device.date = neDate;
+    device.devices =[];
+    device.devices.push($( "input:checked" ).val());
+    device.Version =$('#scheduleDeviceVersion').val();
+    socket.emit('createSchedule', device)
     console.log(device);
 }
+

@@ -21,7 +21,7 @@ socket.on('displayData', function (data) {
 });
 
 socket.on('quantity', function (data) {
-    console.log(data);
+    //console.log(data);
     $("caption h4").html(data + " devices found:");
     html = '<nav><ul class="pagination">';
     Page = Math.ceil(data / 10);
@@ -90,4 +90,12 @@ socket.on('deviceScheduled', function (data) {
     for (i in data)
         html += "<tr><td><input type='checkbox' id='checkSchedule" + data[i].deviceId + "' class='checkSchedule' value='" + data[i].deviceId + "'></td><td>" + data[i].deviceId + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
     $("#tableSchedule").html(html);
+});
+
+socket.on('allSchedule', function (data) {
+    console.log(data);
+    html = '';
+    for (i in data)
+        html += "<p>" + data[i].date + "</p>";
+    $("#allSchedule").html(html);
 });

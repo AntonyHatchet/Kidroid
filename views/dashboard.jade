@@ -202,45 +202,48 @@ block content
                         tbody(id='versionTable')
             //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
-                div(class="modal-header")
-                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-                        i(class="icon-remove")
-                    h3 Create new category
-                div(class="modal-body")
-                    form
-                        div(class="input-append")
-                            input(style='height: 34px' class="span3 form-control" size="16" id="newCategory" name='category')
-                            button(class="btn btn-primary" onclick="createNewCategory()" type="button") Create
+                .modal-dialog.modal-sm
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h3 Create new category
+                        div(class="modal-body")
+                            form
+                                .form-group
+                                input(class="form-control" id="newCategory" name='category')
+                        div(class="modal-footer")
                             div(id='errorCreateCategory' class='alert no-show')
-                                //button(type="button" class="close" data-dismiss="alert") &times;
                                 p All fields must be filled out
+                            button(class="btn btn-primary" onclick="createNewCategory()" type="button") Create
                     //============MODAL Add new Apk version=====================
             div(class="modal" id="addApkVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
-                div(class="modal-header")
-                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-                        i(class="icon-remove")
-                    h3 Add new Apk version
-                div(class="modal-body")
-                    form(method="post" action='/uploadFile' enctype="multipart/form-data")
-                        div(class="input-append")
-                            input(type="file", name='category' value='')
+                .modal-dialog.modal-sm
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h3 Add new Apk version
+                        div(class="modal-body")
+                            form(method="post" action='/uploadFile' enctype="multipart/form-data")
+                                .form-group
+                                input(type="file", class="form-control" name='category' value='')
+                        div(class="modal-footer")
                             button( type="submit" class="btn btn-primary") Add
-                    //    hr
-                    //    p Add new Apk version:
-                    //form(method="post" action='/uploadFile' enctype="multipart/form-data")
-                    //
-                    //    input(type="file", name='category' value='')
-                    //    button( type="submit" class="btn btn-primary") Add
             //============MODAL Edit category=====================
             div(class="modal" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
-                div(class="modal-header")
-                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-                        i(class="icon-remove")
-                    h3 Edit category
-                div(class="modal-body")
-                    form
-                        input(type="input" id='newNameCategory')
-                        button( type="button" onclick="inputNewNameCategory()") Edit
+                .modal-dialog.modal-sm
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h3 Edit category
+                        div(class="modal-body")
+                            form
+                                .form-group
+                                input(type="input" class="form-control" id='newNameCategory')
+                        div(class="modal-footer")
+                            button( type="button" class="btn btn-primary" onclick="inputNewNameCategory()") Edit
         //==========USERS TABS===================
         #users(class='tab-content')
             h2 Users
@@ -256,21 +259,19 @@ block content
                 tbody(id='userTable')
             //============MODAL Add new user=====================
             div(class="modal" id="addUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
-                div(class="modal-header")
-                    button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-                        i(class="icon-remove")
-                    h3 Add new user
-                div(class="modal-body")
-                    form(class="form-horizontal" method='post' action="/signup")
-                        div(class="control-group")
-                            label(class="control-label") Name
-                            div(class="controls")
-                                input(style='height: 34px' class="span3" name='name' size="16" type="input" required)
-                        div(class="control-group")
-                            label(class="control-label") Password
-                            div(class="controls")
-                                input(style='height: 34px' class="span3" name='password' size="16" type="input" required)
-                        div(class="controls")
+                .modal-dialog.modal-sm
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h3 Add new user
+                        div(class="modal-body")
+                            form(class="form-horizontal" method='post' action="/signup")
+                                .form-group
+                                input(name='name' class="form-control" type='text' placeholder='name' required)
+                                .form-group
+                                input(name='password' class="form-control" type='text' placeholder='password' required)
+                        div(class="modal-footer")
                             button(class="btn btn-primary" type='submit') Add user
         //===========TABS SETTINGS================
         #settings(class='tab-content')
@@ -282,38 +283,49 @@ block content
                         <div class="month"><%= month %></div>
                         <div class="clndr-next-button">&rsaquo;</div>
                     </div>
-            //============MODAL EDIT device=====================
-
+            #allSchedule
+            //============MODAL EDIT Schedule=====================
             div(class="modal" id="editSchedule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
-               div(class="modal-header")
-                   button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-                       i(class="icon-remove")
-                   h3 Edit Schedule
-                   div(class="modal-body")
-                       form
-                           div(id='dateSchedule')
-                           input(type='time')
-                           select(id="scheduleDeviceVersion")
-                           hr
-                           form
-                               input(class="input-mini" type='text' id='idStart' placeholder='start id')
-                               input(class="input-mini" type='text' id='idEnd' placeholder='end id')
-                               select(id="scheduleDeviceCategory")
-                               select(id="scheduleDeviceVersionFilter")
-                           button(class="btn btn-primary" onclick='finsDeviceSchedule()') Find
-                           hr
-                           table(class='table table-hover table-bordered table-striped')
-                               thead
-                                    tr
-                                        th
-                                            input(type='checkbox' id='checkAllSchedule')
-                                        th id
-                                        th school
-                                        th apk_version
-                                        th update
-                                        th status
-                               tbody(id='tableSchedule')
-                       button(onclick="createSchedule()")
+                .modal-dialog.modal-sm
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h3 Edit Schedule
+                        div(class="modal-body")
+                            form
+                                .form-group
+                                div(id='dateSchedule')
+
+                                .form-group
+                                input(id='timeSchedule' type='time')
+
+                                .form-group
+                                select(id="scheduleDeviceVersion")
+                                hr
+                                form
+                                    .form-group
+                                    input(class="input-mini" type='text' id='idStart' placeholder='start id')
+                                    .form-group
+                                    input(class="input-mini" type='text' id='idEnd' placeholder='end id')
+                                    .form-group
+                                    select(id="scheduleDeviceCategory")
+                                    .form-group
+                                    select(id="scheduleDeviceVersionFilter")
+                                    button(class="btn btn-primary" onclick='finsDeviceSchedule()') Find
+                                    hr
+                                    table(class='table table-hover table-bordered table-striped')
+                            thead
+                                tr
+                                    th
+                                        input(type='checkbox' id='checkAllSchedule')
+                                    th id
+                                    th school
+                                    th apk_version
+                                    th update
+                                    th status
+                            tbody(id='tableSchedule')
+                    button(onclick="createSchedule()") Create
 
 
 
