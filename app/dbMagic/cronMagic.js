@@ -5,8 +5,8 @@ var Cron = require('../models/cron');
 var Device = require('../models/device');
 module.exports = {
     newScheduleDevice: function(params, callback){
-
-        var deviceId = {$gte:+params.search};
+    console.log(params);
+        var deviceId = {$gte:+params.id.start,$lte:params.id.end};
         var school = params.category;
         var build=  +params.build;
 
