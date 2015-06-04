@@ -21,19 +21,6 @@ block content
                 i(class='icon-chevron-left')
 
     #conteiner
-        //=======MAPS=============
-        //#mapPanel(class="panel panel-default")
-            div(class="panel-heading") Maps
-            #maps(class="panel-body")
-                script.
-                    var map = L.map('maps').setView([55.7422, 37.5719], 1);
-                    // add an OpenStreetMap tile layer
-                    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    }).addTo(map);
-                    // add a marker in the given location, attach some popup content to it and open the popup
-                    var mark = L.marker([55.7422, 37.5719]);
-
         //===========TABS DEVICES=======================
         #devices(class='tab-content current')
             h2 Devices
@@ -50,8 +37,6 @@ block content
 
             #add-device
                 a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") add new device
-                    //button(class='btn btn-primary')
-
 
             table(class='table table-hover table-bordered table-striped' id='paged')
                 caption
@@ -184,29 +169,30 @@ block content
             h2 Filters
             div(class='tabbable')
                 .col-sm-12
-                    ul(class='nav nav-tabs')
-                        li(class='active')
-                            a(href="#filtersSchool" data-toggle="tab") School
-                        li
-                            a(href='#filtersVersion' data-toggle="tab") Version
-                #add-category
-                    a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") add new category...
-                    a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
-                        //button(class='btn btn-primary') add new category...
-                .col-sm-12
-                    table(class='table table-hover table-bordered table-striped')
-                        thead
-                            tr
-                                th(colspan='2') Category name
-                        tbody(id='tableFilter')
-                .col-sm-12
-                    table(class='table table-hover table-bordered table-striped')
-                        thead
-                            tr
-                                th version
-                                th build
-                                th remove
-                        tbody(id='versionTable')
+                    ul(class='nav-tabs')
+                        li(class='tab-link current close' data-tab="filtersSchool") School
+                        li(class='tab-link close' data-tab='filtersVersion') Version
+                #filtersSchool(class='nav-tab-content')
+                    #add-category
+                        a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") add new category...
+                            //button(class='btn btn-primary') add new category...
+                    .col-sm-12
+                        table(class='table table-hover table-bordered table-striped')
+                            thead
+                                tr
+                                    th(colspan='2') Category name
+                            tbody(id='tableFilter')
+                #filtersVersion(class='nav-tab-content')
+                    #add-category
+                        a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
+                    .col-sm-12
+                        table(class='table table-hover table-bordered table-striped')
+                            thead
+                                tr
+                                    th version
+                                    th build
+                                    th remove
+                            tbody(id='versionTable')
             //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm

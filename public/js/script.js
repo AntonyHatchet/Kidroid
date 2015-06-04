@@ -14,7 +14,19 @@ $(document).ready(function () {
     })
 
 });
+$(document).ready(function () {
 
+    $('ul.nav-tabs li').click(function () {
+        var tab_id = $(this).attr('data-tab');
+
+        $('ul.nav-tabs li').removeClass('current');
+        $('.nav-tab-content').removeClass('current');
+
+        $(this).addClass('current');
+        $("#" + tab_id).addClass('current');
+    })
+
+});
 function createNewCategory() {
     var nameCategory = $("#newCategory").val();
     if(nameCategory !=0){
