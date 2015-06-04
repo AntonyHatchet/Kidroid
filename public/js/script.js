@@ -76,7 +76,13 @@ function editDevice(){
     console.log(device);
 }
 
-function find() {
+function sort() {
+    var data = {};
+    data.id = $(".tableFloatingHeaderOriginal th:nth-child(2)").data('value');
+    find(this.data);
+}
+;function find(atr) {
+    console.log(atr);
     var device = {};
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();

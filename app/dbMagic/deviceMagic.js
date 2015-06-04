@@ -55,6 +55,7 @@ module.exports = {
             .where('status').equals((!status)?{$exists: true}:status)
             .where('apk.build').equals((!build)?{$exists: true}:build)
             .limit(10)
+            .skip(page)
             .sort('deviceId')
             .select({})
             .exec(function (err, Devices) {
