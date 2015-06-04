@@ -66,14 +66,14 @@ a {
     width: 70%;
 }
 
-ul.tabs {
+ul.tabs, ul.nav-tabs {
     margin: 0px;
     padding: 0px;
     list-style: circle;
     width: 100%;
 }
 
-ul.tabs li {
+ul.tabs li, ul.nav-tabs li {
     background: none;
     color: #6E6E6E;
     display: inline-block;
@@ -85,17 +85,17 @@ ul.tabs li {
     border-top: 1px solid rgb(224, 224, 224);
 }
 
-ul.tabs li.current {
+ul.tabs li.current, ul.nav-tabs li.current {
     background: #eee;
 }
 
-.tab-content {
+.tab-content, .nav-tab-content {
     display: none;
     padding: 0 50px 50px 0;
     opacity: 0;
 }
 
-.tab-content.current {
+.tab-content.current, .nav-tab-content.current {
     display: block;
     opacity: 1;
 }
