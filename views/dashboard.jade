@@ -127,14 +127,21 @@ block content
                                 i(class="icon-remove")
                             h3 Edit device
                         div(class="modal-body")
-                            form
+                            form.form-horizontal
                                 .form-group
-                                select(id="editDeviceCategory" class="form-control")
+                                    label(for="editDeviceCategory").col-sm-3.control-label School:
+                                    .col-sm-9
+                                        select(id="editDeviceCategory" class="form-control")
                                 .form-group
-                                select(id="editDeviceVersion" class="form-control")
+                                    label(for="addSelectVersion").col-sm-4.control-label APK version *:
+                                    .col-sm-8
+                                        select(id="editDeviceVersion" class="form-control")
                                 .form-group
-                                input(type='text' id="newNameUser" name='category' placeholder='Name User' class="form-control")
+                                    label(for="newNameUser").col-sm-5.control-label Name:
+                                    .col-sm-12.margin-top-5
+                                        input(type='text' id="newNameUser" name='category' placeholder='Name User' class="form-control")
                                 .form-group
+                                    label(for="newComment").col-sm-5.control-label Comment:
                                     .col-sm-12.margin-top-5
                                         input(type='text' id="newComment" name='category' placeholder='Comments' class="form-control")
                         div(class="modal-footer")

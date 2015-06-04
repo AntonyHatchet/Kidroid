@@ -66,16 +66,19 @@ function find() {
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
-    device.version = $("#selectVersion").val();
+    device.version = $("#selectVersion").val().split(' ')[0];
+    device.build = $("#selectVersion").val().split(' ')[1];
     socket.emit('getDevicesByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
+    console.log(device);
 };
 function page(i) {
     var device = {};
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
-    device.version = $("#selectVersion").val();
+    device.version = $("#selectVersion").val().split(' ')[0];
+    device.build = $("#selectVersion").val().split(' ')[1];
     device.page = i*10-10;
     socket.emit('getDevicesByParams', device);
     socket.emit('getDevicesQuantityByParams', device);

@@ -6,20 +6,27 @@ var Device = require('../models/device');
 module.exports = {
     // Получаем из БД общее колличество записей
     getQuantity: function (callback,params) {
-        var query = {};
         if (params!=undefined) {
-            query.name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
-            query.deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
-            query.school = (!params.category) ? {$exists: true} : params.category;
-            query.apk_version.build = (!params.version) ? {$exists: true} : params.version;
-            query.online = (!params.status) ? {$exists: true} : params.status;
+            var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
+            var deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
+            var school = params.category;
+            var build=  +params.build;
+            var status = params.status;
+            var page = params.page;
+            var limit = params.limit;
         }
-        query = Device.count(query);
-        query.exec(function (err, Devices) {
-            if (err) return console.log(err,"getQuantity Device.count err");
-            // Execute callback
-            callback(null, Devices);
-        });
+        Device
+            .count({})
+            .where('name').equals((!name)?{$exists: true}:name)
+            .where('deviceId').equals((!deviceId)?{$exists: true}:deviceId)
+            .where('school').equals((!school)?{$exists: true}:school)
+            .where('status').equals((!status)?{$exists: true}:status)
+            .where('apk.build').equals((!build)?{$exists: true}:build)
+            .exec(function (err, Devices) {
+                if (err) return console.log(err,"getQuantity Device.count err");
+                // Execute callback
+                callback(null, Devices);
+            });
     },
     //Поиск устройств согласно запросам
     getAllDevice: function (callback) {
@@ -31,21 +38,30 @@ module.exports = {
 
     },
     getDevice: function (callback,params) {
-        var query = {};
         if (params!=undefined) {
-            var page = (!params.page)? "" : +params.page;
-            query.name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
-            query.deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
-            query.school = (!params.category) ? {$exists: true} : params.category;
-            query.apk.build = (!params.version) ? {$exists: true} : params.version;
-            query.online = (!params.status) ? {$exists: true} : params.status;
+            var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
+            var deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
+            var school = params.category;
+            var build=  +params.build;
+            var status = params.status;
+            var page = params.page;
+            var limit = params.limit;
         }
-        query = Device.find(query).skip( page ).limit(10).sort({deviceId:1});
-        query.exec(function (err, Devices) {
-            if (err) return console.log(err,"getDevice Device.find err");
-            callback(null, Devices);
-        });
-
+        Device
+            .find({})
+            .where('name').equals((!name)?{$exists: true}:name)
+            .where('deviceId').equals((!deviceId)?{$exists: true}:deviceId)
+            .where('school').equals((!school)?{$exists: true}:school)
+            .where('status').equals((!status)?{$exists: true}:status)
+            .where('apk.build').equals((!build)?{$exists: true}:build)
+            .limit(10)
+            .sort('deviceId')
+            .select({})
+            .exec(function (err, Devices) {
+                if (err) return console.log(err,"getQuantity Device.count err");
+                // Execute callback
+                callback(null, Devices);
+            });
     },
     // Проверка на наличее ID и флага не зарегестрирован в БД
     regDevice: function (id, callback) {
