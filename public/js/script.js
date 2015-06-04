@@ -203,4 +203,13 @@ function createSchedule(){
     socket.emit('createSchedule', device)
     console.log(device);
 }
+$(document).ready(function () {
+    $('#closeScheduleModal').click(function(){
+       $('#editSchedule').removeClass('.in')
+           .attr('aria-hidden', true)
+           .css('z-index','-1')
+           .css('opacity','0')
+           .css('display','none');
+    });
+});
 

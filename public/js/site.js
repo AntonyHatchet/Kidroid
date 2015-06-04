@@ -8,11 +8,20 @@ $(document).ready( function() {
   // moment.locale('ru');
 
   // here's some magic to make sure the dates are happening this month.
-  var thisMonth = moment().format('YYYY-MM');
+  var thisDate = moment().format('YYYY-MM');
 
+  socket.on('allSchedule', function (data) {
+
+    html = '<ul>';
+    for (i in data)
+      html += "<li>" + data[i].devices + "</li><li>" + data[i].status + "</li><li>" + data[i].timeStart + "</li> <hr>";
+    $("#allSchedule").html(html);
+    console.log(data[i].devices);
+  });
   var eventArray = [
-    { date: thisMonth + '-27', title: 'Single Day Event' }
+    { date: thisDate + '-27', title: 'Single Day Event' }
   ];
+
 
   // the order of the click handlers is predictable.
   // direct click action callbacks come first: click, nextMonth, previousMonth, nextYear, previousYear, or today.
@@ -27,6 +36,8 @@ $(document).ready( function() {
     // },
     clickEvents: {
       click: function(target) {
+        //.link('#editSchedule');
+
         console.log(target.date._i);
         $('#editSchedule').addClass('in')
             .attr('aria-hidden', false)

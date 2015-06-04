@@ -177,7 +177,7 @@ block content
                     ul(class='nav-tabs')
                         li(class='tab-link current close' data-tab="filtersSchool") School
                         li(class='tab-link close' data-tab='filtersVersion') Version
-                #filtersSchool(class='nav-tab-content')
+                #filtersSchool(class='nav-tab-content current')
                     #add-category
                         a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") add new category...
                             //button(class='btn btn-primary') add new category...
@@ -294,7 +294,6 @@ block content
                             form
                                 .form-group
                                 div(id='dateSchedule')
-                                .form-group
                                 input(id='timeSchedule' type='time')
                                 .form-group
                                 select(id="scheduleDeviceVersion")
@@ -302,27 +301,27 @@ block content
                                 form
                                     .form-group
                                     input(class="input-mini" type='text' id='idStart' placeholder='start id')
-                                    .form-group
                                     input(class="input-mini" type='text' id='idEnd' placeholder='end id')
                                     .form-group
                                     select(id="scheduleDeviceCategory")
-                                    .form-group
                                     select(id="scheduleDeviceVersionFilter")
                                 button(class="btn btn-primary" onclick='finsDeviceSchedule()') Find
                                 hr
-                                table(class='table table-hover table-bordered table-striped')
-                                    thead
-                                        tr
-                                            th
-                                                input(type='checkbox' id='checkAllSchedule')
-                                            th id
-                                            th school
-                                            th apk_version
-                                            th update
-                                            th status
-                                    tbody(id='tableSchedule')
+                                #tableScheduleFind
+                                    table(class='table table-hover table-bordered table-striped' id='tableSchedule')
+                                        thead(class='tableTarget')
+                                            tr
+                                                th(onclick='sort(this)',data-value="0")
+                                                    input(type='checkbox' id='checkAllSchedule')
+                                                th id
+                                                th school
+                                                th apk_version
+                                                th update
+                                                th status
+                                        tbody(id='tableSchedule')
 
                         div(class="modal-footer")
+                            button(id="closeScheduleModal" class="btn btn-danger") Close
                             button(onclick="createSchedule()" class="btn btn-primary") Create
 
 

@@ -177,7 +177,15 @@ input[type="number"]::-webkit-inner-spin-button:active {
     box-shadow: 0 0 2px #0CF;
     opacity: .8;
 }
-
+#tableScheduleFind{
+    max-height: 200px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+#dateSchedule{
+    position: relative;
+    float: left;
+}
 /*table{*/
 /*width: 100%;*/
 /*}*/

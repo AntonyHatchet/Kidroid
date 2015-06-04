@@ -93,10 +93,10 @@ socket.on('deviceScheduled', function (data) {
     $("#tableSchedule").html(html);
 });
 
-socket.on('allSchedule', function (data) {
-    console.log(data);
-    html = '';
-    for (i in data)
-        html += "<p>" + data[i].date + "</p>";
-    $("#allSchedule").html(html);
-});
+//socket.on('allSchedule', function (data) {
+//    console.log(data);
+//    html = '<ul>';
+//    for (i in data)
+//        html += "<li>" + data[i].devices + "</li><li>" + data[i].status + "</li><li>" + data[i].timeStart + "</li>";
+//    $("#allSchedule").html(html);
+//});
