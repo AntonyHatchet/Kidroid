@@ -2,10 +2,10 @@
  * Created by nikolay_ivanisenko on 25.05.2015.
  */
 
-$('#paged').stickyTableHeaders();
+
 
 $(document).ready(function () {
-
+    $("#paged").stickyTableHeaders({ scrollableArea: $(".container-tab")[0], "fixedOffset": 0 });
     $('ul.tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');
 

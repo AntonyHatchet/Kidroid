@@ -22,7 +22,8 @@ socket.on('displayData', function (data) {
 
 socket.on('quantity', function (data) {
     //console.log(data);
-    $("caption h4").html(data + " devices found:");
+    $("h4").html(data + " devices found:");
+    $("#deployCount").html(" ("+data+")");
     html = '<nav><ul class="pagination">';
     Page = Math.ceil(data / 10);
     for (var j = 1; j <= Page; j++)

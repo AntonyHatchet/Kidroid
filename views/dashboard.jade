@@ -37,14 +37,10 @@ block content
                         select(id="selectVersion" class="span2 form-control" onchange="find()")
                     #add-device
                         a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") add new device
-            #deployApk
-                h2 APK Deploy:
-                form(class='form-search form-inline')
-                    input(type="checkbox" value="option")
-                    label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query ()
+            h4
             .container-fluid.container-tab
                 table(class='table table-hover table-bordered table-striped' id='paged')
-                    thead(id='target')
+                    thead(class='tableTarget')
                         tr
                             th
                                 input(type="checkbox" id="checkboxWarning" value="option1")
@@ -55,7 +51,14 @@ block content
                             th Device status
                             th Options
                     tbody(id='deviceTable')
-                div(id='pagination' class="text-center")
+            div(id='pagination' class="text-center")
+            #deployApk
+                fieldset
+                    legend APK Deploy:
+                    form(class='deployApk form-inline')
+                        input(type="checkbox" value="option")
+                        label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
+                             span(id="deployCount") test
             //============MODAL Add new device=====================
             div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -321,8 +324,6 @@ block content
 
                         div(class="modal-footer")
                             button(onclick="createSchedule()" class="btn btn-primary") Create
-
-
 
 
 

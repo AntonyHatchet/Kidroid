@@ -7,7 +7,12 @@ body {
 a {
     color: #00B7FF;
 }
-
+#devices{
+    height: 100vh;
+}
+.tableTarget{
+    background-color: #FBFBFB;
+}
 #devices, #filters, #users, #settings {
     padding: 10px;
     background: #fff;
@@ -396,4 +401,11 @@ input[type="number"]::-webkit-inner-spin-button:active {
 }
 #map{
     display: block!important;
+}
+.deployApk{
+    margin-bottom: 25px;
+    margin-left: 10px;
+}
+.deployApk input[type=checkbox]{
+    float: left;
 }
