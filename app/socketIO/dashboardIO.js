@@ -42,6 +42,12 @@ module.exports = function (server) {
             }
             io.emit('users', data);
         });
+        cron.getAllSchedule(function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            io.emit('allSchedule', data);
+        });
 
         // «апрос устройств на страницу по колличеству
         socket.on('getDevicesByParams', function (params) {
