@@ -59,6 +59,7 @@ block content
                         input(type="checkbox" value="option")
                         label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
                              span(id="deployCount") test
+                        select(id="selectVersionToDeploy" class="span2 form-control" onchange="find()")
             //============MODAL Add new device=====================
             div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
