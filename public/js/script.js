@@ -208,11 +208,18 @@ function createSchedule(){
     device.devices = [];
         device.devices.push($("input:checked").val());
     device.Version =$('#scheduleDeviceVersion').val();
-    if (device.devices ==0){
-        alert("error no id")
+    if (device.devices ==0 || device.date == ''){
+        $('#errorAddSchedule').removeClass('no-show');
+        console.log('no');
     }
     else {
         socket.emit('createSchedule', device)
+        $('#editSchedule').removeClass('.in')
+            .attr('aria-hidden', true)
+            .css('z-index','-1')
+            .css('opacity','0')
+            .css('display','none');
+        $('#errorAddSchedule').addClass('no-show');
     }
     //console.log(device);
 }

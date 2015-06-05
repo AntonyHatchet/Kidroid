@@ -19,6 +19,11 @@ block content
                 i(class='icon-chevron-left')
             li(class='tab-link close' data-tab='settings') Settings
                 i(class='icon-chevron-left')
+            li(class='tab-link close')
+            li(class='tab-link close' data-tab='requests') Requests
+                i(class='icon-chevron-left')
+            li(class='tab-link close' data-tab='planning') Planning
+                i(class='icon-chevron-left')
 
     #conteiner
         //===========TABS DEVICES=======================
@@ -280,9 +285,9 @@ block content
                                 input(name='password' class="form-control" type='text' placeholder='password' required)
                         div(class="modal-footer")
                             button(class="btn btn-primary" type='submit') Add user
-        //===========TABS SETTINGS================
-        #settings(class='tab-content')
-            h2 Settings
+        //===========TABS planning================
+        #planning(class='tab-content')
+            h2 Planning
             div(class='calendar')
                 script.
                     <div class="clndr-controls">
@@ -290,7 +295,7 @@ block content
                         <div class="month"><%= month %></div>
                         <div class="clndr-next-button">&rsaquo;</div>
                     </div>
-            #allSchedule
+            //#allSchedule
             //============MODAL EDIT Schedule=====================
             div(class="modal" id="editSchedule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -330,8 +335,12 @@ block content
                                         tbody(id='tableSchedule')
 
                         div(class="modal-footer")
+                            #errorAddSchedule(class='no-show') error
                             button(id="closeScheduleModal" class="btn btn-danger") Close
                             button(onclick="createSchedule()" class="btn btn-primary") Create
 
-
+        //===========TABS planning================
+       #requests(class='tab-content')
+           h2 Requests
+           #allSchedule
 
