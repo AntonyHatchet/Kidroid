@@ -6,7 +6,7 @@
 
 $(document).ready(function () {
 
-    $("#paged").stickyTableHeaders({ scrollableArea: $(".container-tab")[0], "fixedOffset": 0 });
+
 
     $('ul.tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');

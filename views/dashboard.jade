@@ -72,15 +72,26 @@ block content
             div(id='pagination' class="text-center")
             #deployApk
                 fieldset
-                    legend APK Deploy:
+                    legend Marionette Deploy: (APK Deploy)
                     form(class='deployApk form-inline col-sm-12')
                         input.col-sm-1(type="checkbox" value="option")
                         label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
-                             span(id="deployCount")
+                            span(id="deployCount")
                         .col-sm-8
                             .col-sm-3
                                 select(id="selectVersionToDeploy" class="span2 form-control" onchange="find()")
-                            button(class="col-sm-2 btn btn-primary" onclick='addDevice()') Deploy
+                            button(class="col-sm-2 btn btn-primary" onclick='addDevice()') Start
+            #deployKidroid
+                fieldset
+                    legend Kidroid Loader Deploy:
+                    form(class='deployApk form-inline col-sm-12')
+                        input.col-sm-1(type="checkbox" value="option")
+                        label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
+                            span(id="deployCount")
+                        .col-sm-8
+                            .col-sm-3
+                                select()
+                            button(class="col-sm-2 btn btn-primary") Start
             //============MODAL Add new device=====================
             div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -188,6 +199,9 @@ block content
                     map.setView([i, j], 12);
                     mark.setLatLng(L.latLng(i, j)).update()
                     $('.map').css('z-index', '1050');
+                    if(i==0||j==0){
+                        $('#buttonMap').addClass('no-show');
+                    }
                 }
 
             script(src="/js/socketTableData.js")
