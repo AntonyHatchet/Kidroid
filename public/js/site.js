@@ -46,7 +46,7 @@ $(document).ready( function() {
             .css('z-index','1050')
             .css('opacity','1')
             .css('display','block');
-        document.getElementById('dateSchedule').innerHTML= '<input id="dateScheduleId" type="date" value="' + target.date._i + '">';
+        document.getElementById('dateSchedule').innerHTML= '<input id="dateScheduleId" class="form-control" type="date" value="' + target.date._i + '">';
         // if you turn the `constraints` option on, try this out:
         // if($(target.element).hasClass('inactive')) {
         //   console.log('not a valid datepicker date.');
@@ -87,12 +87,10 @@ $(document).ready( function() {
     if(e.keyCode == 37) {
       // left arrow
       calendars.clndr1.back();
-      calendars.clndr2.back();
     }
     if(e.keyCode == 39) {
       // right arrow
       calendars.clndr1.forward();
-      calendars.clndr2.forward();
     }
   });
 

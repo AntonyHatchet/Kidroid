@@ -234,3 +234,34 @@ $(document).ready(function () {
     });
 })
 
+
+//========AUTOCOMPLETE=================
+$(function () {
+    'use strict';
+
+    var categoryArray = $.map(category, function (value, key) { return { value: value, data: key }; });
+
+    // Setup jQuery ajax mock:
+    $.mockjax({
+        url: '*',
+        responseTime: 2000,
+        response: function (settings) {
+            var query = settings.data.query,
+                queryLowerCase = query.toLowerCase(),
+                re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi'),
+                suggestions = $.grep(categoryArray, function (categorySchool) {
+                    // return categorySchool.value.toLowerCase().indexOf(queryLowerCase) === 0;
+                    return re.test(categorySchool.value);
+                }),
+                response = {
+                    query: query,
+                    suggestions: suggestions
+                };
+
+            this.responseText = JSON.stringify(response);
+        }
+    });
+    $('#autocomplete-dynamic').autocomplete({
+        lookup: categoryArray
+    });
+});

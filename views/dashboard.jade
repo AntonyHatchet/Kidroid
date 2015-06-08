@@ -330,17 +330,17 @@ block content
                             form
                                 .form-group
                                 div(id='dateSchedule')
-                                input(id='timeSchedule' type='time' required)
+                                input(class="form-control" id='timeSchedule' type='time' required)
                                 .form-group
-                                select(id="scheduleDeviceVersion" required)
+                                select(class="form-control" id="scheduleDeviceVersion" required)
                                 hr
                                 form
                                     .form-group
-                                    input(class="input-mini" type='text' id='idStart' placeholder='start id')
-                                    input(class="input-mini" type='text' id='idEnd' placeholder='end id')
+                                    input(class="form-control" type='text' id='idStart' placeholder='start id')
+                                    input(class="form-control" type='text' id='idEnd' placeholder='end id')
                                     .form-group
-                                    select(id="scheduleDeviceCategory")
-                                    select(id="scheduleDeviceVersionFilter")
+                                    input(class="form-control" id="autocomplete-dynamic")
+                                    select(class="form-control" id="scheduleDeviceVersionFilter")
                                 button(class="btn btn-primary" onclick='finsDeviceSchedule()') Find
                                 hr
                                 #tableScheduleFind
