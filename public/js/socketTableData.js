@@ -56,6 +56,21 @@ socket.on('category', function (date) {
     }
     $("#selectCategory, #addSelectCategory, #editDeviceCategory, #scheduleDeviceCategory").html(html);
 });
+var category=[];
+
+
+socket.on('category', function (date) {
+    //console.log(date, "category");
+    for (var i = 0; i < date.length; i++) {
+        category = [
+            date[i].name
+        ];
+        console.log(category);
+        //category=categorySchool;
+
+    }
+});
+
 
 socket.on('version', function (date) {
     //console.log(school,"category");
@@ -78,7 +93,7 @@ socket.on('users', function (data) {
     //console.log(data);
     html = '';
     for (i in data)
-        html += "<tr><td>" + data[i]._id + "</td><td>" + data[i].local.name + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeUsers\",\"" + data[i]._id + "\")\')>Delete</button></td></tr>";
+        html += "<tr><td><input type='checkbox' id='checkSchedule" + data[i]._id + "' class='checkSchedule' value='" + data[i]._id + "'></td><td>" + data[i]._id + "</td><td>" + data[i].local.name + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeUsers\",\"" + data[i]._id + "\")\')>Delete</button></td></tr>";
     $("#userTable").html(html);
 });
 

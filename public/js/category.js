@@ -2,13 +2,9 @@
  * Created by nikolay_ivanisenko on 08.06.2015.
  */
 
-var category =[
-    'school1',
-    'school2',
-    'school3',
-    'school4'
-];
-
+//var category =[
+//];
+//
 //socket.on('category', function (date) {
 //    //console.log(date, "category");
 //    for (var i = 0; i < date.length; i++) {
@@ -16,6 +12,7 @@ var category =[
 //            date[i].name
 //        ];
 //        category=categorySchool;
+//        console.log(category);
 //    }
 //});
 
