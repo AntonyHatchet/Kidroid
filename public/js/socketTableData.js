@@ -161,7 +161,6 @@ socket.on('getVersionDeploy', function (data) {
     $("#selectVersionApkToDeploy").html(html);
 });
 socket.on('getVersionDeploy', function (data) {
-    console.log(data,"data")
     var apk = "";
     var kidroid = "";
     for (var i = 0; i < data.apk.length; i++) {
