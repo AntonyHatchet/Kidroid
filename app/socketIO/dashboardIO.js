@@ -34,6 +34,7 @@ module.exports = function (server) {
                 console.log(err);
             }
             io.emit('version', data);
+            io.emit('getVersionDeploy', data);
         });
         device.findAllStatus(function (err, data) {
             if (err) {
@@ -186,12 +187,21 @@ module.exports = function (server) {
                 });
             }
         );
-        socket.on('testCategory', function () {
+        socket.on('getCategory', function () {
                 user.findCategory(function (err, data) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('testCategoryCallback', data);
+                    io.emit('getCategoryCallback', data);
+                });
+            }
+        );
+        socket.on('makeDefaultVersion', function (location,id) {
+                user.makeDefaultVersion(location,id,function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('getVersionDeploy', data);
                 });
             }
         );

@@ -8,6 +8,7 @@ var ApkSchema = mongoose.Schema({
         version: Number,
         build: Number
     },
+    default: Boolean,
     link: String
 });
 

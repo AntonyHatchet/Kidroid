@@ -77,7 +77,7 @@ block content
                             span(id="deployCount")
                         .col-sm-8
                             .col-sm-3
-                                select(id="selectVersionToDeploy" class="span2 form-control" onchange="find()")
+                                select(id="selectVersionApkToDeploy" class="span2 form-control" onchange="find()")
                             button(class="col-sm-2 btn btn-primary" onclick='addDevice()') Start
             #deployKidroid
                 fieldset
@@ -85,10 +85,10 @@ block content
                     form(class='deployApk form-inline col-sm-12')
                         input.col-sm-1(type="checkbox" value="option")
                         label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
-                            span(id="deployCount")
+                            span(id="deployCountKidroid")
                         .col-sm-8
                             .col-sm-3
-                                select()
+                                select(id="kidroidVersionDeploy" class="span2 form-control")
                             button(class="col-sm-2 btn btn-primary") Start
             //============MODAL Add new device=====================
             div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -285,12 +285,12 @@ block content
                         div(class="modal-footer")
                             button(class="btn btn-primary" type='submit') Add user
         //===========TABS requests================
-        #requests(class='tab-content')
+        #settings(class='tab-content')
             fieldset
                 legend Marionette APK
                 div(class='form-search form-inline col-sm-9')
-                    label(for='selectVersion') Current version:
-                    select(id="selectVersion" class="form-control" onchange="find()")
+                    label(for='selectDefaultApkVersion') Current version:
+                    select(id="selectDefaultApkVersion" class="form-control" onchange="setDefault()")
 
                 .col-sm-12
                     table(class='table table-hover table-bordered table-striped')
@@ -299,7 +299,35 @@ block content
                                 th version
                                 th build
                                 th remove
-                        tbody(id='versionTable')
+                        tbody(id='settingApkVersionTable')
+                a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
+                    //============MODAL Add new Apk version=====================
+            div(class="modal" id="addApkVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                .modal-dialog.modal-sm
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h3 Add new Marionette version
+                        div(class="modal-body")
+                            form(method="post" action='/uploadFile' enctype="multipart/form-data")
+                                .form-group
+                                input(type="file", class="form-control" name='category' value='')
+                                button( type="submit" class="btn btn-primary") Add
+            fieldset
+                legend Kidroid loader
+                div(class='form-search form-inline col-sm-9')
+                    label(for='selectDefaultKidroidVersion') Current version:
+                    select(id="selectDefaultKidroidVersion" class="form-control" onchange="setDefault()")
+
+                .col-sm-12
+                    table(class='table table-hover table-bordered table-striped')
+                        thead
+                            tr
+                                th version
+                                th build
+                                th remove
+                        tbody(id='settingKidroidVersionTable')
                 a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
                     //============MODAL Add new Apk version=====================
             div(class="modal" id="addApkVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -313,8 +341,8 @@ block content
                             form(method="post" action='/uploadFile' enctype="multipart/form-data")
                                 .form-group
                                 input(type="file", class="form-control" name='category' value='')
-                        div(class="modal-footer")
-                            button( type="submit" class="btn btn-primary") Add
+                                button( type="submit" class="btn btn-primary") Addaaaaa
+
         //===========TABS planning================
         #planning(class='tab-content')
             h2 Planning

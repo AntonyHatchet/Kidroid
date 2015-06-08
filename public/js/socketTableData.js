@@ -2,16 +2,6 @@
  * Created by anton_gorshenin on 25.05.2015.
  */
 
-var category =  {
-    pushData:function(data){
-        this.array.push(data)
-    },
-    getArray:function(){
-       return  this.array
-    },
-    array: []
-};
-
 socket.on('displayData', function (data) {
     //console.log(data.length);
     html = '';
@@ -43,6 +33,7 @@ socket.on('quantity', function (data) {
     //console.log(data);
     $("h4").html(data + " devices found:");
     $("#deployCount").html(" ("+data+")");
+    $("#deployCountKidroid").html(" ("+data+")");
     html = '<nav><ul class="pagination">';
     Page = Math.ceil(data / 10);
     for (var j = 1; j <= Page; j++)
@@ -68,21 +59,6 @@ socket.on('category', function (date) {
     }
     $("#selectCategory, #addSelectCategory, #editDeviceCategory, #scheduleDeviceCategory").html(html);
 });
-var category=[];
-
-
-socket.on('category', function (date) {
-    //console.log(date, "category");
-    for (var i = 0; i < date.length; i++) {
-        category = [
-            date[i].name
-        ];
-        console.log(category);
-        //category=categorySchool;
-
-    }
-});
-
 
 socket.on('version', function (date) {
     console.log(date,"kidroidVersion");
@@ -90,7 +66,7 @@ socket.on('version', function (date) {
     for (var i = 0; i < date.kidroid.length; i++) {
         html += "<option>" + date.kidroid[i].loader +"</option>";
     }
-    $("#kidroidVersion").html(html);
+    $("#kidroidVersion,#kidroidVersionDeploy").html(html);
 });
 
 socket.on('version', function (date) {
@@ -146,13 +122,54 @@ socket.on('deviceScheduled', function (data) {
 });
 
 socket.on('allSchedule', function (data) {
-    console.log(data);
+   // console.log(data);
     html = '<ul>';
     for (i in data)
         html += "<li>" + data[i].devices + "</li><li>" + data[i].status + "</li><li>" + data[i].timeStart + "</li>";
     $("#allSchedule").html(html);
 });
 
+socket.on('getVersionDeploy', function (data) {
+    var defaultVersion;
+    for (var i = 0; i < data.kidroid.length; i++) {
+        if (data.kidroid[i].default){
+            defaultVersion = data.kidroid[i];
+        }
+    }
+    html = "<option>" + defaultVersion.loader +" current"+"</option>";
+    for (var j = 0; j < data.kidroid.length; j++) {
+        if (data.kidroid[j] != defaultVersion)
+        html += "<option>" + data.kidroid[j].loader +"</option>";
+    }
+    $("#selectDefaultKidroidVersion").html(html);
+    $("#kidroidVersionDeploy").html(html);
+});
+
+socket.on('getVersionDeploy', function (data) {
+    var defaultVersion;
+    for (var i = 0; i < data.apk.length; i++) {
+        if (data.apk[i].default){
+            defaultVersion = data.apk[i];
+        }
+    }
+    html = "<option>" + defaultVersion.apk.build +" current"+"</option>";
+    for (var j = 0; j < data.apk.length; j++) {
+        if (data.apk[j] != defaultVersion)
+            html += "<option>" + data.apk[j].apk.build +"</option>";
+    }
+    $("#selectDefaultApkVersion").html(html);
+    $("#selectVersionApkToDeploy").html(html);
+});
+
+var category =  {
+    pushData:function(data){
+        this.array.push(data)
+    },
+    getArray:function(){
+        return  this.array
+    },
+    array: []
+};
 function startAutoComplete(array,className){
 
     var Array = $.map(array, function (value, key) { return { value: value, data: key }; });

@@ -43,7 +43,7 @@ module.exports = function (app, passport) {
 
             fs.mkdir("./public/uploads/buffer/"+ filename.slice(0,4));
             var saveTo = path.join("./public/uploads/buffer/"+filename.slice(0,4), path.basename(filename));
-            file.pipe(fs.createWriteStream(saveTo)).pipe(gzip);
+            file.pipe(fs.createWriteStream(saveTo));
 
             file.on('end', function() {
                 var buffer = new Buffer(saveTo, 'base64');

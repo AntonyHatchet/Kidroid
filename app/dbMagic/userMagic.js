@@ -153,12 +153,29 @@ module.exports = {
         });
     },
     findAllVersion: function (callback) {
-        Version.find("",{"_id":0,"apk":1}, function (err, version) {
+        Version.find("", function (err, version) {
 
             if (err) return console.log(err,"findAllVersion Version.find err");
 
             if (version != null) {
-                Kidroid.find("",{"_id":0,"loader":1}, function (err, kidroid) {
+                Kidroid.find("", function (err, kidroid) {
+
+                    if (err) return console.log(err,"findKidroidVersion Kidroid.find err");
+
+                    if (version != null) {
+                        callback(null, {"apk":version,"kidroid":kidroid})
+                    }
+                });
+            }
+        });
+    },
+    findDefaultVersion: function (callback) {
+        Version.find({"default":true}, function (err, version) {
+
+            if (err) return console.log(err,"findAllVersion Version.find err");
+
+            if (version != null) {
+                Kidroid.find({"default":true}, function (err, kidroid) {
 
                     if (err) return console.log(err,"findKidroidVersion Kidroid.find err");
 
@@ -193,6 +210,7 @@ module.exports = {
                         build: +data.build,
                         version: +data.version.slice(1)
                     },
+                    default: false,
                     link: data.link
                 });
 
@@ -211,6 +229,19 @@ module.exports = {
                 });
             }
             callback(null, 0)
+        })
+    },
+    makeDefault: function (location ,id, callback) {
+
+        location.update({},{$set:{"default":false}}, function (err, data) {
+
+            if (err) return console.log(err,"makeDefault location.update err");
+
+            location.update({"_id": data.id},{$set:{"default":false}}, function(err,data){
+                if (err) return console.log(err,"makeDefault location.update 2 err");
+
+                callback(err,data)
+            })
         })
     },
     removeVersion: function (data, callback) {

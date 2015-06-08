@@ -4,7 +4,8 @@
 var mongoose = require('mongoose');
 
 var KidroidSchema = mongoose.Schema({
-    loader: Number
+    loader: Number,
+    default: Boolean
 });
 
 module.exports = mongoose.model('Kidroid', KidroidSchema, "kidroid");

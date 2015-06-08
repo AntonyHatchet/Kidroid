@@ -49,6 +49,19 @@ module.exports = {
             callback(null, version);
         });
     },
+    makeDefaultVersion: function(location,id,callback){
+        userMagic.makeDefault(location,id,function (err, version) {
+
+            if (err) return console.log(err,"makeDefaultVersion userMagic.makeDefault err");
+
+            module.exports.getDefaultVersion(function(err,versions){
+                callback(null, versions);
+            })
+        });
+    },
+    getDefaultVersion: function(callback){
+
+    },
     findLink: function (version,callback) {
         userMagic.findLink(version,function (err, link) {
 
