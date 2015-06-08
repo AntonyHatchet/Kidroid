@@ -1,6 +1,17 @@
 /**
  * Created by anton_gorshenin on 25.05.2015.
  */
+
+var category =  {
+    pushData:function(data){
+        this.array.push(data)
+    },
+    getArray:function(){
+       return  this.array
+    },
+    array: []
+};
+
 socket.on('displayData', function (data) {
     //console.log(data.length);
     html = '';
@@ -9,8 +20,8 @@ socket.on('displayData', function (data) {
         var deviceId = "<td>" + data[i].deviceId + "</td>";
         var deviceName = "<td>"+ data[i].name + "<p>(Android v." +data[i].android +")</p></td>";
         var update = (!data[i].updateRequired)? "": "*Pending update (v"+data[i].apkToUpdate.version+" build "+data[i].apkToUpdate.build+")";
-        var apkVersion = "<td>" + data[i].apk.version +" (Build "+data[i].apk.build + ")<p>"+ update +"</p></td>";
-        var loaderVersion = "<td>"+ data[i].loader +"</td>";
+        var apkVersion = "<td>" + ((!data[i].apk.version >=1 )? "-" : data[i].apk.version +" (Build "+data[i].apk.build + ")") + "<p>"+ update +"</p></td>";
+        var loaderVersion = "<td>"+ ((data[i].loader >= 1)? data[i].loader: '-') +"</td>";
         var status = "<td>" + data[i].status + "</td>";
         if(data[i].longitude!=0||data[i].latitude!=0) {
             var map = "<button id='buttonMap' href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>Show map</button>";
@@ -40,12 +51,13 @@ socket.on('quantity', function (data) {
 });
 
 socket.on('category', function (school) {
-    //console.log(school,"category");
     html = '';
     for (var i = 0; i < school.length; i++) {
+        category.pushData(school[i].name);
         html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td>" + school[i].name + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeCategory\",\"" + school[i]._id + "\")\')>Delete</button> / <a href='#editCategory' role='button' class='btn btn-primary' data-toggle='modal' onclick='renameCategoryId(\"" + school[i]._id + "\")'>Edit</a></td></tr>";
     }
     $("#tableFilter").html(html);
+    startAutoComplete(category.getArray(),".category")
 });
 
 socket.on('category', function (date) {
@@ -58,12 +70,21 @@ socket.on('category', function (date) {
 });
 
 socket.on('version', function (date) {
-    //console.log(school,"category");
-    html = '<option value="" style="color:#cccccc">Select version</option>';
-    for (var i = 0; i < date.length; i++) {
-        html += "<option>" + date[i].apk.version +" "+ date[i].apk.build +"</option>";
+    console.log(date,"kidroidVersion");
+    html = '<option value="" style="color:#cccccc">Kidroid Loader version</option>';
+    for (var i = 0; i < date.kidroid.length; i++) {
+        html += "<option>" + date.kidroid[i].loader +"</option>";
     }
-    $("#selectVersion,#selectVersionToDeploy, #addSelectVersion, #editDeviceVersion, #scheduleDeviceVersion, #scheduleDeviceVersionFilter").html(html);
+    $("#kidroidVersion").html(html);
+});
+
+socket.on('version', function (date) {
+    //console.log(school,"category");
+    html = '<option value="" style="color:#cccccc">Marionette version</option>';
+    for (var i = 0; i < date.apk.length; i++) {
+        html += "<option>" + date.apk[i].apk.version +" "+ date.apk[i].apk.build +"</option>";
+    }
+    $("#marionetteVersion,#selectVersionToDeploy, #addSelectVersion, #editDeviceVersion, #scheduleDeviceVersion, #scheduleDeviceVersionFilter").html(html);
 });
 socket.on('version', function (date) {
     //console.log(school,"category");
@@ -72,6 +93,14 @@ socket.on('version', function (date) {
         html += "<tr><td>" + date[i].apk.version + "</td><td>" + date[i].apk.build + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeVersion\",\"" + date[i]._id + "\")\')>Delete</button>";
     }
     $("#versionTable").html(html);
+});
+socket.on('status', function (date) {
+    //console.log(school,"category");
+    html = '<option value="" style="color:#cccccc">Select status</option>';
+    for (var i = 0; i < date.length; i++) {
+        html += "<option>" +date[i]+"</option>";
+    }
+    $("#selectStatus").html(html);
 });
 
 socket.on('users', function (data) {
@@ -108,3 +137,32 @@ socket.on('allSchedule', function (data) {
         html += "<li>" + data[i].devices + "</li><li>" + data[i].status + "</li><li>" + data[i].timeStart + "</li>";
     $("#allSchedule").html(html);
 });
+
+function startAutoComplete(array,className){
+
+    var Array = $.map(array, function (value, key) { return { value: value, data: key }; });
+
+// Setup jQuery ajax mock:
+    $.mockjax({
+        url: '*',
+        responseTime: 2000,
+        response: function (settings) {
+            var query = settings.data.query,
+                queryLowerCase = query.toLowerCase(),
+                re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi'),
+                suggestions = $.grep(Array, function (categorySchool) {
+                    // return categorySchool.value.toLowerCase().indexOf(queryLowerCase) === 0;
+                    return re.test(categorySchool.value);
+                }),
+                response = {
+                    query: query,
+                    suggestions: suggestions
+                };
+
+            this.responseText = JSON.stringify(response);
+        }
+    });
+    $(className).autocomplete({
+        lookup: Array
+    });
+}

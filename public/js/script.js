@@ -127,8 +127,8 @@ function find(sort) {
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
-    device.version = $("#selectVersion").val().split(' ')[0];
-    device.build = $("#selectVersion").val().split(' ')[1];
+    device.version = $("#marionetteVersion").val().split(' ')[0];
+    device.build = $("#marionetteVersion").val().split(' ')[1];
     socket.emit('getDevicesByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
 };
@@ -139,8 +139,8 @@ function page(i) {
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
-    device.version = $("#selectVersion").val().split(' ')[0];
-    device.build = $("#selectVersion").val().split(' ')[1];
+    device.version = $("#marionetteVersion").val().split(' ')[0];
+    device.build = $("#marionetteVersion").val().split(' ')[1];
     device.page = i*10-10;
     socket.emit('getDevicesByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
@@ -235,33 +235,3 @@ $(document).ready(function () {
 })
 
 
-//========AUTOCOMPLETE=================
-$(function () {
-    'use strict';
-
-    var categoryArray = $.map(category, function (value, key) { return { value: value, data: key }; });
-
-    // Setup jQuery ajax mock:
-    $.mockjax({
-        url: '*',
-        responseTime: 2000,
-        response: function (settings) {
-            var query = settings.data.query,
-                queryLowerCase = query.toLowerCase(),
-                re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi'),
-                suggestions = $.grep(categoryArray, function (categorySchool) {
-                    // return categorySchool.value.toLowerCase().indexOf(queryLowerCase) === 0;
-                    return re.test(categorySchool.value);
-                }),
-                response = {
-                    query: query,
-                    suggestions: suggestions
-                };
-
-            this.responseText = JSON.stringify(response);
-        }
-    });
-    $('#autocomplete-dynamic').autocomplete({
-        lookup: categoryArray
-    });
-});

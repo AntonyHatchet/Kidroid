@@ -4,6 +4,7 @@
 
 module.exports = function (server) {
     var user = require('../routes/users.js');
+    var device = require('../routes/device.js');
     var cron = require('../dbMagic/cronMagic.js');
     var io = require('socket.io').listen(server);
 
@@ -22,19 +23,23 @@ module.exports = function (server) {
             }
             io.emit('displayData', data);
         });
-
         user.findCategory(function (err, data) {
             if (err) {
                 console.log(err);
             }
             io.emit('category', data);
         });
-
         user.findAllVersion(function (err, data) {
             if (err) {
                 console.log(err);
             }
             io.emit('version', data);
+        });
+        device.findAllStatus(function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            io.emit('status', data);
         });
         user.findAllUsers(function (err, data) {
             if (err) {
@@ -178,6 +183,15 @@ module.exports = function (server) {
                         console.log(err);
                     }
                     io.emit('deviceScheduled', callback);
+                });
+            }
+        );
+        socket.on('testCategory', function () {
+                user.findCategory(function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('testCategoryCallback', data);
                 });
             }
         );

@@ -4,6 +4,7 @@
 var User = require('../models/user');
 var Category = require('../models/category');
 var Version = require('../models/apk_models');
+var Kidroid = require('../models/kidroidModel');
 var Device = require('../models/device');
 
 
@@ -157,7 +158,14 @@ module.exports = {
             if (err) return console.log(err,"findAllVersion Version.find err");
 
             if (version != null) {
-                callback(null, version)
+                Kidroid.find("",{"_id":0,"loader":1}, function (err, kidroid) {
+
+                    if (err) return console.log(err,"findKidroidVersion Kidroid.find err");
+
+                    if (version != null) {
+                        callback(null, {"apk":version,"kidroid":kidroid})
+                    }
+                });
             }
         });
     },

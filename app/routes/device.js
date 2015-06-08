@@ -16,6 +16,19 @@ module.exports = {
             })
         });
     },
+    findAllStatus: function(cb){
+            deviceMagic.findAllStatus(function (err, version) {
+
+                if (err) return console.log(err,"findAllVersion userMagic.findAllVersion err");
+                var statuses = [];
+                version.forEach(function(device){
+                    if (statuses.indexOf(device.status) == -1){
+                        statuses.push(device.status);
+                    }
+                });
+                cb(null, statuses);
+            });
+    },
 //Регистрация девайса
     getRegistrationDevice: function (req, res) {
 

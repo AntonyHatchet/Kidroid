@@ -35,11 +35,9 @@ block content
                     form(class='form-search form-inline col-sm-9')
                         input(type="text" id="DeviceNameIDSerial" class='form-control' placeholder='Device name/ID/Serial' onkeyup="find()")
                         select(id='selectStatus' class="span2 form-control" onchange="find()")
-                            option(value="" style='color:#cccccc') Select status
-                            option(value='0') Offline
-                            option(value='1') Online
                         select(id="selectCategory" class="span2 form-control" onchange="find()")
-                        select(id="selectVersion" class="span2 form-control" onchange="find()")
+                        select(id="marionetteVersion" class="span2 form-control" onchange="find()")
+                        select(id="kidroidVersion" class="span2 form-control" onchange="find()")
                     #add-device
                         a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") Add New Device
             .col-sm-12
@@ -262,8 +260,9 @@ block content
                             form(method="post" action='/uploadFile' enctype="multipart/form-data")
                                 .form-group
                                 input(type="file", class="form-control" name='category' value='')
+                                button( type="submit" class="btn btn-primary") Add
                         div(class="modal-footer")
-                            button( type="submit" class="btn btn-primary") Add
+
             //============MODAL Edit category=====================
             div(class="modal" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -339,7 +338,7 @@ block content
                                     input(class="form-control" type='text' id='idStart' placeholder='start id')
                                     input(class="form-control" type='text' id='idEnd' placeholder='end id')
                                     .form-group
-                                    input(class="form-control" id="autocomplete-dynamic")
+                                    input(class="form-control category" id="autocomplete-dynamic")
                                     select(class="form-control" id="scheduleDeviceVersionFilter")
                                 button(class="btn btn-primary" onclick='finsDeviceSchedule()') Find
                                 hr

@@ -37,6 +37,16 @@ module.exports = {
         }).sort({deviceId:1});
 
     },
+    findAllStatus: function (callback) {
+        Device.find("",{"_id":0,"status":1}, function (err, status) {
+
+            if (err) return console.log(err,"findAllStatus Device.find err");
+
+            if (status != null) {
+                callback(null, status)
+            }
+        });
+    },
     getDevice: function (callback,params) {
         if (params!=undefined) {
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
