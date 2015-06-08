@@ -98,7 +98,7 @@ socket.on('users', function (data) {
     //console.log(data);
     html = '';
     for (i in data)
-        html += "<tr><td><input type='checkbox' id='checkSchedule" + data[i]._id + "' class='checkSchedule' value='" + data[i]._id + "'></td><td>" + data[i]._id + "</td><td>" + data[i].local.name + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeUsers\",\"" + data[i]._id + "\")\')>Delete</button></td></tr>";
+        html += "<tr><td><input type='checkbox' id='checkSchedule" + data[i].password + "' class='checkSchedule' value='" + data[i]._id + "'></td><td>" + data[i]._id + "</td><td>" + data[i].local.name + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeUsers\",\"" + data[i]._id + "\")\')>Delete</button></td></tr>";
     $("#userTable").html(html);
 });
 
@@ -159,6 +159,27 @@ socket.on('getVersionDeploy', function (data) {
     }
     $("#selectDefaultApkVersion").html(html);
     $("#selectVersionApkToDeploy").html(html);
+});
+socket.on('getVersionDeploy', function (data) {
+    console.log(data,"data")
+    var apk = "";
+    var kidroid = "";
+    for (var i = 0; i < data.apk.length; i++) {
+        var checkBox = "<td ><input type='checkbox' class='checkSchedule' value=" + data.apk[i]._id + "></td>";
+        var name = '<td class="name">'+ data.apk[i].date + '(' + data.apk[i].user + ')</td>';
+        var version = '<td class="version">'+ data.apk[i].apk.version + '</td>';
+        var build = '<td class="build">'+  data.apk[i].apk.build + '</td>';
+        apk += '<tr>'+checkBox+name+version+build+'</tr>';
+    }
+    for (var j = 0; j < data.kidroid.length; j++) {
+        var checkBoxKid = "<td ><input type=checkbox class=checkSchedule value=" + data.kidroid[i]._id + "></td>";
+        var nameKid = '<td class="name">'+ data.kidroid[i].date + '(' + data.kidroid[i].user + ')</td>';
+        var versionKid = '<td class="version">'+ data.kidroid[i].loader + '</td>';
+        var buildKid = '<td class="build">'+  data.kidroid[i].loader + '</td>';
+        kidroid += '<tr>'+checkBoxKid+nameKid+versionKid+buildKid+'</tr>';
+    }
+    $("#settingKidroidVersionTable").html(kidroid);
+    $("#settingApkVersionTable").html(apk);
 });
 
 var category =  {

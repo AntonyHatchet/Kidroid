@@ -264,7 +264,7 @@ block content
                     tr
                         th(onclick='sort(this)',data-value="0")
                             input(type='checkbox' id='checkAllSchedule')
-                        th id
+                        th password
                         th name
                         th remove
                 tbody(id='userTable')
@@ -296,9 +296,11 @@ block content
                     table(class='table table-hover table-bordered table-striped')
                         thead
                             tr
-                                th version
-                                th build
-                                th remove
+                                th
+                                    input(type="checkbox",  value='')
+                                th Date added
+                                th Version
+                                th Build
                         tbody(id='settingApkVersionTable')
                 a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
                     //============MODAL Add new Apk version=====================
@@ -324,9 +326,11 @@ block content
                     table(class='table table-hover table-bordered table-striped')
                         thead
                             tr
-                                th version
-                                th build
-                                th remove
+                                th
+                                   input(type="checkbox",  value='')
+                                th Date added
+                                th Version
+                                th Build
                         tbody(id='settingKidroidVersionTable')
                 a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
                     //============MODAL Add new Apk version=====================

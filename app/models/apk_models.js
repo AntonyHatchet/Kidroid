@@ -9,7 +9,9 @@ var ApkSchema = mongoose.Schema({
         build: Number
     },
     default: Boolean,
-    link: String
+    date: Date,
+    link: String,
+    user: String
 });
 
 module.exports = mongoose.model('Apk', ApkSchema, "apk");
