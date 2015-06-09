@@ -68,6 +68,8 @@ block content
                                 .glyphicon.glyphicon-sort
                             th Options
                     tbody(id='deviceTable')
+                    tfoot
+                        button(class='btn btn-danger' type='button' onclick="dellDevice()") Delete
             div(id='pagination' class="text-center")
             #deployApk
                 fieldset
@@ -224,6 +226,8 @@ block content
                                         input(type='checkbox' id='checkAllFilters')
                                     th(colspan='2') Category name
                             tbody(id='tableFilter')
+                            tfoot
+                                button(class="btn btn-danger" onclick="dellCategory()" type="button") Delete
 
             //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -269,8 +273,10 @@ block content
                             input(type='checkbox' id='checkAllUsers')
                         th password
                         th name
-                        th remove
+                        //th remove
                 tbody(id='userTable')
+                tfoot
+                    button( type="button" class="btn btn-danger" onclick="dellUsers()") Delete
             //============MODAL Add new user=====================
             div(class="modal" id="addUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -306,6 +312,7 @@ block content
                                 th Build
                         tbody(id='settingApkVersionTable')
                 a(href='#addMarionetteVersion' role="button" class="btn btn-primary" data-toggle="modal") add Marionette version
+                button(class="btn btn-danger" onclick='delMarionetteAPK()') delete
 
             fieldset
                 legend Kidroid loader
@@ -324,6 +331,7 @@ block content
                                 th Build
                         tbody(id='settingKidroidVersionTable')
                 a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
+                button(class="btn btn-danger" onclick='delKidroidVersion()') delete
 
                 //============MODAL Add new Marionette version=====================
                div(class="modal" id="addMarionetteVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -406,8 +414,8 @@ block content
                             button(id="closeScheduleModal" class="btn btn-danger") Close
                             button(onclick="createSchedule()" class="btn btn-primary") Create
 
-        //===========TABS planning================
-       #requests(class='tab-content')
-           h2 Requests
-           #allSchedule
+            //===========TABS planning================
+           #requests(class='tab-content')
+               h2 Requests
+               #allSchedule
 

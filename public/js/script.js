@@ -172,16 +172,16 @@ function finsDeviceSchedule(){
     device.school = $('#scheduleDeviceCategory').val();
     device.version = $('#scheduleDeviceVersionFilter').val();
     socket.emit('getDeviceForSchedule', device);
-    console.log(device);
+    //console.log(device);
 }
 $(document).ready( function() {
     $("#checkAllSchedule").click( function() {
         if($('#checkAllSchedule').prop('checked')){
             $('.checkSchedule:enabled').prop('checked', true);
-            console.log('true');
+            //console.log('true');
         } else {
             $('.checkSchedule:enabled').prop('checked', false);
-            console.log('false');
+            //console.log('false');
         }
     });
     $("#checkboxWarning").click( function() {
@@ -231,6 +231,7 @@ $(document).ready( function() {
     });
 });
 
+
 function createSchedule(){
     //var checked = [];
     start = $('#idStart').val();
@@ -253,12 +254,13 @@ function createSchedule(){
     t = $('#timeSchedule').val();
     var neDate = Date.parse(da+'T'+t);
     device.date = neDate;
-    device.devices = [];
-        device.devices.push($("input:checked").val());
+    device.devices = $('input:checkbox:checked').map(function() {return this.value;}).get();
     device.Version =$('#scheduleDeviceVersion').val();
+    //console.log(device.devices);
+
     if (device.devices ==0 || device.date == ''){
         $('#errorAddSchedule').removeClass('no-show');
-        console.log('no');
+
     }
     else {
         socket.emit('createSchedule', device)
@@ -268,8 +270,40 @@ function createSchedule(){
             .css('opacity','0')
             .css('display','none');
         $('#errorAddSchedule').addClass('no-show');
+        //console.log(device.devices);
     }
     //console.log(device);
+}
+
+function dellDevice(){
+    var device ={};
+    device.devices = $('input:checkbox:checked').map(function() {return this.value;}).get();
+    socket.emit('removeDevice', device)
+    //console.log(device.devices);
+}
+function dellUsers(){
+    var device ={};
+    device.devices = $('input:checkbox:checked').map(function() {return this.value;}).get();
+    socket.emit('removeUsers', device)
+    //console.log(device.devices);
+}
+function dellCategory(){
+    var device ={};
+    device.devices = $('input:checkbox:checked').map(function() {return this.value;}).get();
+    socket.emit('removeUsers', device)
+    //console.log(device.devices);
+}
+function delMarionetteAPK(){
+    var device ={};
+    device.devices = $('input:checkbox:checked').map(function() {return this.value;}).get();
+    socket.emit('removeMarionetteAPK', device)
+    //console.log(device.devices);
+}
+function delKidroidVersion(){
+    var device ={};
+    device.devices = $('input:checkbox:checked').map(function() {return this.value;}).get();
+    socket.emit('removeKidroidVersion', device)
+    //console.log(device.devices);
 }
 
 $(document).ready(function () {

@@ -16,7 +16,7 @@ $(document).ready( function() {
       eventArray.push({date:data[i].timeStart, title: data[i].status});
     }
     calendars.clndr1.setEvents(eventArray);
-    console.log(eventArray);
+    //console.log(eventArray);
   });
   //var eventArray = [
   //  { date: thisDate + '-27', title: 'Single Day Event' }
@@ -40,7 +40,7 @@ $(document).ready( function() {
       click: function(target) {
         //.link('#editSchedule');
 
-        console.log(target.date._i);
+        //console.log(target.date._i);
         $('#editSchedule').addClass('in')
             .attr('aria-hidden', false)
             .css('z-index','1050')

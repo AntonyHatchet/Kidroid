@@ -6,7 +6,7 @@ socket.on('displayData', function (data) {
     //console.log(data.length);
     html = '';
     for (i in data){
-        var checkbox = "<td><input type='checkbox' class='checkboxWarning' value='option"+ data[i].deviceId +"'></td>";
+        var checkbox = "<td><input type='checkbox' class='checkboxWarning' value="+ data[i].deviceId +"></td>";
         var deviceId = "<td>" + data[i].deviceId + "</td>";
         var deviceName = "<td>"+ data[i].name + "<p>(Android v." +data[i].android +")</p></td>";
         var update = (!data[i].updateRequired)? "": "*Pending update (v"+data[i].apkToUpdate.version+" build "+data[i].apkToUpdate.build+")";
@@ -22,8 +22,8 @@ socket.on('displayData', function (data) {
             //console.log('no-map');
         }
         var edit = "<button href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(" + data[i].deviceId +")'>Edit</button> ";
-        var deleteDevice = "<button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].deviceId + "\")\')>Delete</button>";
-        var options = "<td>" + map + edit + deleteDevice + "</td>";
+        //var deleteDevice = "<button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].deviceId + "\")\')>Delete</button>";
+        var options = "<td>" + map + edit + "</td>";
         html += "<tr>" +checkbox+deviceId+deviceName+apkVersion+loaderVersion+status+options+ "</tr>";
     }
     $("#deviceTable").html(html);
@@ -45,7 +45,7 @@ socket.on('category', function (school) {
     html = '';
     for (var i = 0; i < school.length; i++) {
         category.pushData(school[i].name);
-        html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td><input type='checkbox' class='checkAllFilters' value='option"+ school[i]._id +"'></td><td>" + school[i].name + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeCategory\",\"" + school[i]._id + "\")\')>Delete</button> / <a href='#editCategory' role='button' class='btn btn-primary' data-toggle='modal' onclick='renameCategoryId(\"" + school[i]._id + "\")'>Edit</a></td></tr>";
+        html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td><input type='checkbox' class='checkAllFilters' value="+ school[i]._id +"></td><td>" + school[i].name + "</td><td><a href='#editCategory' role='button' class='btn btn-primary' data-toggle='modal' onclick='renameCategoryId(\"" + school[i]._id + "\")'>Edit</a></td></tr>";
     }
     $("#tableFilter").html(html);
     startAutoComplete(category.getArray(),".category")
@@ -61,7 +61,7 @@ socket.on('category', function (date) {
 });
 
 socket.on('version', function (date) {
-    console.log(date,"kidroidVersion");
+    //console.log(date,"kidroidVersion");
     html = '<option value="" style="color:#cccccc">Kidroid Loader version</option>';
     for (var i = 0; i < date.kidroid.length; i++) {
         html += "<option>" + date.kidroid[i].loader +"</option>";
@@ -98,7 +98,7 @@ socket.on('users', function (data) {
     //console.log(data);
     html = '';
     for (i in data)
-        html += "<tr><td><input type='checkbox' id='checkAllUsers" + data[i].password + "' class='checkAllUsers' value='" + data[i]._id + "'></td><td>" + data[i]._id + "</td><td>" + data[i].local.name + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeUsers\",\"" + data[i]._id + "\")\')>Delete</button></td></tr>";
+        html += "<tr><td><input type='checkbox' id='checkAllUsers" + data[i].password + "' class='checkAllUsers' value='" + data[i]._id + "'></td><td>" + data[i]._id + "</td><td>" + data[i].local.name + "</td></tr>";
     $("#userTable").html(html);
 });
 
