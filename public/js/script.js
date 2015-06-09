@@ -176,10 +176,57 @@ function finsDeviceSchedule(){
 }
 $(document).ready( function() {
     $("#checkAllSchedule").click( function() {
-        if($('#checkAllSchedule').attr('checked')){
-            $('.checkSchedule:enabled').attr('checked', true);
+        if($('#checkAllSchedule').prop('checked')){
+            $('.checkSchedule:enabled').prop('checked', true);
+            console.log('true');
         } else {
-            $('.checkSchedule:enabled').attr('checked', false);
+            $('.checkSchedule:enabled').prop('checked', false);
+            console.log('false');
+        }
+    });
+    $("#checkboxWarning").click( function() {
+        if($('#checkboxWarning').prop('checked')){
+            $('.checkboxWarning:enabled').prop('checked', true);
+            console.log('true');
+        } else {
+            $('.checkboxWarning:enabled').prop('checked', false);
+            console.log('false');
+        }
+    });
+    $("#checkAllUsers").click( function() {
+        if($('#checkAllUsers').prop('checked')){
+            $('.checkAllUsers:enabled').prop('checked', true);
+            console.log('true');
+        } else {
+            $('.checkAllUsers:enabled').prop('checked', false);
+            console.log('false');
+        }
+    });
+    $("#checkAllFilters").click( function() {
+        if($('#checkAllFilters').prop('checked')){
+            $('.checkAllFilters:enabled').prop('checked', true);
+            console.log('true');
+        } else {
+            $('.checkAllFilters:enabled').prop('checked', false);
+            console.log('false');
+        }
+    });
+    $("#checkAllMarionetteAPK").click( function() {
+        if($('#checkAllMarionetteAPK').prop('checked')){
+            $('.checkAllMarionetteAPK:enabled').prop('checked', true);
+            console.log('true');
+        } else {
+            $('.checkAllMarionetteAPK:enabled').prop('checked', false);
+            console.log('false');
+        }
+    });
+    $("#checkAllKidroidVersion").click( function() {
+        if($('#checkAllKidroidVersion').prop('checked')){
+            $('.checkAllKidroidVersion:enabled').prop('checked', true);
+            console.log('true');
+        } else {
+            $('.checkAllKidroidVersion:enabled').prop('checked', false);
+            console.log('false');
         }
     });
 });

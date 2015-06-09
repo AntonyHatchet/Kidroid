@@ -220,6 +220,8 @@ block content
                         table(class='table table-hover table-bordered table-striped')
                             thead
                                 tr
+                                    th(onclick='sort(this)',data-value="0")
+                                        input(type='checkbox' id='checkAllFilters')
                                     th(colspan='2') Category name
                             tbody(id='tableFilter')
 
@@ -264,7 +266,7 @@ block content
                 thead
                     tr
                         th(onclick='sort(this)',data-value="0")
-                            input(type='checkbox' id='checkAllSchedule')
+                            input(type='checkbox' id='checkAllUsers')
                         th password
                         th name
                         th remove
@@ -285,7 +287,7 @@ block content
                                 input(name='password' class="form-control" type='text' placeholder='password' required)
                         div(class="modal-footer")
                             button(class="btn btn-primary" type='submit') Add user
-        //===========TABS requests================
+        //===========TABS SETTINGS================
         #settings(class='tab-content')
             fieldset
                 legend Marionette APK
@@ -297,26 +299,14 @@ block content
                     table(class='table table-hover table-bordered table-striped')
                         thead
                             tr
-                                th
-                                    input(type="checkbox",  value='')
+                                th(onclick='sort(this)',data-value="0")
+                                    input(type='checkbox' id='checkAllMarionetteAPK')
                                 th Date added
                                 th Version
                                 th Build
                         tbody(id='settingApkVersionTable')
-                a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
-                    //============MODAL Add new Apk version=====================
-            div(class="modal" id="addApkVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
-                .modal-dialog.modal-sm
-                    .modal-content
-                        div(class="modal-header")
-                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-                                i(class="icon-remove")
-                            h3 Add new Marionette version
-                        div(class="modal-body")
-                            form(method="post" action='/uploadFile' enctype="multipart/form-data")
-                                .form-group
-                                input(type="file", class="form-control" name='category' value='')
-                                button( type="submit" class="btn btn-primary") Add
+                a(href='#addMarionetteVersion' role="button" class="btn btn-primary" data-toggle="modal") add Marionette version
+
             fieldset
                 legend Kidroid loader
                 div(class='form-search form-inline col-sm-9')
@@ -327,13 +317,27 @@ block content
                     table(class='table table-hover table-bordered table-striped')
                         thead
                             tr
-                                th
-                                   input(type="checkbox",  value='')
+                                th(onclick='sort(this)',data-value="0")
+                                    input(type='checkbox' id='checkAllKidroidVersion')
                                 th Date added
                                 th Version
                                 th Build
                         tbody(id='settingKidroidVersionTable')
                 a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
+
+                //============MODAL Add new Marionette version=====================
+               div(class="modal" id="addMarionetteVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                   .modal-dialog.modal-sm
+                       .modal-content
+                           div(class="modal-header")
+                               button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                   i(class="icon-remove")
+                               h3 Add new Marionette version
+                           div(class="modal-body")
+                               form(method="post" action='/uploadFile' enctype="multipart/form-data")
+                                   .form-group
+                                   input(type="file", class="form-control" name='category' value='')
+                                   button( type="submit" class="btn btn-primary") Add
                     //============MODAL Add new Apk version=====================
             div(class="modal" id="addApkVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -346,7 +350,7 @@ block content
                             form(method="post" action='/uploadFile' enctype="multipart/form-data")
                                 .form-group
                                 input(type="file", class="form-control" name='category' value='')
-                                button( type="submit" class="btn btn-primary") Addaaaaa
+                                button( type="submit" class="btn btn-primary") Add
 
         //===========TABS planning================
         #planning(class='tab-content')
@@ -388,7 +392,7 @@ block content
                                     table(class='table table-hover table-bordered table-striped')
                                         thead
                                             tr
-                                                th(onclick='sort(this)',data-value="0")
+                                                th(data-value="0")
                                                     input(type='checkbox' id='checkAllSchedule')
                                                 th id
                                                 th school
