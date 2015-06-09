@@ -9,9 +9,8 @@ var util = require('util');
 var io = require('./socketIO/dashboardIO');
 var Busboy = require('busboy');
 var fs = require('fs');
-var zlib = require('zlib');
 var crypto = require('crypto');
-var gzip = zlib.createUnzip();
+var unzip = require('unzip');
 
 module.exports = function (app, passport) {
 
@@ -41,16 +40,35 @@ module.exports = function (app, passport) {
 
         busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
 
-            fs.mkdir("./public/uploads/buffer/"+ filename.slice(0,4));
+            //fs.mkdir("./public/uploads/buffer/"+ filename.slice(0,4));
             var saveTo = path.join("./public/uploads/buffer/"+filename.slice(0,4), path.basename(filename));
-            file.pipe(fs.createWriteStream(saveTo));
+            function createBufer() {
+                var path =  "./public/uploads/buffer/"+ Math.random() ;
+                this.getPath = function(){
+                    return path
+                };
+            };
+            var bufer = new createBufer().getPath();
+            file.pipe(unzip.Extract({ path: bufer }));
+
+            //file.pipe(fs.createWriteStream(saveTo));
 
             file.on('end', function() {
-                var buffer = new Buffer(saveTo, 'base64');
-                zlib.unzip(buffer, function(err, buffer) {
-                    if (!err) {
-                        console.log(buffer.toString());
+                fs.readdir(bufer, function(err, files){
+                    if (err) throw err;
+                    if(files){
+                        for (var i = 0;i < files.length; i++){
+                            fs.rmdir(bufer+ "\\" + files[i],function(err,cb){
+                                if (err) console.log(err);
+                                console.log(cb)
+                            })
+                        }
+                        fs.rmdir(bufer,function(err,cb){
+                            if (err) console.log(err);
+                            console.log(cb)
+                        })
                     }
+                    console.log(files)
                 });
                 //var shasum = crypto.createHash('md5');
                 //var s = fs.ReadStream(saveTo);
