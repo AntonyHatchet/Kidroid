@@ -58,7 +58,7 @@ module.exports = function (app, passport) {
                     if (err) throw err;
                     if(files){
                         for (var i = 0;i < files.length; i++){
-                            fs.rmdir(bufer+ "\\" + files[i],function(err,cb){
+                            fs.rmdir(bufer+ "/" + files[i],function(err,cb){
                                 if (err) console.log(err);
                                 console.log(cb)
                             })
