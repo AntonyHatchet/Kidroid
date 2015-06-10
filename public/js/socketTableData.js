@@ -45,7 +45,7 @@ socket.on('category', function (school) {
     html = '';
     for (var i = 0; i < school.length; i++) {
         category.pushData(school[i].name);
-        html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td><input type='checkbox' class='checkAllFilters' value="+ school[i]._id +"></td><td>" + school[i].name + "</td><td><a href='#editCategory' role='button' class='btn btn-primary' data-toggle='modal' onclick='renameCategoryId(\"" + school[i]._id + "\")'>Edit</a></td></tr>";
+        html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td><input type='checkbox' class='checkAllFilters' value="+ school[i]._id +"></td><td>" + school[i].name + "</td><td><a href='#editCategory' role='button' class='btn btn-primary' data-toggle='modal' onclick='renameCategoryId(\"" + school[i]._id + ',' + school[i].name + "\")'>Edit</a></td></tr>";
     }
     $("#tableFilter").html(html);
     startAutoComplete(category.getArray(),".category")
@@ -106,9 +106,16 @@ socket.on('users', function (data) {
 
 socket.on('allDeviceCreated', function (data) {
     if (data.deviceId){
-        $(".modal-body textarea").append("ID " +data.deviceId+"\n")
+        $('#idDevice').addClass('in')
+            .attr('aria-hidden', false)
+            .css('z-index','1050')
+            .css('opacity','1')
+            .css('display','block');
+        $(".idTextarea textarea").append("ID " +data.deviceId+"\n")
+        $("#numberIdDevice").append( +data+"Devices has been added successfully" );
     }
-    $(".modal-body textarea, .modal-body textarea p").css({"display":"block"})
+    $(".idTextarea textarea, .idTextarea textarea p").css({"display":"block"})
+
 });
 
 socket.on('error', function (date) {
@@ -124,10 +131,10 @@ socket.on('deviceScheduled', function (data) {
 });
 
 socket.on('allSchedule', function (data) {
-   // console.log(data);
+    console.log(data);
     html = '<ul>';
     for (i in data)
-        html += "<li>" + data[i].devices + "</li><li>" + data[i].status + "</li><li>" + data[i].timeStart + "</li>";
+        html += "<tr><td>" + data[i].timeStart + "</td><td>" + data[i].devices + "</td><td></td><td></td></tr>";
     $("#allSchedule").html(html);
 });
 

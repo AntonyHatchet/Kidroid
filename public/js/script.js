@@ -50,8 +50,10 @@ var newNameId;
 var idDevice;
 var tokenDevice;
 
-function renameCategoryId(x) {
+function renameCategoryId(x, y) {
     newNameId=x;
+    console.log(y);
+    $("#idCategory p").replaceWith("ID " +x+"\n")
 };
 
 
@@ -154,9 +156,9 @@ function addDevice() {
     device.build = $("#addSelectVersion").val().split(' ')[1];
     device.numberDevice = $("#amountDevice").val();
     if (device.category != 0 && device.version !=0)  {
-    socket.emit('createDevice', device);
-    $('#errorAddDevice').addClass('no-show');
-    //console.log('yes');
+        socket.emit('createDevice', device);
+        $('#errorAddDevice').addClass('no-show');
+        //console.log('yes');
     } else{
         $('#errorAddDevice').removeClass('no-show');
     }
@@ -309,6 +311,15 @@ function delKidroidVersion(){
 $(document).ready(function () {
     $('#closeScheduleModal').click(function(){
        $('#editSchedule').removeClass('.in')
+           .attr('aria-hidden', true)
+           .css('z-index','-1')
+           .css('opacity','0')
+           .css('display','none');
+    });
+})
+$(document).ready(function () {
+    $('#closeIdTextarea').click(function(){
+       $('#idDevice').removeClass('.in')
            .attr('aria-hidden', true)
            .css('z-index','-1')
            .css('opacity','0')

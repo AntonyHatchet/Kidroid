@@ -40,8 +40,8 @@ block content
                         input(id="customFilter" placeholder='- Filter2 -' class="span2 form-control" onchange="find()")
                         select(id="marionetteVersion" class="span2 form-control" onchange="find()")
                         select(id="kidroidVersion" class="span2 form-control" onchange="find()")
-                    #add-device
-                        a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") Add New Device
+                        #add-device
+                            a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") Add New Device
             .col-sm-12
                 h4.col-sm-6
                 h5.col-sm-2.col-sm-offset-4
@@ -69,8 +69,7 @@ block content
                                 .glyphicon.glyphicon-sort
                             th Options
                     tbody(id='deviceTable')
-                    tfoot
-                        button(class='btn btn-danger' type='button' onclick="dellDevice()") Delete
+                        //button(class='btn btn-danger' type='button' onclick="dellDevice()") Delete
             div(id='pagination' class="text-center")
             #deployApk
                 fieldset
@@ -109,6 +108,10 @@ block content
                                     .col-sm-9
                                         select(id="addSelectCategory" class="form-control")
                                 .form-group
+                                    label(for="filter2").col-sm-3.control-label Filter 2:
+                                    .col-sm-9
+                                        select(id="filter2" class="form-control")
+                                .form-group
                                     label(for="addSelectVersion").col-sm-4.control-label APK version *:
                                     .col-sm-8
                                         select(id="addSelectVersion" class="form-control")
@@ -126,7 +129,25 @@ block content
                                 //button(type="button" class="close" data-dismiss="alert") &times;
                                 p All fields must be filled out
                             button(class="btn btn-primary" onclick='addDevice()') Add
-
+            //============MODAL ID device=====================
+            div(class="modal" id="idDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                .modal-dialog.modal-sm
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h3(id='numberIdDevice')
+                        div(class="modal-body idTextarea")
+                            .form-group
+                                label(for="commentDevice").col-sm-5.control-label ID's list:
+                                .col-sm-12.margin-top-5
+                                    textarea(id='commentDevice' class="form-control" rows="3")
+                        div(class="modal-footer")
+                            //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                            div(id='errorAddDevice' class='alert no-show')
+                                //button(type="button" class="close" data-dismiss="alert") &times;
+                                p All fields must be filled out
+                            button(id="closeIdTextarea" class="btn btn-danger") Close
             //============MODAL delete device=====================
             div(class="modal" id="deleteDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog
@@ -158,10 +179,14 @@ block content
                                     .col-sm-9
                                         select(id="editDeviceCategory" class="form-control")
                                 .form-group
-                                    label(for="addSelectVersion").col-sm-4.control-label APK version *:
-                                    .col-sm-8
-                                        select(id="editDeviceVersion" class="form-control")
-                                .form-group
+                                    label(for="filter2").col-sm-3.control-label Filter 2:
+                                    .col-sm-9
+                                        select(id="filter2" class="form-control")
+                                //.form-group
+                                //    label(for="addSelectVersion").col-sm-4.control-label APK version *:
+                                //    .col-sm-8
+                                //        select(id="editDeviceVersion" class="form-control")
+                                //.form-group
                                     label(for="newNameUser").col-sm-5.control-label Name:
                                     .col-sm-12.margin-top-5
                                         input(type='text' id="newNameUser" name='category' placeholder='Name User' class="form-control")
@@ -213,8 +238,8 @@ block content
             div(class='tabbable')
                 .col-sm-12
                     ul(class='nav-tabs')
-                        li(class='tab-link current close' data-tab="filtersSchool") School
-                        li(class='tab-link close' data-tab='filtersVersion') Version
+                        li(class='tab-link current close' data-tab="filtersSchool") Filter 1
+                        li(class='tab-link close' data-tab='filtersAdd') Filter 2
                 #filtersSchool(class='nav-tab-content current')
                     #add-category
                         a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") Add new category...
@@ -227,9 +252,10 @@ block content
                                         input(type='checkbox' id='checkAllFilters')
                                     th(colspan='2') Category name
                             tbody(id='tableFilter')
-                            tfoot
-                                button(class="btn btn-danger" onclick="dellCategory()" type="button") Delete
-
+                        .right
+                            button(class="btn btn-danger" onclick="dellCategory()" type="button") Delete
+                #filtersAdd(class='nav-tab-content')
+                    a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") Add new filter...
             //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -255,6 +281,8 @@ block content
                             button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
                                 i(class="icon-remove")
                             h3 Edit category
+                                #idCategory
+                                    p
                         div(class="modal-body")
                             form
                                 .form-group
@@ -276,8 +304,8 @@ block content
                         th name
                         //th remove
                 tbody(id='userTable')
-                tfoot
-                    button( type="button" class="btn btn-danger" onclick="dellUsers()") Delete
+            .right
+                button( type="button" class="btn btn-danger" onclick="dellUsers()") Delete
             //============MODAL Add new user=====================
             div(class="modal" id="addUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -312,8 +340,9 @@ block content
                                 th Version
                                 th Build
                         tbody(id='settingApkVersionTable')
-                a(href='#addMarionetteVersion' role="button" class="btn btn-primary" data-toggle="modal") add Marionette version
-                button(class="btn btn-danger" onclick='delMarionetteAPK()') delete
+                .right
+                    a(href='#addMarionetteVersion' role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
+                    button(class="btn btn-danger" onclick='delMarionetteAPK()') Remove selected
 
             fieldset
                 legend Kidroid loader
@@ -331,8 +360,9 @@ block content
                                 th Version
                                 th Build
                         tbody(id='settingKidroidVersionTable')
-                a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") add Apk version
-                button(class="btn btn-danger" onclick='delKidroidVersion()') delete
+                .right
+                    a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
+                    button(class="btn btn-danger" onclick='delKidroidVersion()') Remove selected
 
                 //============MODAL Add new Marionette version=====================
                div(class="modal" id="addMarionetteVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -360,7 +390,18 @@ block content
                                 .form-group
                                 input(type="file", class="form-control" name='category' value='')
                                 button( type="submit" class="btn btn-primary") Add
-
+        //===========TABS requests================
+        #requests(class='tab-content')
+            h2 Requests log
+            .col-sm-12
+                table(class='table table-hover table-bordered table-striped')
+                    thead
+                        tr
+                            th Request date
+                            th Devices amount
+                            th school
+                            th Filter 2
+                    tbody(id='allSchedule')
         //===========TABS planning================
         #planning(class='tab-content')
             h2 Planning
@@ -415,15 +456,5 @@ block content
                             button(id="closeScheduleModal" class="btn btn-danger") Close
                             button(onclick="createSchedule()" class="btn btn-primary") Create
 
-            //===========TABS planning================
-           #requests(class='tab-content')
-               h2 Requests
-                   table(class='table table-hover table-bordered table-striped')
-                       thead
-                           tr
-                               th Request date
-                               th Devices amount
-                               th school
-                               th Filter 2
-                       tbody(id='allSchedule')
+
 
