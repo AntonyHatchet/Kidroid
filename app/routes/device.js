@@ -32,7 +32,7 @@ module.exports = {
 //Регистрация девайса
     getRegistrationDevice: function (req, res) {
 
-        deviceMagic.regDevice({id: req.body.id}, function (err, next) {
+        deviceMagic.regDevice({id: req.body.device_id}, function (err, next) {
 
             if (err) return console.log(err,"getRegistrationDevice deviceMagic.regDevice err");
 
@@ -76,7 +76,7 @@ module.exports = {
 
             if (err) return console.log(err,"checkApkVersion deviceMagic.findVersion err");
 
-            if (device.update_required === true && device.apkToUpdate.build != req.body.apk_build) {
+            if (device.updateRequired === true && device.apkToUpdate.build != req.body.apk_build) {
                 user.findLink(device.apkToUpdate.build,function(err,callback){
 
                     if (err) return console.log(err,"checkApkVersion user.findLink err");

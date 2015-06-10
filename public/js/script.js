@@ -130,8 +130,7 @@ function find(sort) {
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
-    device.version = $("#marionetteVersion").val().split(' ')[0];
-    device.build = $("#marionetteVersion").val().split(' ')[1];
+    device.build = $("#marionetteVersion").val();
     socket.emit('getDevicesByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
 };
@@ -141,8 +140,7 @@ function page(i) {
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
-    device.version = $("#marionetteVersion").val().split(' ')[0];
-    device.build = $("#marionetteVersion").val().split(' ')[1];
+    device.build = $("#marionetteVersion").val();
     device.page = i*10-10;
     socket.emit('getDevicesByParams', device);
     socket.emit('getDevicesQuantityByParams', device);

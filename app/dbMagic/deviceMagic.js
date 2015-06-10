@@ -10,7 +10,8 @@ module.exports = {
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
             var deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             var school = params.category;
-            var build=  +params.build;
+            var apkBuild=  (isNaN(params.build.split(' ')[1])) ? {$exists: true}:{$gte:+(params.build.split(' ')[1])};
+            var apkStatus=  (isNaN(params.build.split(' ')[1])) ? params.build :{$exists: true};
             var status = params.status;
             var page = params.page;
             var limit = params.limit;
@@ -21,7 +22,8 @@ module.exports = {
             .where('deviceId').equals((!deviceId)?{$exists: true}:deviceId)
             .where('school').equals((!school)?{$exists: true}:school)
             .where('status').equals((!status)?{$exists: true}:status)
-            .where('apk.build').equals((!build)?{$exists: true}:build)
+            .where('apk.build').equals((!apkBuild)?{$exists: true}:apkBuild)
+            .where('apkToUpdate.status').equals((!apkStatus)?{$exists: true}:apkStatus)
             .exec(function (err, Devices) {
                 if (err) return console.log(err,"getQuantity Device.count err");
                 // Execute callback
@@ -49,12 +51,11 @@ module.exports = {
     },
     getDevice: function (callback,params) {
         if (params!=undefined) {
-            console.log(params);
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
             var deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             var school = params.category;
-            var apkBuild=  (isNaN(params.build)) ? {$exists: true}:{$gte:+params.build};
-            var apkStatus=  (isNaN(params.build)) ? params.build:{$exists: true};
+            var apkBuild=  (isNaN(params.build.split(' ')[1])) ? {$exists: true}:{$gte:+(params.build.split(' ')[1])};
+            var apkStatus=  (isNaN(params.build.split(' ')[1])) ? params.build :{$exists: true};
             var status = params.status;
             var page = params.page;
             var limit = params.limit;
@@ -67,7 +68,7 @@ module.exports = {
             .where('school').equals((!school)?{$exists: true}:school)
             .where('status').equals((!status)?{$exists: true}:status)
             .where('apk.build').equals((!apkBuild)?{$exists: true}:apkBuild)
-            .where('apk.status').equals((!apkBuild)?{$exists: true}:apkBuild)
+            .where('apkToUpdate.status').equals((!apkStatus)?{$exists: true}:apkStatus)
             .limit(10)
             .skip(page)
             .sort(sort)
@@ -180,9 +181,10 @@ module.exports = {
                     "loader": deviceInfo.loader_version,
                     "apk.version": deviceInfo.apk_version,
                     "apk.build": deviceInfo.apk_build,
-                    "update_required": false,
-                    "online":true,
-                    "android": +deviceInfo.android
+                    "updateRequired": false,
+                    "status":"Online",
+                    "android": +deviceInfo.android,
+                    "apkToUpdate.status": ""
                 };
 
                 //Пишем в БД к ID из запроса
