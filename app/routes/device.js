@@ -83,7 +83,7 @@ module.exports = {
 
                     if (err) return console.log(err,"checkApkVersion user.findLink err");
 
-                    res.json({update_required: true, version: device.apk_to_update, link: server + callback[0].link});
+                    res.json({update_required: true, version: device.apk_to_update, link: server + callback[0].link.slice(1)});
                 })
             }
 
@@ -102,7 +102,7 @@ module.exports = {
 
                     if (err) return console.log(err,"getApk user.findLink err");
 
-                    res.json({update_required: true, version: device.apk_to_update, link: server + callback[0].link});
+                    res.json({update_required: true, version: device.apk_to_update, link: server + callback[0].link.slice(1)});
                 })
             }
 
