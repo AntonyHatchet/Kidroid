@@ -243,7 +243,7 @@ block content
                     #add-category
                         a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") Add new category...
                             //button(class='btn btn-primary') add new category...
-                    .col-sm-12
+                    .container-fluid.container-tab
                         table(class='table table-hover table-bordered table-striped')
                             thead
                                 tr
@@ -255,15 +255,16 @@ block content
                             button(class="btn btn-danger" onclick="dellCategory()" type="button") Delete
                 #filtersAdd(class='nav-tab-content')
                     a(href='#createFilter' role="button" class="btn btn-primary right" data-toggle="modal") Add new filter...
-                    table(class='table table-hover table-bordered table-striped')
-                        thead
-                            th(onclick='sort(this)',data-value="0")
-                                input(type='checkbox' id='checkAllFilters')
-                            th name
-                            th params
-                        tbody(id='filtersTable')
-                    .right
-                        button(class="btn btn-danger" onclick="dellFilters()" type="button") Delete
+                    .container-fluid.container-tab
+                        table(class='table table-hover table-bordered table-striped')
+                            thead
+                                th(onclick='sort(this)',data-value="0")
+                                    input(type='checkbox' id='checkAllFilters')
+                                th name
+                                th params
+                            tbody(id='filtersTable')
+                        .right
+                            button(class="btn btn-danger" onclick="dellFilters()" type="button") Delete
             //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -321,17 +322,18 @@ block content
             #add-users
                 a(href='#addUsers' role="button" class="btn btn-primary" data-toggle="modal") add new user
                     //button(class='btn btn-primary') add new user
-            table(class='table table-hover table-bordered table-striped')
-                thead
-                    tr
-                        th(onclick='sort(this)',data-value="0")
-                            input(type='checkbox' id='checkAllUsers')
-                        th password
-                        th name
-                        //th remove
-                tbody(id='userTable')
-            .right
-                button( type="button" class="btn btn-danger" onclick="dellUsers()") Delete
+            .container-fluid.container-tab
+                table(class='table table-hover table-bordered table-striped')
+                    thead
+                        tr
+                            th(onclick='sort(this)',data-value="0")
+                                input(type='checkbox' id='checkAllUsers')
+                            th password
+                            th name
+                            //th remove
+                    tbody(id='userTable')
+                .right
+                    button( type="button" class="btn btn-danger" onclick="dellUsers()") Delete
             //============MODAL Add new user=====================
             div(class="modal" id="addUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -356,7 +358,7 @@ block content
                     label(for='selectDefaultApkVersion') Current version:
                     select(id="selectDefaultApkVersion" class="form-control" onchange="setDefault()")
 
-                .col-sm-12
+                .container-fluid.container-tab
                     table(class='table table-hover table-bordered table-striped')
                         thead
                             tr
@@ -376,7 +378,7 @@ block content
                     label(for='selectDefaultKidroidVersion') Current version:
                     select(id="selectDefaultKidroidVersion" class="form-control" onchange="setDefault()")
 
-                .col-sm-12
+                .container-fluid.container-tab
                     table(class='table table-hover table-bordered table-striped')
                         thead
                             tr
