@@ -12,7 +12,7 @@ module.exports = function (server,sessionMiddleware) {
         sessionMiddleware(socket.request, {}, next);
     });
     io.on('connection', function (socket) {
-        var userId = socket.request.session.passport.user;
+        //var userId = socket.request.session.passport.user;
         user.getAllDeviceQuantity(function (err, data) {
             if (err) {
                 console.log(err);
