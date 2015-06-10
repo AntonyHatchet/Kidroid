@@ -90,7 +90,7 @@ module.exports = function (server,sessionMiddleware) {
             }
         );
         socket.on('createFilter', function (filterData) {
-                    console.log(filterData);
+                console.log(filterData);
                 user.createFilter(filterData, function (err, callback) {
                     if (err) {
                         console.log(err);

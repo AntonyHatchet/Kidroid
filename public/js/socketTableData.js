@@ -77,7 +77,7 @@ socket.on('version', function (date) {
     for (var i = 0; i < date.apk.length; i++) {
         html += "<option>" + date.apk[i].apk.version +" "+ date.apk[i].apk.build +"</option>";
     }
-    $("#marionetteVersion,#selectVersionToDeploy, #addSelectVersion, #editDeviceVersion, #scheduleDeviceVersion, #scheduleDeviceVersionFilter").html(html);
+    $("#marionetteVersion,#selectVersionToDeploy, #editDeviceVersion, #scheduleDeviceVersion, #scheduleDeviceVersionFilter").html(html);
 });
 socket.on('version', function (date) {
     //console.log(school,"category");
@@ -174,7 +174,7 @@ socket.on('getVersionDeploy', function (data) {
         if (data.apk[j] != defaultVersion)
             html += "<option>" + data.apk[j].apk.build +"</option>";
     }
-    $("#selectDefaultApkVersion").html(html);
+    $("#selectDefaultApkVersion, #addSelectVersion").html(html);
     $("#selectVersionApkToDeploy").html(html);
 });
 socket.on('getVersionDeploy', function (data) {

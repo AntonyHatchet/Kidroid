@@ -88,12 +88,12 @@ module.exports = {
         });
     },
     createNewFilter: function (data, callback) {
-        Filter.findOne({"name": data.name}, function (err, filters) {
+        Filters.findOne({"name": data.name}, function (err, filters) {
 
             if (err) return console.log(err,"createNewFilter Filter.findOne err");
 
             if (filters == null) {
-                var newFilter = new Filter({
+                var newFilter = new Filters({
                     name: data.name,
                     params: data.param
                 });
@@ -102,7 +102,7 @@ module.exports = {
 
                     if (err) return console.log(err,"createNewFilter newFilter.save err");
 
-                    Filter.find("", function (err, filters) {
+                    Filters.find("", function (err, filters) {
 
                         if (err) return console.log(err,"createNewFilter Filter.find err");
 
