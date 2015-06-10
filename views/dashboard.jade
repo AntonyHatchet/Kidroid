@@ -20,7 +20,6 @@ block content
                 i(class='icon-chevron-left')
             li(class='tab-link close' data-tab='settings') Settings
                 i(class='icon-chevron-left')
-            li(class='tab-link close')
             li(class='tab-link close' data-tab='requests') Request log
                 i(class='icon-chevron-left')
             li(class='tab-link close' data-tab='planning') Planning
@@ -36,15 +35,15 @@ block content
                     form(class='form-search form-inline')
                         input(type="text" id="DeviceNameIDSerial" class='form-control' placeholder='Device name/ID/Serial' onkeyup="find()")
                         select(id='selectStatus' class="span2 form-control" onchange="find()")
-                        input(id="selectCategory" class="span2 form-control category" onchange="find()")
+                        input(id="selectCategory" placeholder='- School -' class="span2 form-control category" onchange="find()")
                         input(id="customFilter" placeholder='- Filter2 -' class="span2 form-control" onchange="find()")
                         select(id="marionetteVersion" class="span2 form-control" onchange="find()")
                         select(id="kidroidVersion" class="span2 form-control" onchange="find()")
-                        #add-device
-                            a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") Add New Device
             .col-sm-12
-                h4.col-sm-6
-                h5.col-sm-2.col-sm-offset-4
+                h4.col-sm-2
+                #add-device
+                    a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") Add New Device
+                h5.col-sm-2.col-sm-offset-7
                     label(for="ItemsPerPage").col-sm-7.control-label Items per page:
                     .form-group.col-sm-5
                         select(id="ItemsPerPage")
@@ -370,7 +369,7 @@ block content
         #settings(class='tab-content')
             fieldset
                 legend Marionette APK
-                div(class='form-search form-inline')
+                div(class='form-search form-inline apk')
                     label(for='selectDefaultApkVersion') Current version:
                     select(id="selectDefaultApkVersion" class="form-control" onchange="setDefault()")
 
@@ -385,12 +384,13 @@ block content
                                 th Build
                         tbody(id='settingApkVersionTable')
                 .right
-                    a(href='#addMarionetteVersion' role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
-                    button(class="btn btn-danger" onclick='delMarionetteAPK()') Remove selected
+                    .btn-group(role='group')
+                        a(href='#addMarionetteVersion' role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
+                        button(class="btn btn-danger" onclick='delMarionetteAPK()') Remove selected
 
             fieldset
                 legend Kidroid loader
-                div(class='form-search form-inline')
+                div(class='form-search form-inline apk')
                     label(for='selectDefaultKidroidVersion') Current version:
                     select(id="selectDefaultKidroidVersion" class="form-control" onchange="setDefault()")
 
@@ -406,8 +406,9 @@ block content
                                 th Options
                         tbody(id='settingKidroidVersionTable')
                 .right
-                    a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
-                    button(class="btn btn-danger" onclick='delKidroidVersion()') Remove selected
+                    .btn-group(role='group')
+                        a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
+                        button(class="btn btn-danger" onclick='delKidroidVersion()') Remove selected
 
                 //============MODAL Add new Marionette version=====================
                div(class="modal" id="addMarionetteVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")

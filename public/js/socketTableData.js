@@ -14,7 +14,7 @@ socket.on('displayData', function (data) {
         var loaderVersion = "<td>"+ ((data[i].loader >= 1)? data[i].loader: '-') +"</td>";
         var status = "<td>" + data[i].status + "</td>";
         if(data[i].longitude!=0||data[i].latitude!=0) {
-            var map = "<button id='buttonMap' href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>Show map</button>";
+            var map = "<button id='buttonMap' href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>Location</button>";
             //console.log('map');
         }
         else{
@@ -23,7 +23,7 @@ socket.on('displayData', function (data) {
         }
         var edit = "<button href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(" + data[i].deviceId +")'>Edit</button> ";
         //var deleteDevice = "<button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].deviceId + "\")\')>Delete</button>";
-        var options = "<td>" + map + edit + "</td>";
+        var options = "<td><div class='btn-group' role='group'>" + map + edit + "</div></td>";
         html += "<tr>" +checkbox+deviceId+deviceName+apkVersion+loaderVersion+status+options+ "</tr>";
     }
     $("#deviceTable").html(html);
@@ -45,7 +45,7 @@ socket.on('category', function (school) {
     html = '';
     for (var i = 0; i < school.length; i++) {
         category.pushData(school[i].name);
-        html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td><input type='checkbox' class='checkAllCategory' value="+ school[i]._id +"></td><td>" + school[i].name + "</td><td><a href='#editCategory' role='button' class='btn btn-primary' data-toggle='modal' onclick='renameCategoryId(\"" + school[i]._id + ',' + school[i].name + "\")'>Edit</a></td></tr>";
+        html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td><input type='checkbox' class='checkAllCategory' placeholder='- School -' value="+ school[i]._id +"></td><td>" + school[i].name + "</td><td><a href='#editCategory' role='button' class='btn btn-primary' data-toggle='modal' onclick='renameCategoryId(\"" + school[i]._id + ',' + school[i].name + "\")'>Edit</a></td></tr>";
     }
     $("#tableFilter").html(html);
     startAutoComplete(category.getArray(),".category")
@@ -57,7 +57,7 @@ socket.on('category', function (date) {
     for (var i = 0; i < date.length; i++) {
         html += "<option>" + date[i].name + "</option>";
     }
-    $("#selectCategory, #addSelectCategory, #editDeviceCategory, #scheduleDeviceCategory").html(html);
+    $("#addSelectCategory, #editDeviceCategory, #scheduleDeviceCategory").html(html);
 });
 
 socket.on('version', function (date) {
@@ -112,7 +112,8 @@ socket.on('allDeviceCreated', function (data) {
             .css('opacity','1')
             .css('display','block');
         $(".idTextarea textarea").append("ID " +data.deviceId+"\n")
-        $("#numberIdDevice").replaceWith( +data[i]+"Devices has been added successfully" );
+        //TODO сделать вывод созданного колличества устройств
+        $("#numberIdDevice").replaceWith( "Devices has been added successfully" );
     }
     $(".idTextarea textarea, .idTextarea textarea p").css({"display":"block"})
 
