@@ -112,7 +112,7 @@ socket.on('allDeviceCreated', function (data) {
             .css('opacity','1')
             .css('display','block');
         $(".idTextarea textarea").append("ID " +data.deviceId+"\n")
-        $("#numberIdDevice").append( +data+"Devices has been added successfully" );
+        $("#numberIdDevice").replaceWith( +data[i]+"Devices has been added successfully" );
     }
     $(".idTextarea textarea, .idTextarea textarea p").css({"display":"block"})
 
@@ -195,7 +195,8 @@ socket.on('getVersionDeploy', function (data) {
         var nameKid = '<td class="name">'+ dateKidroid.toLocaleString("en", options) + ' (' + data.kidroid[i].user + ')</td>';
         var versionKid = '<td class="version">'+ data.kidroid[i].loader + '</td>';
         var buildKid = '<td class="build">'+  data.kidroid[i].loader + '</td>';
-        kidroid += '<tr>'+checkBoxKid+nameKid+versionKid+buildKid+'</tr>';
+        var optionsdKid = '<td class="build"></td>';
+        kidroid += '<tr>'+checkBoxKid+nameKid+versionKid+buildKid+optionsdKid+'</tr>';
     }
     $("#settingKidroidVersionTable").html(kidroid);
     $("#settingApkVersionTable").html(apk);

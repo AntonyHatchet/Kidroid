@@ -14,6 +14,9 @@ a {
 .right{
     float: right;
 }
+.left{
+    float: left;
+}
 .right a{
     margin-right: 20px;
 }
@@ -426,6 +429,7 @@ input[type="number"]::-webkit-inner-spin-button:active {
 }
 .margin-top-5{
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 #map{
     display: block!important;
