@@ -4,13 +4,8 @@
 var path = require('path');
 var users = require('./routes/users');
 var devices = require("./routes/device");
-var ApkReader = require('node-apk-parser');
-var util = require('util');
 var io = require('./socketIO/dashboardIO');
-var Busboy = require('busboy');
-var fs = require('fs');
-var crypto = require('crypto');
-var unzip = require('unzip');
+
 
 module.exports = function (app, passport) {
 
@@ -35,72 +30,7 @@ module.exports = function (app, passport) {
     app.get('/dashboard', isLoggedIn, function (req, res) {
         res.render('dashboard.jade');
     });
-    app.post('/uploadFile', isLoggedIn, function (req, res) {
-        var busboy = new Busboy({ headers: req.headers });
-
-        busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-
-            //fs.mkdir("./public/uploads/buffer/"+ filename.slice(0,4));
-            var saveTo = path.join("./public/uploads/buffer/"+filename.slice(0,4), path.basename(filename));
-            function createBufer() {
-                var path =  "./public/uploads/buffer/"+ Math.random() ;
-                this.getPath = function(){
-                    return path
-                };
-            };
-            var bufer = new createBufer().getPath();
-            file.pipe(unzip.Extract({ path: bufer }));
-
-            //file.pipe(fs.createWriteStream(saveTo));
-
-            file.on('end', function() {
-                fs.readdir(bufer, function(err, files){
-                    if (err) throw err;
-                    if(files){
-                        for (var i = 0;i < files.length; i++){
-                            fs.rmdir(bufer+ "/" + files[i],function(err,cb){
-                                if (err) console.log(err);
-                                console.log(cb)
-                            })
-                        }
-                        fs.rmdir(bufer,function(err,cb){
-                            if (err) console.log(err);
-                            console.log(cb)
-                        })
-                    }
-                    console.log(files)
-                });
-                //var shasum = crypto.createHash('md5');
-                //var s = fs.ReadStream(saveTo);
-                //s.on('data', function(d) { shasum.update(d); });
-                //s.on('end', function() {
-                //    var d = shasum.digest('hex');
-                //    console.log(d,"checksum");
-                //});
-                //var reader = ApkReader.readFile(saveTo);
-                //var manifest = reader.readManifestSync();
-                //manifest.inspect = function() {
-                //    Object.defineProperty(this,{
-                //        versionCode: function() {
-                //            return this.versionCode;
-                //        },
-                //        versionName: function() {
-                //            return this.versionName;
-                //        }
-                //    });
-                //};
-                //console.log(util.inspect(manifest.versionCode));
-            });
-            //
-        });
-        busboy.on('finish', function() {
-            //
-            console.log('Done parsing form!');
-            res.writeHead(303, { Connection: 'close', Location: '/dashboard' });
-            res.end();
-        });
-        req.pipe(busboy);
-    });
+    app.post('/uploadMarionetteAPK', isLoggedIn, users.createVersionAPK);
 
     // =====================================
     // LOGOUT ==============================

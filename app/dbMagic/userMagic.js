@@ -199,7 +199,7 @@ module.exports = {
         });
     },
     createVersion: function (data, callback) {
-
+        console.log(data,"createVersion data")
         Version.findOne({"apk.build": data.build}, function (err, category) {
 
             if (err) return console.log(err,"createVersion Version.findOne err");
@@ -208,10 +208,12 @@ module.exports = {
                 var newVersion = new Version({
                     apk: {
                         build: +data.build,
-                        version: +data.version.slice(1)
+                        version: +data.version
                     },
                     default: false,
-                    link: data.link
+                    link: data.link,
+                    user: data.user,
+                    date: new Date()
                 });
 
                 newVersion.save(function (err) {
