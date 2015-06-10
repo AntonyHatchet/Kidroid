@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../app')[0];
+var sessionMiddleware = require('../app')[1];
 //var debug = require('debug')('Kidroid:server');
 var http = require('http');
 
@@ -29,7 +30,7 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-
+var io = require('../app/socketIO/dashboardIO.js')(server,sessionMiddleware);
 
 /**
  * Normalize a port into a number, string, or false.

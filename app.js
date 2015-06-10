@@ -8,7 +8,6 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
-var http = require('http')
 
 
 var cron = require('./app/service/cron.js');
@@ -82,6 +81,4 @@ app.use(function (err, req, res, next) {
 });
 
 
-var server = http.createServer(app);
-var io = require('./app/socketIO/dashboardIO.js')(server,sessionMiddleware);
-server.listen(3000);
+module.exports = [app, sessionMiddleware];
