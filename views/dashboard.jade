@@ -257,6 +257,9 @@ block content
                     a(href='#createFilter' role="button" class="btn btn-primary right" data-toggle="modal") Add new filter...
                     table()
                         thead
+                            th name
+                            th params
+                        tbody(id='filtersTable')
             //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm

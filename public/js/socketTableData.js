@@ -130,6 +130,14 @@ socket.on('deviceScheduled', function (data) {
     $("#tableSchedule").html(html);
 });
 
+socket.on('filters', function (data) {
+    console.log(data);
+    //html = '<ul>';
+    //for (i in data)
+    //    html += "<tr><td>" + data[i].timeStart + "</td><td>" + data[i].devices + "</td><td></td><td></td></tr>";
+    //$("#allSchedule").html(html);
+});
+
 socket.on('allSchedule', function (data) {
     console.log(data);
     html = '<ul>';
