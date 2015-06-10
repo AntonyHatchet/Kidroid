@@ -329,6 +329,15 @@ module.exports = {
             callback(null, devices);
         });
     },
+    //Создание нового фильтра
+    createFilter: function (filters, callback) {
+        userMagic.createNewFilter(filters, function (err, data) {
+
+            if (err) return console.log(err,"createCategory  userMagic.createSchoolCategory err");
+
+            callback(null, data);
+        });
+    },
     //КАТЕГОРИИ
     //Добавление категорий
     createCategory: function (category, callback) {

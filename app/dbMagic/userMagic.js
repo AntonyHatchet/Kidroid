@@ -6,6 +6,7 @@ var Category = require('../models/category');
 var Version = require('../models/apk_models');
 var Kidroid = require('../models/kidroidModel');
 var Device = require('../models/device');
+var Filters = require('../models/filters');
 
 
 module.exports = {
@@ -85,6 +86,34 @@ module.exports = {
                 });
             }
         });
+    },
+    createNewFilter: function (data, callback) {
+        Filter.findOne({"name": data.name}, function (err, filters) {
+
+            if (err) return console.log(err,"createNewFilter Filter.findOne err");
+
+            if (filters == null) {
+                var newFilter = new Filter({
+                    name: data.name,
+                    params: data.param
+                });
+
+                newFilter.save(function (err) {
+
+                    if (err) return console.log(err,"createNewFilter newFilter.save err");
+
+                    Filter.find("", function (err, filters) {
+
+                        if (err) return console.log(err,"createNewFilter Filter.find err");
+
+                        if (filters != null) {
+                            callback(null, filters)
+                        }
+                    });
+                });
+            }
+            callback(null, filters)
+        })
     },
     findAllCategory: function (callback) {
         Category.find("", function (err, category) {
