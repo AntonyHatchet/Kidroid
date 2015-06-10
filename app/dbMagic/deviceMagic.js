@@ -172,8 +172,8 @@ module.exports = {
                 // Нашли такой ID, создаем дату для записи в БД.
                 var update = {
                     "timestamp": new Date(),
-                    "latitude": [deviceInfo.latitude],
-                    "longitude": [deviceInfo.longitude],
+                    "latitude": [+deviceInfo.latitude],
+                    "longitude": [+deviceInfo.longitude],
                     "loader": deviceInfo.loader_version,
                     "apk.version": deviceInfo.apk_version,
                     "apk.build": deviceInfo.apk_build,

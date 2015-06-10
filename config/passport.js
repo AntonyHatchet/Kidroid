@@ -1,6 +1,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../app/models/user.js');// подгружаем модель пользователя
-var Device = require('../app/models/device');// подгружаем модель пользователя
+var Device = require('../app/models/device');// подгружаем модель устройств
+var userMagic = require('../app/dbMagic/userMagic');
 
 module.exports = function (passport) {
     passport.serializeUser(function (user, done) {
@@ -8,7 +9,7 @@ module.exports = function (passport) {
     });
 
     passport.deserializeUser(function (id, done) {
-        User.findById(id, function (err, user) {
+        userMagic.findById(id, function (err, user) {
             done(err, user);
         });
     });

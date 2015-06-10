@@ -76,16 +76,16 @@ module.exports = {
 
             if (err) return console.log(err,"checkApkVersion deviceMagic.findVersion err");
 
-            if (device.update_required === false) {
-                next();
-            }
-            else {
+            if (device.update_required === true && device.apkToUpdate.build != req.body.apk_build) {
                 user.findLink(device.apkToUpdate.build,function(err,callback){
 
                     if (err) return console.log(err,"checkApkVersion user.findLink err");
 
                     res.json({update_required: true, version: device.apkToUpdate.build, link: server + callback[0].link.slice(1)});
-                })
+                });
+            }
+            else {
+                next();
             }
 
         });

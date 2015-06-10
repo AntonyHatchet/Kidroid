@@ -2,14 +2,18 @@
  * Created by anton_gorshenin on 22.05.2015.
  */
 
-module.exports = function (server) {
+module.exports = function (server,sessionMiddleware) {
     var user = require('../routes/users.js');
     var device = require('../routes/device.js');
     var cron = require('../dbMagic/cronMagic.js');
     var io = require('socket.io').listen(server);
-
+    var app = require('passport');
+    io.use(function(socket, next){
+        sessionMiddleware(socket.request, {}, next);
+    });
     io.on('connection', function (socket) {
-
+        var userId = socket.request.session.passport.user;
+        console.log("Your User ID is", userId);
         user.getAllDeviceQuantity(function (err, data) {
             if (err) {
                 console.log(err);
@@ -133,7 +137,7 @@ module.exports = function (server) {
             }
         );
         socket.on('removeDevice', function (id) {
-                //console.log(id);
+                console.log(app.session.name);
                 user.removeDevice(id, function (err, callback) {
                     if (err) {
                         console.log(err);

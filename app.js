@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
+var http = require('http')
 
 
 var cron = require('./app/service/cron.js');
@@ -26,18 +27,23 @@ app.set('view engine', 'jade');
 //app.use(multer({
 //    dest: './public/uploads/'
 //}));
+var sessionMiddleware = session({
+    name: "COOKIE_NAME_HERE",
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {secure: false},
+    store: new (require("connect-mongo")(session))({
+        url: "mongodb://tester:tester@ds039880.mongolab.com:39880/kidroid"
+    })
+});
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {secure: false}
-}));
+app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -76,4 +82,6 @@ app.use(function (err, req, res, next) {
 });
 
 
-module.exports = app;
+var server = http.createServer(app);
+var io = require('./app/socketIO/dashboardIO.js')(server,sessionMiddleware);
+server.listen(3000);
