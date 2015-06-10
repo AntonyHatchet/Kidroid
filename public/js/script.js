@@ -316,4 +316,8 @@ $(document).ready(function () {
     });
 })
 
-
+$(window).scroll(function(){
+//box one
+    var $win = $(window);
+    $('#tab').css('left', -$win.scrollLeft());
+});
