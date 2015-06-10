@@ -45,7 +45,7 @@ socket.on('category', function (school) {
     html = '';
     for (var i = 0; i < school.length; i++) {
         category.pushData(school[i].name);
-        html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td><input type='checkbox' class='checkAllFilters' value="+ school[i]._id +"></td><td>" + school[i].name + "</td><td><a href='#editCategory' role='button' class='btn btn-primary' data-toggle='modal' onclick='renameCategoryId(\"" + school[i]._id + ',' + school[i].name + "\")'>Edit</a></td></tr>";
+        html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td><input type='checkbox' class='checkAllCategory' value="+ school[i]._id +"></td><td>" + school[i].name + "</td><td><a href='#editCategory' role='button' class='btn btn-primary' data-toggle='modal' onclick='renameCategoryId(\"" + school[i]._id + ',' + school[i].name + "\")'>Edit</a></td></tr>";
     }
     $("#tableFilter").html(html);
     startAutoComplete(category.getArray(),".category")
@@ -131,11 +131,11 @@ socket.on('deviceScheduled', function (data) {
 });
 
 socket.on('filters', function (data) {
-    console.log(data);
-    //html = '<ul>';
-    //for (i in data)
-    //    html += "<tr><td>" + data[i].timeStart + "</td><td>" + data[i].devices + "</td><td></td><td></td></tr>";
-    //$("#allSchedule").html(html);
+    //console.log(data);
+    html = '';
+    for (i in data)
+        html += "<tr><td><input type='checkbox' class='checkAllFilters' id='checkSchedule" + data[i].id + "'  value='" + data[i].id + "'></td><td>" + data[i].name + "</td><td>" + data[i].params + "</td></tr>";
+    $("#filtersTable").html(html);
 });
 
 socket.on('allSchedule', function (data) {

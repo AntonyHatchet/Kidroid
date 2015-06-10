@@ -216,6 +216,15 @@ $(document).ready( function() {
             console.log('false');
         }
     });
+    $("#checkAllCategory").click( function() {
+        if($('#checkAllCategory').prop('checked')){
+            $('.checkAllCategory:enabled').prop('checked', true);
+            console.log('true');
+        } else {
+            $('.checkAllCategory:enabled').prop('checked', false);
+            console.log('false');
+        }
+    });
     $("#checkAllMarionetteAPK").click( function() {
         if($('#checkAllMarionetteAPK').prop('checked')){
             $('.checkAllMarionetteAPK:enabled').prop('checked', true);
@@ -295,7 +304,13 @@ function dellUsers(){
 function dellCategory(){
     var device ={};
     device.devices = $('input:checkbox:checked').map(function() {return this.value;}).get();
-    socket.emit('removeUsers', device)
+    socket.emit('removeCategory', device)
+    //console.log(device.devices);
+}
+function dellFilters(){
+    var device ={};
+    device.devices = $('input:checkbox:checked').map(function() {return this.value;}).get();
+    socket.emit('removeFilters', device)
     //console.log(device.devices);
 }
 function delMarionetteAPK(){

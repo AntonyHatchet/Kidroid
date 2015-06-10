@@ -248,18 +248,22 @@ block content
                             thead
                                 tr
                                     th(onclick='sort(this)',data-value="0")
-                                        input(type='checkbox' id='checkAllFilters')
+                                        input(type='checkbox' id='checkAllCategory')
                                     th(colspan='2') Category name
                             tbody(id='tableFilter')
                         .right
                             button(class="btn btn-danger" onclick="dellCategory()" type="button") Delete
                 #filtersAdd(class='nav-tab-content')
                     a(href='#createFilter' role="button" class="btn btn-primary right" data-toggle="modal") Add new filter...
-                    table()
+                    table(class='table table-hover table-bordered table-striped')
                         thead
+                            th(onclick='sort(this)',data-value="0")
+                                input(type='checkbox' id='checkAllFilters')
                             th name
                             th params
                         tbody(id='filtersTable')
+                    .right
+                        button(class="btn btn-danger" onclick="dellFilters()" type="button") Delete
             //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
