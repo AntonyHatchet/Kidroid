@@ -16,7 +16,8 @@ var DeviceSchema = mongoose.Schema({
     },
     apkToUpdate: {
         version: Number,
-        build: Number
+        build: Number,
+        status: String
     },
     loader: Number,
     name: String,

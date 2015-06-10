@@ -53,27 +53,29 @@ socket.on('category', function (school) {
 
 socket.on('category', function (date) {
     //console.log(date, "category");
-    html = '<option value="" style="color:#cccccc">Select school</option>';
+    html = '<option value="" style="color:#cccccc">- Select school -</option>';
     for (var i = 0; i < date.length; i++) {
-        html += "<option>" + date[i].name + "</option>";
+        html += "<option>- " + date[i].name + " -</option>";
     }
     $("#selectCategory, #addSelectCategory, #editDeviceCategory, #scheduleDeviceCategory").html(html);
 });
 
 socket.on('version', function (date) {
     //console.log(date,"kidroidVersion");
-    html = '<option value="" style="color:#cccccc">Kidroid Loader version</option>';
+    html = '<option value="" style="color:#cccccc">- Kidroid Loader version -</option>';
     for (var i = 0; i < date.kidroid.length; i++) {
-        html += "<option>" + date.kidroid[i].loader +"</option>";
+        html += "<option>- " + date.kidroid[i].loader +" -</option>";
     }
     $("#kidroidVersion,#kidroidVersionDeploy").html(html);
 });
 
 socket.on('version', function (date) {
     //console.log(school,"category");
-    html = '<option value="" style="color:#cccccc">Marionette version</option>';
+    var scheduled = '<option value="Install scheduled" >- Install scheduled -</option>';
+    var inProgress = '<option value="Install in progress">- Install in progress -</option>';
+    html = '<option value="" style="color:#cccccc">- Marionette version -</option>' + scheduled + inProgress;
     for (var i = 0; i < date.apk.length; i++) {
-        html += "<option>" + date.apk[i].apk.version +" "+ date.apk[i].apk.build +"</option>";
+        html += "<option>- " + date.apk[i].apk.version +" "+ date.apk[i].apk.build +" -</option>";
     }
     $("#marionetteVersion,#selectVersionToDeploy, #addSelectVersion, #editDeviceVersion, #scheduleDeviceVersion, #scheduleDeviceVersionFilter").html(html);
 });
@@ -81,15 +83,15 @@ socket.on('version', function (date) {
     //console.log(school,"category");
     html = '';
     for (var i = 0; i < date.length; i++) {
-        html += "<tr><td>" + date[i].apk.version + "</td><td>" + date[i].apk.build + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeVersion\",\"" + date[i]._id + "\")\')>Delete</button>";
+        html += "<tr><td>-" + date[i].apk.version + "</td><td>" + date[i].apk.build + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeVersion\",\"" + date[i]._id + "\")\')>Delete</button>";
     }
     $("#versionTable").html(html);
 });
 socket.on('status', function (date) {
     //console.log(school,"category");
-    html = '<option value="" style="color:#cccccc">Select status</option>';
+    html = '<option value="" style="color:#cccccc">- Select status -</option>';
     for (var i = 0; i < date.length; i++) {
-        html += "<option>" +date[i]+"</option>";
+        html += "<option>- " +date[i]+" -</option>";
     }
     $("#selectStatus").html(html);
 });
