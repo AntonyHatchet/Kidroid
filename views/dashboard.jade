@@ -31,8 +31,8 @@ block content
             h2 Devices
             fieldset
                 legend Filter:
-                #filter.col-sm-12
-                    form(class='form-search form-inline col-sm-9')
+                #filter
+                    form(class='form-search form-inline')
                         input(type="text" id="DeviceNameIDSerial" class='form-control' placeholder='Device name/ID/Serial' onkeyup="find()")
                         select(id='selectStatus' class="span2 form-control" onchange="find()")
                         input(id="selectCategory" class="span2 form-control category" onchange="find()")
@@ -297,7 +297,7 @@ block content
         #settings(class='tab-content')
             fieldset
                 legend Marionette APK
-                div(class='form-search form-inline col-sm-9')
+                div(class='form-search form-inline')
                     label(for='selectDefaultApkVersion') Current version:
                     select(id="selectDefaultApkVersion" class="form-control" onchange="setDefault()")
 
@@ -316,7 +316,7 @@ block content
 
             fieldset
                 legend Kidroid loader
-                div(class='form-search form-inline col-sm-9')
+                div(class='form-search form-inline')
                     label(for='selectDefaultKidroidVersion') Current version:
                     select(id="selectDefaultKidroidVersion" class="form-control" onchange="setDefault()")
 
@@ -417,5 +417,12 @@ block content
             //===========TABS planning================
            #requests(class='tab-content')
                h2 Requests
-               #allSchedule
+                   table(class='table table-hover table-bordered table-striped')
+                       thead
+                           tr
+                               th Request date
+                               th Devices amount
+                               th school
+                               th Filter 2
+                       tbody(id='allSchedule')
 
