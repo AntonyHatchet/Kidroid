@@ -153,10 +153,6 @@ ul.tabs li.current, ul.nav-tabs li.current {
     color: #2b2b2b;
     background-color: #e8e8e8;
 }
-
-#add-device, #add-users {
-    float: left;
-}
 #add-category a{
     margin-left: 20px;
 }
