@@ -56,11 +56,15 @@ function createNewFilter() {
 var newNameId;
 var idDevice;
 var tokenDevice;
+var newUsersId;
 
 function renameCategoryId(x, y) {
     newNameId=x;
     console.log(y);
     $("#idCategory p").replaceWith("ID " +x+"\n")
+}
+;function editUsers(x) {
+    newUsersId=x;
 };
 
 
@@ -70,6 +74,14 @@ function inputNewNameCategory() {
     device.newName = $("#newNameCategory").val();
     socket.emit('editCategory', device);
     //console.log(device);
+};
+function inputNewNameUser() {
+    var device = {};
+    device.id = newUsersId;
+    device.newName = $("#newNameUsers").val();
+    device.newPassword = $("#newNamepassword").val();
+    socket.emit('editUsers', device);
+    console.log(device);
 };
 
 function editDeviceWriteIdToken(id, token){

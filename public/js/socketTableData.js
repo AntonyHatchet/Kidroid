@@ -100,7 +100,7 @@ socket.on('users', function (data) {
     //console.log(data);
     html = '';
     for (i in data)
-        html += "<tr><td><input type='checkbox' id='checkAllUsers" + data[i].password + "' class='checkAllUsers' value='" + data[i]._id + "'></td><td>" + data[i]._id + "</td><td>" + data[i].local.name + "</td></tr>";
+        html += "<tr><td><input type='checkbox' id='checkAllUsers" + data[i]._id + "' class='checkAllUsers' value='" + data[i]._id + "'></td><td>" + data[i].local.name + "</td><td><a href='#editUsers' role='button' class='btn btn-primary' data-toggle='modal' onclick='editUsers(\"" + data[i]._id + "\")'>Edit</a></td></tr>";
     $("#userTable").html(html);
 });
 

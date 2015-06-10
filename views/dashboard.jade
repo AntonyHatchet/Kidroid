@@ -328,12 +328,28 @@ block content
                         tr
                             td(onclick='sort(this)',data-value="0")
                                 input(type='checkbox' id='checkAllUsers')
-                            th password
+                            //th password
                             th name
+                            th options
                             //th remove
                     tbody(id='userTable')
                 .right
                     button( type="button" class="btn btn-danger" onclick="dellUsers()") Delete
+            //============MODAL Edit users=====================
+            div(class="modal" id="editUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                .modal-dialog.modal-sm
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h3 Edit users
+                        div(class="modal-body")
+                            form
+                                .form-group
+                                input(type="input" class="form-control" id='newNameUsers' placeholder='name')
+                                input(type="input" class="form-control" id='newNamepassword' placeholder='password')
+                        div(class="modal-footer")
+                            button( type="button" class="btn btn-primary" onclick="inputNewNameUser()") Edit
             //============MODAL Add new user=====================
             div(class="modal" id="addUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
