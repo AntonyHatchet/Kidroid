@@ -21,7 +21,7 @@ block content
             li(class='tab-link close' data-tab='settings') Settings
                 i(class='icon-chevron-left')
             li(class='tab-link close')
-            li(class='tab-link close' data-tab='requests') Requests
+            li(class='tab-link close' data-tab='requests') Request log
                 i(class='icon-chevron-left')
             li(class='tab-link close' data-tab='planning') Planning
                 i(class='icon-chevron-left')
@@ -143,11 +143,10 @@ block content
                                 .col-sm-12.margin-top-5
                                     textarea(id='commentDevice' class="form-control" rows="3")
                         div(class="modal-footer")
-                            //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
-                            div(id='errorAddDevice' class='alert no-show')
-                                //button(type="button" class="close" data-dismiss="alert") &times;
-                                p All fields must be filled out
-                            button(id="closeIdTextarea" class="btn btn-danger") Close
+
+                            button(id="" class="btn btn-primary left") Copy to the clipboard
+                            button(id="closeIdTextarea" class="btn btn-primary right") Add more devices...
+
             //============MODAL delete device=====================
             div(class="modal" id="deleteDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog
@@ -193,13 +192,13 @@ block content
                                 .form-group
                                     label(for="newComment").col-sm-5.control-label Comment:
                                     .col-sm-12.margin-top-5
-                                        input(type='text' id="newComment" name='category' placeholder='Comments' class="form-control")
+                                        textarea(type='text' id="newComment" name='category' rows='3' placeholder='Comments' class="form-control")
                         div(class="modal-footer")
                             //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
                             div(id='errorAddDevice' class='alert no-show')
                                 //button(type="button" class="close" data-dismiss="alert") &times;
                                 p All fields must be filled out
-                            button(class="btn btn-primary" onclick='editDevice()') Edit
+                            button(class="btn btn-primary" onclick='editDevice()') Save
             //============MODAL maps=====================
             div(class="modal" id="map" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: -1; opacity: 0 ")
                 .modal-dialog.modal-lg
@@ -255,7 +254,9 @@ block content
                         .right
                             button(class="btn btn-danger" onclick="dellCategory()" type="button") Delete
                 #filtersAdd(class='nav-tab-content')
-                    a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") Add new filter...
+                    a(href='#createFilter' role="button" class="btn btn-primary right" data-toggle="modal") Add new filter...
+                    table()
+                        thead
             //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -272,6 +273,24 @@ block content
                             div(id='errorCreateCategory' class='alert no-show')
                                 p All fields must be filled out
                             button(class="btn btn-primary" onclick="createNewCategory()" type="button") Create
+            //============MODAL Create new filter=====================
+            div(class="modal" id="createFilter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                .modal-dialog.modal-sm
+                    .modal-content
+                        div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+                                i(class="icon-remove")
+                            h3 Create new filter
+                        div(class="modal-body")
+                            form(class="form-horizontal" method='post' action="/signup")
+                                .form-group
+                                input(class="form-control" id="nameFilter" name='category' placeholder='name')
+                                .form-group
+                                input(class="form-control" id="paramFilter" name='category' placeholder='parameter')
+                        div(class="modal-footer")
+                            div(id='errorCreateCategory' class='alert no-show')
+                                p All fields must be filled out
+                            button(class="btn btn-primary" onclick="createNewCategory()"  type="button") Create
 
             //============MODAL Edit category=====================
             div(class="modal" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -359,6 +378,7 @@ block content
                                 th Date added
                                 th Version
                                 th Build
+                                th Options
                         tbody(id='settingKidroidVersionTable')
                 .right
                     a(href='#addApkVersion' role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
@@ -394,14 +414,23 @@ block content
         #requests(class='tab-content')
             h2 Requests log
             .col-sm-12
+                h5.col-sm-2.col-sm-offset-4.right
+                    label(for="ItemsPerPage").col-sm-7.control-label Items per page:
+                    .form-group.col-sm-5
+                        select(id="ItemsPerPage")
+                            option(value='0') 10
+                            option(value='20') 20
+                            option(value='50') 50
+            .container-fluid.container-tab
                 table(class='table table-hover table-bordered table-striped')
-                    thead
+                    thead(class='tableTarget')
                         tr
                             th Request date
                             th Devices amount
                             th school
                             th Filter 2
                     tbody(id='allSchedule')
+            div(id='pagination' class="text-center")
         //===========TABS planning================
         #planning(class='tab-content')
             h2 Planning
