@@ -89,6 +89,16 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
+        socket.on('createFilter', function (filterData) {
+
+                user.createFilter(filterData, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('filters', callback);
+                });
+            }
+        );
         socket.on('updateCategory', function (categoryParams) {
 
                 user.updateCategory(categoryParams, function (err, callback) {
