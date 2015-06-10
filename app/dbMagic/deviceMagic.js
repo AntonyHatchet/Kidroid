@@ -120,8 +120,7 @@ module.exports = {
             deviceId: deviceInfo.deviceID,
             registered: false,
             apkToUpdate:{
-                version: deviceInfo.version,
-                build: deviceInfo.build,
+                build: (isNaN(deviceInfo.build.split(' ')[1])) ? deviceInfo.build.split(' ')[0]:deviceInfo.build,
                 status: "Install scheduled"
             },
             apk: {

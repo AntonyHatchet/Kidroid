@@ -13,6 +13,12 @@ module.exports = function (server,sessionMiddleware) {
     });
     io.on('connection', function (socket) {
         var userId = socket.request.session.passport;
+        user.findFilter(function (err, callback) {
+            if (err) {
+                console.log(err);
+            }
+            io.emit('filters', callback);
+        });
         user.getAllDeviceQuantity(function (err, data) {
             if (err) {
                 console.log(err);

@@ -115,6 +115,16 @@ module.exports = {
             callback(null, filters)
         })
     },
+    findAllFilter: function (callback) {
+        Filters.find("", function (err, filters) {
+
+            if (err) return console.log(err,"findAllFilter Filters.find err");
+
+            if (filters != null) {
+                callback(null, filters)
+            }
+        });
+    },
     findAllCategory: function (callback) {
         Category.find("", function (err, category) {
 
