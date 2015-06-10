@@ -45,6 +45,13 @@ function createNewCategory() {
 
     //console.log(nameCategory);
 };
+function createNewFilter() {
+    var data = {};
+    data.name= $("#nameFilter").val();
+    data.param= $("#paramFilter").val();
+    socket.emit('createFilter', data);
+    console.log(data);
+};
 //TO DO =====================
 var newNameId;
 var idDevice;
