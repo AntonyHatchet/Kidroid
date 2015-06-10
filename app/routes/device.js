@@ -79,11 +79,11 @@ module.exports = {
                 next();
             }
             else {
-                user.findLink(device.apk_to_update,function(err,callback){
+                user.findLink(device.apk.build,function(err,callback){
 
                     if (err) return console.log(err,"checkApkVersion user.findLink err");
 
-                    res.json({update_required: true, version: device.apk_to_update, link: server + callback[0].link.slice(1)});
+                    res.json({update_required: true, version: device.apk.build, link: server + callback[0].link.slice(1)});
                 })
             }
 
