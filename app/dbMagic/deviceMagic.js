@@ -49,15 +49,16 @@ module.exports = {
     },
     getDevice: function (callback,params) {
         if (params!=undefined) {
+            console.log(params);
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
             var deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             var school = params.category;
-            var build=  +params.build;
+            var apkBuild=  (isNaN(params.build)) ? {$exists: true}:{$gte:+params.build};
+            var apkStatus=  (isNaN(params.build)) ? params.build:{$exists: true};
             var status = params.status;
             var page = params.page;
             var limit = params.limit;
             var sort = params.sort;
-            console.log(sort)
         }
         Device
             .find({})
@@ -65,7 +66,8 @@ module.exports = {
             .where('deviceId').equals((!deviceId)?{$exists: true}:deviceId)
             .where('school').equals((!school)?{$exists: true}:school)
             .where('status').equals((!status)?{$exists: true}:status)
-            .where('apk.build').equals((!build)?{$exists: true}:build)
+            .where('apk.build').equals((!apkBuild)?{$exists: true}:apkBuild)
+            .where('apk.status').equals((!apkBuild)?{$exists: true}:apkBuild)
             .limit(10)
             .skip(page)
             .sort(sort)
@@ -118,7 +120,8 @@ module.exports = {
             registered: false,
             apkToUpdate:{
                 version: deviceInfo.version,
-                build: deviceInfo.build
+                build: deviceInfo.build,
+                status: "Install scheduled"
             },
             apk: {
                 version: 0,

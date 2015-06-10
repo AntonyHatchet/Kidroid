@@ -136,7 +136,6 @@ function find(sort) {
 function page(i) {
     var device = {};
     device.sort = sort();
-    console.log(device.sort,"page");
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
     device.category = $("#selectCategory").val();
@@ -145,7 +144,6 @@ function page(i) {
     device.page = i*10-10;
     socket.emit('getDevicesByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
-    console.log(device);
 };
 function addDevice() {
     var device = {};
@@ -156,7 +154,6 @@ function addDevice() {
     if (device.category != 0 && device.version !=0)  {
     socket.emit('createDevice', device);
     $('#errorAddDevice').addClass('no-show');
-    //console.log('yes');
     } else{
         $('#errorAddDevice').removeClass('no-show');
     }
