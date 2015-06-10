@@ -163,16 +163,27 @@ socket.on('getVersionDeploy', function (data) {
 socket.on('getVersionDeploy', function (data) {
     var apk = "";
     var kidroid = "";
+    var options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        weekday: 'long',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+    };
     for (var i = 0; i < data.apk.length; i++) {
+        var dateApk = new Date(data.apk[i].date);
         var checkBox = "<td ><input type='checkbox' class='checkAllMarionetteAPK' value=" + data.apk[i]._id + "></td>";
-        var name = '<td class="name">'+ data.apk[i].date + '(' + data.apk[i].user + ')</td>';
+        var name = '<td class="name">'+ dateApk.toLocaleString("en", options) + ' (' + data.apk[i].user + ')</td>';
         var version = '<td class="version">'+ data.apk[i].apk.version + '</td>';
         var build = '<td class="build">'+  data.apk[i].apk.build + '</td>';
         apk += '<tr>'+checkBox+name+version+build+'</tr>';
     }
     for (var j = 0; j < data.kidroid.length; j++) {
+        var dateKidroid = new Date(data.kidroid[i].date);
         var checkBoxKid = "<td ><input type=checkbox class='checkAllKidroidVersion' value=" + data.kidroid[i]._id + "></td>";
-        var nameKid = '<td class="name">'+ data.kidroid[i].date + '(' + data.kidroid[i].user + ')</td>';
+        var nameKid = '<td class="name">'+ dateKidroid.toLocaleString("en", options) + ' (' + data.kidroid[i].user + ')</td>';
         var versionKid = '<td class="version">'+ data.kidroid[i].loader + '</td>';
         var buildKid = '<td class="build">'+  data.kidroid[i].loader + '</td>';
         kidroid += '<tr>'+checkBoxKid+nameKid+versionKid+buildKid+'</tr>';
