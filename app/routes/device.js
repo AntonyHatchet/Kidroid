@@ -71,6 +71,7 @@ module.exports = {
     },
     // сверка необходимости обновления версии АПК
     checkApkVersion: function (req, res, next) {
+        console.log(req.body);
         deviceMagic.findVersion({id: req.body.device_id}, function (err, device) {
 
             if (err) return console.log(err,"checkApkVersion deviceMagic.findVersion err");
@@ -79,7 +80,6 @@ module.exports = {
                 next();
             }
             else {
-                console.log(device);
                 user.findLink(device.apkToUpdate.build,function(err,callback){
 
                     if (err) return console.log(err,"checkApkVersion user.findLink err");
