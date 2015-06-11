@@ -12,7 +12,7 @@ module.exports = function (server,sessionMiddleware) {
     });
     io.on('connection', function (socket) {
         var userName;
-        if(socket.request.session.passport.user) {
+        if(socket.request.session.passport.user != undefined) {
             console.log("user.findUser");
             user.findUser(socket.request.session.passport.user, function (err, data) {
                 if (err) {
