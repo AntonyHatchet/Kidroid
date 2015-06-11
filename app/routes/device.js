@@ -52,6 +52,18 @@ module.exports = {
             });
         });
     },
+    getRemoveDevice: function (req, res) {
+
+        deviceMagic.removeDevice({id: req.body.device_id}, function (err, next) {
+
+            if (err) return console.log(err,"getRemoveDevice deviceMagic.removeDevice err");
+
+            if (next === null) {
+                res.json({"success": false});
+            }
+            res.json({"success": true});
+        });
+    },
 //Авторизация планшета по ИД и токену
     getAuthorizationDevice: function (req, res, next) {
         console.log(req.body, "Authorization Data");
