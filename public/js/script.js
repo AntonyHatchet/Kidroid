@@ -8,13 +8,13 @@ $(document).ready(function () {
 
 
 
-    $('ul.tabs li').click(function () {
+    $('ul.tabsMy li').click(function () {
         var tab_id = $(this).attr('data-tab');
 
-        $('ul.tabs li').removeClass('current');
+        $('ul.tabsMy li').removeClass('active');
         $('.tab-content').removeClass('current');
 
-        $(this).addClass('current');
+        $(this).addClass('active');
         $("#" + tab_id).addClass('current');
     })
 

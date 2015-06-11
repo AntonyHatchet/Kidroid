@@ -154,9 +154,9 @@ ul.tabs li.current, ul.nav-tabs li.current {
     visibility: visible;
     opacity: 1;
 }
-.tabs i{
-    float: right;
-}
+/*.tabs i{*/
+    /*float: right;*/
+/*}*/
 #tab li:hover{
     color: #2b2b2b;
     background-color: #e8e8e8;
@@ -410,7 +410,7 @@ input[type="number"]::-webkit-inner-spin-button:active {
     padding: 15px;
 }
 
-.tab-content.current {
+.tab-content.active {
     display: inherit;
 }
 .form-search select,.form-search input{
