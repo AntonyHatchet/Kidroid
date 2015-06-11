@@ -359,11 +359,19 @@ block content
                                 i(class="icon-remove")
                             h3 Edit users
                         div(class="modal-body")
-                            form
+                            form.form-horizontal
                                 .form-group
-                                input(type="input" class="form-control" id='newNameUsers' placeholder='name')
-                                input(type="password" class="form-control" id='newNamepassword' placeholder='password')
-                                input(type="password" class="form-control" id='newNamepassword2' placeholder='confirm password')
+                                    label(for="newNameUsers").col-sm-3.control-label Name:
+                                    .col-sm-9
+                                        input(type="input" class="form-control" id='newNameUsers' placeholder='name')
+                                .form-group
+                                    label(for="newNamepassword").col-sm-3.control-label password:
+                                    .col-sm-9
+                                            input(type="password" class="form-control" id='newNamepassword' placeholder='password')
+                                .form-group
+                                    label(for="newNamepassword2").col-sm-3.control-label password:
+                                    .col-sm-9
+                                            input(type="password" class="form-control" id='newNamepassword2' placeholder='confirm password')
                         div(class="modal-footer")
                             div(id='errorUsersPassword' class='alert no-show')
                                 //button(type="button" class="close" data-dismiss="alert") &times;
