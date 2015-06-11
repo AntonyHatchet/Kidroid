@@ -249,10 +249,12 @@ block content
                             a School
                         li(role="presentation" data-tab='filtersAdd')
                             a Filter 2
-                    button(class="btn btn-default" onclick="" type="button") Create New Filter
+                    .btn-group
+                        button(class="btn btn-default" onclick="" type="button") Create New Filter
+                        button(class="btn btn-default" onclick="" type="button") Edit Filter
+                        button(class="btn btn-default" onclick="" type="button") Remove Filter
                 #filtersSchool(class='nav-tab-content current')
                     #add-category.right
-                        a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") Add new school...
                             //button(class='btn btn-primary') add new category...
                     .container-fluid.container-tab
                         table(class='table table-hover table-bordered table-striped')
@@ -264,7 +266,8 @@ block content
                             tbody(id='tableFilter')
                         .right
                             .btn-group
-                            button(class="btn btn-danger" onclick="dellCategory()" type="button") Delete
+                                a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") Add new school...
+                                button(class="btn btn-danger" onclick="dellCategory()" type="button") Delete
                 #filtersAdd(class='nav-tab-content')
                     .container-fluid.container-tab
                         table(class='table table-hover table-bordered table-striped')
@@ -276,7 +279,7 @@ block content
                             tbody(id='filtersTable')
                         .right
                             .btn-group
-                                a(href='#createFilter' role="button" class="btn btn-primary right" data-toggle="modal") Add new filter...
+                                a(href='#createFilter' role="button" class="btn btn-primary" data-toggle="modal") Add new filter2...
                                 button(class="btn btn-danger" onclick="dellFilters()" type="button") Delete
             //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -332,9 +335,6 @@ block content
         //==========USERS TABS===================
         #users(class='tab-content')
             h2 Users
-            #add-users.right
-                a(href='#addUsers' role="button" class="btn btn-primary" data-toggle="modal") add new user
-                    //button(class='btn btn-primary') add new user
             .container-fluid.container-tab
                 table(class='table table-hover table-bordered table-striped')
                     thead
@@ -347,7 +347,9 @@ block content
                             //th remove
                     tbody(id='userTable')
                 .right
-                    button( type="button" class="btn btn-danger" onclick="dellUsers()") Delete
+                    .btn-group
+                        a(href='#addUsers' role="button" class="btn btn-primary" data-toggle="modal") Add New User
+                        button( type="button" class="btn btn-danger" onclick="dellUsers()") Delete
             //============MODAL Edit users=====================
             div(class="modal" id="editUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
