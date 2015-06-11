@@ -484,22 +484,6 @@ block content
                             th Filter 2
                     tbody(id='allSchedule')
             div(id='pagination' class="text-center")
-            //====================================
-            textarea(id='testArea') jhgasdajhdgajhgdasjhgdjasg
-            #testDiv
-                button(id='testIdButton')
-            script.
-                var clip = new ZeroClipboard.Client();
-                    clip.setText('');
-                    clip.addEventListener( 'complete', function(client, text) {
-                    // alert("Copy: " + text );
-                    } );
-
-                    clip.addEventListener( 'mouseDown', function(client) {
-                        clip.setText( document.getElementById('testArea').innerHTML );
-                } );
-
-                clip.glue('testIdButton','testDiv');
         //===========TABS planning================
         #planning(class='tab-content')
             h2 Planning
