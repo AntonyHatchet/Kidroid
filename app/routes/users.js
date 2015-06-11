@@ -13,6 +13,11 @@ var util = require('util');
 module.exports = {
     //ПОЛЬЗОВАТЕЛИ
     //Поиск всех пользователей
+    findUser: function (id,callback) {
+        userMagic.findById(id, function (err, user) {
+            callback(err, user);
+        });
+    },
     findAllUsers: function (callback) {
         userMagic.findAllUsers(function (err, data) {
 
@@ -220,7 +225,7 @@ module.exports = {
     //        });
     //        req.pipe(busboy);
     //},
-    removeVersion: function (category, callback) {
+    removeMarionetteAPK: function (category, callback) {
         userMagic.removeVersion(category, function (err, category) {
 
             if (err) return console.log(err,"removeVersion userMagic.removeVersion err");

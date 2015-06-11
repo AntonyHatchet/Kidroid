@@ -7,12 +7,19 @@ module.exports = function (server,sessionMiddleware) {
     var device = require('../routes/device.js');
     var cron = require('../dbMagic/cronMagic.js');
     var io = require('socket.io').listen(server);
-    var app = require('passport');
     io.use(function(socket, next){
         sessionMiddleware(socket.request, {}, next);
     });
     io.on('connection', function (socket) {
-        var userId = socket.request.session.passport;
+        var userName;
+        user.findUser(socket.request.session.passport.user,function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            console.log(data.local.name)
+            userName = data.local.namee;
+            io.emit('userName', data.local.name);
+        });
         user.findFilter(function (err, callback) {
             if (err) {
                 console.log(err);
@@ -63,27 +70,37 @@ module.exports = function (server,sessionMiddleware) {
             }
             io.emit('allSchedule', data);
         });
+        //UPDATE
+        socket.on('updateCategory', function (categoryParams) {
 
-        // Запрос устройств на страницу по колличеству
-        socket.on('getDevicesByParams', function (params) {
-                user.getDevice(function (err, callback) {
+                user.updateCategory(categoryParams, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('category', callback);
+                });
+            }
+        );
+
+        socket.on('updateDevice', function (params) {
+                user.updateDevice(params, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
                     io.emit('displayData', callback);
-                },params);
+                });
             }
         );
-        socket.on('getDevicesQuantityByParams', function (params) {
-                user.getAllDeviceQuantity(function (err, callback) {
+        socket.on('updateSchedule', function (params) {
+                cron.updateSchedule(params, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    console.log(callback);
-                    io.emit('quantity', callback);
-                },params);
+                    io.emit('allSchedule', callback);
+                });
             }
         );
+        //CREATE
         // Создаем категорию
         socket.on('createCategory', function (categoryName) {
 
@@ -95,23 +112,12 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
-        socket.on('createFilter', function (filterData) {
-                console.log(filterData);
-                user.createFilter(filterData, function (err, callback) {
+        socket.on('createSchedule', function (params) {
+                cron.newSchedule(params, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('filters', callback);
-                });
-            }
-        );
-        socket.on('updateCategory', function (categoryParams) {
-
-                user.updateCategory(categoryParams, function (err, callback) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    io.emit('category', callback);
+                    io.emit('allSchedule', callback);
                 });
             }
         );
@@ -126,53 +132,18 @@ module.exports = function (server,sessionMiddleware) {
                 },function(err,end){
                     if (err)throw err;
                     if (end){
-                    io.emit("allDeviceCreated", "Finish")
-                        }
+                        io.emit("allDeviceCreated", "Finish")
+                    }
                 });
             }
         );
-        socket.on('updateDevice', function (params) {
-                user.updateDevice(params, function (err, callback) {
+        socket.on('createFilter', function (filterData) {
+                console.log(filterData);
+                user.createFilter(filterData, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('displayData', callback);
-                });
-            }
-        );
-        socket.on('createSchedule', function (params) {
-                cron.newSchedule(params, function (err, callback) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    io.emit('allSchedule', callback);
-                });
-            }
-        );
-        socket.on('updateSchedule', function (params) {
-                cron.updateSchedule(params, function (err, callback) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    io.emit('allSchedule', callback);
-                });
-            }
-        );
-        socket.on('checkScheduleStatus', function (id) {
-                cron.checkScheduleStatus(id, function (err, callback) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    io.emit('deviceScheduled', callback);
-                });
-            }
-        );
-        socket.on('makeDefaultVersion', function (location,id) {
-                user.makeDefaultVersion(location,id,function (err, data) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    io.emit('getVersionDeploy', data);
+                    io.emit('filters', callback);
                 });
             }
         );
@@ -193,6 +164,26 @@ module.exports = function (server,sessionMiddleware) {
                     }
                     io.emit('deviceScheduled', callback);
                 });
+            }
+        );
+        // Запрос устройств на страницу по колличеству
+        socket.on('getDevicesByParams', function (params) {
+                user.getDevice(function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('displayData', callback);
+                },params);
+            }
+        );
+        socket.on('getDevicesQuantityByParams', function (params) {
+                user.getAllDeviceQuantity(function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log(callback);
+                    io.emit('quantity', callback);
+                },params);
             }
         );
         //REMOVE
@@ -227,6 +218,36 @@ module.exports = function (server,sessionMiddleware) {
                         io.emit('users', callback);
                     });
                 }
+            }
+        );
+        socket.on('removeMarionetteAPK', function (apkID) {
+                for (var i = 0; i < apkID.length; i++) {
+                    user.removeMarionetteAPK(apkID[i], function (err, callback) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        io.emit('users', callback);
+                    });
+                }
+            }
+        );
+        //OTHER
+        socket.on('checkScheduleStatus', function (id) {
+                cron.checkScheduleStatus(id, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('deviceScheduled', callback);
+                });
+            }
+        );
+        socket.on('makeDefaultVersion', function (location,id) {
+                user.makeDefaultVersion(location,id,function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('getVersionDeploy', data);
+                });
             }
         );
         //Отключение пользователя

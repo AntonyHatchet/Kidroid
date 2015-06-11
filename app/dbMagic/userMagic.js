@@ -296,7 +296,7 @@ module.exports = {
         })
     },
     removeVersion: function (data, callback) {
-        Version.remove({"_id": data}, function (err, category) {
+        Version.find({"_id": data}, function (err, category) {
 
             if (err) return console.log(err,"removeVersion Version.remove err");
 

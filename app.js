@@ -33,7 +33,8 @@ var sessionMiddleware = session({
     saveUninitialized: true,
     cookie: {secure: false},
     store: new (require("connect-mongo")(session))({
-        url: "mongodb://tester:tester@ds039880.mongolab.com:39880/kidroid"
+        url: "mongodb://tester:tester@ds039880.mongolab.com:39880/kidroid",
+        ttl: 6000
     })
 });
 
