@@ -9,9 +9,19 @@ html(lang="ru")
         //script(src="https://code.jquery.com/jquery-1.11.1.min.js")
         link(rel='stylesheet', href='/stylesheets/clndr.css')
         //link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+        //================NEW STYLE=========================
         link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
-        link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
-        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='/stylesheets/new/sb-admin.css')
+        link(rel='stylesheet', href='/stylesheets/new/plugins/morris.css')
+        link(rel='stylesheet', href='/stylesheets/new/font-awesome.min.css')
+
+        //===========OLD STYLE==================
+        //link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        //link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+        //link(rel='stylesheet', href='/stylesheets/style.css')
+        //========================
+        link(rel='stylesheet', href='/stylesheets/new/style.css')
+        //=================================================
         //link(rel='stylesheet', href='/stylesheets/bootstrap-responsive.css')
         //link(rel='stylesheet', href='/stylesheets/table.css')
         link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css')
@@ -41,4 +51,5 @@ html(lang="ru")
 
 
     body
-        block content
+        #wrapper
+            block content
