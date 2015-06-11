@@ -291,6 +291,14 @@ module.exports = {
             callback(null, Devices);
         },params);
     },
+    getDeviceIdByParams: function (params,callback) {
+        deviceMagic.getDeviceId(params,function (err, Devices) {
+
+            if (err) return console.log(err,"getDevice deviceMagic.getDevice err");
+
+            callback(null, Devices);
+        });
+    },
     //Создаем запросы к БД на добавление устройств
     createDevice: function (params, callback,end) {
         uploader(0);

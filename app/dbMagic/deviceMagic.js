@@ -79,6 +79,32 @@ module.exports = {
                 callback(null, Devices);
             });
     },
+    getDeviceId: function (params,callback) {
+        if (params!=undefined) {
+            var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
+            var deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
+            var school = params.category;
+            var apkBuild=  (isNaN(params.build.split(' ')[1])) ? {$exists: true}:{$gte:+(params.build.split(' ')[1])};
+            var apkStatus=  (isNaN(params.build.split(' ')[1])) ? params.build :{$exists: true};
+            var status = params.status;
+        }
+        Device
+            .find({})
+            .where('name').equals((!name)?{$exists: true}:name)
+            .where('deviceId').equals((!deviceId)?{$exists: true}:deviceId)
+            .where('school').equals((!school)?{$exists: true}:school)
+            .where('status').equals((!status)?{$exists: true}:status)
+            .where('apk.build').equals((!apkBuild)?{$exists: true}:apkBuild)
+            .where('apkToUpdate.status').equals((!apkStatus)?{$exists: true}:apkStatus)
+            .select("-_id -apkToUpdate -apk -school -timestamp -registered -loader -updateRequired -status -name -android -__v -longitude -latitude -token")
+            .exec(function (err, Devices) {
+                if (err) return console.log(err,"getDeviceId Device.find err");
+                // Execute callback
+                    for (i in Devices){
+                        console.log(Devices[i].deviceId)
+                    }
+            });
+    },
     // Проверка на наличее ID и флага не зарегестрирован в БД
     regDevice: function (id, callback) {
 
