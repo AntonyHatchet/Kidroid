@@ -140,21 +140,21 @@ block content
                             .form-group
                                 label(for="commentDevice").col-sm-5.control-label ID's list:
                                 .col-sm-12.margin-top-5
-                                    textarea(id='commentDevice' class="form-control" rows="3")
+                                    #idDeviceCreate(class="form-control")
                         div(class="modal-footer")
                             #copyClipboardContainer
                                 button(id="copyClipboard" class="btn btn-primary left") Copy to the clipboard
                             button(id="closeIdTextarea" class="btn btn-primary right") Add more devices...
-            script.
-                var clip = new ZeroClipboard.Client();
-                clip.setText('');
-                clip.addEventListener('complete', function (client, text) {
-                    alert("Copy: " + text);
-                });
-                clip.addEventListener('mouseDown', function (client) {
-                    clip.setText(document.getElementById('commentDevice').innerHTML);
-                });
-                clip.glue('copyClipboard', 'copyClipboardContainer');
+            //script.
+            //    var clip = new ZeroClipboard.Client();
+            //    clip.setText('');
+            //    clip.addEventListener('complete', function (client, text) {
+            //        alert("Copy: " + text);
+            //    });
+            //    clip.addEventListener('mouseDown', function (client) {
+            //        clip.setText(document.getElementById('idDeviceCreate').innerHTML);
+            //    });
+            //    clip.glue('copyClipboard', 'copyClipboardContainer');
             //============MODAL delete device=====================
             div(class="modal" id="deleteDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog
@@ -471,6 +471,22 @@ block content
                             th Filter 2
                     tbody(id='allSchedule')
             div(id='pagination' class="text-center")
+            //====================================
+            textarea(id='testArea') jhgasdajhdgajhgdasjhgdjasg
+            #testDiv
+                button(id='testIdButton')
+            script.
+                var clip = new ZeroClipboard.Client();
+                    clip.setText('');
+                    clip.addEventListener( 'complete', function(client, text) {
+                    // alert("Copy: " + text );
+                    } );
+
+                    clip.addEventListener( 'mouseDown', function(client) {
+                        clip.setText( document.getElementById('testArea').innerHTML );
+                } );
+
+                clip.glue('testIdButton','testDiv');
         //===========TABS planning================
         #planning(class='tab-content')
             h2 Planning
