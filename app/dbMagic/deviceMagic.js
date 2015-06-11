@@ -243,8 +243,7 @@ module.exports = {
         })
     },
     removeDevice: function (data, callback) {
-        console.log(data,"removeDevice", typeof data);
-        Device.remove({"deviceId": data}, function (err, data) {
+        Device.remove({"deviceId": data.id}, function (err, data) {
 
             if (err) return console.log(err,"removeDevice err");
 
