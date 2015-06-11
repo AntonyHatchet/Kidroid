@@ -11,7 +11,7 @@ var Filters = require('../models/filters');
 
 module.exports = {
     findById: function (id,callback) {
-        User.findOne({"_id":id},{"local.name":1}, function (err, data) {
+        User.findOne({"_id":id.user},{"local.name":1}, function (err, data) {
 
             if (err) return console.log(err,"findById User.findOne err");
 
