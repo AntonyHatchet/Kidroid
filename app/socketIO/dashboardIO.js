@@ -12,13 +12,16 @@ module.exports = function (server,sessionMiddleware) {
     });
     io.on('connection', function (socket) {
         var userName;
-        user.findUser(socket.request.session.passport.user,function (err, data) {
-            if (err) {
-                console.log(err);
-            }
-            userName = data.local.name;
-            io.emit('userName', data.local.name);
-        });
+        if(socket.request.session.passport.user) {
+            console.log("user.findUser");
+            user.findUser(socket.request.session.passport.user, function (err, data) {
+                if (err) {
+                    console.log(err);
+                }
+                userName = data.local.name;
+                io.emit('userName', data.local.name);
+            });
+        }
         user.findFilter(function (err, callback) {
             if (err) {
                 console.log(err);
