@@ -105,8 +105,8 @@ block content
                             span(id="deployCount")
                         .col-sm-8
                             .col-sm-3
-                                select(id="selectVersionApkToDeploy" class="span2 form-control" onchange="find()")
-                            button(class="col-sm-2 btn btn-primary" onclick='addDevice()') Start
+                                select(id="selectVersionApkToDeploy" class="span2 form-control")
+                            button(class="col-sm-2 btn btn-primary" onclick='deployAPK()') Start
             #deployKidroid
                 fieldset
                     legend Kidroid Loader Deploy:
@@ -117,7 +117,7 @@ block content
                         .col-sm-8
                             .col-sm-3
                                 select(id="kidroidVersionDeploy" class="span2 form-control")
-                            button(class="col-sm-2 btn btn-primary") Start
+                            button(class="col-sm-2 btn btn-primary" onclick='deployKidroid()') Start
             //============MODAL Add new device=====================
             div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -506,7 +506,7 @@ block content
                         tr
                             th Request date
                             th Devices amount
-                            th school
+                            th Version
                             th Filter 2
                     tbody(id='allSchedule')
             div(id='pagination' class="text-center")

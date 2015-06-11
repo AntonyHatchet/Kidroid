@@ -11,14 +11,15 @@ var Filters = require('../models/filters');
 
 module.exports = {
     findById: function (id,callback) {
-        User.findOne({"_id":id},{"local.name":1}, function (err, data) {
+        console.log(id,"findById");
+            User.findOne({"_id": id}, {"local.name": 1}, function (err, data) {
 
-            if (err) return console.log(err,"findById User.findOne err");
+                if (err) return console.log(err, "findById User.findOne err");
 
-            if (data != null) {
-                callback(null, data)
-            }
-        });
+                if (data != null) {
+                    callback(null, data)
+                }
+            })
     },
     findAllUsers: function (callback) {
         User.find("",{"local.name":1}, function (err, data) {

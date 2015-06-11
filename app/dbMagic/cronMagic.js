@@ -23,12 +23,13 @@ module.exports = {
 
     },
     newSchedule: function (job, callback) {
-
+        console.log(job.version, "newShedule")
         var newCron = new Cron({
             "timeStart": job.date,
             "devices": job.devices,
-            "versionToUpdate": job.version,
-            "status": "New"
+            "versionToUpdate": +job.version,
+            "status": "New",
+            "name": job.name
         });
         newCron.save(function (err) {
             if (err) {
