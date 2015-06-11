@@ -315,8 +315,8 @@ function dellDevice(){
 }
 function dellUsers(){
     var device ={};
-    device.devices = $('input:checkbox:checked').map(function() {return this.value;}).get();
-    socket.emit('removeUsers', device)
+    device.devices = $('input:checkbox.checkAllUsers:checked').map(function() {return this.value;}).get();
+    socket.emit('removeUsers', device.devices)
     //console.log(device.devices);
 }
 function dellCategory(){
