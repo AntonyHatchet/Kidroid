@@ -235,12 +235,15 @@ block content
             h2 Filters
             div(class='tabbable')
                 .col-sm-12
-                    ul(class='nav-tabs')
-                        li(class='tab-link current close' data-tab="filtersSchool") Filter 1
-                        li(class='tab-link  close' data-tab='filtersAdd') Filter 2
+                    ul(class='nav nav-tabs')
+                        li(role="presentation" data-tab="filtersSchool" class="current")
+                            a School
+                        li(role="presentation" data-tab='filtersAdd')
+                            a Filter 2
+                    button(class="btn btn-default" onclick="" type="button") Create New Filter
                 #filtersSchool(class='nav-tab-content current')
                     #add-category.right
-                        a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") Add new category...
+                        a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") Add new school...
                             //button(class='btn btn-primary') add new category...
                     .container-fluid.container-tab
                         table(class='table table-hover table-bordered table-striped')
@@ -248,12 +251,12 @@ block content
                                 tr
                                     td(onclick='sort(this)',data-value="0")
                                         input(type='checkbox' id='checkAllCategory')
-                                    th(colspan='2') Category name
+                                    th(colspan='2') School name
                             tbody(id='tableFilter')
                         .right
+                            .btn-group
                             button(class="btn btn-danger" onclick="dellCategory()" type="button") Delete
                 #filtersAdd(class='nav-tab-content')
-                    a(href='#createFilter' role="button" class="btn btn-primary right" data-toggle="modal") Add new filter...
                     .container-fluid.container-tab
                         table(class='table table-hover table-bordered table-striped')
                             thead
@@ -263,7 +266,9 @@ block content
                                 th params
                             tbody(id='filtersTable')
                         .right
-                            button(class="btn btn-danger" onclick="dellFilters()" type="button") Delete
+                            .btn-group
+                                a(href='#createFilter' role="button" class="btn btn-primary right" data-toggle="modal") Add new filter...
+                                button(class="btn btn-danger" onclick="dellFilters()" type="button") Delete
             //============MODAL Create new category=====================
             div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
