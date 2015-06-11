@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-//var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -10,6 +9,8 @@ var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
 
+
+var cron = require('./app/service/cron.js');
 
 mongoose.connect(dbConfig.url);
 
@@ -22,17 +23,27 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
+//app.use(multer({
+//    dest: './public/uploads/'
+//}));
+var sessionMiddleware = session({
+    name: "COOKIE_NAME_HERE",
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {secure: false},
+    store: new (require("connect-mongo")(session))({
+        url: "mongodb://tester:tester@ds039880.mongolab.com:39880/kidroid",
+        ttl: 60000
+    })
+});
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {secure: false}
-}));
+app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -71,4 +82,4 @@ app.use(function (err, req, res, next) {
 });
 
 
-module.exports = app;
+module.exports = [app, sessionMiddleware];

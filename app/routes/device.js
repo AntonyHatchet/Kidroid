@@ -1,80 +1,133 @@
 var deviceMagic = require('../dbMagic/deviceMagic');
+var user = require('../routes/users.js');
+var server = require('../../config/server.js').address;
+
 module.exports = {
+    // Проверяем когда последний раз устройства делали отстук
+    checkStatus: function(){
+        deviceMagic.getAllDevice(function(err,data){
+            if (err) return console.log(err,"checkStatus deviceMagic.getAllDevice err");
+
+            data.forEach(function(device){
+                var time = (new Date - device.timestamp)/60000;
+                if (time > 30){
+                    deviceMagic.updateDeviceStatus(device._id);
+                }
+            })
+        });
+    },
+    findAllStatus: function(cb){
+            deviceMagic.findAllStatus(function (err, version) {
+
+                if (err) return console.log(err,"findAllVersion userMagic.findAllVersion err");
+                var statuses = [];
+                version.forEach(function(device){
+                    if (statuses.indexOf(device.status) == -1){
+                        statuses.push(device.status);
+                    }
+                });
+                cb(null, statuses);
+            });
+    },
 //Регистрация девайса
     getRegistrationDevice: function (req, res) {
-        console.log(req.body.id,"Body.id");
-        console.log(req.body,"Body");
-        deviceMagic.regDevice({id: req.body.id}, function (err,next) {
-            if (err) {
-                console.log("not correct ID",err);
-            }
-            if (next === null){
-                res.json({"error":"wrong ID"});}
 
-            deviceMagic.registrDevice(req.body, function (err,token) {
-                if (err) {
-                    console.log("registr err",err);
-                }
+        deviceMagic.regDevice({id: req.body.device_id}, function (err, next) {
+
+            if (err) return console.log(err,"getRegistrationDevice deviceMagic.regDevice err");
+
+            if (next === null) {
+                res.json({"error": "wrong ID"});
+            }
+
+            deviceMagic.registrDevice(req.body, function (err, token) {
+
+                if (err) return console.log(err,"getRegistrationDevice deviceMagic.registrDevice err");
+
                 if (token != null) {
                     console.log("res token", token);
                     res.json({"token": token});
                 }
+
             });
+        });
+    },
+    getRemoveDevice: function (req, res) {
+
+        deviceMagic.removeDevice({id: +(req.body.device_id)}, function (err, next) {
+
+            if (err) return console.log(err,"getRemoveDevice deviceMagic.removeDevice err");
+
+            if (next === null) {
+                res.json({"success": false});
+            }
+            res.json({"success": true});
         });
     },
 //Авторизация планшета по ИД и токену
     getAuthorizationDevice: function (req, res, next) {
-        var id = !req.param? req.body.id:req.params.id;
-        var token = !req.param? req.body.token:req.params.token;
-        deviceMagic.authDevice({id: id, token: token}, function (err,callback) {
-            if (err) {
-                console.log(err);
+        console.log(req.body, "Authorization Data");
+        var id = !req.param.id ? req.body.device_id : req.params.id;
+        var token = !req.param.token ? req.body.token : req.params.token;
+        deviceMagic.authDevice({id: id, token: token}, function (err, callback) {
+
+            if (err) return console.log(err,"getAuthorizationDevice deviceMagic.authDevice err");
+
+            if (callback === null) {
+                return res.json({"error": "Wrong ID"});
             }
-            if (callback === null){
-               return res.json({"error":"Wrong ID"});
-            }
+
             return next();
+
         });
     },
     // сверка необходимости обновления версии АПК
     checkApkVersion: function (req, res, next) {
-        deviceMagic.findVersion({id: req.body.id, version: req.body.apk_version}, function (err, device) {
-            if (err) {
-                console.log(err);
-            }
-            if (device.apk_version === req.body.apk_version) {
-                console.log("Same version - ", device.apk_version);
-                next();
+        console.log(req.body);
+        deviceMagic.findVersion({id: req.body.device_id}, function (err, device) {
+
+            if (err) return console.log(err,"checkApkVersion deviceMagic.findVersion err");
+
+            if (device.updateRequired === true && device.apkToUpdate.build != req.body.apk_build) {
+                user.findLink(device.apkToUpdate.build,function(err,callback){
+
+                    if (err) return console.log(err,"checkApkVersion user.findLink err");
+
+                    res.json({update_required: true, version: device.apkToUpdate.build, link: server + callback[0].link.slice(1)});
+                });
             }
             else {
-                console.log("Different version");
-                res.json({"apk_version": device.apk_version});
+                next();
             }
+
         });
     },
     getApk: function (req, res, next) {
-        deviceMagic.findVersion({id: req.params.id, version: req.params.apk_version}, function (err, device) {
-            if (err) {
-                console.log(err);
-            }
-            if (device.apk_version === req.params.apk_version) {
-                console.log("Same version - ", device.apk_version);
+        deviceMagic.findVersion({id: req.params.id}, function (err, device) {
+
+            if (err) return console.log(err,"getApk deviceMagic.findVersion err");
+
+            if (device.update_required === false) {
                 next();
             }
             else {
-                console.log("Different version");
-                res.json({"UPDATE_AVAILABLE": 1});
+                user.findLink(device.apk_to_update,function(err,callback){
+
+                    if (err) return console.log(err,"getApk user.findLink err");
+
+                    res.json({update_required: true, version: device.apk_to_update, link: server + callback[0].link.slice(1)});
+                })
             }
+
         });
     },
     //Сохранение данных полученных от планшета
     getSaveData: function (req, res) {
-        console.log("save device info");
         deviceMagic.updateDevice(req.body, function (err) {
-            if (err) {
-                console.log(err);
-            }
-            res.end();
+
+            if (err) return console.log(err,"getSaveData deviceMagic.updateDevice err");
+
+            res.json({update_required: false, version: 0, link: null});
         });
     }
 };

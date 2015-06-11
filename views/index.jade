@@ -2,14 +2,14 @@ extends layout
 
 block content
     h1= title
-    p Welcome to #{title}
+    //p Welcome to #{title}
     if message.lenght > 0
         p Message #{message}
     form(action="/login", method="post" class="login")
-        h1 Login!
+        h1 Welcome to Kidroid!
         p.subheading Please Login To Your Account
         label Username
         input(type="text", name="name" class='username')
         label Password
         input(type="password", name="password" class='password')
-        button(type="submit" class='submit') login
+        button(type="submit" class='btn btn-primary') login
