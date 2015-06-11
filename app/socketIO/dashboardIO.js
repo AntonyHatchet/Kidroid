@@ -16,8 +16,7 @@ module.exports = function (server,sessionMiddleware) {
             if (err) {
                 console.log(err);
             }
-            console.log(data.local.name)
-            userName = data.local.namee;
+            userName = data.local.name;
             io.emit('userName', data.local.name);
         });
         user.findFilter(function (err, callback) {
@@ -113,6 +112,7 @@ module.exports = function (server,sessionMiddleware) {
             }
         );
         socket.on('createSchedule', function (params) {
+                params.name = userName;
                 cron.newSchedule(params, function (err, callback) {
                     if (err) {
                         console.log(err);

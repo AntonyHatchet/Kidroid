@@ -287,7 +287,7 @@ function createSchedule(){
     var neDate = Date.parse(da+'T'+t);
     device.date = neDate;
     device.devices = $('input:checkbox:checked').map(function() {return this.value;}).get();
-    device.Version =$('#scheduleDeviceVersion').val();
+    device.version =$('#scheduleDeviceVersion').val().split(' ')[1];
     //console.log(device.devices);
 
     if (device.devices ==0 || device.date == ''){
