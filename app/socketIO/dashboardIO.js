@@ -115,26 +115,6 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
-        socket.on('removeCategory', function (categoryID) {
-
-                user.removeCategory(categoryID, function (err, callback) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    io.emit('category', callback);
-                });
-            }
-        );
-        socket.on('removeUsers', function (userID) {
-
-                user.removeUsers(userID, function (err, callback) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    io.emit('users', callback);
-                });
-            }
-        );
         socket.on('createDevice', function (paramsDevice) {
                 //console.log(paramsDevice);
                 user.createDevice(paramsDevice, function (err, allDevice,savedDevice) {
@@ -151,31 +131,12 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
-        socket.on('removeDevice', function (id) {
-                console.log(app.session.name);
-                user.removeDevice(id, function (err, callback) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    io.emit('displayData', callback);
-                });
-            }
-        );
         socket.on('updateDevice', function (params) {
                 user.updateDevice(params, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
                     io.emit('displayData', callback);
-                });
-            }
-        );
-        socket.on('getDeviceForSchedule', function (params) {
-                cron.newScheduleDevice(params, function (err, callback) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    io.emit('deviceScheduled', callback);
                 });
             }
         );
@@ -206,6 +167,16 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
+        socket.on('makeDefaultVersion', function (location,id) {
+                user.makeDefaultVersion(location,id,function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('getVersionDeploy', data);
+                });
+            }
+        );
+        //GET
         socket.on('getCategory', function () {
                 user.findCategory(function (err, data) {
                     if (err) {
@@ -215,13 +186,47 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
-        socket.on('makeDefaultVersion', function (location,id) {
-                user.makeDefaultVersion(location,id,function (err, data) {
+        socket.on('getDeviceForSchedule', function (params) {
+                cron.newScheduleDevice(params, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('getVersionDeploy', data);
+                    io.emit('deviceScheduled', callback);
                 });
+            }
+        );
+        //REMOVE
+        socket.on('removeVersion', function (id) {
+                for (var i = 0; i < id.length; i++) {
+                    user.removeVersion(id[i], function (err, callback) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        io.emit('displayData', callback);
+                    });
+                }
+            }
+        );
+        socket.on('removeCategory', function (categoryID) {
+                for (var i = 0; i < categoryID.length; i++) {
+                    user.removeCategory(categoryID[i], function (err, callback) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        io.emit('category', callback);
+                    });
+                }
+            }
+        );
+        socket.on('removeUsers', function (userID) {
+                for (var i = 0; i < userID.length; i++) {
+                    user.removeUsers(userID[i], function (err, callback) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        io.emit('users', callback);
+                    });
+                }
             }
         );
         //Отключение пользователя

@@ -105,7 +105,9 @@ legend{
 ul.nav-tabs{
     margin-bottom: 15px;
 }
-
+.tabbable > .col-sm-12 > .btn-group {
+    margin-bottom: 15px;
+}
 ul.tabs {
     margin: 0px;
     padding: 0px;

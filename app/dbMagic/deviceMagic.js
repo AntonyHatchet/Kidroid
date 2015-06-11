@@ -183,7 +183,8 @@ module.exports = {
                     "updateRequired": false,
                     "status":"Online",
                     "android": +deviceInfo.android,
-                    "apkToUpdate.status": ""
+                    "apkToUpdate.status": "",
+                    "name": deviceInfo.name
                 };
 
                 //Пишем в БД к ID из запроса
