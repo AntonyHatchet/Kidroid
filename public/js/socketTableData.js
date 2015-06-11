@@ -111,7 +111,7 @@ socket.on('allDeviceCreated', function (data) {
             .css('z-index','1050')
             .css('opacity','1')
             .css('display','block');
-        $(".idTextarea textarea").append("ID " +data.deviceId+"\n")
+        $("#idDeviceCreate").append("ID " +data.deviceId+"\n")
         //TODO сделать вывод созданного колличества устройств
         $("#numberIdDevice").replaceWith( "Devices has been added successfully" );
     }
