@@ -126,7 +126,7 @@ block content
                             //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
                             div(id='errorAddDevice' class='alert no-show')
                                 //button(type="button" class="close" data-dismiss="alert") &times;
-                                p All fields must be filled out
+                                p passwords are different
                             button(class="btn btn-primary" onclick='addDevice()') Add
             //============MODAL ID device=====================
             div(class="modal" id="idDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -362,8 +362,12 @@ block content
                             form
                                 .form-group
                                 input(type="input" class="form-control" id='newNameUsers' placeholder='name')
-                                input(type="input" class="form-control" id='newNamepassword' placeholder='password')
+                                input(type="password" class="form-control" id='newNamepassword' placeholder='password')
+                                input(type="password" class="form-control" id='newNamepassword2' placeholder='confirm password')
                         div(class="modal-footer")
+                            div(id='errorUsersPassword' class='alert no-show')
+                                //button(type="button" class="close" data-dismiss="alert") &times;
+                                p Passwords are different
                             button( type="button" class="btn btn-primary" onclick="inputNewNameUser()") Edit
             //============MODAL Add new user=====================
             div(class="modal" id="addUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")

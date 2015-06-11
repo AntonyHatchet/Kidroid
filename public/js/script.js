@@ -80,8 +80,15 @@ function inputNewNameUser() {
     device.id = newUsersId;
     device.newName = $("#newNameUsers").val();
     device.newPassword = $("#newNamepassword").val();
-    socket.emit('editUsers', device);
-    console.log(device);
+    var newPassword2 = $("#newNamepassword2").val();
+    if(device.newPassword == newPassword2){
+        console.log('yes');
+        $('#errorUsersPassword').addClass('no-show');
+        socket.emit('editUsers', device);
+    }else{
+        $('#errorUsersPassword').removeClass('no-show');
+        console.log('no');
+    }
 };
 
 function editDeviceWriteIdToken(id, token){
