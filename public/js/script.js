@@ -157,7 +157,7 @@ function sort(place) {
     }
 
     return params
-};
+}
 function uploadChangeApk(){
     $('#uploadApk').click();
 }

@@ -147,6 +147,7 @@ socket.on('filters', function (data) {
 });
 
 socket.on('allSchedule', function (data) {
+    console.log(data)
     var options = {
         year: 'numeric',
         month: 'long',
@@ -158,10 +159,18 @@ socket.on('allSchedule', function (data) {
         second: 'numeric'
     };
     html = '<ul>';
-    for (i in data)
+    for (i in data) {
         var date = new Date(data[i].timeStart);
-        html += "<tr><td>" + date.toLocaleString("en", options) + " (" +data[i].name+ ")" + "</td><td>" + data[i].devices + "</td><td>" + data[i].versionToUpdate + "</td><td></td></tr>";
-    $("#allSchedule").html(html);
+        var devices = data[i].devices;
+        var name = data[i].name;
+        var version = data[i].versionToUpdate;
+        var status = data[i].status;
+        var school = "School #2";
+        var type = data[i].type;
+        var filter2 = "Some filter data";
+        html += "<tr><td>" + date.toLocaleString("en", options) + " (" + name + ")" + "</td><td>" + devices + "</td><td>" + version + "</td><td>" + status + "</td><td>" + school + "</td><td>" + type + "</td><td>" + filter2 + "</td></tr>";
+    }
+        $("#allSchedule").html(html);
 });
 socket.on('userName', function (data){
     $("#userName").html('Signed in ass:' +data);
