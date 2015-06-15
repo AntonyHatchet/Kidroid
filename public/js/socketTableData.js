@@ -34,11 +34,11 @@ socket.on('quantity', function (data) {
     $("h4").html(data + " devices found:");
     $("#deployCount").html(" ("+data+")");
     $("#deployCountKidroid").html(" ("+data+")");
-    html = '<nav><ul class="pagination">';
+    html = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>';
     Page = Math.ceil(data / 10);
     for (var j = 1; j <= Page; j++)
         html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>";
-    $("#pagination").html(html);
+    $("#pagination").html(html+ '<li><a onclick=page('+ Page +') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>');
 });
 
 socket.on('category', function (school) {
