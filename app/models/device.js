@@ -8,7 +8,6 @@ var DeviceSchema = mongoose.Schema({
     school: String,
     timestamp: Date,
     //TODO убрать deviceID как не нужный элемент
-    deviceId: Number,
     token: String,
     latitude: Array,
     longitude: Array,
@@ -27,7 +26,8 @@ var DeviceSchema = mongoose.Schema({
     registered: Boolean,
     updateRequired: Boolean,
     status: String,
-    android: Number
+    android: Number,
+    filter2: String
 });
 
 module.exports = mongoose.model('Device', DeviceSchema, "devices");

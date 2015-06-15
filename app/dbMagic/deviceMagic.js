@@ -12,6 +12,7 @@ module.exports = {
             var school = params.category;
             var apkBuild=  (isNaN(params.build.split(' ')[1])) ? {$exists: true}:{$gte:+(params.build.split(' ')[1])};
             var apkStatus=  (isNaN(params.build.split(' ')[1])) ? params.build :{$exists: true};
+            var filter = params.filter2;
             var status = params.status;
             var page = params.page;
             var limit = params.limit;
@@ -22,6 +23,7 @@ module.exports = {
             .where('_id').equals((!_id)?{$exists: true}:_id)
             .where('school').equals((!school)?{$exists: true}:school)
             .where('status').equals((!status)?{$exists: true}:status)
+            .where('filter2').equals((!filter)?{$exists: true}:filter)
             .where('apk.build').equals((!apkBuild)?{$exists: true}:apkBuild)
             .where('apkToUpdate.status').equals((!apkStatus)?{$exists: true}:apkStatus)
             .exec(function (err, Devices) {
@@ -53,10 +55,11 @@ module.exports = {
         if (params!=undefined) {
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
             var _id = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
-            var school = params.category;
+            var school = params.school;
             var apkBuild=  (isNaN(params.build.split(' ')[1])) ? {$exists: true}:{$gte:+(params.build.split(' ')[1])};
             var apkStatus=  (isNaN(params.build.split(' ')[1])) ? params.build :{$exists: true};
             var status = params.status;
+            var filter = params.filter2;
             var page = params.page;
             var limit = params.limit;
             var sort = params.sort;
@@ -69,6 +72,7 @@ module.exports = {
             .where('status').equals((!status)?{$exists: true}:status)
             .where('apk.build').equals((!apkBuild)?{$exists: true}:apkBuild)
             .where('apkToUpdate.status').equals((!apkStatus)?{$exists: true}:apkStatus)
+            .where('filter2').equals((!filter)?{$exists: true}:filter)
             .limit(10)
             .skip(page)
             .sort(sort)
@@ -76,6 +80,7 @@ module.exports = {
             .exec(function (err, Devices) {
                 if (err) return console.log(err,"getQuantity Device.count err");
                 // Execute callback
+                console.log(Devices,"devices")
                 callback(null, Devices);
             });
     },
@@ -84,19 +89,24 @@ module.exports = {
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
             var _id = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             var school = params.category;
-            var apkBuild=  (isNaN(params.build.split(' ')[1])) ? {$exists: true}:{$gte:+(params.build.split(' ')[1])};
-            var apkStatus=  (isNaN(params.build.split(' ')[1])) ? params.build :{$exists: true};
+            var filter = params.filter2;
+            if(params.build != undefined) {
+                var apkBuild = (isNaN(params.build.split(' ')[1])) ? {$exists: true} : {$gte: +(params.build.split(' ')[1])};
+                var apkStatus = (isNaN(params.build.split(' ')[1])) ? params.build : {$exists: true};
+            }
             var status = params.status;
         }
+        console.log(params,"getDeviceId");
         Device
             .find({})
             .where('name').equals((!name)?{$exists: true}:name)
             .where('_id').equals((!_id)?{$exists: true}:_id)
             .where('school').equals((!school)?{$exists: true}:school)
+            .where('filter2').equals((!filter)?{$exists: true}:filter)
             .where('status').equals((!status)?{$exists: true}:status)
             .where('apk.build').equals((!apkBuild)?{$exists: true}:apkBuild)
             .where('apkToUpdate.status').equals((!apkStatus)?{$exists: true}:apkStatus)
-            .select("-apkToUpdate -apk -school -timestamp -registered -loader -updateRequired -status -name -android -__v -longitude -latitude -token")
+            .select("-apkToUpdate -apk -school -timestamp -registered -loader -updateRequired -status -name -android -__v -longitude -latitude -token -filter2")
             .exec(function (err, Devices) {
                 if (err) return console.log(err,"get_id Device.find err");
                 // Execute callback
@@ -159,7 +169,8 @@ module.exports = {
             "updateRequired": true,
             "status": "Unregistered",
             "name": "Test Name",
-            "android": 4.4
+            "android": 4.4,
+            "filter2": deviceInfo.filter2
         });
         newDevice.save(function (err) {
             if (err) return console.log(err,"saveDevice newDevice.save err");

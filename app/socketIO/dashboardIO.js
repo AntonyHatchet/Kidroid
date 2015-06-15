@@ -92,6 +92,7 @@ module.exports = function (server,sessionMiddleware) {
         );
 
         socket.on('updateDevice', function (params) {
+                console.log(params);
                 user.updateDevice(params, function (err, callback) {
                     if (err) {
                         console.log(err);
@@ -111,13 +112,12 @@ module.exports = function (server,sessionMiddleware) {
         );
         //CREATE
         // Создаем категорию
-        socket.on('createCategory', function (categoryName) {
-
-                user.createCategory(categoryName, function (err, callback) {
+        socket.on('createFilter', function (filterParams) {
+                user.createFilter(filterParams, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('category', callback);
+                    io.emit('filters', callback);
                 });
             }
         );
@@ -178,16 +178,6 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
-        socket.on('createFilter', function (filterData) {
-                console.log(filterData);
-                user.createFilter(filterData, function (err, callback) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    io.emit('filters', callback);
-                });
-            }
-        );
         //GET
         socket.on('getCategory', function () {
                 user.findCategory(function (err, data) {
@@ -208,13 +198,13 @@ module.exports = function (server,sessionMiddleware) {
             }
         );
         socket.on('getDeviceIdByParams', function (params) {
-                user.getDeviceIdByParams(params, function (err, callback) {
+                user.getDeviceIdByParams(function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
                     devicesToDeploy = callback;
                     io.emit('deviceForDeploy', callback);
-                });
+                },params);
             }
         );
         // Запрос устройств на страницу по колличеству

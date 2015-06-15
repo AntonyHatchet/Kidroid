@@ -55,21 +55,19 @@ module.exports = {
     },
     updateDeviceInfo: function (data, callback) {
 
-        Device.findOne({"deviceId": data.id}, function (err, category) {
+        Device.findOne({"_id": data.id}, function (err, category) {
 
             if (err) return console.log(err,"updateDeviceInfo Device.findOne err");
 
             if (category != null) {
                 // Нашли такой ID, создаем дату для записи в БД.
                 var update = {
-                    "name": data.name,
                     "comment": data.comments,
-                    "school": data.category,
-                    "apkToUpdate": data.version,
-                    "updateRequired" : true
+                    "school": data.school,
+                    "filter2": data.filter2
                 };
                 //Пишем в БД к ID из запроса
-                Device.update({"deviceId": data.id}, {$set: update},{$upsert: true}, function (err, updated) {
+                Device.update({"_id": data.id}, {$set: update},{$upsert: true}, function (err, updated) {
 
                     if (err) return console.log(err,"updateDeviceInfo Device.update err");
 
@@ -89,31 +87,19 @@ module.exports = {
         });
     },
     createNewFilter: function (data, callback) {
-        Filters.findOne({"name": data.name}, function (err, filters) {
+        console.log(data,"createNewFilter data");
+        Filters.update({"name": data.name},{$push:{"params":data.params}},{$upsert:true}, function (err, filters) {
 
             if (err) return console.log(err,"createNewFilter Filter.findOne err");
 
-            if (filters == null) {
-                var newFilter = new Filters({
-                    name: data.name,
-                    params: data.param
-                });
+            Filters.find("", function (err, filters) {
 
-                newFilter.save(function (err) {
+                if (err) return console.log(err,"createNewFilter Filter.find err");
 
-                    if (err) return console.log(err,"createNewFilter newFilter.save err");
-
-                    Filters.find("", function (err, filters) {
-
-                        if (err) return console.log(err,"createNewFilter Filter.find err");
-
-                        if (filters != null) {
-                            callback(null, filters)
-                        }
-                    });
-                });
-            }
-            callback(null, filters)
+                if (filters != null) {
+                    callback(null, filters)
+                }
+            });
         })
     },
     findAllFilter: function (callback) {
@@ -136,7 +122,7 @@ module.exports = {
             }
         });
     },
-    createSchoolCategory: function (data, callback) {
+    createFilter: function (data, callback) {
         Category.findOne({"name": data.name}, function (err, category) {
 
             if (err) return console.log(err,"createSchoolCategory Category.findOne err");

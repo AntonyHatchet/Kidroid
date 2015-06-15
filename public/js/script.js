@@ -36,7 +36,7 @@ function createNewCategory() {
     var nameCategory = $("#newCategory").val();
     if(nameCategory !=0){
         console.log('yes');
-        socket.emit('createCategory', {name: "" + nameCategory + ""});
+        socket.emit('createFilter', {"name":"School","params": nameCategory });
         $('#errorCreateCategory').addClass('no-show');
     }else{
         console.log('no');
@@ -45,12 +45,16 @@ function createNewCategory() {
 
     //console.log(nameCategory);
 };
+
 function createNewFilter() {
-    var data = {};
-    data.name= $("#nameFilter").val();
-    data.param= $("#paramFilter").val();
-    socket.emit('createFilter', data);
-    console.log(data);
+    var nameFilter = $("#paramFilter").val();
+    if(nameFilter !=0){
+        socket.emit('createFilter', {"name":"Filter2","params": nameFilter });
+        $('#errorCreateCategory').addClass('no-show');
+    }else{
+        console.log('no');
+        $('#errorCreateCategory').removeClass('no-show');
+    };
 };
 //TO DO =====================
 var newNameId;
@@ -64,7 +68,8 @@ function renameCategoryId(x, y) {
     $("#newNameCategory").attr("placeholder",y)
 };
 function editUsers(x) {
-    newUsersId=x;
+    newUsersId= x.split(' ')[0];
+    $('#editUsers h3').empty().append("Edit "+ x.split(' ')[2])
 };
 
 function inputNewNameCategory() {
@@ -102,9 +107,8 @@ function editDeviceWriteIdToken(id, token){
 function editDevice(){
     var device = {};
     device.id = idDevice;
-    device.category = $("#editDeviceCategory").val();
-    //device.version = $("#editDeviceVersion").val();
-    //device.name = $("#newNameUser").val();
+    device.school = $("#editDeviceCategory").val();
+    device.filter2 = $("#filter2").val();
     device.comments = $("#newComment").val();
     if(device.category !=0) {
         socket.emit('updateDevice', device);
@@ -175,11 +179,13 @@ function deployKidroid(){
     socket.emit("deployKidroid",version)
 }
 function find(sort) {
+    console.log(sort);
     var device = {};
     device.sort = (!sort)?{}:sort;
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
-    device.category = $("#selectCategory").val();
+    device.school = $("#selectCategory").val();
+    device.filter2 = $("#customFilter").val();
     device.build = $("#marionetteVersion").val();
     socket.emit('getDevicesByParams', device);
     socket.emit('getDeviceIdByParams', device);
@@ -190,7 +196,8 @@ function page(i) {
     device.sort = sort();
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
-    device.category = $("#selectCategory").val();
+    device.school = $("#selectCategory").val();
+    device.filter2 = $("#customFilter").val();
     device.build = $("#marionetteVersion").val();
     device.page = i*10-10;
     socket.emit('getDevicesByParams', device);
@@ -201,6 +208,8 @@ function addDevice() {
     device.category = $("#addSelectCategory").val();
     device.build = $("#addSelectVersion").val();
     device.numberDevice = $("#amountDevice").val();
+    device.filter2 = $("#filter2").val();
+    console.log(device);
     if (device.category != 0 && device.version !=0)  {
         socket.emit('createDevice', device);
         $('#errorAddDevice').addClass('no-show');

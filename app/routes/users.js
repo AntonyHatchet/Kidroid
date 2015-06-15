@@ -142,6 +142,7 @@ module.exports = {
             var bufer = new createBufer().getPath();
             var busboy = new Busboy({ headers: req.headers });
             var arrApk = [];
+            var arrApk2 = [];
 
             busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
                 var unzipParsrer = file.pipe(unzip.Parse());
@@ -173,6 +174,8 @@ module.exports = {
                             s.on('end', function () {
                                 var d = shasum.digest('hex');
                                 console.log(d,"d");
+                                arrApk2.push(d);
+                                console.log(arrApk2,"arrApk2");
                                 return d
                             });
                         },
@@ -198,11 +201,10 @@ module.exports = {
                             return {version:manifest.versionName.slice(0,3), build:manifest.versionCode}
                         }
                     };
-
                     for(var i=0;i<arrApk.length;i++){
-                        console.log(zip.findCheckSum(bufer+arrApk[i]),"findCheckSum");
+                        zip.findCheckSum(bufer+arrApk[i])
                     }
-
+                    console.log(arrApk2);
                     //
                     //if(zip.checkSum(bufer)){
                     //    if (zip.checkVersion(bufer)){
@@ -327,7 +329,8 @@ module.exports = {
                             _id: id,
                             school: params.category,
                             version: params.version,
-                            build: params.build
+                            build: params.build,
+                            filter2: params.filter2
                         },
                         function (err,savedDevice) {
 
@@ -357,15 +360,6 @@ module.exports = {
             callback(null, devices);
         });
     },
-    //Создание нового фильтра
-    createFilter: function (filters, callback) {
-        userMagic.createNewFilter(filters, function (err, data) {
-
-            if (err) return console.log(err,"createCategory  userMagic.createSchoolCategory err");
-
-            callback(null, data);
-        });
-    },
     findFilter: function (callback) {
         userMagic.findAllFilter(function (err, data) {
 
@@ -376,12 +370,12 @@ module.exports = {
     },
     //КАТЕГОРИИ
     //Добавление категорий
-    createCategory: function (category, callback) {
-        userMagic.createSchoolCategory(category, function (err, category) {
+    createFilter: function (params, callback) {
+        userMagic.createNewFilter(params, function (err, filters) {
 
             if (err) return console.log(err,"createCategory  userMagic.createSchoolCategory err");
 
-            callback(null, category);
+            callback(null, filters);
         });
     },
     //Обновление категорий

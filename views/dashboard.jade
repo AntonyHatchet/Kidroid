@@ -62,7 +62,7 @@ block content
                             input(type="text" id="DeviceNameIDSerial" class='form-control' placeholder='Device name/ID/Serial' onkeyup="find()")
                             select(id='selectStatus' class="span2 form-control" onchange="find()")
                             input(id="selectCategory" placeholder='- School -' class="span2 form-control category" onchange="find()")
-                            input(id="customFilter" placeholder='- Filter2 -' class="span2 form-control" onchange="find()")
+                            input(id="customFilter" placeholder='- Filter2 -' class="span2 form-control filter2" onchange="find()")
                             select(id="marionetteVersion" class="span2 form-control" onchange="find()")
                             select(id="kidroidVersion" class="span2 form-control" onchange="find()")
                 .col-sm-12
@@ -133,7 +133,7 @@ block content
                                     .form-group
                                         label(for="filter2").col-sm-3.control-label Filter 2:
                                         .col-sm-9
-                                            input(id="filter2" placeholder='- Filter 2 -' class="span2 form-control category")
+                                            input(id="filter2" placeholder='- Filter 2 -' class="span2 form-control filter2")
                                     .form-group
                                         label(for="addSelectVersion").col-sm-4.control-label APK version *:
                                         .col-sm-8
@@ -231,11 +231,11 @@ block content
                                     .form-group
                                         label(for="editDeviceCategory").col-sm-3.control-label School:
                                         .col-sm-9
-                                            select(id="editDeviceCategory" class="form-control")
+                                            input(id="editDeviceCategory" placeholder='- School -' class="span2 form-control category")
                                     .form-group
                                         label(for="filter2").col-sm-3.control-label Filter 2:
                                         .col-sm-9
-                                            select(id="filter2" class="form-control")
+                                            input(id="filter2" placeholder='- Filter2 -' class="span2 form-control filter2")
                                     //.form-group
                                     //    label(for="addSelectVersion").col-sm-4.control-label APK version *:
                                     //    .col-sm-8
@@ -293,9 +293,9 @@ block content
                     .col-sm-12
                         ul(class='nav nav-tabs')
                             li(role="presentation" data-tab="filtersSchool" class="active")
-                                a School
+                                a#firstFilter School
                             li(role="presentation" data-tab='filtersAdd')
-                                a Filter 2
+                                a#secondFilter Filter 2
                     #filtersSchool(class='nav-tab-content current')
                         #add-category.right
                                 //button(class='btn btn-primary') add new category...
@@ -305,7 +305,7 @@ block content
                                     tr
                                         td(onclick='sort(this)',data-value="0")
                                             input(type='checkbox' id='checkAllCategory')
-                                        th(colspan='2') School name
+                                        th(colspan='2') Name
                                 tbody(id='tableFilter')
                             .right
                                 .btn-group
@@ -315,10 +315,10 @@ block content
                         .container-fluid.container-tab
                             table(class='table table-hover table-bordered table-striped')
                                 thead
-                                    td(onclick='sort(this)',data-value="0")
-                                        input(type='checkbox' id='checkAllFilters')
-                                    th name
-                                    th params
+                                    tr
+                                        td(onclick='sort(this)',data-value="0")
+                                            input(type='checkbox' id='checkAllFilters')
+                                        th Name
                                 tbody(id='filtersTable')
                             .right
                                 .btn-group
@@ -331,7 +331,7 @@ block content
                             div(class="modal-header")
                                 button(type="button" class="close" data-dismiss="modal" aria-label="Close")
                                     span(aria-hidden="true") &times;
-                                h3 Create new category
+                                h3 Create new school
                             div(class="modal-body")
                                 form.form-horizontal
                                     .form-group
@@ -349,21 +349,17 @@ block content
                             div(class="modal-header")
                                 button(type="button" class="close" data-dismiss="modal" aria-label="Close")
                                     span(aria-hidden="true") &times;
-                                h3 Create new filter
-                            form(class="form-horizontal" method='post' action="/signup")
-                                div(class="modal-body")
+                                h3 Create new filter2
+                            div(class="modal-body")
+                                form.form-horizontal
                                     .form-group
-                                        label(for="nameFilter").col-sm-3.control-label Name:
+                                        label(for="newCategory").col-sm-3.control-label Name:
                                         .col-sm-9
-                                            input(class="form-control" id="nameFilter" name='category' placeholder='name')
-                                    .form-group
-                                        label(for="paramFilter").col-sm-3.control-label parameter:
-                                        .col-sm-9
-                                            input(class="form-control" id="paramFilter" name='category' placeholder='parameter')
-                                div(class="modal-footer")
-                                    div(id='errorCreateCategory' class='alert alert-danger no-show')
-                                        p All fields must be filled out
-                                    button(class="btn btn-primary" onclick="createNewFilter()"  type="button") Create
+                                            input(class="form-control" id="paramFilter" name='category')
+                            div(class="modal-footer")
+                                div(id='errorCreateCategory' class='alert alert-danger no-show')
+                                    p All fields must be filled out
+                                button(class="btn btn-primary" onclick="createNewFilter()" type="button") Create
 
                 //============MODAL Edit category=====================
                 div(class="modal" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")

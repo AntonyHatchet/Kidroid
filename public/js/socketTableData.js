@@ -41,20 +41,6 @@ socket.on('quantity', function (data) {
     $("#pagination").html(html+ '<li><a onclick=page('+ Page +') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>');
 });
 
-socket.on('category', function (school) {
-    html = '';
-    for (var i = 0; i < school.length; i++) {
-        category.pushData(school[i].name);
-        var id=  school[i]._id;
-        var idPlaceholder='<td><input type="checkbox" class="checkAllCategory" placeholder="- School -" value='+ school[i]._id +'></td>';
-        var name = school[i].name;
-        var end = '<td><a href="#editCategory" role="button" class="btn btn-primary" data-toggle="modal"  onclick=renameCategoryId("'+id+'","'+name+'")>Edit</a></td>';
-        html += '<tr>'+'<td style="display: none">'+id+'</td>'+idPlaceholder+'<td>'+name+'</td>'+end+'</tr>';
-    }
-    $("#tableFilter").html(html);
-    startAutoComplete(category.getArray(),".category")
-});
-
 socket.on('category', function (date) {
     //console.log(date, "category");
     html = '<option value="" style="color:#cccccc">- Select school -</option>';
@@ -104,7 +90,7 @@ socket.on('users', function (data) {
     //console.log(data);
     html = '';
     for (i in data)
-        html += "<tr><td><input type='checkbox' id='checkAllUsers" + data[i]._id + "' class='checkAllUsers' value='" + data[i]._id + "'></td><td>" + data[i].local.name + "</td><td><a href='#editUsers' role='button' class='btn btn-primary' data-toggle='modal' onclick='editUsers(\"" + data[i]._id + "\")'>Edit</a></td></tr>";
+        html += "<tr><td><input type='checkbox' id='checkAllUsers" + data[i]._id + "' class='checkAllUsers' value='" + data[i]._id + "'></td><td>" + data[i].local.name + "</td><td><a href='#editUsers' role='button' class='btn btn-primary' data-toggle='modal' onclick='editUsers(\"" + data[i]._id +" , " +data[i].local.name + "\")'>Edit</a></td></tr>";
     $("#userTable").html(html);
 });
 
@@ -145,10 +131,34 @@ socket.on('deviceForDeploy', function (data) {
 
 socket.on('filters', function (data) {
     //console.log(data);
-    html = '';
-    for (i in data)
-        html += "<tr><td><input type='checkbox' class='checkAllFilters' id='checkSchedule" + data[i].id + "'  value='" + data[i].id + "'></td><td>" + data[i].name + "</td><td>" + data[i].params + "</td></tr>";
-    $("#filtersTable").html(html);
+    for (i in data) {
+        html = '';
+        if (data[i].name === "School") {
+            $("#firstFilter").html(data[i].name);
+            for (var j = 0; j < data[i].params.length; j++) {
+                school.pushData(data[i].params[j]);
+                var name = "<td>" + data[i].params[j] + "</td>"
+                var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(this)'>Edit</a></td>";
+                var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule'  value=''></td>"
+                html += "<tr>" + checkbox + name + editButton + "</tr>";
+            }
+            startAutoComplete(school.getArray(),".category");
+            $("#tableFilter").html(html);
+        }
+        if (data[i].name === "Filter2") {
+            html = '';
+            $("#secondFilter").html(data[i].name);
+            for (var f = 0; f < data[i].params.length; f++) {
+                filter2.pushData(data[i].params[f]);
+                var name = "<td>" + data[i].params[f] + "</td>"
+                var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(this)'>Edit</a></td>";
+                var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule'  value=''></td>"
+                html += "<tr>" + checkbox + name + editButton + "</tr>";
+            }
+            startAutoComplete(filter2.getArray(),".filter2");
+            $("#filtersTable").html(html);
+        }
+    }
 });
 
 socket.on('allSchedule', function (data) {
@@ -246,7 +256,16 @@ socket.on('getVersionDeploy', function (data) {
     $("#settingApkVersionTable").html(apk);
 });
 
-var category =  {
+var school =  {
+    pushData:function(data){
+        this.array.push(data)
+    },
+    getArray:function(){
+        return  this.array
+    },
+    array: []
+};
+var filter2 =  {
     pushData:function(data){
         this.array.push(data)
     },
