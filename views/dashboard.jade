@@ -169,24 +169,24 @@ block content
                 //            .col-sm-3
                 //                select(id="selectVersionApkToDeploy" class="span2 form-control")
                 //            button(class="col-sm-2 btn btn-primary" type="button" onclick='deployAPK()') Start
-            //============MODAL Add new device ID=====================
-            div(class="modal" id="idDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
-                .modal-dialog.modal-sm
-                    .modal-content
-                        div(class="modal-header")
-                            button(type="button" class="close" id='closeIdTextarea' data-dismiss="modal" aria-label="Close")
-                                span(aria-hidden="true") &times;
-                            h2 Add new device(s)
-                        div(class="modal-body")
-                            form.form-horizontal
-                                .form-group
-                                    label(for="commentDevice").col-sm-5.control-label ID's list:
-                                    .col-sm-12.margin-top-5
-                                        #idDeviceCreate(class="form-control")
-                            div(class="modal-footer")
-                                #copyClipboardContainer
-                                    button(id="copyClipboard" class="btn btn-primary left") Copy to the clipboard
-                                button(id="closeIdTextarea" class="btn btn-primary right") Add more devices...
+                    //============MODAL Add new device ID=====================
+                div(class="modal" id="idDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                    .modal-dialog.modal-sm
+                        .modal-content
+                            div(class="modal-header")
+                                button(type="button" class="close" id='closeIdTextarea' data-dismiss="modal" aria-label="Close")
+                                    span(aria-hidden="true") &times;
+                                h2 Add new device(s)
+                            div(class="modal-body")
+                                form.form-horizontal
+                                    .form-group
+                                        label(for="commentDevice").col-sm-5.control-label ID's list:
+                                        .col-sm-12.margin-top-5
+                                            #idDeviceCreate(class="form-control")
+                                div(class="modal-footer")
+                                    #copyClipboardContainer
+                                        button(id="copyClipboard" class="btn btn-primary left") Copy to the clipboard
+                                    button(id="closeIdTextarea" class="btn btn-primary right") Add more devices...
                 //script.
                 //    var clip = new ZeroClipboard.Client();
                 //    clip.setText('');
