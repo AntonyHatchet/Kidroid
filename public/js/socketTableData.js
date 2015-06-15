@@ -156,6 +156,9 @@ socket.on('allSchedule', function (data) {
         html += "<tr><td>" + date.toLocaleString("en", options) + " (" +data[i].name+ ")" + "</td><td>" + data[i].devices + "</td><td>" + data[i].versionToUpdate + "</td><td></td></tr>";
     $("#allSchedule").html(html);
 });
+socket.on('userName', function (data){
+    $("#userName").html('Signed in ass:' +data);
+});
 
 socket.on('getVersionDeploy', function (data) {
     var defaultVersion;
