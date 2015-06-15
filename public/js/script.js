@@ -81,13 +81,18 @@ function inputNewNameUser() {
     device.newName = $("#newNameUsers").val();
     device.newPassword = $("#newNamepassword").val();
     var newPassword2 = $("#newNamepassword2").val();
-    if(device.newPassword == newPassword2){
+    if(device.newPassword == newPassword2 && device.newName !=0 && newPassword2 !=0){
         console.log('yes');
         $('#errorUsersPassword').addClass('no-show');
+        $('#errorUsersName').addClass('no-show');
         socket.emit('editUsers', device);
-    }else{
+    }if(device.newPassword != newPassword2 ){
         $('#errorUsersPassword').removeClass('no-show');
-        console.log('no');
+        $('#errorUsersName').addClass('no-show');
+        //console.log('no');
+    }else{
+        $('#errorUsersName').removeClass('no-show');
+        $('#errorUsersPassword').addClass('no-show');
     }
 };
 
@@ -99,11 +104,16 @@ function editDevice(){
     var device = {};
     device.id = idDevice;
     device.category = $("#editDeviceCategory").val();
-    device.version = $("#editDeviceVersion").val();
-    device.name = $("#newNameUser").val();
+    //device.version = $("#editDeviceVersion").val();
+    //device.name = $("#newNameUser").val();
     device.comments = $("#newComment").val();
-    socket.emit('updateDevice', device);
-    console.log(device);
+    if(device.category !=0) {
+        socket.emit('updateDevice', device);
+        $('#errorEditDevice').addClass('no-show');
+    }else{
+        $('#errorEditDevice').removeClass('no-show');
+    }
+    //console.log(device);
 }
 var params = {};
 function sort(place) {
