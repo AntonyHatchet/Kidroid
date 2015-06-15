@@ -130,6 +130,13 @@ socket.on('deviceScheduled', function (data) {
         html += "<tr><td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i].deviceId + "'  value='" + data[i].deviceId + "'></td><td>" + data[i].deviceId + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
     $("#tableSchedule").html(html);
 });
+socket.on('deviceForDeploy', function (data) {
+    //console.log(data);
+    html = '';
+    for (i in data)
+        html += "<tr><td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i].deviceId + "'  value='" + data[i].deviceId + "'></td><td>" + data[i].deviceId + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
+    $("#tableSchedule").html(html);
+});
 
 socket.on('filters', function (data) {
     //console.log(data);

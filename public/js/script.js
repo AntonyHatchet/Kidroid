@@ -149,7 +149,10 @@ function sort(place) {
     return params
 };
 
-
+function deployAPK(){
+    var version = $("#selectVersionApkToDeploy").val().split(' ')[0];
+    socket.emit("deployApk",version)
+}
 function find(sort) {
     var device = {};
     device.sort = (!sort)?{}:sort;
@@ -158,6 +161,7 @@ function find(sort) {
     device.category = $("#selectCategory").val();
     device.build = $("#marionetteVersion").val();
     socket.emit('getDevicesByParams', device);
+    socket.emit('getDeviceIdByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
 };
 function page(i) {

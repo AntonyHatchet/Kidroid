@@ -79,7 +79,7 @@ module.exports = {
                 callback(null, Devices);
             });
     },
-    getDeviceId: function (params,callback) {
+    getDeviceId: function (callback,params) {
         if (params!=undefined) {
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
             var deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
@@ -96,13 +96,15 @@ module.exports = {
             .where('status').equals((!status)?{$exists: true}:status)
             .where('apk.build').equals((!apkBuild)?{$exists: true}:apkBuild)
             .where('apkToUpdate.status').equals((!apkStatus)?{$exists: true}:apkStatus)
-            .select("-_id -apkToUpdate -apk -school -timestamp -registered -loader -updateRequired -status -name -android -__v -longitude -latitude -token")
+            .select("-apkToUpdate -apk -school -timestamp -registered -loader -updateRequired -status -name -android -__v -longitude -latitude -token -deviceID")
             .exec(function (err, Devices) {
                 if (err) return console.log(err,"getDeviceId Device.find err");
                 // Execute callback
+                var devicesArray = [];
                     for (i in Devices){
-                        console.log(Devices[i].deviceId)
+                        devicesArray.push(Devices[i]._id)
                     }
+                callback(null,devicesArray)
             });
     },
     // Проверка на наличее ID и флага не зарегестрирован в БД

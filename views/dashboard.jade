@@ -100,18 +100,16 @@ block content
                 fieldset
                     legend Marionette Deploy: (APK Deploy)
                     form(class='deployApk form-inline col-sm-12')
-                        input.col-sm-1(type="checkbox" value="option")
                         label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
                             span(id="deployCount")
                         .col-sm-8
                             .col-sm-3
                                 select(id="selectVersionApkToDeploy" class="span2 form-control")
-                            button(class="col-sm-2 btn btn-primary" onclick='deployAPK()') Start
+                            button(class="col-sm-2 btn btn-primary" type="button" onclick='deployAPK()') Start
             #deployKidroid
                 fieldset
                     legend Kidroid Loader Deploy:
                     form(class='deployApk form-inline col-sm-12')
-                        input.col-sm-1(type="checkbox" value="option")
                         label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
                             span(id="deployCountKidroid")
                         .col-sm-8

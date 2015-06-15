@@ -12,6 +12,7 @@ module.exports = function (server,sessionMiddleware) {
     });
     io.on('connection', function (socket) {
         var userName;
+        var devicesToDeploy;
         if(socket.request.session.passport != undefined) {
             console.log("user.findUser");
             user.findUser(socket.request.session.passport.user, function (err, data) {
@@ -72,6 +73,13 @@ module.exports = function (server,sessionMiddleware) {
             }
             io.emit('allSchedule', data);
         });
+        user.getDeviceIdByParams(function (err, callback) {
+            if (err) {
+                console.log(err,"getDeviceIdByParams first");
+            }
+            console.log(callback);
+            devicesToDeploy = callback;
+        });
         //UPDATE
         socket.on('updateCategory', function (categoryParams) {
 
@@ -120,6 +128,23 @@ module.exports = function (server,sessionMiddleware) {
                     if (err) {
                         console.log(err);
                     }
+                    io.emit('allSchedule', callback);
+                });
+            }
+        );
+
+        socket.on('deployApk', function (version) {
+                console.log("deployApk version", version)
+                var deploy={};
+                deploy.name = userName;
+                deploy.date = new Date();
+                deploy.devices = devicesToDeploy;
+                deploy.version = version;
+                cron.newSchedule(deploy, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log(callback,"deployApk callback")
                     io.emit('allSchedule', callback);
                 });
             }
@@ -174,7 +199,8 @@ module.exports = function (server,sessionMiddleware) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('deviceScheduled', callback);
+                    devicesToDeploy = callback;
+                    io.emit('deviceForDeploy', callback);
                 });
             }
         );
