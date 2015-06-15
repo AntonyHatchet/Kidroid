@@ -4,8 +4,10 @@
 var mongoose = require('mongoose');
 
 var DeviceSchema = mongoose.Schema({
+    _id:Number,
     school: String,
     timestamp: Date,
+    //TODO убрать deviceID как не нужный элемент
     deviceId: Number,
     token: String,
     latitude: Array,

@@ -169,6 +169,15 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
+        socket.on('getDeviceIdByParams', function (params) {
+                user.getDeviceIdByParams(params, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('deviceScheduled', callback);
+                });
+            }
+        );
         // «апрос устройств на страницу по колличеству
         socket.on('getDevicesByParams', function (params) {
                 user.getDevice(function (err, callback) {
