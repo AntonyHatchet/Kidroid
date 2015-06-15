@@ -492,7 +492,8 @@ block content
                         .btn-group(role='group')
                             a(onclick="document.getElementById('upload_hidden_Kidroid').click();" role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
                             form(method="post" action='/uploadKidroid' enctype="multipart/form-data" style="position: absolute; display: block; overflow: hidden; width: 0; height: 0; border: 0; padding: 0;")
-                                    input(type="file", id='upload_hidden_Kidroid' class="form-control" name='category' value='')
+                                    input(type="file", id='upload_hidden_Kidroid' class="form-control" name='category' value='' onchange='uploadChangeKidroid()')
+                                    input(type="submit", id="uploadKidroid" style="display:none;")
                             button(class="btn btn-danger" onclick='delKidroidVersion()') Remove selected
 
                 //    //============MODAL Add new Marionette version=====================

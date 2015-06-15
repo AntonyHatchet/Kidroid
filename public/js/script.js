@@ -160,6 +160,9 @@ function sort(place) {
 function uploadChangeApk(){
     $('#uploadApk').click();
 }
+function uploadChangeKidroid(){
+    $('#uploadKidroid').click();
+}
 function deployAPK(){
     var version = $("#selectVersionApkToDeploy").val().split(' ')[0];
     socket.emit("deployApk",version)

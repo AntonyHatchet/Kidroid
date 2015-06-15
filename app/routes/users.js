@@ -161,19 +161,20 @@ module.exports = {
                 unzipParsrer.on('close', function(){
 
                 console.log("Unzip");
+                console.log(arrApk,"arrApk first");
                     var zip = {
                         findCheckSum: function(path){
-                            for (var i=0;i<arrApk.length;i++) {
-                                var shasum = crypto.createHash('md5');
-                                var s = fs.createReadStream(path + arrApk[i]);
-                                s.on('data', function (d) {
-                                    shasum.update(d);
-                                });
-                                s.on('end', function () {
-                                    var d = shasum.digest('hex');
-                                    return d
-                                });
-                            }
+                            var shasum = crypto.createHash('md5');
+                            console.log(path,"path");
+                            var s = fs.createReadStream(path);
+                            s.on('data', function (d) {
+                                shasum.update(d);
+                            });
+                            s.on('end', function () {
+                                var d = shasum.digest('hex');
+                                console.log(d,"d");
+                                return d
+                            });
                         },
                         readCheckSum : function(path){
                             fs.readFileSync(path+"list.md5", 'utf8').slice(17);
@@ -197,7 +198,11 @@ module.exports = {
                             return {version:manifest.versionName.slice(0,3), build:manifest.versionCode}
                         }
                     };
-                    console.log(zip.findCheckSum(bufer));
+
+                    for(var i=0;i<arrApk.length;i++){
+                        console.log(zip.findCheckSum(bufer+arrApk[i]),"findCheckSum");
+                    }
+
                     //
                     //if(zip.checkSum(bufer)){
                     //    if (zip.checkVersion(bufer)){
