@@ -176,14 +176,13 @@ socket.on('allSchedule', function (data) {
     html = '<ul>';
     for (i in data) {
         var date = new Date(data[i].timeStart);
-        var devices = data[i].devices;
         var name = data[i].name;
         var version = data[i].versionToUpdate;
         var status = data[i].status;
         var school = "School #2";
         var type = data[i].type;
         var filter2 = "Some filter data";
-        html += "<tr><td>" + date.toLocaleString("en", options) + " (" + name + ")" + "</td><td>" + devices + "</td><td>" + version + "</td><td>" + status + "</td><td>" + school + "</td><td>" + type + "</td><td>" + filter2 + "</td></tr>";
+        html += "<tr><td>" + date.toLocaleString("en", options) + " (" + name + ")" + "</td><td>" + version + "</td><td>" + status + "</td><td>" + school + "</td><td>" + type + "</td><td>" + filter2 + "</td></tr>";
     }
         $("#allSchedule").html(html);
 });
