@@ -115,6 +115,7 @@ socket.on('allDeviceCreated', function (data) {
             .css('z-index','1050')
             .css('opacity','1')
             .css('display','block');
+        $('#addDevice').css('display','none');
         $("#idDeviceCreate").append("ID " +data._id+"\n")
         //TODO сделать вывод созданного колличества устройств
         $("#numberIdDevice").replaceWith( "Devices has been added successfully" );
@@ -177,7 +178,7 @@ socket.on('allSchedule', function (data) {
         $("#allSchedule").html(html);
 });
 socket.on('userName', function (data){
-    $("#userName").html('Signed in ass: ' +data);
+    $("#userName").html(' Signed in as: ' +data);
 });
 
 socket.on('getVersionDeploy', function (data) {

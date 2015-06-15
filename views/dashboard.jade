@@ -29,27 +29,27 @@ block content
                 li.active(data-tab='devices')
                     a(href="#")
                         i.fa.fa-fw.fa-dashboard
-                        span Devices
+                        span  Devices
                 li(data-tab='users')
                     a(href="#")
                         i.fa.fa-fw.fa-user
-                        span Users
+                        span  Users
                 li(data-tab='filters')
                     a(href="#")
                         i.fa.fa-fw.fa-arrows-v
-                        span Filters
+                        span  Filters
                 li(data-tab='settings')
                     a(href="#")
                         i.fa.fa-fw.fa-wrench
-                        span Settings
+                        span  Settings
                 li(data-tab='requests')
                     a(href="#")
                         i.fa.fa-fw.fa-edit
-                        span Request log
+                        span  Request log
                 li(data-tab='planning')
                     a(href="#")
                         i.fa.fa-fw.fa-table
-                        span Planning
+                        span  Planning
     #page-wrapper.content
         .container-fluid
             //===========TABS DEVICES=======================
@@ -182,11 +182,16 @@ block content
                                     .form-group
                                         label(for="commentDevice").col-sm-5.control-label ID's list:
                                         .col-sm-12.margin-top-5
-                                            #idDeviceCreate(class="form-control")
+                                            textarea(id='idDeviceCreate' name='idDeviceCreate' class="form-control" onclick="this.select()")
                                 div(class="modal-footer")
                                     #copyClipboardContainer
-                                        button(id="copyClipboard" class="btn btn-primary left") Copy to the clipboard
+                                        a(id="copyClipboard" href='javascript:highlight(0)' class="btn btn-primary left") Copy to the clipboard
                                     button(id="closeIdTextarea1" class="btn btn-primary right") Add more devices...
+                                    //script.
+                                    //    function highlight(x) {
+                                    //        document.forms[x].elements[0].focus()
+                                    //        document.forms[x].elements[0].select()
+                                    //    }
                 //script.
                 //    var clip = new ZeroClipboard.Client();
                 //    clip.setText('');
@@ -548,6 +553,7 @@ block content
                                 th Filter 2
                         tbody(id='allSchedule')
                 div(id='pagination' class="text-center")
+
             //===========TABS planning================
             #planning(class='tab-content')
                 h2 Planning

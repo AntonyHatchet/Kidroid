@@ -380,6 +380,7 @@ $(document).ready(function () {
 })
 $(document).ready(function () {
     $('#closeIdTextarea, #closeIdTextarea1').click(function(){
+       $('#addDevice').css('display','block');
        $('#idDevice').removeClass('.in')
            .attr('aria-hidden', true)
            .css('z-index','-1')
