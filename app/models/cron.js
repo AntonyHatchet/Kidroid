@@ -8,7 +8,8 @@ var CronSchema = mongoose.Schema({
         devices: Array,
         versionToUpdate: Number,
         status: String,
-        name: String
+        name: String,
+        type: String
 });
 
 module.exports = mongoose.model('Cron', CronSchema, "cron");

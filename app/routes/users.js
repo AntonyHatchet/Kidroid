@@ -309,7 +309,7 @@ module.exports = {
                     if (err) return console.log(err,"createDevice deviceMagic.createDeviceId err");
 
                     deviceMagic.saveDevice({
-                            deviceID: id,
+                            _id: id,
                             school: params.category,
                             version: params.version,
                             build: params.build

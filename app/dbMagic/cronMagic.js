@@ -12,7 +12,7 @@ module.exports = {
 
         Device
             .find({})
-            .where('deviceId').equals((!deviceId)?{$exists: true}:deviceId)
+            .where('_id').equals((!deviceId)?{$exists: true}:deviceId)
             .where('school').equals((!school)?{$exists: true}:school)
             .where('apk.build').equals((!build)?{$exists: true}:build)
             .exec(function (err, Devices) {
@@ -29,7 +29,8 @@ module.exports = {
             "devices": job.devices,
             "versionToUpdate": +job.version,
             "status": "New",
-            "name": job.name
+            "name": job.name,
+            "type": job.type
         });
         newCron.save(function (err) {
             if (err) {
@@ -80,7 +81,7 @@ module.exports = {
 
             if (err) return console.log(err,"checkScheduleStatus findOne");
 
-            Device.find({"deviceId": {$gte:job.devices[0],$lte:job.devices[job.devices.length]}},function(err,data){
+            Device.find({"_id": {$gte:job.devices[0],$lte:job.devices[job.devices.length]}},function(err,data){
                 if (err) return console.log(err,"checkScheduleStatus find");
                 callback(null,data)
             });
@@ -107,7 +108,7 @@ module.exports = {
         Updater(0);
         function Updater(i){
             if (i!=null && i < id.length){
-                Device.update({"deviceId":+id[i]},{$set:{"apkToUpdate":+version,"updateRequired":true}}, function (err, updated) {
+                Device.update({"_id":+id[i]},{$set:{"apkToUpdate":+version,"updateRequired":true}}, function (err, updated) {
                     if (err) return console.log(err,"ScheduleStart Device.update err");
                     console.log("This device " + id[i] + "is updated");
                 });

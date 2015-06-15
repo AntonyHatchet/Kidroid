@@ -140,6 +140,24 @@ module.exports = function (server,sessionMiddleware) {
                 deploy.date = new Date();
                 deploy.devices = devicesToDeploy;
                 deploy.version = version;
+                deploy.type = "Marionette APK";
+                cron.newSchedule(deploy, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log(callback,"deployApk callback")
+                    io.emit('allSchedule', callback);
+                });
+            }
+        );
+        socket.on('deployKidroid', function (version) {
+                console.log("deployKidroid version", version);
+                var deploy={};
+                deploy.name = userName;
+                deploy.date = new Date();
+                deploy.devices = devicesToDeploy;
+                deploy.version = version;
+                deploy.type = "Kidroid Loader";
                 cron.newSchedule(deploy, function (err, callback) {
                     if (err) {
                         console.log(err);

@@ -8,7 +8,7 @@ module.exports = {
     getQuantity: function (callback,params) {
         if (params!=undefined) {
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
-            var deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
+            var _id = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             var school = params.category;
             var apkBuild=  (isNaN(params.build.split(' ')[1])) ? {$exists: true}:{$gte:+(params.build.split(' ')[1])};
             var apkStatus=  (isNaN(params.build.split(' ')[1])) ? params.build :{$exists: true};
@@ -19,7 +19,7 @@ module.exports = {
         Device
             .count({})
             .where('name').equals((!name)?{$exists: true}:name)
-            .where('deviceId').equals((!deviceId)?{$exists: true}:deviceId)
+            .where('_id').equals((!_id)?{$exists: true}:_id)
             .where('school').equals((!school)?{$exists: true}:school)
             .where('status').equals((!status)?{$exists: true}:status)
             .where('apk.build').equals((!apkBuild)?{$exists: true}:apkBuild)
@@ -36,7 +36,7 @@ module.exports = {
             if (err) return console.log(err,"getAllDevice Device.find err");
             // Execute callback
             callback(null, Devices);
-        }).sort({deviceId:1});
+        }).sort({_id:1});
 
     },
     findAllStatus: function (callback) {
@@ -52,7 +52,7 @@ module.exports = {
     getDevice: function (callback,params) {
         if (params!=undefined) {
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
-            var deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
+            var _id = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             var school = params.category;
             var apkBuild=  (isNaN(params.build.split(' ')[1])) ? {$exists: true}:{$gte:+(params.build.split(' ')[1])};
             var apkStatus=  (isNaN(params.build.split(' ')[1])) ? params.build :{$exists: true};
@@ -64,7 +64,7 @@ module.exports = {
         Device
             .find({})
             .where('name').equals((!name)?{$exists: true}:name)
-            .where('deviceId').equals((!deviceId)?{$exists: true}:deviceId)
+            .where('_id').equals((!_id)?{$exists: true}:_id)
             .where('school').equals((!school)?{$exists: true}:school)
             .where('status').equals((!status)?{$exists: true}:status)
             .where('apk.build').equals((!apkBuild)?{$exists: true}:apkBuild)
@@ -82,7 +82,7 @@ module.exports = {
     getDeviceId: function (callback,params) {
         if (params!=undefined) {
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
-            var deviceId = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
+            var _id = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             var school = params.category;
             var apkBuild=  (isNaN(params.build.split(' ')[1])) ? {$exists: true}:{$gte:+(params.build.split(' ')[1])};
             var apkStatus=  (isNaN(params.build.split(' ')[1])) ? params.build :{$exists: true};
@@ -91,14 +91,14 @@ module.exports = {
         Device
             .find({})
             .where('name').equals((!name)?{$exists: true}:name)
-            .where('deviceId').equals((!deviceId)?{$exists: true}:deviceId)
+            .where('_id').equals((!_id)?{$exists: true}:_id)
             .where('school').equals((!school)?{$exists: true}:school)
             .where('status').equals((!status)?{$exists: true}:status)
             .where('apk.build').equals((!apkBuild)?{$exists: true}:apkBuild)
             .where('apkToUpdate.status').equals((!apkStatus)?{$exists: true}:apkStatus)
-            .select("-apkToUpdate -apk -school -timestamp -registered -loader -updateRequired -status -name -android -__v -longitude -latitude -token -deviceID")
+            .select("-apkToUpdate -apk -school -timestamp -registered -loader -updateRequired -status -name -android -__v -longitude -latitude -token")
             .exec(function (err, Devices) {
-                if (err) return console.log(err,"getDeviceId Device.find err");
+                if (err) return console.log(err,"get_id Device.find err");
                 // Execute callback
                 var devicesArray = [];
                     for (i in Devices){
@@ -112,7 +112,7 @@ module.exports = {
 
         var device = Device;
 
-        device.findOne({"deviceId": id.id, "registered": false}, function (err, device) {
+        device.findOne({"_id": id.id, "registered": false}, function (err, device) {
             if (err) return console.log(err,"regDevice device.findOne err");
             callback(null, device);
         });
@@ -122,7 +122,7 @@ module.exports = {
     authDevice: function (deviceInfo, callback) {
         var device = Device;
         device.findOne({
-            "deviceId": deviceInfo.id,
+            "_id": deviceInfo.id,
             "token": deviceInfo.token,
             "registered": true
         }, function (err, device) {
@@ -133,7 +133,7 @@ module.exports = {
     // Находим версию по ИД устройства
     findVersion: function (deviceInfo, callback) {
         var device = Device;
-        device.findOne({"deviceId": +deviceInfo.id}, {
+        device.findOne({"_id": +deviceInfo.id}, {
             "_id": 1,
             "apkToUpdate": 1
         }, function (err, device) {
@@ -143,10 +143,9 @@ module.exports = {
     },
     saveDevice: function (deviceInfo, callback) {
         var newDevice = new Device({
-            _id: deviceInfo.deviceID,
+            _id: deviceInfo._id,
             school: deviceInfo.school,
             timestamp: new Date().getTime(),
-            deviceId: deviceInfo.deviceID,
             registered: false,
             apkToUpdate:{
                 build: (isNaN(deviceInfo.build.split(' ')[1])) ? deviceInfo.build.split(' ')[0]:deviceInfo.build,
@@ -170,7 +169,7 @@ module.exports = {
     },
 
     registrDevice: function (deviceInfo, callback) {
-        Device.findOne({"deviceId": deviceInfo.id, "registered": false}, function (err, device) {
+        Device.findOne({"_id": deviceInfo.id, "registered": false}, function (err, device) {
             if (err) return console.log(err,"registrDevice Device.findOne err");
 
             if (device != null) {
@@ -181,7 +180,7 @@ module.exports = {
                     "registered": true,
                     "status":"Registered"
                 };
-                Device.update({"deviceId": deviceInfo.id}, {$set: update}, {upsert: true}, function (err, updated) {
+                Device.update({"_id": deviceInfo.id}, {$set: update}, {upsert: true}, function (err, updated) {
 
                     if (err) return console.log(err,"registrDevice Device.update err");
 
@@ -197,7 +196,7 @@ module.exports = {
     updateDevice: function (deviceInfo, callback) {
 
         //Поиск в БД, ID полученного из запроса
-        Device.findOne({"deviceId": deviceInfo.device_id}, function (err, device) {
+        Device.findOne({"_id": deviceInfo.device_id}, function (err, device) {
             if (err) return console.log(err,"updateDevice Device.findOne err");
 
             if (device != null) {
@@ -217,7 +216,7 @@ module.exports = {
                 };
 
                 //Пишем в БД к ID из запроса
-                Device.update({"deviceId": deviceInfo.device_id}, {$set: update}, {upsert: true}, function (err, updated) {
+                Device.update({"_id": deviceInfo.device_id}, {$set: update}, {upsert: true}, function (err, updated) {
                     if (err) return console.log(err,"updateDevice Device.update err");
                     console.log("updated", updated);
                 });
@@ -238,15 +237,15 @@ module.exports = {
         var find = Device.find();
 
        find.exec(function (err, id) {
-           if (err) return console.log(err,"createDeviceId exec");
+           if (err) return console.log(err,"create_id exec");
 
             // Execute callback
-            id = (!id[id.length - 1])? id = 1:id[id.length - 1].deviceId += 1;
+            id = (!id[id.length - 1])? id = 1:id[id.length - 1]._id += 1;
             callback(null,id)
         })
     },
     removeDevice: function (data, callback) {
-        Device.remove({"deviceId": data.id}, function (err, data) {
+        Device.remove({"_id": data.id}, function (err, data) {
 
             if (err) return console.log(err,"removeDevice err");
 
