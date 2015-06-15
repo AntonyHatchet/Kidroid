@@ -6,8 +6,8 @@ socket.on('displayData', function (data) {
     //console.log(data.length);
     html = '';
     for (i in data){
-        var checkbox = "<td><input type='checkbox' class='checkboxWarning' value="+ data[i].deviceId +"></td>";
-        var deviceId = "<td>" + data[i].deviceId + "</td>";
+        var checkbox = "<td><input type='checkbox' class='checkboxWarning' value="+ data[i]._id +"></td>";
+        var deviceId = "<td>" + data[i]._id + "</td>";
         var deviceName = "<td>"+ data[i].name + "<p>(Android v." +data[i].android +")</p></td>";
         var update = (!data[i].updateRequired)? "": "*Pending update (v"+data[i].apkToUpdate.version+" build "+data[i].apkToUpdate.build+")";
         var apkVersion = "<td>" + ((!data[i].apk.version >=1 )? "-" : data[i].apk.version +" (Build "+data[i].apk.build + ")") + "<p>"+ update +"</p></td>";
@@ -21,7 +21,7 @@ socket.on('displayData', function (data) {
             var map ="<p></p>"
             //console.log('no-map');
         }
-        var edit = "<button href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(" + data[i].deviceId +")'>Edit</button> ";
+        var edit = "<button href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(" + data[i]._id +")'>Edit</button> ";
         //var deleteDevice = "<button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].deviceId + "\")\')>Delete</button>";
         var options = "<td><div class='btn-group' role='group'>" + map + edit + "</div></td>";
         html += "<tr>" +checkbox+deviceId+deviceName+apkVersion+loaderVersion+status+options+ "</tr>";
@@ -105,13 +105,13 @@ socket.on('users', function (data) {
 });
 
 socket.on('allDeviceCreated', function (data) {
-    if (data.deviceId){
+    if (data._id){
         $('#idDevice').addClass('in')
             .attr('aria-hidden', false)
             .css('z-index','1050')
             .css('opacity','1')
             .css('display','block');
-        $("#idDeviceCreate").append("ID " +data.deviceId+"\n")
+        $("#idDeviceCreate").append("ID " +data._id+"\n")
         //TODO сделать вывод созданного колличества устройств
         $("#numberIdDevice").replaceWith( "Devices has been added successfully" );
     }
@@ -127,14 +127,14 @@ socket.on('deviceScheduled', function (data) {
     //console.log(data);
     html = '';
     for (i in data)
-        html += "<tr><td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i].deviceId + "'  value='" + data[i].deviceId + "'></td><td>" + data[i].deviceId + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
+        html += "<tr><td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td><td>" + data[i]._id + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
     $("#tableSchedule").html(html);
 });
 socket.on('deviceForDeploy', function (data) {
     //console.log(data);
     html = '';
     for (i in data)
-        html += "<tr><td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i].deviceId + "'  value='" + data[i].deviceId + "'></td><td>" + data[i].deviceId + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
+        html += "<tr><td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td><td>" + data[i]._id + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
     $("#tableSchedule").html(html);
 });
 

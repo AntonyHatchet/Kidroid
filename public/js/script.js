@@ -123,7 +123,7 @@ function sort(place) {
             case 1:
                 (+elem[1].dataset.sort == 1) ? elem[1].dataset.sort = -1 : elem[1].dataset.sort = 1;
                 params = {
-                    "deviceId": +elem[1].dataset.sort
+                    "_id": +elem[1].dataset.sort
                 };
                 break;
             case 2:
