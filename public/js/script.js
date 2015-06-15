@@ -58,10 +58,6 @@ var idDevice;
 var tokenDevice;
 var newUsersId;
 
-function test(data){
-    console.log(data)
-}
-
 function renameCategoryId(x, y) {
     newNameId=x;
     console.log(x,y);
@@ -70,7 +66,6 @@ function renameCategoryId(x, y) {
 function editUsers(x) {
     newUsersId=x;
 };
-
 
 function inputNewNameCategory() {
     var device = {};
