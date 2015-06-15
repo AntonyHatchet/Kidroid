@@ -54,7 +54,7 @@ module.exports = {
     },
     getRemoveDevice: function (req, res) {
 
-        deviceMagic.removeDevice({id: +(req.body.device_id)}, function (err, next) {
+        deviceMagic.removeDevice({id: req.body.device_id}, function (err, next) {
 
             if (err) return console.log(err,"getRemoveDevice deviceMagic.removeDevice err");
 

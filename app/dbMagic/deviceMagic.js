@@ -141,6 +141,7 @@ module.exports = {
     },
     saveDevice: function (deviceInfo, callback) {
         var newDevice = new Device({
+            _id: deviceInfo.deviceID,
             school: deviceInfo.school,
             timestamp: new Date().getTime(),
             deviceId: deviceInfo.deviceID,
@@ -230,7 +231,7 @@ module.exports = {
             console.log("This device is offline status updated", updated);
         })
     },
-    //TODO Переписать, сейчас возможны дубликаты при множественной генерации id
+    //TODO Переписать, сейчас возможны дубликаты при множественной генерации id. Сделать ID устройства уникальным и записывать как _id в базе.
     createDeviceId: function (callback) {
         var find = Device.find();
 
