@@ -10,14 +10,19 @@
 }
 #page-wrapper{
     min-width: 1400px;
+    /*z-index: 1;*/
+    position: relative;
+
+}
+.content{
 
 }
 .modal-sm {
     width: 400px!important;
 }
-#map{
-    display: block!important;
-}
+/*#map{*/
+    /*display: block!important;*/
+/*}*/
 #maps{
     height: 500px;
 }

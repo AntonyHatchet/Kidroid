@@ -24,10 +24,10 @@ $(document).ready(function () {
     $('ul.nav-tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');
 
-        $('ul.nav-tabs li').removeClass('current');
+        $('ul.nav-tabs li').removeClass('active');
         $('.nav-tab-content').removeClass('current');
 
-        $(this).addClass('current');
+        $(this).addClass('active');
         $("#" + tab_id).addClass('current');
     })
 
@@ -368,7 +368,7 @@ function delKidroidVersion(){
 }
 
 $(document).ready(function () {
-    $('#closeScheduleModal').click(function(){
+    $('#closeScheduleModal, #closeScheduleModal1').click(function(){
        $('#editSchedule').removeClass('.in')
            .attr('aria-hidden', true)
            .css('z-index','-1')
@@ -377,7 +377,7 @@ $(document).ready(function () {
     });
 })
 $(document).ready(function () {
-    $('#closeIdTextarea').click(function(){
+    $('#closeIdTextarea, #closeIdTextarea1').click(function(){
        $('#idDevice').removeClass('.in')
            .attr('aria-hidden', true)
            .css('z-index','-1')
