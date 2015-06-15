@@ -16,7 +16,6 @@ block content
         ul.nav.navbar-right.top-nav
             li.dropdown
                 a.dropdown-toggle(href="#" data-toggle="dropdown")
-                    i.fa.fa-user
                     span(id='userName')
                 ul.dropdown-menu
                     li
@@ -129,11 +128,11 @@ block content
                                     .form-group
                                         label(for="addSelectCategory").col-sm-3.control-label School:
                                         .col-sm-9
-                                            select(id="addSelectCategory" class="form-control")
+                                            input(id="addSelectCategory" placeholder='- School -' class="span2 form-control category")
                                     .form-group
                                         label(for="filter2").col-sm-3.control-label Filter 2:
                                         .col-sm-9
-                                            select(id="filter2" class="form-control")
+                                            input(id="filter2" placeholder='- Filter 2 -' class="span2 form-control category")
                                     .form-group
                                         label(for="addSelectVersion").col-sm-4.control-label APK version *:
                                         .col-sm-8
@@ -515,7 +514,7 @@ block content
                                 button(type="button" class="close" data-dismiss="modal" aria-label="Close")
                                     span(aria-hidden="true") &times;
                                 h3 Add new Apk version
-                            form(method="post" action='/uploadFile' enctype="multipart/form-data")
+                            form(method="post" action='/uploadKidroid' enctype="multipart/form-data")
                                 .modal-body
                                     .form-group
                                     input(type="file", class="form-control" name='category' value='')

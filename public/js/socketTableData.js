@@ -173,7 +173,7 @@ socket.on('allSchedule', function (data) {
         $("#allSchedule").html(html);
 });
 socket.on('userName', function (data){
-    $("#userName").html('Signed in ass:' +data);
+    $("#userName").html('Signed in ass: ' +data);
 });
 
 socket.on('getVersionDeploy', function (data) {

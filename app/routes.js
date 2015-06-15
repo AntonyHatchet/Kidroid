@@ -31,6 +31,7 @@ module.exports = function (app, passport) {
         res.render('dashboard.jade');
     });
     app.post('/uploadMarionetteAPK', isLoggedIn, users.createVersionAPK);
+    app.post('/uploadKidroid', isLoggedIn, users.createVersionKidroid);
 
     // =====================================
     // LOGOUT ==============================

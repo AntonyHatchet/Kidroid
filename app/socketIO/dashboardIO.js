@@ -77,7 +77,6 @@ module.exports = function (server,sessionMiddleware) {
             if (err) {
                 console.log(err,"getDeviceIdByParams first");
             }
-            console.log(callback);
             devicesToDeploy = callback;
         });
         //UPDATE
@@ -134,7 +133,6 @@ module.exports = function (server,sessionMiddleware) {
         );
 
         socket.on('deployApk', function (version) {
-                console.log("deployApk version", version)
                 var deploy={};
                 deploy.name = userName;
                 deploy.date = new Date();
@@ -145,13 +143,11 @@ module.exports = function (server,sessionMiddleware) {
                     if (err) {
                         console.log(err);
                     }
-                    console.log(callback,"deployApk callback")
                     io.emit('allSchedule', callback);
                 });
             }
         );
         socket.on('deployKidroid', function (version) {
-                console.log("deployKidroid version", version);
                 var deploy={};
                 deploy.name = userName;
                 deploy.date = new Date();
@@ -162,7 +158,6 @@ module.exports = function (server,sessionMiddleware) {
                     if (err) {
                         console.log(err);
                     }
-                    console.log(callback,"deployApk callback")
                     io.emit('allSchedule', callback);
                 });
             }
