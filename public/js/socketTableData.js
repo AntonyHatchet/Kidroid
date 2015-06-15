@@ -45,7 +45,11 @@ socket.on('category', function (school) {
     html = '';
     for (var i = 0; i < school.length; i++) {
         category.pushData(school[i].name);
-        html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td><input type='checkbox' class='checkAllCategory' placeholder='- School -' value="+ school[i]._id +"></td><td>" + school[i].name + "</td><td><a href='#editCategory' role='button' class='btn btn-primary' data-toggle='modal' onclick='renameCategoryId(\"" + school[i]._id + ',' + school[i].name + "\")'>Edit</a></td></tr>";
+        var id=  school[i]._id;
+        var idPlaceholder='<td><input type="checkbox" class="checkAllCategory" placeholder="- School -" value='+ school[i]._id +'></td>';
+        var name = school[i].name;
+        var end = '<td><a href="#editCategory" role="button" class="btn btn-primary" data-toggle="modal"  onclick=renameCategoryId("'+id+'","'+name+'")>Edit</a></td>';
+        html += '<tr>'+'<td style="display: none">'+id+'</td>'+idPlaceholder+'<td>'+name+'</td>'+end+'</tr>';
     }
     $("#tableFilter").html(html);
     startAutoComplete(category.getArray(),".category")
