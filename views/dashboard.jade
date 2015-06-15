@@ -464,11 +464,11 @@ block content
                             tbody(id='settingApkVersionTable')
                     .right
                         .btn-group(role='group')
-                            a(href='#addMarionetteVersion' role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
-                            //form(method="post" action='/uploadMarionetteAPK' enctype="multipart/form-data")
-                            //    .form-group
-                            //    input(type="file", class="form-control" name='category' value='' onchange='uploadChangeApk()')
-                            //    input(type="submit", id="uploadApk" style="display:none;")
+                            a(role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
+                            form(method="post" action='/uploadMarionetteAPK' enctype="multipart/form-data" style="position: absolute;width: 132px;height: 34px;z-index: 0;opacity: 0;")
+                                .form-group
+                                input(type="file", class="form-control" name='category' value='' onchange='uploadChangeApk()')
+                                input(type="submit", id="uploadApk" style="display:none;")
                             button(class="btn btn-danger" onclick='delMarionetteAPK()') Remove selected
 
                 fieldset
