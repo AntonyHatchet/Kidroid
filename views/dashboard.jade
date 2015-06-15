@@ -328,9 +328,11 @@ block content
                                     span(aria-hidden="true") &times;
                                 h3 Create new category
                             div(class="modal-body")
-                                form
+                                form.form-horizontal
                                     .form-group
-                                    input(class="form-control" id="newCategory" name='category')
+                                        label(for="newCategory").col-sm-3.control-label Name:
+                                        .col-sm-9
+                                            input(class="form-control" id="newCategory" name='category')
                             div(class="modal-footer")
                                 div(id='errorCreateCategory' class='alert alert-danger no-show')
                                     p All fields must be filled out
@@ -343,16 +345,20 @@ block content
                                 button(type="button" class="close" data-dismiss="modal" aria-label="Close")
                                     span(aria-hidden="true") &times;
                                 h3 Create new filter
-                            div(class="modal-body")
-                                form(class="form-horizontal" method='post' action="/signup")
+                            form(class="form-horizontal" method='post' action="/signup")
+                                div(class="modal-body")
                                     .form-group
-                                    input(class="form-control" id="nameFilter" name='category' placeholder='name')
+                                        label(for="nameFilter").col-sm-3.control-label Name:
+                                        .col-sm-9
+                                            input(class="form-control" id="nameFilter" name='category' placeholder='name')
                                     .form-group
-                                    input(class="form-control" id="paramFilter" name='category' placeholder='parameter')
-                            div(class="modal-footer")
-                                div(id='errorCreateCategory' class='alert alert-danger no-show')
-                                    p All fields must be filled out
-                                button(class="btn btn-primary" onclick="createNewFilter()"  type="button") Create
+                                        label(for="paramFilter").col-sm-3.control-label parameter:
+                                        .col-sm-9
+                                            input(class="form-control" id="paramFilter" name='category' placeholder='parameter')
+                                div(class="modal-footer")
+                                    div(id='errorCreateCategory' class='alert alert-danger no-show')
+                                        p All fields must be filled out
+                                    button(class="btn btn-primary" onclick="createNewFilter()"  type="button") Create
 
                 //============MODAL Edit category=====================
                 div(class="modal" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -365,9 +371,11 @@ block content
                                     #idCategory
                                         p
                             div(class="modal-body")
-                                form
+                                form.form-horizontal
                                     .form-group
-                                    input(type="input" class="form-control" id='newNameCategory')
+                                        label(for="newNameCategory").col-sm-3.control-label Name:
+                                        .col-sm-9
+                                            input(type="input" class="form-control" id='newNameCategory')
                             div(class="modal-footer")
                                 button( type="button" class="btn btn-primary" onclick="inputNewNameCategory()") Edit
             //==========USERS TABS===================
@@ -457,10 +465,10 @@ block content
                     .right
                         .btn-group(role='group')
                             a(href='#addMarionetteVersion' role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
-                            form(method="post" action='/uploadMarionetteAPK' enctype="multipart/form-data")
-                                .form-group
-                                input(type="file", class="form-control" name='category' value='' onchange='uploadChangeApk()')
-                                input(type="submit", id="uploadApk" style="display:none;")
+                            //form(method="post" action='/uploadMarionetteAPK' enctype="multipart/form-data")
+                            //    .form-group
+                            //    input(type="file", class="form-control" name='category' value='' onchange='uploadChangeApk()')
+                            //    input(type="submit", id="uploadApk" style="display:none;")
                             button(class="btn btn-danger" onclick='delMarionetteAPK()') Remove selected
 
                 fieldset
@@ -493,10 +501,11 @@ block content
                                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
                                        span(aria-hidden="true") &times;
                                    h3 Add new Marionette version
-                               div(class="modal-body")
-                                   form(method="post" action='/uploadMarionetteAPK' enctype="multipart/form-data")
+                               form(method="post" action='/uploadMarionetteAPK' enctype="multipart/form-data")
+                                .modal-body
                                        .form-group
                                        input(type="file", class="form-control" name='category' value='')
+                                .modal-footer
                                        button( type="submit" class="btn btn-primary") Add
                         //============MODAL Add new Apk version=====================
                 div(class="modal" id="addApkVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -506,10 +515,11 @@ block content
                                 button(type="button" class="close" data-dismiss="modal" aria-label="Close")
                                     span(aria-hidden="true") &times;
                                 h3 Add new Apk version
-                            div(class="modal-body")
-                                form(method="post" action='/uploadFile' enctype="multipart/form-data")
+                            form(method="post" action='/uploadFile' enctype="multipart/form-data")
+                                .modal-body
                                     .form-group
                                     input(type="file", class="form-control" name='category' value='')
+                                .modal-footer
                                     button( type="submit" class="btn btn-primary") Add
             //===========TABS requests================
             #requests(class='tab-content')
@@ -548,14 +558,14 @@ block content
                     .modal-dialog.modal-sm
                         .modal-content
                             div(class="modal-header")
-                                button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                                button(type="button" class="close" id='closeScheduleModal' data-dismiss="modal" aria-label="Close")
                                     span(aria-hidden="true") &times;
                                 h3 Edit Schedule
                             div(class="modal-body")
                                 form
-                                    .form-group
-                                    div(id='dateSchedule')
-                                    input(class="form-control" id='timeSchedule' type='time' required)
+                                    .form-group.form-inline
+                                        div(id='dateSchedule')
+                                        input(class="form-control" id='timeSchedule' type='time' required)
                                     .form-group
                                     select(class="form-control" id="scheduleDeviceVersion" required)
                                     hr
@@ -583,8 +593,9 @@ block content
 
                             div(class="modal-footer")
                                 #errorAddSchedule(class='no-show') error
-                                button(id="closeScheduleModal" class="btn btn-danger") Close
-                                button(onclick="createSchedule()" class="btn btn-primary") Create
+                                .btn-group
+                                    button(id="closeScheduleModal" class="btn btn-danger") Close
+                                    button(onclick="createSchedule()" class="btn btn-primary") Create
 
 
 
