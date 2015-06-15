@@ -158,10 +158,20 @@ function sort(place) {
 
     return params
 };
-
+function uploadChangeApk(){
+    $('#uploadApk').click();
+}
 function deployAPK(){
     var version = $("#selectVersionApkToDeploy").val().split(' ')[0];
     socket.emit("deployApk",version)
+}
+function uploadChangeKidroid(){
+    $('#uploadKidroid').click();
+}
+function deployKidroid(){
+    var version = $("#selectVersionKidroidToDeploy").val().split(' ')[0];
+    console.log(version)
+    //socket.emit("deployKidroid",version)
 }
 function find(sort) {
     var device = {};

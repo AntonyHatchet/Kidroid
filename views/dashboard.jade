@@ -100,7 +100,6 @@ block content
                     fieldset
                         legend Marionette Deploy: (APK Deploy)
                         form(class='deployApk form-inline col-sm-12')
-                            input.col-sm-1(type="checkbox" value="option")
                             label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
                                 span(id="deployCount")
                             .col-sm-8
@@ -111,7 +110,6 @@ block content
                     fieldset
                         legend Kidroid Loader Deploy:
                         form(class='deployApk form-inline col-sm-12')
-                            input.col-sm-1(type="checkbox" value="option")
                             label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
                                 span(id="deployCountKidroid")
                             .col-sm-8
@@ -171,16 +169,6 @@ block content
                             .col-sm-3
                                 select(id="selectVersionApkToDeploy" class="span2 form-control")
                             button(class="col-sm-2 btn btn-primary" type="button" onclick='deployAPK()') Start
-            #deployKidroid
-                fieldset
-                    legend Kidroid Loader Deploy:
-                    form(class='deployApk form-inline col-sm-12')
-                        label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
-                            span(id="deployCountKidroid")
-                        .col-sm-8
-                            .col-sm-3
-                                select(id="kidroidVersionDeploy" class="span2 form-control")
-                            button(class="col-sm-2 btn btn-primary" onclick='deployKidroid()') Start
             //============MODAL Add new device=====================
             div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
@@ -464,6 +452,10 @@ block content
                     .right
                         .btn-group(role='group')
                             a(href='#addMarionetteVersion' role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
+                            form(method="post" action='/uploadMarionetteAPK' enctype="multipart/form-data")
+                                .form-group
+                                input(type="file", class="form-control" name='category' value='' onchange='uploadChangeApk()')
+                                input(type="submit", id="uploadApk" style="display:none;")
                             button(class="btn btn-danger" onclick='delMarionetteAPK()') Remove selected
 
                 fieldset
