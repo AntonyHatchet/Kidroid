@@ -153,28 +153,28 @@ block content
                                     p passwords are different
                                 button(class="btn btn-primary .col-lg-6" onclick='addDevice()') Add
                 //============MODAL ID device=====================
-                div(class="modal" id="idDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
-                    .modal-dialog.modal-sm
-                        .modal-content
-                            div(class="modal-header")
-                                button(type="button" class="close" data-dismiss="modal" aria-label="Close")
-                                    span(aria-hidden="true") &times;
-                                h3(id='numberIdDevice')
-                            div(class="modal-body idTextarea")
-                    legend Marionette Deploy: (APK Deploy)
-                    form(class='deployApk form-inline col-sm-12')
-                        label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
-                            span(id="deployCount")
-                        .col-sm-8
-                            .col-sm-3
-                                select(id="selectVersionApkToDeploy" class="span2 form-control")
-                            button(class="col-sm-2 btn btn-primary" type="button" onclick='deployAPK()') Start
-            //============MODAL Add new device=====================
-            div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                //div(class="modal" id="idDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                //    .modal-dialog.modal-sm
+                //        .modal-content
+                //            div(class="modal-header")
+                //                button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                //                    span(aria-hidden="true") &times;
+                //                h3(id='numberIdDevice')
+                //            div(class="modal-body idTextarea")
+                //    legend Marionette Deploy: (APK Deploy)
+                //    form(class='deployApk form-inline col-sm-12')
+                //        label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
+                //            span(id="deployCount")
+                //        .col-sm-8
+                //            .col-sm-3
+                //                select(id="selectVersionApkToDeploy" class="span2 form-control")
+                //            button(class="col-sm-2 btn btn-primary" type="button" onclick='deployAPK()') Start
+            //============MODAL Add new device ID=====================
+            div(class="modal" id="idDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                 .modal-dialog.modal-sm
                     .modal-content
                         div(class="modal-header")
-                            button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                            button(type="button" class="close" id='closeIdTextarea' data-dismiss="modal" aria-label="Close")
                                 span(aria-hidden="true") &times;
                             h2 Add new device(s)
                         div(class="modal-body")

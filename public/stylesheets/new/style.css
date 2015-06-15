@@ -68,3 +68,9 @@ legend{
     margin-bottom: 0;
     padding: 5px;
 }
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
