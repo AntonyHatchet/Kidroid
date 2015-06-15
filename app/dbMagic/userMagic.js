@@ -248,7 +248,7 @@ module.exports = {
             }
         });
     },
-    createVersion: function (data, callback) {
+    createVersionApk: function (data, callback) {
         console.log(data,"createVersion data")
         Version.findOne({"apk.build": data.build}, function (err, category) {
 

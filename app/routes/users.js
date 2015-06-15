@@ -105,7 +105,7 @@ module.exports = {
                                         if (err) return console.error(err,"fs.move");
                                         console.log("success move!")
                                     });
-                                    userMagic.createVersion(apk, function(err,cb){
+                                    userMagic.createVersionApk(apk, function(err,cb){
                                         if (err) return console.error(err,"users.createVersion APK");
                                         console.log(cb,"createVersion APK callback");
                                         fs.remove(bufer, function (err) {
@@ -130,101 +130,111 @@ module.exports = {
             });
             req.pipe(busboy);
     },
-    //createVersionKidroid: function (req, res) {
-    //
-    //        function createBufer() {
-    //            var path =  "./public/uploads/buffer/"+ Math.floor(Math.random() * (1000 - 1)) + 1+"/";
-    //            this.getPath = function(){
-    //                return path
-    //            };
-    //        };
-    //
-    //        var bufer = new createBufer().getPath();
-    //        var busboy = new Busboy({ headers: req.headers });
-    //
-    //        busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-    //            var unzipParsrer = file.pipe(unzip.Parse());
-    //            unzipParsrer.on('entry', function (entry) {
-    //                var fileType = entry.path.slice(-3);
-    //                var type = entry.type; // 'Directory' or 'File'
-    //                var size = entry.size;
-    //                if (fileType === "apk"||fileType === "md5"||fileType === "txt" ) {
-    //                    entry.pipe(fs.createOutputStream(bufer+ entry.path));
-    //                    console.log('File [' + entry.path + '] Finished');
-    //                } else {
-    //                    entry.autodrain();
-    //                }
-    //            });
-    //            unzipParsrer.on('close', function(){
-    //                var zip = {
-    //                    findCheckSum: function(path){
-    //                        var shasum = crypto.createHash('md5');
-    //                        var s = fs.createReadStream(path + "mytextbooks-school-release.apk");
-    //                        s.on('data', function(d) { shasum.update(d); });
-    //                        s.on('end', function() {
-    //                            var d = shasum.digest('hex');
-    //                            return d
-    //                        });
-    //                    },
-    //                    readCheckSum : function(path){
-    //                        fs.readFileSync(path+"list.md5", 'utf8').slice(17);
-    //                    },
-    //                    checkSum:function(path){
-    //                        return (this.findCheckSum(path)===this.readCheckSum(path))
-    //                    },
-    //                    checkVersion:function(path){
-    //                        var reader = ApkReader.readFile(path + "mytextbooks-school-release.apk");
-    //                        var manifest = reader.readManifestSync();
-    //                        manifest.inspect = function() {
-    //                            Object.defineProperty(this,{
-    //                                versionCode: function() {
-    //                                    return this.versionCode;
-    //                                },
-    //                                versionName: function() {
-    //                                    return this.versionName;
-    //                                }
-    //                            });
-    //                        };
-    //                        return {version:manifest.versionName.slice(0,3), build:manifest.versionCode}
-    //                    }
-    //                };
-    //
-    //                if(zip.checkSum(bufer)){
-    //                    if (zip.checkVersion(bufer)){
-    //                        var apk = new zip.checkVersion(bufer);
-    //                        apk.link = './public/uploads/Marionette-APK/'+apk.build + ".zip";
-    //                        apk.user = req.user.local.name;
-    //                        fs.exists('./public/uploads/Marionette-APK/'+apk.build + ".zip", function (exists) {
-    //                            if(!exists){
-    //                                fs.move(bufer+"/zip/"+filename, apk.link, function (err) {
-    //                                    if (err) return console.error(err,"fs.move");
-    //                                    console.log("success move!")
-    //                                });
-    //                                userMagic.createVersion(apk, function(err,cb){
-    //                                    if (err) return console.error(err,"users.createVersion APK");
-    //                                    console.log(cb,"createVersion APK callback");
-    //                                    fs.remove(bufer, function (err) {
-    //                                        if (err) return console.error(err);
-    //
-    //                                        console.log('success remove!')
-    //                                    })
-    //                                })
-    //                            }
-    //                            res.end();
-    //                        });
-    //
-    //                    }
-    //                }
-    //            });
-    //            file.pipe(fs.createOutputStream(bufer+"/zip/"+filename));
-    //        });
-    //        busboy.on('finish', function() {
-    //            console.log('Done parsing form!');
-    //            res.writeHead(303, { Connection: 'close', Location: '/dashboard' });
-    //            res.end();
-    //        });
-    //        req.pipe(busboy);
-    //},
+    createVersionKidroid: function (req, res) {
+
+            function createBufer() {
+                var path =  "./public/uploads/buffer/"+ Math.floor(Math.random() * (1000 - 1)) + 1+"/";
+                this.getPath = function(){
+                    return path
+                };
+            };
+
+            var bufer = new createBufer().getPath();
+            var busboy = new Busboy({ headers: req.headers });
+            var arrApk = [];
+
+            busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+                var unzipParsrer = file.pipe(unzip.Parse());
+                unzipParsrer.on('entry', function (entry) {
+                    var fileType = entry.path.slice(-3);
+                    var type = entry.type; // 'Directory' or 'File'
+                    var size = entry.size;
+                    if (fileType === "apk"||fileType === "md5"||fileType === "txt" ) {
+                        entry.pipe(fs.createOutputStream(bufer+ entry.path));
+                        if (fileType === "apk"){
+                            arrApk.push(entry.path)
+                        }
+                    } else {
+                        entry.autodrain();
+                    }
+                });
+                unzipParsrer.on('close', function(){
+
+                console.log("Unzip");
+                    var zip = {
+                        findCheckSum: function(path){
+                            for (var i=0;i<arrApk.length;i++) {
+                                var shasum = crypto.createHash('md5');
+                                var s = fs.createReadStream(path + arrApk[i]);
+                                s.on('data', function (d) {
+                                    shasum.update(d);
+                                });
+                                s.on('end', function () {
+                                    var d = shasum.digest('hex');
+                                    return d
+                                });
+                            }
+                        },
+                        readCheckSum : function(path){
+                            fs.readFileSync(path+"list.md5", 'utf8').slice(17);
+                        },
+                        checkSum:function(path){
+                            return (this.findCheckSum(path)===this.readCheckSum(path))
+                        },
+                        checkVersion:function(path){
+                            var reader = ApkReader.readFile(path + "mytextbooks-school-release.apk");
+                            var manifest = reader.readManifestSync();
+                            manifest.inspect = function() {
+                                Object.defineProperty(this,{
+                                    versionCode: function() {
+                                        return this.versionCode;
+                                    },
+                                    versionName: function() {
+                                        return this.versionName;
+                                    }
+                                });
+                            };
+                            return {version:manifest.versionName.slice(0,3), build:manifest.versionCode}
+                        }
+                    };
+                    console.log(zip.findCheckSum(bufer));
+                    //
+                    //if(zip.checkSum(bufer)){
+                    //    if (zip.checkVersion(bufer)){
+                    //        var apk = new zip.checkVersion(bufer);
+                    //        apk.link = './public/uploads/Marionette-APK/'+apk.build + ".zip";
+                    //        apk.user = req.user.local.name;
+                    //        fs.exists('./public/uploads/Marionette-APK/'+apk.build + ".zip", function (exists) {
+                    //            if(!exists){
+                    //                fs.move(bufer+"/zip/"+filename, apk.link, function (err) {
+                    //                    if (err) return console.error(err,"fs.move");
+                    //                    console.log("success move!")
+                    //                });
+                    //                userMagic.createVersionApk(apk, function(err,cb){
+                    //                    if (err) return console.error(err,"users.createVersion APK");
+                    //                    console.log(cb,"createVersion APK callback");
+                    //                    fs.remove(bufer, function (err) {
+                    //                        if (err) return console.error(err);
+                    //
+                    //                        console.log('success remove!')
+                    //                    })
+                    //                })
+                    //            }
+                    //            res.end();
+                    //        });
+                    //
+                    //    }
+                    //}
+                });
+                file.pipe(fs.createOutputStream(bufer+"/zip/"+filename));
+            });
+            busboy.on('finish', function() {
+                console.log('Done parsing form!');
+                res.writeHead(303, { Connection: 'close', Location: '/dashboard' });
+                res.end();
+            });
+            req.pipe(busboy);
+    },
     removeMarionetteAPK: function (category, callback) {
         userMagic.removeVersion(category, function (err, category) {
 

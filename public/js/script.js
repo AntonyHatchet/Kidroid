@@ -58,12 +58,16 @@ var idDevice;
 var tokenDevice;
 var newUsersId;
 
+function test(data){
+    console.log(data)
+}
+
 function renameCategoryId(x, y) {
     newNameId=x;
-    console.log(y);
-    $("#idCategory p").replaceWith("ID " +x+"\n")
-}
-;function editUsers(x) {
+    console.log(x,y);
+    $("#newNameCategory").attr("placeholder",y)
+};
+function editUsers(x) {
     newUsersId=x;
 };
 
