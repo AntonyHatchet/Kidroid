@@ -233,9 +233,9 @@ block content
                                         .col-sm-9
                                             input(id="editDeviceCategory" placeholder='- School -' class="span2 form-control category")
                                     .form-group
-                                        label(for="filter2").col-sm-3.control-label Filter 2:
+                                        label(for="editDeviceFilter2").col-sm-3.control-label Filter 2:
                                         .col-sm-9
-                                            input(id="filter2" placeholder='- Filter2 -' class="span2 form-control filter2")
+                                            input(id="editDeviceFilter2" placeholder='- Filter2 -' class="span2 form-control filter2")
                                     //.form-group
                                     //    label(for="addSelectVersion").col-sm-4.control-label APK version *:
                                     //    .col-sm-8
@@ -362,7 +362,7 @@ block content
                                 button(class="btn btn-primary" onclick="createNewFilter()" type="button") Create
 
                 //============MODAL Edit category=====================
-                div(class="modal" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+                div(class="modal" id="editFilters" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                     .modal-dialog.modal-sm
                         .modal-content
                             div(class="modal-header")
@@ -412,13 +412,13 @@ block content
                                         .col-sm-9
                                             input(type="input" class="form-control" id='newNameUsers' placeholder='name')
                                     .form-group
-                                        label(for="newNamepassword").col-sm-3.control-label password:
+                                        label(for="newNamepassword").col-sm-3.control-label Password:
                                         .col-sm-9
-                                                input(type="password" class="form-control" id='newNamepassword' placeholder='password')
+                                                input(type="password" class="form-control" id='newNamepassword' placeholder='password*')
                                     .form-group
-                                        label(for="newNamepassword2").col-sm-3.control-label password:
+                                        label(for="newNamepassword2").col-sm-3.control-label Confirm:
                                         .col-sm-9
-                                                input(type="password" class="form-control" id='newNamepassword2' placeholder='confirm password')
+                                                input(type="password" class="form-control" id='newNamepassword2' placeholder='confirm password*')
                             div(class="modal-footer")
                                 div(id='errorUsersPassword' class='alert alert-danger no-show')
                                     p Passwords are different

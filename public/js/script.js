@@ -57,19 +57,16 @@ function createNewFilter() {
     };
 };
 //TO DO =====================
-var newNameId;
 var idDevice;
 var tokenDevice;
 var newUsersId;
 
-function renameCategoryId(x, y) {
-    newNameId=x;
-    console.log(x,y);
-    $("#newNameCategory").attr("placeholder",y)
+function editFilters(context) {
+    console.log(context.parentNode.parentNode.childNodes[1].val());
 };
 function editUsers(x) {
     newUsersId= x.split(' ')[0];
-    $('#editUsers h3').empty().append("Edit "+ x.split(' ')[2])
+    $('#newNameUsers').attr("value",x.split(' ')[2])
 };
 
 function inputNewNameCategory() {
@@ -85,15 +82,16 @@ function inputNewNameUser() {
     device.newName = $("#newNameUsers").val();
     device.newPassword = $("#newNamepassword").val();
     var newPassword2 = $("#newNamepassword2").val();
-    if(device.newPassword == newPassword2 && device.newName !=0 && newPassword2 !=0){
+    if(device.newPassword == newPassword2 && device.newName && newPassword2){
         console.log('yes');
         $('#errorUsersPassword').addClass('no-show');
         $('#errorUsersName').addClass('no-show');
-        socket.emit('editUsers', device);
+        $('.close').click();
+        return socket.emit('updateUser', device);
     }if(device.newPassword != newPassword2 ){
         $('#errorUsersPassword').removeClass('no-show');
         $('#errorUsersName').addClass('no-show');
-        //console.log('no');
+        return newPassword2;
     }else{
         $('#errorUsersName').removeClass('no-show');
         $('#errorUsersPassword').addClass('no-show');
@@ -108,9 +106,10 @@ function editDevice(){
     var device = {};
     device.id = idDevice;
     device.school = $("#editDeviceCategory").val();
-    device.filter2 = $("#filter2").val();
+    device.filter2 = $("#editDeviceFilter2").val();
     device.comments = $("#newComment").val();
     if(device.category !=0) {
+        $('#editDevice .close').click();
         socket.emit('updateDevice', device);
         $('#errorEditDevice').addClass('no-show');
     }else{

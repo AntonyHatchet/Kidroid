@@ -103,18 +103,21 @@ module.exports = {
     },
     ScheduleStart: function (task){
         console.log("ScheduleStart");
+        console.log(task,"task");
         var id = task.devices;
         var version = task.version;
         Updater(0);
         function Updater(i){
             if (i!=null && i < id.length){
-                Device.update({"_id":+id[i]},{$set:{"apkToUpdate":+version,"updateRequired":true}}, function (err, updated) {
+                Device.update({"_id":+id[i]},{$set:{"apkToUpdate.build":+version,"updateRequired":true}}, function (err, updated) {
                     if (err) return console.log(err,"ScheduleStart Device.update err");
                     console.log("This device " + id[i] + "is updated");
                 });
-                Updater(++i)
+                Updater(i++)
             }
-            console.log("END")
         }
+        Cron.findOne({"_id":task._id}, function (err, job) {
+            console.log("END")
+        });
     }
 };

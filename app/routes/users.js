@@ -360,6 +360,14 @@ module.exports = {
             callback(null, devices);
         });
     },
+    updateUserInfo: function (params, callback) {
+       userMagic.updateUserInfo(params, function (err, devices) {
+
+           if (err) return console.log(err,"updateDevice userMagic.updateDeviceInfo err");
+
+            callback(null, devices);
+        });
+    },
     findFilter: function (callback) {
         userMagic.findAllFilter(function (err, data) {
 

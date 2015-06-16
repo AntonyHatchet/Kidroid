@@ -59,6 +59,25 @@ module.exports = function (passport) {
             });
 
         }));
+    passport.use('change-password', new LocalStrategy({
+            // by default, local strategy uses username and password, we will override with email
+            usernameField: 'name',
+            passwordField: 'password',
+            passReqToCallback: true // allows us to pass back the entire request to the callback
+        },
+        function (req, name, password, done) {
+
+            // asynchronous
+            // User.findOne wont fire unless data is sent back
+            process.nextTick(function () {
+
+                // find a user whose email is the same as the forms email
+                // we are checking to see if the user trying to login already exists
+                
+
+            });
+
+        }));
 
     passport.use('local-login', new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email

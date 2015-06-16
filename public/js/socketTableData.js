@@ -89,8 +89,11 @@ socket.on('status', function (date) {
 socket.on('users', function (data) {
     //console.log(data);
     html = '';
-    for (i in data)
-        html += "<tr><td><input type='checkbox' id='checkAllUsers" + data[i]._id + "' class='checkAllUsers' value='" + data[i]._id + "'></td><td>" + data[i].local.name + "</td><td><a href='#editUsers' role='button' class='btn btn-primary' data-toggle='modal' onclick='editUsers(\"" + data[i]._id +" , " +data[i].local.name + "\")'>Edit</a></td></tr>";
+    for (i in data){
+        var checkbox = "<td><input type='checkbox' id='checkAllUsers" + data[i]._id + "' class='checkAllUsers' value='" + data[i]._id + "'></td>";
+        var name = "<td>" + data[i].local.name + "</td>";
+        var editName = "<td><div class='btn-group'><a href='#editUsers' role='button' class='btn btn-primary' data-toggle='modal' onclick='editUsers(\"" + data[i]._id +" , " +data[i].local.name + "\")'>Edit user</a>";
+        html += "<tr>"+checkbox+name+editName+"</tr>";}
     $("#userTable").html(html);
 });
 
@@ -183,8 +186,8 @@ socket.on('allSchedule', function (data) {
         var type = data[i].type;
         var filter2 = "Some filter data";
         html += "<tr><td>" + date.toLocaleString("en", options) + " (" + name + ")" + "</td><td>" + version + "</td><td>" + status + "</td><td>" + school + "</td><td>" + type + "</td><td>" + filter2 + "</td></tr>";
-    }
         $("#allSchedule").html(html);
+    }
 });
 socket.on('userName', function (data){
     $("#userName").html(' Signed in as: ' +data);

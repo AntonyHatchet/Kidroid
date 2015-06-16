@@ -86,6 +86,59 @@ module.exports = {
             }
         });
     },
+    updateUserInfo: function (data, callback) {
+        console.log(data)
+        User.findOne({'local.name': data.newName}, function (err, user) {
+
+            console.log(err,"err",user,"user")
+            // if there are any errors, return the error
+            if (err)
+                return done(err);
+
+            // check to see if theres already a user with that email
+            if (user) {
+                var newUserPassword = new User();
+
+                // set the user's local credentials
+                newUserPassword.local.password = newUserPassword.generateHash(data.newPassword);
+
+                // save the user
+                User.update({'local.name': data.newName},{$set:{'local.password':newUserPassword.local.password}},function (err) {
+                    if (err)
+                        throw err;
+                    module.exports.findAllUsers(function(err,data){
+                        callback(err,data)
+                    })
+                });
+            }
+            if (user == null) {
+                User.findOne({'_id': data.id}, function (err, user) {
+                    if (err)
+                        return done(err);
+                    if (user) {
+                        var newUserPassword = new User();
+
+                        // set the user's local credentials
+                        newUserPassword.local.password = newUserPassword.generateHash(data.newPassword);
+
+                        // save the user
+                        User.update({'_id': data.id}, {
+                            $set: {
+                                'local.name': data.newName,
+                                'local.password': newUserPassword.local.password
+                            }
+                        }, function (err) {
+                            if (err)
+                                throw err;
+                            module.exports.findAllUsers(function(err,data){
+                                callback(err,data)
+                            })
+                        });
+                    }
+                });
+            }
+        });
+    },
     createNewFilter: function (data, callback) {
         console.log(data,"createNewFilter data");
         Filters.update({"name": data.name},{$push:{"params":data.params}},{$upsert:true}, function (err, filters) {
