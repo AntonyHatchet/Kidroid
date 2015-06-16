@@ -54,7 +54,7 @@ socket.on('quantity', function (data) {
                 html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
             }
         ;
-    }else if(Page<5){
+    }else if(Page<5){ //страниц мало
         for (var j = 1; j <= Page; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
