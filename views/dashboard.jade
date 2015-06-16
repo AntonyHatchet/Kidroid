@@ -72,8 +72,8 @@ block content
                     h5.col-sm-2.col-sm-offset-6
                         label(for="ItemsPerPage").col-sm-7.control-label Items per page:
                         .form-group.col-sm-5
-                            select(id="ItemsPerPage")
-                                option(value='0') 10
+                            select(id="ItemsPerPage" onchange="find()")
+                                option(value='10') 10
                                 option(value='20') 20
                                 option(value='50') 50
                 .col-lg-12.container-tab

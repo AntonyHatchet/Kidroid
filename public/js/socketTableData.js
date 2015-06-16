@@ -28,14 +28,14 @@ socket.on('displayData', function (data) {
     }
     $("#deviceTable").html(html);
 });
-
+var itemsPerPage;
 socket.on('quantity', function (data) {
     //console.log(data);
     $("h4").html(data + " devices found:");
     $("#deployCount").html(" ("+data+")");
     $("#deployCountKidroid").html(" ("+data+")");
     html = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>';
-    Page = Math.ceil(data / 10);
+    Page = Math.ceil(data / itemsPerPage);
     for (var j = 1; j <= Page; j++)
         html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>";
     $("#pagination").html(html+ '<li><a onclick=page('+ Page +') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>');
@@ -173,7 +173,7 @@ socket.on('allSchedule', function (data) {
         minute: 'numeric',
         second: 'numeric'
     };
-    html = '<ul>';
+    html = '';
     for (i in data) {
         var date = new Date(data[i].timeStart);
         var name = data[i].name;

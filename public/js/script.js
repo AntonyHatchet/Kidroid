@@ -181,15 +181,18 @@ function deployKidroid(){
 function find(sort) {
     console.log(sort);
     var device = {};
-    device.sort = (!sort)?{}:sort;
-    device.search = $("#DeviceNameIDSerial").val();
-    device.status = $("#selectStatus").val();
-    device.school = $("#selectCategory").val();
-    device.filter2 = $("#customFilter").val();
-    device.build = $("#marionetteVersion").val();
-    socket.emit('getDevicesByParams', device);
+    var data = {};
+    device.sort = data.sort = (!sort)?{}:sort;
+    device.search = data.search = $("#DeviceNameIDSerial").val();
+    device.status = data.status = $("#selectStatus").val();
+    device.school = data.school = $("#selectCategory").val();
+    device.filter2 = data.filter2 = $("#customFilter").val();
+    device.build = data.build = $("#marionetteVersion").val();
+    data.limit = itemsPerPage = $("#ItemsPerPage").val();
+    socket.emit('getDevicesByParams', data);
     socket.emit('getDeviceIdByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
+    console.log(data);
 };
 function page(i) {
     var device = {};
@@ -232,6 +235,7 @@ function finsDeviceSchedule(){
     //console.log(device);
 }
 $(document).ready( function() {
+    itemsPerPage = $("#ItemsPerPage").val();
     $("#checkAllSchedule").click( function() {
         if($('#checkAllSchedule').prop('checked')){
             $('.checkSchedule:enabled').prop('checked', true);
