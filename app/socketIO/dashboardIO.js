@@ -110,6 +110,15 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
+        socket.on('updateUser', function (params) {
+                user.updateUserInfo(params, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('users', callback);
+                });
+            }
+        );
         //CREATE
         // Создаем категорию
         socket.on('createFilter', function (filterParams) {
