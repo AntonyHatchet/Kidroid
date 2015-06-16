@@ -133,7 +133,7 @@ socket.on('deviceForDeploy', function (data) {
 });
 
 socket.on('filters', function (data) {
-    //console.log(data);
+    console.log(data);
     for (i in data) {
         html = '';
         if (data[i].name === "School") {

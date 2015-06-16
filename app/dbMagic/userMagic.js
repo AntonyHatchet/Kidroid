@@ -167,26 +167,22 @@ module.exports = {
     },
     updateFilterParams: function (data, callback) {
         //Пишем в БД к ID из запроса
-        var queryName = {};
-        queryName.name = {};
-        queryName.name.$ = data.newName;
-        console.log(queryName);
-        //Filters.update({"params": data.newName}, {$set: {queryName: data.newName}}, function (err, updated) {
-        //
-        //    if (err) return console.log(err,"updateSchoolCategory Category.update err");
-        //
-        //    if (updated != null){
-        //        Category.find("", function (err, category) {
-        //
-        //            if (err) return console.log(err,"updateSchoolCategory Category.find err");
-        //
-        //            if (category != null) {
-        //                callback(null, category)
-        //            }
-        //        });
-        //    }
-        //    // Execute callback passed from route
-        //});
+        Filters.update({"params": data.oldName}, {$set: {"params.$": data.newName}}, function (err, updated) {
+
+            if (err) return console.log(err,"updateSchoolCategory Category.update err");
+
+            if (updated != null){
+                Filters.find("", function (err, category) {
+
+                    if (err) return console.log(err,"updateSchoolCategory Category.find err");
+
+                    if (category != null) {
+                        callback(null, category)
+                    }
+                });
+            }
+            // Execute callback passed from route
+        });
     },
     removeSchoolCategory: function (data, callback) {
         Category.remove({"_id": data}, function (err, category) {

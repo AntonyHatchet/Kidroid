@@ -80,7 +80,7 @@ module.exports = function (server,sessionMiddleware) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('category', callback);
+                    io.emit('filters', callback);
                 });
             }
         );
