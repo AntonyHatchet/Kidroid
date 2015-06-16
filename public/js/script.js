@@ -108,7 +108,7 @@ function editDevice(){
     device.school = $("#editDeviceCategory").val();
     device.filter2 = $("#editDeviceFilter2").val();
     device.comments = $("#newComment").val();
-    if(device.category !=0) {
+    if(device.school !=0) {
         $('#editDevice .close').click();
         socket.emit('updateDevice', device);
         $('#errorEditDevice').addClass('no-show');
