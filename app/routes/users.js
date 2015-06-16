@@ -387,8 +387,8 @@ module.exports = {
         });
     },
     //Обновление категорий
-    updateCategory: function (params, callback) {
-        userMagic.updateSchoolCategory(params, function (err, category) {
+    updateFilter: function (params, callback) {
+        userMagic.updateFilterParams(params, function (err, category) {
 
             if (err) return console.log(err,"updateCategory  userMagic.updateSchoolCategory err");
 
@@ -400,15 +400,6 @@ module.exports = {
         userMagic.removeSchoolCategory(category, function (err, category) {
 
             if (err) return console.log(err,"removeCategory  userMagic.removeSchoolCategory err");
-
-            callback(null, category);
-        });
-    },
-    //Поиск всех категорий
-    findCategory: function (callback) {
-        userMagic.findAllCategory(function (err, category) {
-
-            if (err) return console.log(err,"findCategory  userMagic.findAllCategory err");
 
             callback(null, category);
         });

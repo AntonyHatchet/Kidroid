@@ -62,7 +62,7 @@ var tokenDevice;
 var newUsersId;
 
 function editFilters(context) {
-    console.log(context.parentNode.parentNode.childNodes[1].val());
+    $("#newNameCategory").val(context.parentNode.parentNode.childNodes[1].innerText).attr("data-name",context.parentNode.parentNode.childNodes[1].innerText);
 };
 function editUsers(x) {
     newUsersId= x.split(' ')[0];
@@ -71,7 +71,7 @@ function editUsers(x) {
 
 function inputNewNameCategory() {
     var device = {};
-    device.id = newNameId;
+    device.oldName = $("#newNameCategory").attr("data-name");
     device.newName = $("#newNameCategory").val();
     socket.emit('editCategory', device);
     //console.log(device);

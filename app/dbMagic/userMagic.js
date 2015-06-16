@@ -165,61 +165,28 @@ module.exports = {
             }
         });
     },
-    findAllCategory: function (callback) {
-        Category.find("", function (err, category) {
-
-            if (err) return console.log(err,"findAllCategory Category.find err");
-
-            if (category != null) {
-                callback(null, category)
-            }
-        });
-    },
-    createFilter: function (data, callback) {
-        Category.findOne({"name": data.name}, function (err, category) {
-
-            if (err) return console.log(err,"createSchoolCategory Category.findOne err");
-
-            if (category == null) {
-                var newCategory = new Category({
-                    name: data.name
-                });
-
-                newCategory.save(function (err) {
-
-                    if (err) return console.log(err,"createSchoolCategory newCategory.save err");
-
-                    Category.find("", function (err, category) {
-
-                        if (err) return console.log(err,"createSchoolCategory Category.find err");
-
-                        if (category != null) {
-                            callback(null, category)
-                        }
-                    });
-                });
-            }
-            callback(null, category)
-        })
-    },
-    updateSchoolCategory: function (data, callback) {
+    updateFilterParams: function (data, callback) {
         //Пишем в БД к ID из запроса
-        Category.update({"_id": data.id}, {$set: {"name": data.newName}}, function (err, updated) {
-
-            if (err) return console.log(err,"updateSchoolCategory Category.update err");
-
-            if (updated != null){
-                Category.find("", function (err, category) {
-
-                    if (err) return console.log(err,"updateSchoolCategory Category.find err");
-
-                    if (category != null) {
-                        callback(null, category)
-                    }
-                });
-            }
-            // Execute callback passed from route
-        });
+        var queryName = {};
+        queryName.name = {};
+        queryName.name.$ = data.newName;
+        console.log(queryName);
+        //Filters.update({"params": data.newName}, {$set: {queryName: data.newName}}, function (err, updated) {
+        //
+        //    if (err) return console.log(err,"updateSchoolCategory Category.update err");
+        //
+        //    if (updated != null){
+        //        Category.find("", function (err, category) {
+        //
+        //            if (err) return console.log(err,"updateSchoolCategory Category.find err");
+        //
+        //            if (category != null) {
+        //                callback(null, category)
+        //            }
+        //        });
+        //    }
+        //    // Execute callback passed from route
+        //});
     },
     removeSchoolCategory: function (data, callback) {
         Category.remove({"_id": data}, function (err, category) {

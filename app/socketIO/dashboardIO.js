@@ -42,12 +42,6 @@ module.exports = function (server,sessionMiddleware) {
             }
             io.emit('displayData', data);
         });
-        user.findCategory(function (err, data) {
-            if (err) {
-                console.log(err);
-            }
-            io.emit('category', data);
-        });
         user.findAllVersion(function (err, data) {
             if (err) {
                 console.log(err);
@@ -80,9 +74,9 @@ module.exports = function (server,sessionMiddleware) {
             devicesToDeploy = callback;
         });
         //UPDATE
-        socket.on('updateCategory', function (categoryParams) {
+        socket.on('editCategory', function (categoryParams) {
 
-                user.updateCategory(categoryParams, function (err, callback) {
+                user.updateFilter(categoryParams, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }

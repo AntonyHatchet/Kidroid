@@ -116,8 +116,6 @@ module.exports = {
                 Updater(i++)
             }
         }
-        Cron.findOne({"_id":task._id}, function (err, job) {
-            console.log("END")
-        });
+        console.log("End")
     }
 };

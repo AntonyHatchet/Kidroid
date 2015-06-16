@@ -73,7 +73,7 @@ module.exports = {
             .where('apk.build').equals((!apkBuild)?{$exists: true}:apkBuild)
             .where('apkToUpdate.status').equals((!apkStatus)?{$exists: true}:apkStatus)
             .where('filter2').equals((!filter)?{$exists: true}:filter)
-            .limit(10)
+            .limit(+limit)
             .skip(page)
             .sort(sort)
             .select({})
