@@ -213,14 +213,22 @@ var acrivePage;
 function page(i) {
     acrivePage=i;
     var device = {};
+    var data = {};
+    data.limit = itemsPerPage = $("#ItemsPerPage").val();
     device.sort = sort();
-    device.search = $("#DeviceNameIDSerial").val();
-    device.status = $("#selectStatus").val();
-    device.school = $("#selectCategory").val();
-    device.filter2 = $("#customFilter").val();
-    device.build = $("#marionetteVersion").val();
-    device.page = i*10-10;
-    socket.emit('getDevicesByParams', device);
+    device.search = data.search = $("#DeviceNameIDSerial").val();
+    device.status = data.status = $("#selectStatus").val();
+    device.school = data.school = $("#selectCategory").val();
+    device.filter2 =data.filter2 =  $("#customFilter").val();
+    device.build = data.build = $("#marionetteVersion").val();
+    if(data.limit==10 || i==1) {
+        device.page = data.page = i * 10 - 10;
+    }else if(data.limit==20 && i!=1){
+        device.page = data.page = i * 20 -20;
+    }else if(data.limit==50 && i!=1){
+        device.page = data.page = i * 50 -50;
+    }
+    socket.emit('getDevicesByParams', data);
     socket.emit('getDevicesQuantityByParams', device);
     console.log(device);
 };
