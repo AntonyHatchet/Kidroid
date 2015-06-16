@@ -47,7 +47,7 @@ socket.on('quantity', function (data) {
             }
         ;
     }else if(lastPage>=Page){
-        for (var j = onePage; j <= Page; j++)
+        for (var j = Page-8; j <= Page; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
             } else {
