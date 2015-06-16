@@ -31,14 +31,14 @@ socket.on('displayData', function (data) {
 var itemsPerPage;
 socket.on('quantity', function (data) {
     //console.log(data);
-    var onePage=acrivePage-4;
-    var lastPage=acrivePage+4;
+    var onePage=acrivePage-2;
+    var lastPage=acrivePage+2;
     $("h4").html(data + " devices found:");
     $("#deployCount").html(" ("+data+")");
     $("#deployCountKidroid").html(" ("+data+")");
     html = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>';
     Page = Math.ceil(data / itemsPerPage);
-    if(onePage >= 2 && lastPage<Page) {
+    if(onePage >= 2 && lastPage<Page) { // мы гдек то в середине
         for (var j = onePage; j <= lastPage; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
@@ -46,16 +46,24 @@ socket.on('quantity', function (data) {
                 html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
             }
         ;
-    }else if(lastPage>=Page){
-        for (var j = Page-8; j <= Page; j++)
+    }else if(lastPage>=Page && onePage>=Page-5 && onePage>0 && Page>=5){ // если мы в конце страниц и перывая страница не ушла в минус
+        for (var j = Page-4; j <= Page; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
             } else {
                 html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
             }
         ;
-    }else{
-        for (var j = 1; j <= 9; j++)
+    }else if(Page<5){
+        for (var j = 1; j <= Page; j++)
+            if (j == acrivePage) {
+                html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            } else {
+                html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            }
+        ;
+    }else{ //Юнный падаван только начал свой путь
+        for (var j = 1; j <= 5; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
             } else {
