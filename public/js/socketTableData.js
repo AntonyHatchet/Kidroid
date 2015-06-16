@@ -31,17 +31,38 @@ socket.on('displayData', function (data) {
 var itemsPerPage;
 socket.on('quantity', function (data) {
     //console.log(data);
+    var onePage=acrivePage-4;
+    var lastPage=acrivePage+4;
     $("h4").html(data + " devices found:");
     $("#deployCount").html(" ("+data+")");
     $("#deployCountKidroid").html(" ("+data+")");
     html = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>';
     Page = Math.ceil(data / itemsPerPage);
-    for (var j = 1; j <= Page; j++)
-        if(j==acrivePage) {
-            html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
-        }else{
-            html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
-        };
+    if(onePage >= 2 && lastPage<Page) {
+        for (var j = onePage; j <= lastPage; j++)
+            if (j == acrivePage) {
+                html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            } else {
+                html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            }
+        ;
+    }else if(lastPage>=Page){
+        for (var j = onePage; j <= Page; j++)
+            if (j == acrivePage) {
+                html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            } else {
+                html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            }
+        ;
+    }else{
+        for (var j = 1; j <= 9; j++)
+            if (j == acrivePage) {
+                html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            } else {
+                html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            }
+        ;
+    }
     $("#pagination").html(html+ '<li><a onclick=page('+ Page +') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>');
 });
 
