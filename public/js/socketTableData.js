@@ -37,7 +37,11 @@ socket.on('quantity', function (data) {
     html = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>';
     Page = Math.ceil(data / itemsPerPage);
     for (var j = 1; j <= Page; j++)
-        html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>";
+        if(j==acrivePage) {
+            html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
+        }else{
+            html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
+        };
     $("#pagination").html(html+ '<li><a onclick=page('+ Page +') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>');
 });
 

@@ -18,8 +18,6 @@ $(document).ready(function () {
         $("#" + tab_id).addClass('current');
     })
 
-});
-$(document).ready(function () {
 
     $('ul.nav-tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');
@@ -211,7 +209,9 @@ function find(sort) {
     socket.emit('getDevicesQuantityByParams', device);
     console.log(data);
 };
+var acrivePage;
 function page(i) {
+    acrivePage=i;
     var device = {};
     device.sort = sort();
     device.search = $("#DeviceNameIDSerial").val();
@@ -222,6 +222,7 @@ function page(i) {
     device.page = i*10-10;
     socket.emit('getDevicesByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
+    console.log(device);
 };
 function addDevice() {
     var device = {};
@@ -234,7 +235,7 @@ function addDevice() {
         socket.emit('createDevice', device);
         $('#errorAddDevice').addClass('no-show');
         $('#completeAddDevice').removeClass('no-show');
-        $('#idDeviceCreate').setAttribute(rows, number);
+        $('#idDeviceCreate').autosize();
         //console.log('yes');
     } else{
         $('#errorAddDevice').removeClass('no-show');
