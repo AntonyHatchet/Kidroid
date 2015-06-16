@@ -14,7 +14,6 @@ module.exports = function (server,sessionMiddleware) {
         var userName;
         var devicesToDeploy;
         if(socket.request.session.passport != undefined) {
-            console.log("user.findUser");
             user.findUser(socket.request.session.passport.user, function (err, data) {
                 if (err) {
                     console.log(err);

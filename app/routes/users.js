@@ -142,7 +142,6 @@ module.exports = {
             var bufer = new createBufer().getPath();
             var busboy = new Busboy({ headers: req.headers });
             var arrApk = [];
-            var arrApk2 = [];
 
             busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
                 var unzipParsrer = file.pipe(unzip.Parse());
@@ -160,78 +159,76 @@ module.exports = {
                     }
                 });
                 unzipParsrer.on('close', function(){
-
-                console.log("Unzip");
-                console.log(arrApk,"arrApk first");
                     var zip = {
-                        findCheckSum: function(path){
-                            var shasum = crypto.createHash('md5');
-                            console.log(path,"path");
-                            var s = fs.createReadStream(path);
-                            s.on('data', function (d) {
-                                shasum.update(d);
-                            });
-                            s.on('end', function () {
-                                var d = shasum.digest('hex');
-                                console.log(d,"d");
-                                arrApk2.push(d);
-                                console.log(arrApk2,"arrApk2");
-                                return d
-                            });
-                        },
-                        readCheckSum : function(path){
-                            fs.readFileSync(path+"list.md5", 'utf8').slice(17);
-                        },
-                        checkSum:function(path){
-                            return (this.findCheckSum(path)===this.readCheckSum(path))
+                        CheckSum: function(path,callback){
+                            var checkNumber=[];
+                            var sumArr = fs.readFileSync(path+"list.md5", 'utf8').split("\r\n");
+                            for(var i in sumArr){
+                                sumArr[i]= sumArr[i].slice(sumArr[i].indexOf(':')+1)
+                            }
+                            function check(callback,apk,files){
+                                var shasum = crypto.createHash('md5');
+                                var s = fs.createReadStream(path+apk);
+                                s.on('data', function (d) {
+                                    shasum.update(d);
+                                });
+                                s.on('end', function () {
+                                    var d = shasum.digest('hex');
+                                    callback(null,(d==files))
+                                });
+
+                            }
+
+                            for (var j=0;j<sumArr.length;j++) {
+                                for (var f = 0; f < arrApk.length; f++) {
+                                    check(function(err,data){
+                                       if(err)throw new err;
+                                        if(data){
+                                            checkNumber.push(data);
+                                            if(checkNumber.length===sumArr.length){
+                                                return callback(null,true);
+                                            }
+                                        }
+                                    },arrApk[f],sumArr[j]);
+                                }
+                            }
+
                         },
                         checkVersion:function(path){
-                            var reader = ApkReader.readFile(path + "mytextbooks-school-release.apk");
-                            var manifest = reader.readManifestSync();
-                            manifest.inspect = function() {
-                                Object.defineProperty(this,{
-                                    versionCode: function() {
-                                        return this.versionCode;
-                                    },
-                                    versionName: function() {
-                                        return this.versionName;
-                                    }
-                                });
-                            };
-                            return {version:manifest.versionName.slice(0,3), build:manifest.versionCode}
+                            var reader = fs.readFileSync(path+"version.txt", 'utf8');
+                            return {loader:reader}
                         }
                     };
-                    for(var i=0;i<arrApk.length;i++){
-                        zip.findCheckSum(bufer+arrApk[i])
-                    }
-                    console.log(arrApk2);
                     //
-                    //if(zip.checkSum(bufer)){
-                    //    if (zip.checkVersion(bufer)){
-                    //        var apk = new zip.checkVersion(bufer);
-                    //        apk.link = './public/uploads/Marionette-APK/'+apk.build + ".zip";
-                    //        apk.user = req.user.local.name;
-                    //        fs.exists('./public/uploads/Marionette-APK/'+apk.build + ".zip", function (exists) {
-                    //            if(!exists){
-                    //                fs.move(bufer+"/zip/"+filename, apk.link, function (err) {
-                    //                    if (err) return console.error(err,"fs.move");
-                    //                    console.log("success move!")
-                    //                });
-                    //                userMagic.createVersionApk(apk, function(err,cb){
-                    //                    if (err) return console.error(err,"users.createVersion APK");
-                    //                    console.log(cb,"createVersion APK callback");
-                    //                    fs.remove(bufer, function (err) {
-                    //                        if (err) return console.error(err);
-                    //
-                    //                        console.log('success remove!')
-                    //                    })
-                    //                })
-                    //            }
-                    //            res.end();
-                    //        });
-                    //
-                    //    }
-                    //}
+                    zip.CheckSum(bufer,function(err,callback){
+                        if (err)throw err;
+                        if (callback){
+                            if (zip.checkVersion(bufer)){
+                                var kidroid = new zip.checkVersion(bufer);
+                                kidroid.link = './public/uploads/Kidroid-APK/'+kidroid.loader + ".zip";
+                                kidroid.user = req.user.local.name;
+                                fs.exists('./public/uploads/Kidroid-APK/'+kidroid.loader + ".zip", function (exists) {
+                                    if(!exists){
+                                        fs.move(bufer+"/zip/"+filename, kidroid.link, function (err) {
+                                            if (err) return console.error(err,"fs.move");
+                                            console.log("success move!")
+                                        });
+                                        userMagic.createVersionKidroid(kidroid, function(err,cb){
+                                            if (err) return console.error(err,"users.createVersion APK");
+                                            console.log(cb,"createVersion APK callback");
+                                            fs.remove(bufer, function (err) {
+                                                if (err) return console.error(err);
+
+                                                console.log('success remove!')
+                                            })
+                                        })
+                                    }
+                                    res.end();
+                                });
+
+                            }
+                        }
+                    });
                 });
                 file.pipe(fs.createOutputStream(bufer+"/zip/"+filename));
             });

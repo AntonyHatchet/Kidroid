@@ -271,13 +271,12 @@ socket.on('getVersionDeploy', function (data) {
         apk += '<tr>'+checkBox+name+version+build+'</tr>';
     }
     for (var j = 0; j < data.kidroid.length; j++) {
-        var dateKidroid = new Date(data.kidroid[i].date);
-        var checkBoxKid = "<td ><input type=checkbox class='checkAllKidroidVersion' value=" + data.kidroid[i]._id + "></td>";
-        var nameKid = '<td class="name">'+ dateKidroid.toLocaleString("en", options) + ' (' + data.kidroid[i].user + ')</td>';
-        var versionKid = '<td class="version">'+ data.kidroid[i].loader + '</td>';
-        var buildKid = '<td class="build">'+  data.kidroid[i].loader + '</td>';
+        var dateKidroid = new Date(data.kidroid[j].date);
+        var checkBoxKid = "<td ><input type=checkbox class='checkAllKidroidVersion' value=" + data.kidroid[j]._id + "></td>";
+        var nameKid = '<td class="name">'+ dateKidroid.toLocaleString("en", options) + ' (' + data.kidroid[j].user + ')</td>';
+        var versionKid = '<td class="version">'+ data.kidroid[j].loader + '</td>';
         var optionsdKid = '<td class="build"></td>';
-        kidroid += '<tr>'+checkBoxKid+nameKid+versionKid+buildKid+optionsdKid+'</tr>';
+        kidroid += '<tr>'+checkBoxKid+nameKid+versionKid+'</tr>';
     }
     $("#settingKidroidVersionTable").html(kidroid);
     $("#settingApkVersionTable").html(apk);

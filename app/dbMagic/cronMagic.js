@@ -102,8 +102,14 @@ module.exports = {
         },"New");
     },
     ScheduleStart: function (task){
-        console.log("ScheduleStart");
-        console.log(task,"task");
+        Cron.update({"_id":task.id},{$set:{"status":"Started"}},{$upsert:true},function (err,cb) {
+            if (err) {
+                return console.log(err, "updateSchedule err");
+            }
+            if (!cb){
+                return console.log(cb, "updateSchedule cb");
+            }
+        });
         var id = task.devices;
         var version = task.version;
         Updater(0);
@@ -112,8 +118,8 @@ module.exports = {
                 Device.update({"_id":+id[i]},{$set:{"apkToUpdate.build":+version,"updateRequired":true}}, function (err, updated) {
                     if (err) return console.log(err,"ScheduleStart Device.update err");
                     console.log("This device " + id[i] + "is updated");
+                    Updater(i++)
                 });
-                Updater(i++)
             }
         }
         console.log("End")

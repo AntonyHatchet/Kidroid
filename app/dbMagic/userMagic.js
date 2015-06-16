@@ -285,6 +285,38 @@ module.exports = {
             callback(null, 0)
         })
     },
+    createVersionKidroid: function (data, callback) {
+        console.log(data,"createVersionKidroid data")
+        Kidroid.findOne({"loader": data.loader}, function (err, category) {
+
+            if (err) return console.log(err,"createVersionKidroid Version.findOne err");
+
+            if (category == null) {
+                var newVersion = new Kidroid({
+                    loader: data.loader,
+                    default: false,
+                    link: data.link,
+                    user: data.user,
+                    date: new Date()
+                });
+
+                newVersion.save(function (err) {
+
+                    if (err) return console.log(err,"createVersionKidroid newVersion.save err");
+
+                    Kidroid.find("", function (err, category) {
+
+                        if (err) return console.log(err,"createVersionKidroid Version.find err");
+
+                        if (category != null) {
+                            callback(null, category)
+                        }
+                    });
+                });
+            }
+            callback(null, 0)
+        })
+    },
     makeDefault: function (location ,id, callback) {
 
         location.update({},{$set:{"default":false}}, function (err, data) {

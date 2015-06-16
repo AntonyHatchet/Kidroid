@@ -80,7 +80,6 @@ module.exports = {
             .exec(function (err, Devices) {
                 if (err) return console.log(err,"getQuantity Device.count err");
                 // Execute callback
-                console.log(Devices,"devices")
                 callback(null, Devices);
             });
     },
@@ -96,7 +95,6 @@ module.exports = {
             }
             var status = params.status;
         }
-        console.log(params,"getDeviceId");
         Device
             .find({})
             .where('name').equals((!name)?{$exists: true}:name)

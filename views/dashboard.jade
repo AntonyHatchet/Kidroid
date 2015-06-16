@@ -28,7 +28,7 @@ block content
             ul.nav.navbar-nav.side-nav.tabsMy
                 li.active(data-tab='devices')
                     a(href="#")
-                        i.fa.fa-fw.fa-dashboard
+                        i.fa.fa-fw.fa-mobile
                         span  Devices
                 li(data-tab='users')
                     a(href="#")
@@ -38,18 +38,22 @@ block content
                     a(href="#")
                         i.fa.fa-fw.fa-arrows-v
                         span  Filters
-                li(data-tab='settings')
+                li(data-tab='versions')
                     a(href="#")
-                        i.fa.fa-fw.fa-wrench
-                        span  Settings
+                        i.fa.fa-fw.fa-code-fork
+                        span  Versions
                 li(data-tab='requests')
                     a(href="#")
                         i.fa.fa-fw.fa-edit
                         span  Request log
                 li(data-tab='planning')
                     a(href="#")
-                        i.fa.fa-fw.fa-table
+                        i.fa.fa-fw.fa-calendar-o
                         span  Planning
+                li(data-tab='Kidroid settings')
+                    a(href="#")
+                        i.fa.fa-fw.fa-cogs
+                        span  Kidroid settings
     #page-wrapper.content
         .container-fluid
             //===========TABS DEVICES=======================
@@ -462,7 +466,7 @@ block content
                                 .modal-footer
                                     button(class="btn btn-primary" type='submit') Add user
             //===========TABS SETTINGS================
-            #settings(class='tab-content')
+            #versions(class='tab-content')
                 fieldset
                     legend Marionette APK
                     div(class='form-search form-inline apk')
@@ -502,8 +506,6 @@ block content
                                         input(type='checkbox' id='checkAllKidroidVersion')
                                     th Date added
                                     th Version
-                                    th Build
-                                    th Options
                             tbody(id='settingKidroidVersionTable')
                     .right
                         .btn-group(role='group')
