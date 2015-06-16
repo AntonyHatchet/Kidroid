@@ -37,10 +37,12 @@ function createNewCategory() {
     if(nameCategory !=0){
         console.log('yes');
         socket.emit('createFilter', {"name":"School","params": nameCategory });
-        $('#errorCreateCategory').addClass('no-show');
+        $('#errorCreateSchool').addClass('no-show');
+        $('#completeCreateSchool').removeClass('no-show');
     }else{
         console.log('no');
-        $('#errorCreateCategory').removeClass('no-show');
+        $('#errorCreateSchool').removeClass('no-show');
+        $('#completeCreateSchool').addClass('no-show');
     }
 
     //console.log(nameCategory);
@@ -50,10 +52,12 @@ function createNewFilter() {
     var nameFilter = $("#paramFilter").val();
     if(nameFilter !=0){
         socket.emit('createFilter', {"name":"Filter2","params": nameFilter });
-        $('#errorCreateCategory').addClass('no-show');
+        $('#errorCreateFilter').addClass('no-show');
+        $('#completeCreateFilter').removeClass('no-show');
     }else{
         console.log('no');
-        $('#errorCreateCategory').removeClass('no-show');
+        $('#errorCreateFilter').removeClass('no-show');
+        $('#completeCreateFilter').addClass('no-show');
     };
 };
 //TO DO =====================
@@ -73,7 +77,16 @@ function inputNewNameCategory() {
     var device = {};
     device.oldName = $("#newNameCategory").attr("data-name");
     device.newName = $("#newNameCategory").val();
-    socket.emit('editCategory', device);
+    if(device.newName != 0) {
+        //console.log('yes');
+        $('#errorEditFilters').addClass('no-show');
+        $('#completeEditFilters').removeClass('no-show');
+        socket.emit('editCategory', device);
+    }else{
+        //console.log('no');
+        $('#errorEditFilters').removeClass('no-show');
+        $('#completeEditFilters').addClass('no-show');
+    }
     //console.log(device);
 };
 function inputNewNameUser() {
@@ -86,15 +99,18 @@ function inputNewNameUser() {
         console.log('yes');
         $('#errorUsersPassword').addClass('no-show');
         $('#errorUsersName').addClass('no-show');
+        $('#completeUsersEdit').removeClass('no-show');
         $('.close').click();
         return socket.emit('updateUser', device);
     }if(device.newPassword != newPassword2 ){
         $('#errorUsersPassword').removeClass('no-show');
         $('#errorUsersName').addClass('no-show');
+        $('#completeUsersEdit').addClass('no-show');
         return newPassword2;
     }else{
         $('#errorUsersName').removeClass('no-show');
         $('#errorUsersPassword').addClass('no-show');
+        $('#completeUsersEdit').addClass('no-show');
     }
 };
 
@@ -112,8 +128,10 @@ function editDevice(){
         $('#editDevice .close').click();
         socket.emit('updateDevice', device);
         $('#errorEditDevice').addClass('no-show');
+        $('#completeEditDevice').removeClass('no-show');
     }else{
         $('#errorEditDevice').removeClass('no-show');
+        $('#completeEditDevice').addClass('no-show');
     }
     //console.log(device);
 }
@@ -209,15 +227,18 @@ function addDevice() {
     var device = {};
     device.category = $("#addSelectCategory").val();
     device.build = $("#addSelectVersion").val();
-    device.numberDevice = $("#amountDevice").val();
+    device.numberDevice = number = $("#amountDevice").val();
     device.filter2 = $("#filter2").val();
     console.log(device);
     if (device.category != 0 && device.version !=0)  {
         socket.emit('createDevice', device);
         $('#errorAddDevice').addClass('no-show');
+        $('#completeAddDevice').removeClass('no-show');
+        $('#idDeviceCreate').setAttribute(rows, number);
         //console.log('yes');
     } else{
         $('#errorAddDevice').removeClass('no-show');
+        $('#completeAddDevice').addClass('no-show');
     }
 };
 
@@ -393,6 +414,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('#closeIdTextarea, #closeIdTextarea1').click(function(){
        $('#addDevice').css('display','block');
+       $('#closeAddDevice').click();
        $('#idDevice').removeClass('.in')
            .attr('aria-hidden', true)
            .css('z-index','-1')

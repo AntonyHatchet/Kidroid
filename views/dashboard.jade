@@ -83,15 +83,15 @@ block content
                                 th
                                     input(type="checkbox" id="checkboxWarning" value="option1")
                                 th(onclick='find(sort(this))',data-sort="1",data-id="1") ID#
-                                    .glyphicon.glyphicon-sort
+                                    .glyphicon.glyphicon-sort.right
                                 th(onclick='find(sort(this))',data-sort="1",data-id="2") Device Name
-                                    .glyphicon.glyphicon-sort
+                                    .glyphicon.glyphicon-sort.right
                                 th(onclick='find(sort(this))',data-sort="1",data-id="3") APK version
-                                    .glyphicon.glyphicon-sort
+                                    .glyphicon.glyphicon-sort.right
                                 th(onclick='find(sort(this))',data-sort="1",data-id="4") Loader version
-                                    .glyphicon.glyphicon-sort
+                                    .glyphicon.glyphicon-sort.right
                                 th(onclick='find(sort(this))',data-sort="1",data-id="5") Device status
-                                    .glyphicon.glyphicon-sort
+                                    .glyphicon.glyphicon-sort.right
                                 th Options
                         tbody(id='deviceTable')
                             //button(class='btn btn-danger' type='button' onclick="dellDevice()") Delete
@@ -121,7 +121,7 @@ block content
                     .modal-dialog.modal-sm
                         .modal-content
                             div(class="modal-header")
-                                button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                                button(type="button" id='closeAddDevice' class="close" data-dismiss="modal" aria-label="Close")
                                     span(aria-hidden="true") &times;
                                 h2 Add new device(s)
                             div(class="modal-body")
@@ -143,14 +143,17 @@ block content
                                         .col-sm-7
                                             input(id='amountDevice' type="number", name='number' min="1" value='1' class="form-control")
                                     .form-group
-                                        label(for="commentDevice").col-sm-5.control-label Comment:
-                                        .col-sm-12.margin-top-5
+                                        label(for="commentDevice").col-sm-3.control-label Comment:
+                                        .col-sm-9
                                             textarea(id='commentDevice' class="form-control" rows="3")
                             div(class="modal-footer")
                                 //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
                                 div(id='errorAddDevice' class='alert alert-danger no-show .col-lg-1')
                                     //button(type="button" class="close" data-dismiss="alert") &times;
-                                    p passwords are different
+                                    p All fields must be filled out
+                                div(id='completeAddDevice' class='alert alert-success no-show .col-lg-1')
+                                    //button(type="button" class="close" data-dismiss="alert") &times;
+                                    p Devices are adding
                                 button(class="btn btn-primary .col-lg-6" onclick='addDevice()') Add
                 //============MODAL ID device=====================
                 //div(class="modal" id="idDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -253,6 +256,9 @@ block content
                                 div(id='errorEditDevice' class='alert alert-danger no-show')
                                     //button(type="button" class="close" data-dismiss="alert") &times;
                                     p All fields must be filled out
+                                div(id='completeEditDevice' class='alert alert-success no-show')
+                                    //button(type="button" class="close" data-dismiss="alert") &times;
+                                    p Device is edit
                                 button(class="btn btn-primary" onclick='editDevice()') Save
                 //============MODAL maps=====================
                 div(class="modal" id="map" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: -1; opacity: 0 ")
@@ -339,8 +345,10 @@ block content
                                         .col-sm-9
                                             input(class="form-control" id="newCategory" name='category')
                             div(class="modal-footer")
-                                div(id='errorCreateCategory' class='alert alert-danger no-show')
+                                div(id='errorCreateSchool' class='alert alert-danger no-show')
                                     p All fields must be filled out
+                                div(id='completeCreateSchool' class='alert alert-success no-show')
+                                    p School is create
                                 button(class="btn btn-primary" onclick="createNewCategory()" type="button") Create
                 //============MODAL Create new filter=====================
                 div(class="modal" id="createFilter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -357,8 +365,10 @@ block content
                                         .col-sm-9
                                             input(class="form-control" id="paramFilter" name='category')
                             div(class="modal-footer")
-                                div(id='errorCreateCategory' class='alert alert-danger no-show')
+                                div(id='errorCreateFilter' class='alert alert-danger no-show')
                                     p All fields must be filled out
+                                div(id='completeCreateFilter' class='alert alert-success no-show')
+                                    p Filter is create
                                 button(class="btn btn-primary" onclick="createNewFilter()" type="button") Create
 
                 //============MODAL Edit category=====================
@@ -378,6 +388,10 @@ block content
                                         .col-sm-9
                                             input(type="input" class="form-control" id='newNameCategory')
                             div(class="modal-footer")
+                                div(id='errorEditFilters' class='alert alert-danger no-show')
+                                    p All fields must be filled out
+                                div(id='completeEditFilters' class='alert alert-success no-show')
+                                    p Name is edit
                                 button( type="button" class="btn btn-primary" onclick="inputNewNameCategory()") Edit
             //==========USERS TABS===================
             #users(class='tab-content')
@@ -424,6 +438,8 @@ block content
                                     p Passwords are different
                                 div(id='errorUsersName' class='alert alert-danger no-show')
                                     p All fields must be filled out
+                                div(id='completeUsersEdit' class='alert alert-success no-show')
+                                    p Users is edit
                                 button( type="button" class="btn btn-primary" onclick="inputNewNameUser()") Edit
                 //============MODAL Add new user=====================
                 div(class="modal" id="addUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
