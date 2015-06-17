@@ -134,12 +134,13 @@ module.exports = function (server,sessionMiddleware) {
             }
         );
 
-        socket.on('deployApk', function (version) {
+        socket.on('deployApk', function (data) {
                 var deploy={};
                 deploy.name = userName;
                 deploy.date = new Date();
                 deploy.devices = devicesToDeploy;
-                deploy.version = version;
+                deploy.build = data.build;
+                deploy.version = data.version;
                 deploy.type = "Marionette APK";
                 cron.newSchedule(deploy, function (err, callback) {
                     if (err) {

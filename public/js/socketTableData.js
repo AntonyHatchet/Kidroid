@@ -10,7 +10,7 @@ socket.on('displayData', function (data) {
         var deviceId = "<td>" + data[i]._id + "</td>";
         var deviceName = "<td>"+ data[i].name + "<p>(Android v." +data[i].android +")</p></td>";
         var update = (!data[i].updateRequired)? "": "*Pending update (v"+data[i].apkToUpdate.version+" build "+data[i].apkToUpdate.build+")";
-        var apkVersion = "<td>" + ((!data[i].apk.version >=1 )? "-" : data[i].apk.version +" (Build "+data[i].apk.build + ")") + "<p>"+ update +"</p></td>";
+        var apkVersion = "<td>" + ((!+data[i].apk.build >=1 )? "-" : data[i].apk.version +" (Build "+data[i].apk.build + ")") + "<p>"+ update +"</p></td>";
         var loaderVersion = "<td>"+ ((data[i].loader >= 1)? data[i].loader: '-') +"</td>";
         var status = "<td>" + data[i].status + "</td>";
         if(data[i].longitude!=0||data[i].latitude!=0) {

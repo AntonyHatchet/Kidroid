@@ -27,7 +27,7 @@ module.exports = {
         var newCron = new Cron({
             "timeStart": job.date,
             "devices": job.devices,
-            "versionToUpdate": +job.version,
+            "versionToUpdate": {version:job.version,build:(job.build)?job.build:0},
             "status": "New",
             "name": job.name,
             "type": job.type
@@ -48,9 +48,8 @@ module.exports = {
         var query = {
             "timeStart": job.date,
             "devices": job.devices,
-            "versionToUpdate": job.version,
+            "versionToUpdate": {version:job.version,build:(job.build)?job.build:0},
             "status": "New"
-
         };
 
         Cron.update({"_id":job.id},{$set:query},{$upsert:true},function (err,cb) {
@@ -102,7 +101,7 @@ module.exports = {
         },"New");
     },
     ScheduleStart: function (task){
-        Cron.update({"_id":task.id},{$set:{"status":"Started"}},{$upsert:true},function (err,cb) {
+        Cron.update({"_id":task._id},{$set:{"status":"Started"}},{$upsert:true},function (err,cb) {
             if (err) {
                 return console.log(err, "updateSchedule err");
             }
@@ -111,15 +110,24 @@ module.exports = {
             }
         });
         var id = task.devices;
-        var version = task.version;
+        var version = task.versionToUpdate.version;
+        var build = task.versionToUpdate.build;
         Updater(0);
         function Updater(i){
             if (i!=null && i < id.length){
-                Device.update({"_id":+id[i]},{$set:{"apkToUpdate.build":+version,"updateRequired":true}}, function (err, updated) {
-                    if (err) return console.log(err,"ScheduleStart Device.update err");
-                    console.log("This device " + id[i] + "is updated");
-                    Updater(i++)
-                });
+                if (task.type === "Kidroid Loader"){
+                    Device.update({"_id":+id[i]},{$set:{"kidroidToUpdate":version,"updateRequired":true}},{$upsert:true}, function (err, updated) {
+                        if (err) return console.log(err,"ScheduleStart Device.update err");
+                        console.log("This device " + id[i] + "Kidroid is updated");
+                        Updater(i++)
+                    });
+                }else if (task.type === "Marionette APK"){
+                    Device.update({"_id":+id[i]},{$set:{"apkToUpdate.build":+build,"apkToUpdate.version":version,"updateRequired":true}}, function (err, updated) {
+                        if (err) return console.log(err,"ScheduleStart Device.update err");
+                        console.log("This device " + id[i] + "Marionette is updated");
+                        Updater(i++)
+                    });
+                }
             }
         }
         console.log("End")

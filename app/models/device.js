@@ -7,20 +7,20 @@ var DeviceSchema = mongoose.Schema({
     _id:Number,
     school: String,
     timestamp: Date,
-    //TODO убрать deviceID как не нужный элемент
     token: String,
     latitude: Array,
     longitude: Array,
     apk: {
-        version: Number,
-        build: Number
+        version: String,
+        build: String
     },
     apkToUpdate: {
-        version: Number,
-        build: Number,
+        version: String,
+        build: String,
         status: String
     },
-    loader: Number,
+    loader: String,
+    kidroidToUpdate: String,
     name: String,
     comment: String,
     registered: Boolean,

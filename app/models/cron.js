@@ -6,7 +6,10 @@ var mongoose = require('mongoose');
 var CronSchema = mongoose.Schema({
         timeStart: Date,
         devices: Array,
-        versionToUpdate: Number,
+        versionToUpdate: {
+                version: String,
+                build: String
+        },
         status: String,
         name: String,
         type: String

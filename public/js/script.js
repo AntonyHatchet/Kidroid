@@ -183,8 +183,10 @@ function uploadChangeKidroid(){
     $('#uploadKidroid').click();
 }
 function deployAPK(){
-    var version = $("#selectVersionApkToDeploy").val().split(' ')[0];
-    socket.emit("deployApk",version)
+    var apk = {};
+    apk.version = $("#selectVersionApkToDeploy").val().split(' ')[0];
+    apk.build = $("#selectVersionApkToDeploy").val().split(' ')[1];
+    socket.emit("deployApk",apk)
 }
 function uploadChangeKidroid(){
     $('#uploadKidroid').click();

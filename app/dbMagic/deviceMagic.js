@@ -156,7 +156,8 @@ module.exports = {
             timestamp: new Date().getTime(),
             registered: false,
             apkToUpdate:{
-                build: (isNaN(deviceInfo.build.split(' ')[1])) ? deviceInfo.build.split(' ')[0]:deviceInfo.build,
+                build:  deviceInfo.build.split(' ')[1],
+                version: deviceInfo.build.split(' ')[0],
                 status: "Install scheduled"
             },
             apk: {
