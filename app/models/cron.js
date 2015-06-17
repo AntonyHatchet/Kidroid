@@ -14,7 +14,9 @@ var CronSchema = mongoose.Schema({
         name: String,
         type: String,
         school: String,
-        filter: String
+        filter: String,
+        deviceToUpdate: Number,
+        deviceUpdated: Number
 });
 
 module.exports = mongoose.model('Cron', CronSchema, "cron");

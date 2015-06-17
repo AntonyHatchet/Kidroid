@@ -7,6 +7,7 @@ module.exports = {
     // Получаем из БД общее колличество записей
     getQuantity: function (callback,params) {
         if (params!=undefined) {
+            console.log(params,"Find getQuantity")
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
             var _id = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             var school = params.category;
@@ -53,6 +54,7 @@ module.exports = {
     },
     getDevice: function (callback,params) {
         if (params!=undefined) {
+            console.log(params,"Find getDevice")
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
             var _id = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             var school = params.school;
@@ -85,6 +87,7 @@ module.exports = {
     },
     getDeviceId: function (callback,params) {
         if (params!=undefined) {
+            console.log(params,"Find getDeviceId")
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
             var _id = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             var school = params.category;
@@ -143,7 +146,9 @@ module.exports = {
         var device = Device;
         device.findOne({"_id": +deviceInfo.id}, {
             "_id": 1,
-            "apkToUpdate": 1
+            "apkToUpdate": 1,
+            "task":1,
+            "updateRequired":1
         }, function (err, device) {
             if (err) return console.log(err,"findVersion device.findOne err");
             callback(null, device);
@@ -178,8 +183,8 @@ module.exports = {
         });
     },
 
-    registrDevice: function (deviceInfo, callback) {
-        Device.findOne({"_id": deviceInfo.id, "registered": false}, function (err, device) {
+    registrDevice: function (id, callback) {
+        Device.findOne({"_id": id, "registered": false}, function (err, device) {
             if (err) return console.log(err,"registrDevice Device.findOne err");
 
             if (device != null) {
@@ -190,7 +195,7 @@ module.exports = {
                     "registered": true,
                     "status":"Registered"
                 };
-                Device.update({"_id": deviceInfo.id}, {$set: update}, {upsert: true}, function (err, updated) {
+                Device.update({"_id": id}, {$set: update}, {upsert: true}, function (err, updated) {
 
                     if (err) return console.log(err,"registrDevice Device.update err");
 

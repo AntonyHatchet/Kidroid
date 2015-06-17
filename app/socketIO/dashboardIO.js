@@ -138,7 +138,7 @@ module.exports = function (server,sessionMiddleware) {
                 var deploy={};
                 deploy.name = userName;
                 deploy.date = new Date();
-                deploy.devices = (data.devices)?data.devices:devicesToDeploy;
+                deploy.devices = (data.devices.length !=0)?data.devices:devicesToDeploy;
                 deploy.build = data.build;
                 deploy.version = data.version;
                 deploy.type = "Marionette APK";
@@ -156,7 +156,7 @@ module.exports = function (server,sessionMiddleware) {
                 var deploy={};
                 deploy.name = userName;
                 deploy.date = new Date();
-                deploy.devices = (version.devices)?version.devices:devicesToDeploy;
+                deploy.devices = (version.devices.length !=0)?version.devices:devicesToDeploy;
                 deploy.version = version;
                 deploy.type = "Kidroid Loader";
                 deploy.school = version.school;
@@ -210,17 +210,18 @@ module.exports = function (server,sessionMiddleware) {
                         console.log(err);
                     }
                     devicesToDeploy = callback;
-                    io.emit('deviceForDeploy', callback);
                 },params);
             }
         );
         // «апрос устройств на страницу по колличеству
         socket.on('getDevicesByParams', function (params) {
+                console.log(params,"getDevicesByParams")
                 user.getDevice(function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
                     io.emit('displayData', callback);
+                    io.emit('deviceForDeploy', callback);
                 },params);
             }
         );

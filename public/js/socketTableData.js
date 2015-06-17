@@ -162,7 +162,7 @@ socket.on('deviceScheduled', function (data) {
     $("#tableSchedule").html(html);
 });
 socket.on('deviceForDeploy', function (data) {
-    console.log(data);
+    console.log(data,"deviceForDeploy");
     html = '';
     for (i in data)
         var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td>"
@@ -222,12 +222,13 @@ socket.on('allSchedule', function (data) {
     for (i in data) {
         var date = new Date(data[i].timeStart);
         var name = data[i].name;
-        var version = data[i].versionToUpdate;
-        var status = data[i].status;
-        var school = "School #2";
+        var version = "v"+data[i].versionToUpdate.version+" build "+data[i].versionToUpdate.build;
+        var total = data[i].deviceToUpdate;
+        var updated = data[i].deviceUpdated;
+        var school = data[i].school;
+        var filter = data[i].filter;
         var type = data[i].type;
-        var filter2 = "Some filter data";
-        html += "<tr><td>" + date.toLocaleString("en", options) + " (" + name + ")" + "</td><td>" + version + "</td><td>" + status + "</td><td>" + school + "</td><td>" + type + "</td><td>" + filter2 + "</td></tr>";
+        html += "<tr><td>" + date.toLocaleString("en", options) + " (" + name + ")" + "</td><td>" + type + "</td><td>" + version + "</td><td>" + total + "</td><td>" + updated + "</td><td>" + school + "</td><td>" + filter + "</td></tr>";
         $("#allSchedule").html(html);
     }
 });

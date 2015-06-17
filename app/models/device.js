@@ -27,7 +27,8 @@ var DeviceSchema = mongoose.Schema({
     updateRequired: Boolean,
     status: String,
     android: Number,
-    filter2: String
+    filter2: String,
+    task: String
 });
 
 module.exports = mongoose.model('Device', DeviceSchema, "devices");

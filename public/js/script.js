@@ -189,10 +189,10 @@ function deployAPK(){
     apk.version = $("#selectVersionApkToDeploy").val().split(' ')[0];
     apk.build = $("#selectVersionApkToDeploy").val().split(' ')[1];
     apk.school = $("#selectCategory").val();
-    apk.filter2 = $("#customFilter").val();
+    apk.filter = $("#customFilter").val();
     apk.devices = $('input:checkbox.checkboxWarning:checked').map(function() {return this.value;}).get();
     socket.emit("deployApk",apk)
-    //console.log(apk);
+    console.log(apk);
 }
 function uploadChangeKidroid(){
     $('#uploadKidroid').click();
@@ -201,7 +201,7 @@ function deployKidroid(){
     var kidroid = {};
     kidroid.version = $("#kidroidVersionDeploy").val().split(' ')[0];
     kidroid.school = $("#selectCategory").val();
-    kidroid.filter2 = $("#customFilter").val();
+    kidroid.filter = $("#customFilter").val();
     kidroid.devices = $('input:checkbox.checkboxWarning:checked').map(function() {return this.value;}).get();
     socket.emit("deployKidroid",kidroid)
 }
@@ -213,13 +213,12 @@ function find(sort) {
     device.search = data.search = $("#DeviceNameIDSerial").val();
     device.status = data.status = $("#selectStatus").val();
     device.school = data.school = $("#selectCategory").val();
-    device.filter2 = data.filter2 = $("#customFilter").val();
+    device.filter = data.filter = $("#customFilter").val();
     device.build = data.build = $("#marionetteVersion").val();
     data.limit = itemsPerPage = $("#ItemsPerPage").val();
     socket.emit('getDevicesByParams', data);
     socket.emit('getDeviceIdByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
-    console.log(data);
 };
 var acrivePage;
 function page(i) {
@@ -231,7 +230,7 @@ function page(i) {
     device.search = data.search = $("#DeviceNameIDSerial").val();
     device.status = data.status = $("#selectStatus").val();
     device.school = data.school = $("#selectCategory").val();
-    device.filter2 =data.filter2 =  $("#customFilter").val();
+    device.filter = data.filter =  $("#customFilter").val();
     device.build = data.build = $("#marionetteVersion").val();
     if(data.limit==10 || i==1) {
         device.page = data.page = i * 10 - 10;
@@ -249,7 +248,7 @@ function addDevice() {
     device.category = $("#addSelectCategory").val();
     device.build = $("#addSelectVersion").val();
     device.numberDevice = number = $("#amountDevice").val();
-    device.filter2 = $("#filter2").val();
+    device.filter = $("#filter2").val();
     console.log(device);
     if (device.category != 0 && device.version !=0)  {
         socket.emit('createDevice', device);

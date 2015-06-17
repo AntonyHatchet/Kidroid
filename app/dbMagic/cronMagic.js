@@ -32,7 +32,9 @@ module.exports = {
             "name": job.name,
             "type": job.type,
             "school": job.school,
-            "filter": job.filter
+            "filter": job.filter,
+            "deviceToUpdate": job.devices.length,
+            "deviceUpdated":0
         });
         newCron.save(function (err) {
             if (err) {
@@ -51,7 +53,9 @@ module.exports = {
             "timeStart": job.date,
             "devices": job.devices,
             "versionToUpdate": {version:job.version,build:(job.build)?job.build:0},
-            "status": "New"
+            "status": "New",
+            "deviceToUpdate": job.devices.length,
+            "deviceUpdated":0
         };
 
         Cron.update({"_id":job.id},{$set:query},{$upsert:true},function (err,cb) {
@@ -114,19 +118,20 @@ module.exports = {
         var id = task.devices;
         var version = task.versionToUpdate.version;
         var build = task.versionToUpdate.build;
+        console.log(task,"task")
         console.log(id,"Updater")
         console.log(id.length,"Updater.length")
         Updater(0);
         function Updater(i){
             if (i < id.length){
                 if (task.type === "Kidroid Loader"){
-                    Device.update({"_id":+id[i]},{$set:{"kidroidToUpdate":version,"updateRequired":true}},{$upsert:true}, function (err, updated) {
+                    Device.update({"_id":+id[i]},{$set:{"kidroidToUpdate":version,"updateRequired":true,"task":task._id}},{$upsert:true}, function (err, updated) {
                         if (err) return console.log(err,"ScheduleStart Device.update err");
                         console.log("This device " + id[i] + "Kidroid is updated");
                         Updater(++i)
                     });
                 }else if (task.type === "Marionette APK"){
-                    Device.update({"_id":+id[i]},{$set:{"apkToUpdate.build":+build,"apkToUpdate.version":version,"updateRequired":true}},{$upsert:true}, function (err, updated) {
+                    Device.update({"_id":+id[i]},{$set:{"apkToUpdate.build":+build,"apkToUpdate.version":version,"updateRequired":true,"task":task._id}},{$upsert:true}, function (err, updated) {
                         if (err) return console.log(err,"ScheduleStart Device.update err");
                         console.log("This device " + id[i] + "Marionette is updated");
                         Updater(++i)
@@ -135,5 +140,12 @@ module.exports = {
             }
         }
         console.log("End")
+    },
+    counter: function(id,callback){
+        Cron.update({"_id":id},{$inc:{"deviceUpdated":1}}, function (err, updated) {
+            if (err) return console.log(err,"ScheduleStart Device.update err");
+            console.log("This Cron " + updated);
+            callback(err,true)
+        });
     }
 };

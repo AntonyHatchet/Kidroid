@@ -1,6 +1,7 @@
 var deviceMagic = require('../dbMagic/deviceMagic');
 var user = require('../routes/users.js');
 var server = require('../../config/server.js').address;
+var Cron = require('../dbMagic/cronMagic');
 
 module.exports = {
     // Проверяем когда последний раз устройства делали отстук
@@ -40,7 +41,7 @@ module.exports = {
                 res.json({"error": "wrong ID"});
             }
 
-            deviceMagic.registrDevice(req.body, function (err, token) {
+            deviceMagic.registrDevice(req.body.device_id, function (err, token) {
 
                 if (err) return console.log(err,"getRegistrationDevice deviceMagic.registrDevice err");
 
@@ -88,7 +89,7 @@ module.exports = {
 
             if (err) return console.log(err,"checkApkVersion deviceMagic.findVersion err");
 
-            if (device.updateRequired === true && device.apkToUpdate.build != req.body.apk_build) {
+            if (device.apkToUpdate.build != req.body.apk_build) {
                 user.findLink(device.apkToUpdate.build,function(err,callback){
 
                     if (err) return console.log(err,"checkApkVersion user.findLink err");
@@ -96,8 +97,15 @@ module.exports = {
                     res.json({update_required: true, version: device.apkToUpdate.build, link: server + callback[0].link.slice(1)});
                 });
             }
+            if(device.updateRequired === true){
+                Cron.counter(device.task,function(err,callback){
+                    if (err) return console.log(err,"checkApkVersion Cron.counter err");
+                    if (callback)
+                        next();
+                })
+            }
             else {
-                next();
+              next();
             }
 
         });

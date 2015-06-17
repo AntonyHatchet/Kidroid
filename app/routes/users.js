@@ -327,7 +327,7 @@ module.exports = {
                             school: params.category,
                             version: params.version,
                             build: params.build,
-                            filter2: params.filter2
+                            filter2: params.filter
                         },
                         function (err,savedDevice) {
 
@@ -393,8 +393,8 @@ module.exports = {
         });
     },
     //Удаление категорий
-    removeFilters: function (filters, callback) {
-        userMagic.removeFilters(filters, function (err, category) {
+    removeFilters: function (category, callback) {
+        userMagic.removeFilters(category, function (err, category) {
 
             if (err) return console.log(err,"removeCategory  userMagic.removeSchoolCategory err");
 
