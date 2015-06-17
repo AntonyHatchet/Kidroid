@@ -374,25 +374,13 @@ function createSchedule(){
     //console.log(device);
 }
 
-function dellDevice(){
-    var device ={};
-    device.devices = $('input:checkbox:checked').map(function() {return this.value;}).get();
-    socket.emit('removeDevice', device.devices)
-    //console.log(device.devices);
-}
 function dellUsers(){
     var device ={};
     device.devices = $('input:checkbox.checkAllUsers:checked').map(function() {return this.value;}).get();
     socket.emit('removeUsers', device.devices)
     //console.log(device.devices);
 }
-function dellCategory(){
-    var device ={};
-    device.devices = $('input:checkbox.checkAllCategory:checked').map(function() {return this.value;}).get();
-    socket.emit('removeCategory', device.devices)
-    //console.log(device.devices);
-}
-function dellFilters(){
+function dellFilter(){
     var device ={};
     device.devices = $('input:checkbox.checkAllFilters:checked').map(function() {return this.value;}).get();
     socket.emit('removeFilters', device.devices)

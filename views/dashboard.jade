@@ -320,7 +320,7 @@ block content
                             .right
                                 .btn-group
                                     a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") Add new school...
-                                    button(class="btn btn-danger" onclick="dellCategory()" type="button") Delete
+                                    button(class="btn btn-danger" onclick="dellFilter()" type="button") Delete
                     #filtersAdd(class='nav-tab-content')
                         .container-fluid.container-tab
                             table(class='table table-hover table-bordered table-striped')
@@ -333,7 +333,7 @@ block content
                             .right
                                 .btn-group
                                     a(href='#createFilter' role="button" class="btn btn-primary" data-toggle="modal") Add new filter2...
-                                    button(class="btn btn-danger" onclick="dellFilters()" type="button") Delete
+                                    button(class="btn btn-danger" onclick="dellFilter()" type="button") Delete
                 //============MODAL Create new category=====================
                 div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
                     .modal-dialog.modal-sm

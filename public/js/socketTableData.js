@@ -249,10 +249,10 @@ socket.on('getVersionDeploy', function (data) {
             defaultVersion = data.apk[i];
         }
     }
-    html = "<option>" + defaultVersion.apk.build +" current"+"</option>";
+    html = "<option>" + defaultVersion.apk.version +" "+ defaultVersion.apk.build +" current"+"</option>";
     for (var j = 0; j < data.apk.length; j++) {
         if (data.apk[j] != defaultVersion)
-            html += "<option>" + data.apk[j].apk.build +"</option>";
+            html += "<option>" + defaultVersion.apk.version +" "+ defaultVersion.apk.build +"</option>";
     }
     $("#selectDefaultApkVersion, #addSelectVersion").html(html);
     $("#selectVersionApkToDeploy").html(html);
