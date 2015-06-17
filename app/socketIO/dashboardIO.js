@@ -241,13 +241,13 @@ module.exports = function (server,sessionMiddleware) {
                 }
             }
         );
-        socket.on('removeCategory', function (categoryID) {
-                for (var i = 0; i < categoryID.length; i++) {
-                    user.removeCategory(categoryID[i], function (err, callback) {
+        socket.on('removeFilters', function (data) {
+                for (var i = 0; i < data.filters.length; i++) {
+                    user.removeFilters({name:data.name,filter:data.filters[i]}, function (err, callback) {
                         if (err) {
                             console.log(err);
                         }
-                        io.emit('category', callback);
+                        io.emit('filters', callback);
                     });
                 }
             }

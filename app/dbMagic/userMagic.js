@@ -184,14 +184,14 @@ module.exports = {
             // Execute callback passed from route
         });
     },
-    removeSchoolCategory: function (data, callback) {
-        Category.remove({"_id": data}, function (err, category) {
+    removeFilters: function (data, callback) {
+        Filters.update({"name": data.name},{$pull:{"params":data.filter}}, function (err, category) {
 
             if (err) return console.log(err,"removeSchoolCategory Category.remove err");
-
+            console.log(category)
             if (category != null) {
 
-                Category.find("", function (err, category) {
+                Filters.find("", function (err, category) {
 
                     if (err) return console.log(err,"removeSchoolCategory Category.find err");
 

@@ -377,19 +377,34 @@ function createSchedule(){
 function dellUsers(){
     var device ={};
     device.devices = $('input:checkbox.checkAllUsers:checked').map(function() {return this.value;}).get();
-    socket.emit('removeUsers', device.devices)
+    socket.emit('removeUsers', device.devices);
     //console.log(device.devices);
 }
+
+//TODO переписать на абстрактную функцию удаления
 function dellFilter(){
-    var device ={};
-    device.devices = $('input:checkbox.checkAllFilters:checked').map(function() {return this.value;}).get();
-    socket.emit('removeFilters', device.devices)
+    console.log("dellFilter");
+    var filter ={};
+    filter.filters = $('input:checkbox.checkAllFilters:checked').map(function() {return this.value;}).get();
+    filter.name = "Filter2";
+    if(filter.filters.length >=1){
+        socket.emit('removeFilters', filter);
+    }
     //console.log(device.devices);
+}
+function dellCategory(){
+     console.log("dellCategory");
+    var category ={};
+    category.filters = $('input:checkbox.checkAllCategory:checked').map(function() {return this.value;}).get();
+    category.name = "School";
+    if(category.filters.length >=1){
+        socket.emit('removeFilters', category);
+    }
 }
 function delMarionetteAPK(){
     var device ={};
     device.devices = $('input:checkbox.checkAllMarionetteAPK:checked').map(function() {return this.value;}).get();
-    socket.emit('removeMarionetteAPK', device.devices)
+    socket.emit('removeMarionetteAPK', device.devices);
     //console.log(device.devices);
 }
 function delKidroidVersion(){

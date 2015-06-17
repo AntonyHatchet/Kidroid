@@ -393,8 +393,8 @@ module.exports = {
         });
     },
     //Удаление категорий
-    removeCategory: function (category, callback) {
-        userMagic.removeSchoolCategory(category, function (err, category) {
+    removeFilters: function (filters, callback) {
+        userMagic.removeFilters(filters, function (err, category) {
 
             if (err) return console.log(err,"removeCategory  userMagic.removeSchoolCategory err");
 

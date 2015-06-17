@@ -175,7 +175,7 @@ socket.on('filters', function (data) {
                 school.pushData(data[i].params[j]);
                 var name = "<td>" + data[i].params[j] + "</td>"
                 var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(this)'>Edit</a></td>";
-                var checkbox = "<td><input type='checkbox' class='checkAllCategory' id='checkSchedule'  value=''></td>"
+                var checkbox = "<td><input type='checkbox' class='checkAllCategory' id='checkSchedule'  value='"+ data[i].params[j] +"'></td>"
                 html += "<tr>" + checkbox + name + editButton + "</tr>";
             }
             startAutoComplete(school.getArray(),".category");
@@ -188,7 +188,7 @@ socket.on('filters', function (data) {
                 filter2.pushData(data[i].params[f]);
                 var name = "<td>" + data[i].params[f] + "</td>"
                 var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(this)'>Edit</a></td>";
-                var checkbox = "<td><input type='checkbox' class='checkAllFilters' id='checkSchedule'  value=''></td>"
+                var checkbox = "<td><input type='checkbox' class='checkAllFilters' id='checkSchedule'  value='"+ data[i].params[f] +"'></td>"
                 html += "<tr>" + checkbox + name + editButton + "</tr>";
             }
             startAutoComplete(filter2.getArray(),".filter2");
