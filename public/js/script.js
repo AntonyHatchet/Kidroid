@@ -427,3 +427,10 @@ $(window).scroll(function(){
 });
 
 //===================
+//$(document).ready(function () {
+//    <div class="clndr-controls">
+//    <div class="clndr-previous-button">&lsaquo;</div>
+//    <div class="month"><%= month %></div>
+//    <div class="clndr-next-button">&rsaquo;</div>
+//    </div>
+//}
