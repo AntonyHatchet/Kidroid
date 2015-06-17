@@ -65,7 +65,7 @@ var newUsersId;
 
 function editFilters(context) {
     //$("#newNameCategory").val(context.parentNode.parentNode.childNodes[1].innerText).attr("data-name",context.parentNode.parentNode.childNodes[1].innerText);
-    //$("#newNameCategory").attr("data-name",context).attr("value",context);
+    $("#newNameCategory").attr("data-name",context).attr("value",context).attr("placeholder",context);
     //console.log(context);
 };
 function editUsers(x) {
