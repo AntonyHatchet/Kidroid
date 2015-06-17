@@ -245,7 +245,8 @@ function addDevice() {
         socket.emit('createDevice', device);
         $('#errorAddDevice').addClass('no-show');
         $('#completeAddDevice').removeClass('no-show');
-        $('#idDeviceCreate').autosize();
+        $('#idDeviceCreate').attr('rows',''+ number + '');
+
         //console.log('yes');
     } else{
         $('#errorAddDevice').removeClass('no-show');
@@ -383,7 +384,7 @@ function dellUsers(){
     //console.log(device.devices);
 }
 
-//TODO переписать на абстрактную функцию удаления
+//TODO пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function dellFilter(){
     console.log("dellFilter");
     var filter ={};

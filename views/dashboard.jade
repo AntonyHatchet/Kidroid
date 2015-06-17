@@ -469,9 +469,9 @@ block content
             #versions(class='tab-content')
                 fieldset
                     legend Marionette APK
-                    div(class='form-search form-inline apk')
-                        label(for='selectDefaultApkVersion') Current version:
-                        select(id="selectDefaultApkVersion" class="form-control" onchange="setDefault()")
+                    .form-search.form-inline.apk.col-sm-9
+                            label(for='selectDefaultApkVersion') Current version:
+                            select(id="selectDefaultApkVersion" class="form-control" onchange="setDefault()")
 
                     .container-fluid.container-tab
                         table(class='table table-hover table-bordered table-striped')
@@ -494,7 +494,7 @@ block content
 
                 fieldset
                     legend Kidroid loader
-                    div(class='form-search form-inline apk')
+                    .form-search.form-inline.apk.col-sm-9
                         label(for='selectDefaultKidroidVersion') Current version:
                         select(id="selectDefaultKidroidVersion" class="form-control" onchange="setDefault()")
 
