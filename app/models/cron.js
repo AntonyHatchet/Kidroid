@@ -12,7 +12,9 @@ var CronSchema = mongoose.Schema({
         },
         status: String,
         name: String,
-        type: String
+        type: String,
+        school: String,
+        filter: String
 });
 
 module.exports = mongoose.model('Cron', CronSchema, "cron");

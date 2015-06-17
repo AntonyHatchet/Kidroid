@@ -138,7 +138,7 @@ module.exports = function (server,sessionMiddleware) {
                 var deploy={};
                 deploy.name = userName;
                 deploy.date = new Date();
-                deploy.devices = (data.device)?data.device:devicesToDeploy;
+                deploy.devices = (data.devices)?data.devices:devicesToDeploy;
                 deploy.build = data.build;
                 deploy.version = data.version;
                 deploy.type = "Marionette APK";
@@ -156,11 +156,11 @@ module.exports = function (server,sessionMiddleware) {
                 var deploy={};
                 deploy.name = userName;
                 deploy.date = new Date();
-                deploy.devices = (version.device)?version.device:devicesToDeploy;
+                deploy.devices = (version.devices)?version.devices:devicesToDeploy;
                 deploy.version = version;
                 deploy.type = "Kidroid Loader";
-                deploy.school = data.school;
-                deploy.filter = data.filter;
+                deploy.school = version.school;
+                deploy.filter = version.filter;
                 cron.newSchedule(deploy, function (err, callback) {
                     if (err) {
                         console.log(err);
