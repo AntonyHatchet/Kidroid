@@ -151,17 +151,25 @@ socket.on('error', function (date) {
 });
 
 socket.on('deviceScheduled', function (data) {
-    //console.log(data);
+    console.log(data);
     html = '';
     for (i in data)
-        html += "<tr><td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td><td>" + data[i]._id + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
+        var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td>"
+        var id = "<td>" + data[i]._id + "</td>"
+        var school = "<td>" + data[i].school + "</td>"
+        var apk_vers = "<td>" + data[i].apk.version + "</td>"
+        html += "<tr>"+checkbox+id+school+apk_vers+ "<td></td><td></td></tr>";
     $("#tableSchedule").html(html);
 });
 socket.on('deviceForDeploy', function (data) {
-    //console.log(data);
+    console.log(data);
     html = '';
     for (i in data)
-        html += "<tr><td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td><td>" + data[i]._id + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
+        var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td>"
+        var id = "<td>" + data[i]._id + "</td>"
+        var school = "<td>" + data[i].school + "</td>"
+        var apk_vers = "<td>" + data[i].apk.version + "</td>"
+        html += "<tr>"+checkbox+id+school+apk_vers+"<td></td><td></td></tr>";
     $("#tableSchedule").html(html);
 });
 
