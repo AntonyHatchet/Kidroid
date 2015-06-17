@@ -30,7 +30,9 @@ module.exports = {
             "versionToUpdate": {version:job.version,build:(job.build)?job.build:0},
             "status": "New",
             "name": job.name,
-            "type": job.type
+            "type": job.type,
+            "school": job.school,
+            "filter": job.filter
         });
         newCron.save(function (err) {
             if (err) {
@@ -94,7 +96,7 @@ module.exports = {
                 }
                 cb.forEach(function(task){
                     var time = (task.timeStart - new Date)/60000;
-                    if (time <= 0){
+                    if (time <= 0&& task.status === "New"){
                         module.exports.ScheduleStart(task)
                     }
                 })
@@ -112,20 +114,22 @@ module.exports = {
         var id = task.devices;
         var version = task.versionToUpdate.version;
         var build = task.versionToUpdate.build;
+        console.log(id,"Updater")
+        console.log(id.length,"Updater.length")
         Updater(0);
         function Updater(i){
-            if (i!=null && i < id.length){
+            if (i < id.length){
                 if (task.type === "Kidroid Loader"){
                     Device.update({"_id":+id[i]},{$set:{"kidroidToUpdate":version,"updateRequired":true}},{$upsert:true}, function (err, updated) {
                         if (err) return console.log(err,"ScheduleStart Device.update err");
                         console.log("This device " + id[i] + "Kidroid is updated");
-                        Updater(i++)
+                        Updater(++i)
                     });
                 }else if (task.type === "Marionette APK"){
-                    Device.update({"_id":+id[i]},{$set:{"apkToUpdate.build":+build,"apkToUpdate.version":version,"updateRequired":true}}, function (err, updated) {
+                    Device.update({"_id":+id[i]},{$set:{"apkToUpdate.build":+build,"apkToUpdate.version":version,"updateRequired":true}},{$upsert:true}, function (err, updated) {
                         if (err) return console.log(err,"ScheduleStart Device.update err");
                         console.log("This device " + id[i] + "Marionette is updated");
-                        Updater(i++)
+                        Updater(++i)
                     });
                 }
             }
