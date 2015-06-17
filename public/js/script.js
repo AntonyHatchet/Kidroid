@@ -58,13 +58,15 @@ function createNewFilter() {
         $('#completeCreateFilter').addClass('no-show');
     };
 };
-//TO DO =====================
+//TODO =====================
 var idDevice;
 var tokenDevice;
 var newUsersId;
 
 function editFilters(context) {
-    $("#newNameCategory").val(context.parentNode.parentNode.childNodes[1].innerText).attr("data-name",context.parentNode.parentNode.childNodes[1].innerText);
+    //$("#newNameCategory").val(context.parentNode.parentNode.childNodes[1].innerText).attr("data-name",context.parentNode.parentNode.childNodes[1].innerText);
+    //$("#newNameCategory").attr("data-name",context).attr("value",context);
+    //console.log(context);
 };
 function editUsers(x) {
     newUsersId= x.split(' ')[0];
@@ -186,14 +188,22 @@ function deployAPK(){
     var apk = {};
     apk.version = $("#selectVersionApkToDeploy").val().split(' ')[0];
     apk.build = $("#selectVersionApkToDeploy").val().split(' ')[1];
+    apk.school = $("#selectCategory").val();
+    apk.filter2 = $("#customFilter").val();
+    apk.devices = $('input:checkbox.checkboxWarning:checked').map(function() {return this.value;}).get();
     socket.emit("deployApk",apk)
+    //console.log(apk);
 }
 function uploadChangeKidroid(){
     $('#uploadKidroid').click();
 }
 function deployKidroid(){
-    var version = $("#kidroidVersionDeploy").val().split(' ')[0];
-    socket.emit("deployKidroid",version)
+    var kidroid = {};
+    kidroid.version = $("#kidroidVersionDeploy").val().split(' ')[0];
+    kidroid.school = $("#selectCategory").val();
+    kidroid.filter2 = $("#customFilter").val();
+    kidroid.devices = $('input:checkbox.checkboxWarning:checked').map(function() {return this.value;}).get();
+    socket.emit("deployKidroid",kidroid)
 }
 function find(sort) {
     console.log(sort);

@@ -182,7 +182,8 @@ socket.on('filters', function (data) {
             for (var j = 0; j < data[i].params.length; j++) {
                 school.pushData(data[i].params[j]);
                 var name = "<td>" + data[i].params[j] + "</td>"
-                var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(this)'>Edit</a></td>";
+                console.log(data[i].params[j]);
+                var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[j] + "\")\'>Edit</a></td>";
                 var checkbox = "<td><input type='checkbox' class='checkAllCategory' id='checkSchedule'  value='"+ data[i].params[j] +"'></td>"
                 html += "<tr>" + checkbox + name + editButton + "</tr>";
             }
@@ -195,7 +196,7 @@ socket.on('filters', function (data) {
             for (var f = 0; f < data[i].params.length; f++) {
                 filter2.pushData(data[i].params[f]);
                 var name = "<td>" + data[i].params[f] + "</td>"
-                var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(this)'>Edit</a></td>";
+                var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[f] + "\")'>Edit</a></td>";
                 var checkbox = "<td><input type='checkbox' class='checkAllFilters' id='checkSchedule'  value='"+ data[i].params[f] +"'></td>"
                 html += "<tr>" + checkbox + name + editButton + "</tr>";
             }
