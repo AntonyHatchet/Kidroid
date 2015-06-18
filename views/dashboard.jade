@@ -62,13 +62,19 @@ block content
                 fieldset
                     legend Filter:
                     #filter
-                        form(class='form-search form-inline')
-                            input(type="text" id="DeviceNameIDSerial" class='form-control' placeholder='Device name/ID/Serial' onkeyup="find()")
-                            select(id='selectStatus' class="span2 form-control" onchange="find()")
-                            input(id="selectCategory" placeholder='- School -' class="span2 form-control category" onkeyup="getFilter(this.value,'School')")
-                            input(id="customFilter" placeholder='- Filter2 -' class="span2 form-control filter2" onkeyup="getFilter(this.value, 'Filter2')")
-                            select(id="marionetteVersion" class="span2 form-control" onchange="find()")
-                            select(id="kidroidVersion" class="span2 form-control" onchange="find()")
+                        form(class='row')
+                            .col-xs-2
+                                input(type="text" id="DeviceNameIDSerial" class='form-control input-sm' placeholder='Device name/ID/Serial' onkeyup="find()")
+                            .col-xs-2
+                                select(id='selectStatus' class="span2 form-control input-sm" onchange="find()")
+                            .col-xs-2
+                                input(id="selectCategory" placeholder='- School -' class="span2 form-control category input-sm" onkeyup="getFilter(this.value,'School')")
+                            .col-xs-2
+                                input(id="customFilter" placeholder='- Filter2 -' class="span2 form-control filter2 input-sm" onkeyup="getFilter(this.value, 'Filter2')")
+                            .col-xs-2
+                                select(id="marionetteVersion" class="span2 form-control input-sm" onchange="find()")
+                            .col-xs-2
+                                select(id="kidroidVersion" class="span2 form-control input-sm" onchange="find()")
                 .col-sm-12
                     h4.col-sm-2
                     #add-device.col-sm-2
@@ -107,7 +113,7 @@ block content
                             label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
                                 span(id="deployCount")
                             .col-sm-8
-                                .col-sm-3
+                                .col-sm-4
                                     select(id="selectVersionApkToDeploy" class="span2 form-control")
                                 button(class="col-sm-2 btn btn-primary" onclick='deployAPK()') Start
                 #deployKidroid
@@ -117,7 +123,7 @@ block content
                             label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
                                 span(id="deployCountKidroid")
                             .col-sm-8
-                                .col-sm-3
+                                .col-sm-4
                                     select(id="kidroidVersionDeploy" class="span2 form-control")
                                 button(class="col-sm-2 btn btn-primary" onclick='deployKidroid()') Start
                 //============MODAL Add new device=====================
