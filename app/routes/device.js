@@ -84,11 +84,15 @@ module.exports = {
     },
     // сверка необходимости обновления версии АПК
     checkApkVersion: function (req, res, next) {
+        if (!req.body.id||!req.body.token||!req.body.apk_build||!req.body.loader_version){
+            return res.json([{type:"Error",Message:"Wrong data"}]);
+        }else
         deviceMagic.findVersion({id: req.body.id}, function (err, device) {
-
+            console.log(device, "checkApkVersion device from DB");
             if (err) return console.log(err,"checkApkVersion deviceMagic.findVersion err");
 
             if (device.apkToUpdate.build != req.body.apk_build && device.kidroidToUpdate != req.body.loader_version) {
+                console.log(device, "Super update");
                 user.findLink(device.apkToUpdate.build,"Marionette",function(err,apk){
                     if (err) return console.log(err,"checkApkVersion user.findLink err");
 
