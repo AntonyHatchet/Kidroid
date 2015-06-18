@@ -6,6 +6,7 @@ socket.on('displayData', function (data) {
     //console.log(data.length);
     html = '';
     for (i in data){
+        //console.log(data);
         var checkbox = "<td><input type='checkbox' class='checkboxWarning' value="+ data[i]._id +"></td>";
         var deviceId = "<td>" + data[i]._id + "</td>";
         var deviceName = "<td>"+ data[i].name + "<p>(Android v." +data[i].android +")</p></td>";
@@ -21,7 +22,7 @@ socket.on('displayData', function (data) {
             var map ="<p></p>"
             //console.log('no-map');
         }
-        var edit = "<button href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(" + data[i]._id +")'>Edit</button> ";
+        var edit = "<button href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(\"" + data[i]._id + "," + data[i].token + "," + data[i].name + "\")'>Edit</button> ";
         //var deleteDevice = "<button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].deviceId + "\")\')>Delete</button>";
         var options = "<td><div class='btn-group' role='group'>" + map + edit + "</div></td>";
         html += "<tr>" +checkbox+deviceId+deviceName+apkVersion+loaderVersion+status+options+ "</tr>";

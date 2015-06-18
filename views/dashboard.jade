@@ -234,7 +234,20 @@ block content
                                     span(aria-hidden="true") &times;
                                 h3 Edit device
                             div(class="modal-body")
+
                                 form.form-horizontal
+                                    .form-group
+                                        label(for="idDevise").col-sm-3.control-label ID:
+                                        .col-sm-9
+                                            input(id="idDevise" class="form-control" disabled)
+                                    .form-group
+                                        label(for="tokenDevise").col-sm-3.control-label Token:
+                                        .col-sm-9
+                                            input(id="tokenDevise" class="form-control" disabled)
+                                    .form-group
+                                        label(for="nameDevise").col-sm-3.control-label Name:
+                                        .col-sm-9
+                                            input(id="nameDevise" class="form-control" disabled)
                                     .form-group
                                         label(for="editDeviceCategory").col-sm-3.control-label School:
                                         .col-sm-9
