@@ -186,6 +186,15 @@ module.exports = function (server,sessionMiddleware) {
             }
         );
         //GET
+        socket.on('getFilter', function (data) {
+                user.findFilter(function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('getFilterBack', data);
+                },data);
+            }
+        );
         socket.on('getCategory', function () {
                 user.findCategory(function (err, data) {
                     if (err) {

@@ -347,3 +347,9 @@ function startAutoComplete(array,className){
         lookup: Array
     });
 }
+socket.on("getFilterBack",function(filters){
+    for (i in filters){
+        console.log(filters[i].params,"getFilterBack")
+    }
+
+});

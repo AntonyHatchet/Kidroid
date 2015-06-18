@@ -141,7 +141,7 @@ module.exports = {
     },
     createNewFilter: function (data, callback) {
         console.log(data,"createNewFilter data");
-        Filters.update({"name": data.name},{$push:{"params":data.params}},{$upsert:true}, function (err, filters) {
+        Filters.update({"name": data.name},{$addToSet:{"params":data.params}},{$upsert:true}, function (err, filters) {
 
             if (err) return console.log(err,"createNewFilter Filter.findOne err");
 
@@ -158,6 +158,18 @@ module.exports = {
     findAllFilter: function (callback) {
         Filters.find("", function (err, filters) {
 
+            if (err) return console.log(err,"findAllFilter Filters.find err");
+
+            if (filters != null) {
+                callback(null, filters)
+            }
+        });
+    },
+    findFilterByQuery: function (callback,data) {
+        var name = data.name;
+        var query =  {$regex :new RegExp(data.params, 'i')};
+        Filters.aggregate({"params.$.name": query}, function (err, filters) {
+            console.log(filters)
             if (err) return console.log(err,"findAllFilter Filters.find err");
 
             if (filters != null) {

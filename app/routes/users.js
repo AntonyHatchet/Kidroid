@@ -375,13 +375,24 @@ module.exports = {
             callback(null, devices);
         });
     },
-    findFilter: function (callback) {
-        userMagic.findAllFilter(function (err, data) {
+    findFilter: function (callback,data) {
+        console.log(data,"filtersssssss")
+        if(!data) {
+            userMagic.findAllFilter(function (err, data) {
 
-            if (err) return console.log(err,"createCategory  userMagic.createSchoolCategory err");
+                if (err) return console.log(err, "createCategory  userMagic.createSchoolCategory err");
 
-            callback(null, data);
-        });
+                callback(null, data);
+            });
+        }else
+        if (data){
+            userMagic.findFilterByQuery(function (err, data) {
+
+                if (err) return console.log(err, "createCategory  userMagic.createSchoolCategory err");
+
+                callback(null, data);
+            },data);
+        }else throw new error;
     },
     //КАТЕГОРИИ
     //Добавление категорий
