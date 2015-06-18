@@ -120,7 +120,10 @@ function editDeviceWriteIdToken(x){
     $("#idDevise").attr('value',idDevice);
     $("#tokenDevise").attr('value',tokenDevice);
     $("#nameDevise").attr('value',x.split(',')[2]);
-    console.log(idDevice, tokenDevice);
+    if(tokenDevice=='undefined'){
+        $(".tokenDevise").addClass("no-show")
+    }
+    console.log(tokenDevice);
 }
 function editDevice(){
     var device = {};
