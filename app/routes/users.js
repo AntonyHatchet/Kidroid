@@ -240,7 +240,15 @@ module.exports = {
             req.pipe(busboy);
     },
     removeMarionetteAPK: function (category, callback) {
-        userMagic.removeVersion(category, function (err, category) {
+        userMagic.removeApkVersion(category, function (err, category) {
+
+            if (err) return console.log(err,"removeVersion userMagic.removeVersion err");
+
+            callback(null, category);
+        });
+    },
+    removeKidroid: function (category, callback) {
+        userMagic.removeKidroidVersion(category, function (err, category) {
 
             if (err) return console.log(err,"removeVersion userMagic.removeVersion err");
 

@@ -246,17 +246,6 @@ module.exports = function (server,sessionMiddleware) {
             }
         );
         //REMOVE
-        socket.on('removeVersion', function (id) {
-                for (var i = 0; i < id.length; i++) {
-                    user.removeVersion(id[i], function (err, callback) {
-                        if (err) {
-                            console.log(err);
-                        }
-                        io.emit('displayData', callback);
-                    });
-                }
-            }
-        );
         socket.on('removeFilters', function (data) {
                 for (var i = 0; i < data.filters.length; i++) {
                     user.removeFilters({name:data.name,filter:data.filters[i]}, function (err, callback) {
@@ -286,6 +275,17 @@ module.exports = function (server,sessionMiddleware) {
                             console.log(err);
                         }
                         io.emit('users', callback);
+                    });
+                }
+            }
+        );
+        socket.on('removeKidroidVersion', function (id) {
+                for (var i = 0; i < id.length; i++) {
+                    user.removeKidroid(id[i], function (err, callback) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        io.emit('displayData', callback);
                     });
                 }
             }

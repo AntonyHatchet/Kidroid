@@ -7,6 +7,7 @@ var Version = require('../models/apk_models');
 var Kidroid = require('../models/kidroidModel');
 var Device = require('../models/device');
 var Filters = require('../models/filters');
+var fs = require('fs-extra');
 
 
 module.exports = {
@@ -363,20 +364,48 @@ module.exports = {
             })
         })
     },
-    removeVersion: function (data, callback) {
-        Version.find({"_id": data}, function (err, category) {
+    removeApkVersion: function (data, callback) {
+        console.log(data,"removeApkVersion")
+        Version.find({"_id": data}, function (err, version) {
 
             if (err) return console.log(err,"removeVersion Version.remove err");
 
-            if (category != null) {
+            if (version != null) {
 
-                Version.find("", function (err, category) {
+                Version.remove({"_id": data}, function (err, version) {
 
                     if (err) return console.log(err,"removeVersion Version.find err");
 
-                    if (category != null) {
+                    if (version != null) {
 
-                        callback(null, category)
+                        fs.remove(version.link, function (err) {
+                            if (err) return console.error(err,"fs.move");
+                            console.log("success remove!")
+                        });
+
+                    }
+                });
+            }
+        });
+    },
+    removeKidroidVersion: function (data, callback) {
+        console.log(data,"removeKidroidVersion")
+        Kidroid.find({"_id": data}, function (err, version) {
+
+            if (err) return console.log(err,"removeVersion Version.remove err");
+
+            if (version != null) {
+
+                Kidroid.remove({"_id": data}, function (err, version) {
+
+                    if (err) return console.log(err,"removeVersion Version.find err");
+
+                    if (version != null) {
+
+                        fs.remove(version.link, function (err) {
+                            if (err) return console.error(err,"fs.move");
+                            console.log("success remove!")
+                        });
 
                     }
                 });
