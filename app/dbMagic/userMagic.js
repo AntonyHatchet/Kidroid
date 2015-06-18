@@ -365,22 +365,24 @@ module.exports = {
         })
     },
     removeApkVersion: function (data, callback) {
-        console.log(data,"removeApkVersion")
-        Version.find({"_id": data}, function (err, version) {
+        Version.findOne({"_id": data}, function (err, version) {
 
             if (err) return console.log(err,"removeVersion Version.remove err");
 
             if (version != null) {
 
-                Version.remove({"_id": data}, function (err, version) {
+                Version.remove({"_id": version._id}, function (err, remove) {
 
                     if (err) return console.log(err,"removeVersion Version.find err");
 
-                    if (version != null) {
+                    if (remove != null) {
 
                         fs.remove(version.link, function (err) {
                             if (err) return console.error(err,"fs.move");
-                            console.log("success remove!")
+                            console.log("success remove Marionette version! #"+ version.apk)
+                            module.exports.findAllVersion(function(allMarionette){
+                                callback(err, allMarionette)
+                            })
                         });
 
                     }
@@ -389,22 +391,23 @@ module.exports = {
         });
     },
     removeKidroidVersion: function (data, callback) {
-        console.log(data,"removeKidroidVersion")
-        Kidroid.find({"_id": data}, function (err, version) {
-
+        Kidroid.findOne({"_id": data}, function (err, version) {
+            console.log(version,"version.link")
             if (err) return console.log(err,"removeVersion Version.remove err");
 
             if (version != null) {
 
-                Kidroid.remove({"_id": data}, function (err, version) {
+                Kidroid.remove({"_id": version._id}, function (err, remove) {
 
                     if (err) return console.log(err,"removeVersion Version.find err");
 
-                    if (version != null) {
-
+                    if (remove != null) {
                         fs.remove(version.link, function (err) {
                             if (err) return console.error(err,"fs.move");
-                            console.log("success remove!")
+                            console.log("success remove Kidroid version! #"+ version.loader)
+                            module.exports.findAllVersion(function(allKidroid){
+                                callback(err, allKidroid)
+                            })
                         });
 
                     }

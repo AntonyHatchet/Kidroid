@@ -86,9 +86,11 @@ socket.on('category', function (date) {
 
 socket.on('version', function (date) {
     //console.log(date,"kidroidVersion");
-    html = '<option value="" style="color:#cccccc">- Kidroid Loader version -</option>';
-    for (var i = 0; i < date.kidroid.length; i++) {
-        html += "<option>" + date.kidroid[i].loader +"</option>";
+        html = '<option value="" style="color:#cccccc">- Kidroid Loader version -</option>';
+    if(date.kidroid.length) {
+        for (var i = 0; i < date.kidroid.length; i++) {
+            html += "<option>" + date.kidroid[i].loader + "</option>";
+        }
     }
     $("#kidroidVersion,#kidroidVersionDeploy").html(html);
 });
@@ -239,18 +241,22 @@ socket.on('userName', function (data){
 
 socket.on('getVersionDeploy', function (data) {
     var defaultVersion;
-    for (var i = 0; i < data.kidroid.length; i++) {
-        if (data.kidroid[i].default){
-            defaultVersion = data.kidroid[i];
+    if(data.length) {
+        for (var i = 0; i < data.kidroid.length; i++) {
+            if (data.kidroid[i].default) {
+                defaultVersion = data.kidroid[i];
+            }
         }
     }
-    html = "<option>" + defaultVersion.loader +" current"+"</option>";
-    for (var j = 0; j < data.kidroid.length; j++) {
-        if (data.kidroid[j] != defaultVersion)
-        html += "<option>" + data.kidroid[j].loader +"</option>";
+    if(defaultVersion!=undefined){
+        html = "<option>" + defaultVersion.loader +" current"+"</option>";
+        for (var j = 0; j < data.kidroid.length; j++) {
+            if (data.kidroid[j] != defaultVersion)
+            html += "<option>" + data.kidroid[j].loader +"</option>";
+        }
+        $("#selectDefaultKidroidVersion").html(html);
+        $("#kidroidVersionDeploy").html(html);
     }
-    $("#selectDefaultKidroidVersion").html(html);
-    $("#kidroidVersionDeploy").html(html);
 });
 
 socket.on('getVersionDeploy', function (data) {
@@ -260,13 +266,15 @@ socket.on('getVersionDeploy', function (data) {
             defaultVersion = data.apk[i];
         }
     }
-    html = "<option>" + defaultVersion.apk.version +" "+ defaultVersion.apk.build +" current"+"</option>";
-    for (var j = 0; j < data.apk.length; j++) {
-        if (data.apk[j] != defaultVersion)
-            html += "<option>" + defaultVersion.apk.version +" "+ defaultVersion.apk.build +"</option>";
+    if(defaultVersion!=undefined) {
+        html = "<option>" + defaultVersion.apk.version + " " + defaultVersion.apk.build + " current" + "</option>";
+        for (var j = 0; j < data.apk.length; j++) {
+            if (data.apk[j] != defaultVersion)
+                html += "<option>" + defaultVersion.apk.version + " " + defaultVersion.apk.build + "</option>";
+        }
+        $("#selectDefaultApkVersion, #addSelectVersion").html(html);
+        $("#selectVersionApkToDeploy").html(html);
     }
-    $("#selectDefaultApkVersion, #addSelectVersion").html(html);
-    $("#selectVersionApkToDeploy").html(html);
 });
 socket.on('getVersionDeploy', function (data) {
     var apk = "";
@@ -290,8 +298,8 @@ socket.on('getVersionDeploy', function (data) {
             var build = '<td class="build">'+  data.apk[i].apk.build + '</td>';
             apk += '<tr>'+checkBox+name+version+build+'</tr>';
         }
-        $("#settingApkVersionTable").html(apk);
     }
+    $("#settingApkVersionTable").html(apk);
     if(data.kidroid.length) {
         for (var j = 0; j < data.kidroid.length; j++) {
             var dateKidroid = new Date(data.kidroid[j].date);
@@ -301,8 +309,9 @@ socket.on('getVersionDeploy', function (data) {
             var optionsdKid = '<td class="build"></td>';
             kidroid += '<tr>' + checkBoxKid + nameKid + versionKid + '</tr>';
         }
-        $("#settingKidroidVersionTable").html(kidroid);
     }
+    console.log(kidroid);
+    $("#settingKidroidVersionTable").html(kidroid);
 });
 
 var school =  {

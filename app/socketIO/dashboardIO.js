@@ -274,7 +274,9 @@ module.exports = function (server,sessionMiddleware) {
                         if (err) {
                             console.log(err);
                         }
-                        io.emit('users', callback);
+                        console.log(callback,"removeMarionetteAPK");
+                        io.emit('version', callback);
+                        io.emit('getVersionDeploy', callback);
                     });
                 }
             }
@@ -285,7 +287,8 @@ module.exports = function (server,sessionMiddleware) {
                         if (err) {
                             console.log(err);
                         }
-                        io.emit('displayData', callback);
+                        io.emit('version', callback);
+                        io.emit('getVersionDeploy', callback);
                     });
                 }
             }
