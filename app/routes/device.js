@@ -84,19 +84,39 @@ module.exports = {
     },
     // сверка необходимости обновления версии АПК
     checkApkVersion: function (req, res, next) {
-        console.log(req.body);
         deviceMagic.findVersion({id: req.body.device_id}, function (err, device) {
 
             if (err) return console.log(err,"checkApkVersion deviceMagic.findVersion err");
 
-            if (device.apkToUpdate.build != req.body.apk_build) {
-                user.findLink(device.apkToUpdate.build,function(err,callback){
-
+            if (device.apkToUpdate.build != req.body.apk_build && device.kidroidToUpdate != req.body.loader_version) {
+                user.findLink(device.apkToUpdate.build,"Marionette",function(err,apk){
                     if (err) return console.log(err,"checkApkVersion user.findLink err");
 
-                    res.json({update_required: true, version: device.apkToUpdate.build, link: server + callback[0].link.slice(1)});
+                    user.findLink(device.kidroidToUpdate,"Kidroid",function(err,kidroid){
+
+                        if (err) return console.log(err,"checkApkVersion user.findLink err");
+                        return res.json([{type:"kidroid",update_required: true, version: device.kidroidToUpdate, link: server + kidroid[0].link.slice(1)},{type:"marionette",update_required: true, version: device.apkToUpdate.build, link: server + apk[0].link.slice(1)}]);
+                    });
                 });
-            }
+            }else
+            if (device.apkToUpdate.build != req.body.apk_build) {
+                user.findLink(device.apkToUpdate.build,"Marionette",function(err,callback){
+
+                    if (err) return console.log(err,"checkApkVersion user.findLink err");
+                    console.log(callback,"Apk")
+                    return res.json([{type:"marionette",update_required: true, version: device.apkToUpdate.build, link: server + callback[0].link.slice(1)}]);
+                });
+            }else
+            if (device.kidroidToUpdate != req.body.loader_version) {
+                console.log("started Kidroid update")
+                user.findLink(device.kidroidToUpdate,"Kidroid",function(err,callback){
+
+                    if (err) return console.log(err,"checkApkVersion user.findLink err");
+                    console.log(callback,"Kidroid")
+                    return res.json([{type:"kidroid",update_required: true, version: device.kidroidToUpdate, link: server + callback[0].link.slice(1)}]);
+                });
+                console.log("Kidroid update after response ")
+            }else
             if(device.updateRequired === true){
                 Cron.counter(device.task,function(err,callback){
                     if (err) return console.log(err,"checkApkVersion Cron.counter err");

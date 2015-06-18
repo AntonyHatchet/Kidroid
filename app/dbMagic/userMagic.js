@@ -238,9 +238,21 @@ module.exports = {
             }
         });
     },
-    findLink: function (build,callback) {
+    findLinkApk: function (build,callback) {
 
         Version.find({'apk.build':+build},{"_id":0,"link":1}, function (err, data) {
+
+            if (err) return console.log(err,"findLink Version.find err");
+
+            if (data != null) {
+                console.log(data,"Link data");
+                callback(null, data)
+            }
+        });
+    },
+    findLinkKidroid: function (build,callback) {
+
+        Kidroid.find({'loader':build},{"_id":0,"link":1}, function (err, data) {
 
             if (err) return console.log(err,"findLink Version.find err");
 

@@ -157,7 +157,7 @@ module.exports = function (server,sessionMiddleware) {
                 deploy.name = userName;
                 deploy.date = new Date();
                 deploy.devices = (version.devices.length !=0)?version.devices:devicesToDeploy;
-                deploy.version = version;
+                deploy.version = version.version;
                 deploy.type = "Kidroid Loader";
                 deploy.school = version.school;
                 deploy.filter = version.filter;
