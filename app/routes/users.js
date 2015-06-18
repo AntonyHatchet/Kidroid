@@ -269,13 +269,23 @@ module.exports = {
     getDefaultVersion: function(callback){
 
     },
-    findLink: function (version,callback) {
-        userMagic.findLink(version,function (err, link) {
+    findLink: function (version,type,callback) {
+        console.log(version,type,"some data")
+        if (type === "Kidroid"){
+            userMagic.findLinkKidroid(version,function (err, link) {
 
-            if (err) return console.log(err,"findLink userMagic.findLink err");
+                if (err) return console.log(err,"findLink userMagic.findLink err");
 
-            callback(null, link);
-        });
+                callback(null, link);
+            });
+        }else if (type === "Marionette"){
+            userMagic.findLinkApk(version,function (err, link) {
+
+                if (err) return console.log(err,"findLink userMagic.findLink err");
+
+                callback(null, link);
+            });
+        }
     },
     // УСТРОЙСТВА
     // Выводим общее количество устройств
@@ -365,13 +375,24 @@ module.exports = {
             callback(null, devices);
         });
     },
-    findFilter: function (callback) {
-        userMagic.findAllFilter(function (err, data) {
+    findFilter: function (callback,data) {
+        console.log(data,"filtersssssss")
+        if(!data) {
+            userMagic.findAllFilter(function (err, data) {
 
-            if (err) return console.log(err,"createCategory  userMagic.createSchoolCategory err");
+                if (err) return console.log(err, "createCategory  userMagic.createSchoolCategory err");
 
-            callback(null, data);
-        });
+                callback(null, data);
+            });
+        }else
+        if (data){
+            userMagic.findFilterByQuery(function (err, data) {
+
+                if (err) return console.log(err, "createCategory  userMagic.createSchoolCategory err");
+
+                callback(null, data);
+            },data);
+        }else throw new error;
     },
     //КАТЕГОРИИ
     //Добавление категорий

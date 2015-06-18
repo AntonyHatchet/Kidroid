@@ -191,6 +191,9 @@ function uploadChangeApk(){
 function uploadChangeKidroid(){
     $('#uploadKidroid').click();
 }
+function getFilter(query,name){
+    socket.emit("getFilter",{name:name,params:query})
+}
 function deployAPK(){
     var apk = {};
     apk.version = $("#selectVersionApkToDeploy").val().split(' ')[0];
@@ -200,9 +203,6 @@ function deployAPK(){
     apk.devices = $('input:checkbox.checkboxWarning:checked').map(function() {return this.value;}).get();
     socket.emit("deployApk",apk)
     console.log(apk);
-}
-function uploadChangeKidroid(){
-    $('#uploadKidroid').click();
 }
 function deployKidroid(){
     var kidroid = {};
@@ -255,7 +255,7 @@ function addDevice() {
     device.category = $("#addSelectCategory").val();
     device.build = $("#addSelectVersion").val();
     device.numberDevice = number = $("#amountDevice").val();
-    device.filter2 = $("#filter2").val();
+    device.filter = $("#filter2").val();
     console.log(device);
     if (device.category != 0 && device.version !=0)  {
         socket.emit('createDevice', device);

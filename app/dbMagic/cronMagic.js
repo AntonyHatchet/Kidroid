@@ -144,7 +144,6 @@ module.exports = {
     counter: function(id,callback){
         Cron.update({"_id":id},{$inc:{"deviceUpdated":1}}, function (err, updated) {
             if (err) return console.log(err,"ScheduleStart Device.update err");
-            console.log("This Cron " + updated);
             callback(err,true)
         });
     }

@@ -148,7 +148,8 @@ module.exports = {
             "_id": 1,
             "apkToUpdate": 1,
             "task":1,
-            "updateRequired":1
+            "updateRequired":1,
+            "kidroidToUpdate":1
         }, function (err, device) {
             if (err) return console.log(err,"findVersion device.findOne err");
             callback(null, device);

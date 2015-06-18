@@ -12,7 +12,7 @@ socket.on('displayData', function (data) {
         var deviceName = "<td>"+ data[i].name + "<p>(Android v." +data[i].android +")</p></td>";
         var update = (!data[i].updateRequired)? "": "*Pending update (v"+data[i].apkToUpdate.version+" build "+data[i].apkToUpdate.build+")";
         var apkVersion = "<td>" + ((!+data[i].apk.build >=1 )? "-" : data[i].apk.version +" (Build "+data[i].apk.build + ")") + "<p>"+ update +"</p></td>";
-        var loaderVersion = "<td>"+ ((data[i].loader >= 1)? data[i].loader: '-') +"</td>";
+        var loaderVersion = "<td>"+ ((data[i].loader != 0)? data[i].loader: '-') +"</td>";
         var status = "<td>" + data[i].status + "</td>";
         if(data[i].longitude!=0||data[i].latitude!=0) {
             var map = "<button id='buttonMap' href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>Location</button>";
@@ -175,7 +175,7 @@ socket.on('deviceForDeploy', function (data) {
 });
 
 socket.on('filters', function (data) {
-    console.log(data);
+
     for (i in data) {
         html = '';
         if (data[i].name === "School") {
@@ -347,3 +347,9 @@ function startAutoComplete(array,className){
         lookup: Array
     });
 }
+socket.on("getFilterBack",function(filters){
+    for (i in filters){
+        console.log(filters[i].params,"getFilterBack")
+    }
+
+});
