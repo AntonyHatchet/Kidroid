@@ -32,7 +32,7 @@ module.exports = {
     },
 //Регистрация девайса
     getRegistrationDevice: function (req, res) {
-
+        console.log(req.body);
         deviceMagic.regDevice({id: req.body.device_id}, function (err, next) {
 
             if (err) return console.log(err,"getRegistrationDevice deviceMagic.regDevice err");
