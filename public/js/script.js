@@ -122,6 +122,8 @@ function editDeviceWriteIdToken(x){
     $("#nameDevise").attr('value',x.split(',')[2]);
     if(tokenDevice=='undefined'){
         $(".tokenDevise").addClass("no-show")
+    }else{
+        $(".tokenDevise").removeClass("no-show")
     }
     console.log(tokenDevice);
 }
