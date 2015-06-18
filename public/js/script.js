@@ -208,36 +208,35 @@ function deployKidroid(){
 function find(sort) {
     console.log(sort);
     var device = {};
-    var data = {};
-    device.sort = data.sort = (!sort)?{}:sort;
-    device.search = data.search = $("#DeviceNameIDSerial").val();
-    device.status = data.status = $("#selectStatus").val();
-    device.school = data.school = $("#selectCategory").val();
-    device.filter = data.filter = $("#customFilter").val();
-    device.build = data.build = $("#marionetteVersion").val();
-    data.limit = itemsPerPage = $("#ItemsPerPage").val();
-    socket.emit('getDevicesByParams', data);
+    device.sort = (!sort)?{}:sort;
+    device.search = $("#DeviceNameIDSerial").val();
+    device.status = $("#selectStatus").val();
+    device.school = $("#selectCategory").val();
+    device.filter = $("#customFilter").val();
+    device.build = $("#marionetteVersion").val();
+    device.limit = itemsPerPage = $("#ItemsPerPage").val();
+    socket.emit('getDevicesByParams', device);
     socket.emit('getDeviceIdByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
+    //console.log(data);
 };
 var acrivePage;
 function page(i) {
     acrivePage=i;
     var device = {};
-    var data = {};
-    data.limit = itemsPerPage = $("#ItemsPerPage").val();
+    device.limit = itemsPerPage = $("#ItemsPerPage").val();
     device.sort = sort();
-    device.search = data.search = $("#DeviceNameIDSerial").val();
-    device.status = data.status = $("#selectStatus").val();
-    device.school = data.school = $("#selectCategory").val();
-    device.filter = data.filter =  $("#customFilter").val();
-    device.build = data.build = $("#marionetteVersion").val();
+    device.search = $("#DeviceNameIDSerial").val();
+    device.status = $("#selectStatus").val();
+    device.school = $("#selectCategory").val();
+    device.filter =  $("#customFilter").val();
+    device.build = $("#marionetteVersion").val();
     if(data.limit==10 || i==1) {
-        device.page = data.page = i * 10 - 10;
-    }else if(data.limit==20 && i!=1){
-        device.page = data.page = i * 20 -20;
-    }else if(data.limit==50 && i!=1){
-        device.page = data.page = i * 50 -50;
+        device.page = i * 10 - 10;
+    }else if(device.limit==20 && i!=1){
+        device.page = i * 20 -20;
+    }else if(device.limit==50 && i!=1){
+        device.page = i * 50 -50;
     }
     socket.emit('getDevicesByParams', data);
     socket.emit('getDevicesQuantityByParams', device);
@@ -248,7 +247,7 @@ function addDevice() {
     device.category = $("#addSelectCategory").val();
     device.build = $("#addSelectVersion").val();
     device.numberDevice = number = $("#amountDevice").val();
-    device.filter = $("#filter2").val();
+    device.filter2 = $("#filter2").val();
     console.log(device);
     if (device.category != 0 && device.version !=0)  {
         socket.emit('createDevice', device);
