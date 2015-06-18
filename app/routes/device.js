@@ -33,7 +33,7 @@ module.exports = {
 //Регистрация девайса
     getRegistrationDevice: function (req, res) {
         console.log(req.body);
-        deviceMagic.regDevice({id: req.body.device_id}, function (err, next) {
+        deviceMagic.regDevice({id: req.body.id}, function (err, next) {
 
             if (err) return console.log(err,"getRegistrationDevice deviceMagic.regDevice err");
 
@@ -41,7 +41,7 @@ module.exports = {
                 res.json({"error": "wrong ID"});
             }
 
-            deviceMagic.registrDevice(req.body.device_id, function (err, token) {
+            deviceMagic.registrDevice(req.body.id, function (err, token) {
 
                 if (err) return console.log(err,"getRegistrationDevice deviceMagic.registrDevice err");
 
@@ -55,7 +55,7 @@ module.exports = {
     },
     getRemoveDevice: function (req, res) {
 
-        deviceMagic.removeDevice({id: req.body.device_id}, function (err, next) {
+        deviceMagic.removeDevice({id: req.body.id}, function (err, next) {
 
             if (err) return console.log(err,"getRemoveDevice deviceMagic.removeDevice err");
 
@@ -68,7 +68,7 @@ module.exports = {
 //Авторизация планшета по ИД и токену
     getAuthorizationDevice: function (req, res, next) {
         console.log(req.body, "Authorization Data");
-        var id = !req.param.id ? req.body.device_id : req.params.id;
+        var id = !req.param.id ? req.body.id : req.params.id;
         var token = !req.param.token ? req.body.token : req.params.token;
         deviceMagic.authDevice({id: id, token: token}, function (err, callback) {
 
@@ -84,7 +84,7 @@ module.exports = {
     },
     // сверка необходимости обновления версии АПК
     checkApkVersion: function (req, res, next) {
-        deviceMagic.findVersion({id: req.body.device_id}, function (err, device) {
+        deviceMagic.findVersion({id: req.body.id}, function (err, device) {
 
             if (err) return console.log(err,"checkApkVersion deviceMagic.findVersion err");
 
