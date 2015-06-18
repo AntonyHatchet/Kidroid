@@ -348,6 +348,7 @@ function startAutoComplete(array,className){
     });
 }
 socket.on("getFilterBack",function(filters){
+    console.log(filters)
     for (i in filters){
         console.log(filters[i].params,"getFilterBack")
     }
