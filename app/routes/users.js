@@ -159,10 +159,12 @@ module.exports = {
                     }
                 });
                 unzipParsrer.on('close', function(){
+                    console.log("unzipParsrer")
                     var zip = {
                         CheckSum: function(path,callback){
                             var checkNumber=[];
                             var sumArr = fs.readFileSync(path+"list.md5", 'utf8').split("\r\n");
+                            console.log("sumArr",sumArr)
                             for(var i in sumArr){
                                 sumArr[i]= sumArr[i].slice(sumArr[i].indexOf(':')+1)
                             }
