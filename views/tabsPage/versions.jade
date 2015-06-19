@@ -1,0 +1,81 @@
+//
+   Created by nikolay_ivanisenko on 19.06.2015.
+
+//===========TABS VERSION================
+#versions(class='tab-content')
+    fieldset
+        legend Marionette APK
+        .form-search.form-inline.apk.col-sm-9
+                label(for='selectDefaultApkVersion') Current version:
+                select(id="selectDefaultApkVersion" class="form-control" onchange="setDefault()")
+
+        .container-fluid.container-tab
+            table(class='table table-hover table-bordered table-striped')
+                thead
+                    tr
+                        td.checkColum(onclick='sort(this)',data-value="0")
+                            input(type='checkbox' id='checkAllMarionetteAPK')
+                        th Date added
+                        th Version
+                        th Build
+                tbody(id='settingApkVersionTable')
+        .right
+            .btn-group(role='group')
+                a(role="button" onclick="document.getElementById('upload_hidden_APK').click();" class='btn btn-primary' data-toggle='modal') Upload new APK
+                form(method="post" action='/uploadMarionetteAPK' enctype="multipart/form-data" style="position: absolute; display: block; overflow: hidden; width: 0; height: 0; border: 0; padding: 0;")
+                    .form-group
+                    input(type="file", id='upload_hidden_APK' class="form-control" name='category' value='' onchange='uploadChangeApk()')
+                    input(type="submit", id="uploadApk" style="display:none;")
+                button(class="btn btn-danger" onclick='delMarionetteAPK()') Remove selected
+
+    fieldset
+        legend Kidroid loader
+        .form-search.form-inline.apk.col-sm-9
+            label(for='selectDefaultKidroidVersion') Current version:
+            select(id="selectDefaultKidroidVersion" class="form-control" onchange="setDefault()")
+
+        .container-fluid.container-tab
+            table(class='table table-hover table-bordered table-striped')
+                thead
+                    tr
+                        td.checkColum(onclick='sort(this)',data-value="0")
+                            input(type='checkbox' id='checkAllKidroidVersion')
+                        th Date added
+                        th Version
+                tbody(id='settingKidroidVersionTable')
+        .right
+            .btn-group(role='group')
+                a(onclick="document.getElementById('upload_hidden_Kidroid').click();" role="button" class="btn btn-primary" data-toggle="modal") Upload new APK
+                form(method="post" action='/uploadKidroid' enctype="multipart/form-data" style="position: absolute; display: block; overflow: hidden; width: 0; height: 0; border: 0; padding: 0;")
+                        input(type="file", id='upload_hidden_Kidroid' class="form-control" name='category' value='' onchange='uploadChangeKidroid()')
+                        input(type="submit", id="uploadKidroid" style="display:none;")
+                button(class="btn btn-danger" onclick='delKidroidVersion()') Remove selected
+
+    //    //============MODAL Add new Marionette version=====================
+    //   div(class="modal" id="addMarionetteVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+    //       .modal-dialog.modal-sm
+    //           .modal-content
+    //               div(class="modal-header")
+    //                   button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+    //                       span(aria-hidden="true") &times;
+    //                   h3 Add new Marionette version
+    //               form(method="post" action='/uploadMarionetteAPK' enctype="multipart/form-data")
+    //                .modal-body
+    //                       .form-group
+    //                       input(type="file", class="form-control" name='category' value='')
+    //                .modal-footer
+    //                       button( type="submit" class="btn btn-primary") Add
+    //        //============MODAL Add new Apk version=====================
+    //div(class="modal" id="addApkVersion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+    //    .modal-dialog.modal-sm
+    //        .modal-content
+    //            div(class="modal-header")
+    //                button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+    //                    span(aria-hidden="true") &times;
+    //                h3 Add new Apk version
+    //            form(method="post" action='/uploadFile' enctype="multipart/form-data")
+    //                .modal-body
+    //                    .form-group
+    //                    input(type="file", class="form-control" name='category' value='')
+    //                .modal-footer
+    //                    button( type="submit" class="btn btn-primary") Add
