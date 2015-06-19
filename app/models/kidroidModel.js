@@ -4,10 +4,11 @@
 var mongoose = require('mongoose');
 
 var KidroidSchema = mongoose.Schema({
-    loader: Number,
+    loader: String,
     date: Date,
     default: Boolean,
-    user: String
+    user: String,
+    link: String
 });
 
 module.exports = mongoose.model('Kidroid', KidroidSchema, "kidroid");

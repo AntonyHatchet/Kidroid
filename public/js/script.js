@@ -18,16 +18,14 @@ $(document).ready(function () {
         $("#" + tab_id).addClass('current');
     })
 
-});
-$(document).ready(function () {
 
     $('ul.nav-tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');
 
-        $('ul.nav-tabs li').removeClass('current');
+        $('ul.nav-tabs li').removeClass('active');
         $('.nav-tab-content').removeClass('current');
 
-        $(this).addClass('current');
+        $(this).addClass('active');
         $("#" + tab_id).addClass('current');
     })
 
@@ -36,43 +34,59 @@ function createNewCategory() {
     var nameCategory = $("#newCategory").val();
     if(nameCategory !=0){
         console.log('yes');
-        socket.emit('createCategory', {name: "" + nameCategory + ""});
-        $('#errorCreateCategory').addClass('no-show');
+        socket.emit('createFilter', {"name":"School","params": nameCategory });
+        $('#errorCreateSchool').addClass('no-show');
+        $('#completeCreateSchool').removeClass('no-show');
     }else{
         console.log('no');
-        $('#errorCreateCategory').removeClass('no-show');
+        $('#errorCreateSchool').removeClass('no-show');
+        $('#completeCreateSchool').addClass('no-show');
     }
 
     //console.log(nameCategory);
 };
+
 function createNewFilter() {
-    var data = {};
-    data.name= $("#nameFilter").val();
-    data.param= $("#paramFilter").val();
-    socket.emit('createFilter', data);
-    console.log(data);
+    var nameFilter = $("#paramFilter").val();
+    if(nameFilter !=0){
+        socket.emit('createFilter', {"name":"Filter2","params": nameFilter });
+        $('#errorCreateFilter').addClass('no-show');
+        $('#completeCreateFilter').removeClass('no-show');
+    }else{
+        console.log('no');
+        $('#errorCreateFilter').removeClass('no-show');
+        $('#completeCreateFilter').addClass('no-show');
+    };
 };
-//TO DO =====================
-var newNameId;
+//TODO =====================
 var idDevice;
 var tokenDevice;
 var newUsersId;
 
-function renameCategoryId(x, y) {
-    newNameId=x;
-    console.log(y);
-    $("#idCategory p").replaceWith("ID " +x+"\n")
-}
-;function editUsers(x) {
-    newUsersId=x;
+function editFilters(context) {
+    //$("#newNameCategory").val(context.parentNode.parentNode.childNodes[1].innerText).attr("data-name",context.parentNode.parentNode.childNodes[1].innerText);
+    $("#newNameCategory").attr("data-name",context).attr("value",context).attr("placeholder",context);
+    //console.log(context);
 };
-
+function editUsers(x) {
+    newUsersId= x.split(' ')[0];
+    $('#newNameUsers').attr("value",x.split(' ')[2])
+};
 
 function inputNewNameCategory() {
     var device = {};
-    device.id = newNameId;
+    device.oldName = $("#newNameCategory").attr("data-name");
     device.newName = $("#newNameCategory").val();
-    socket.emit('editCategory', device);
+    if(device.newName != 0) {
+        //console.log('yes');
+        $('#errorEditFilters').addClass('no-show');
+        $('#completeEditFilters').removeClass('no-show');
+        socket.emit('editCategory', device);
+    }else{
+        //console.log('no');
+        $('#errorEditFilters').removeClass('no-show');
+        $('#completeEditFilters').addClass('no-show');
+    }
     //console.log(device);
 };
 function inputNewNameUser() {
@@ -81,29 +95,54 @@ function inputNewNameUser() {
     device.newName = $("#newNameUsers").val();
     device.newPassword = $("#newNamepassword").val();
     var newPassword2 = $("#newNamepassword2").val();
-    if(device.newPassword == newPassword2){
+    if(device.newPassword == newPassword2 && device.newName && newPassword2){
         console.log('yes');
         $('#errorUsersPassword').addClass('no-show');
-        socket.emit('editUsers', device);
-    }else{
+        $('#errorUsersName').addClass('no-show');
+        $('#completeUsersEdit').removeClass('no-show');
+        $('.close').click();
+        return socket.emit('updateUser', device);
+    }if(device.newPassword != newPassword2 ){
         $('#errorUsersPassword').removeClass('no-show');
-        console.log('no');
+        $('#errorUsersName').addClass('no-show');
+        $('#completeUsersEdit').addClass('no-show');
+        return newPassword2;
+    }else{
+        $('#errorUsersName').removeClass('no-show');
+        $('#errorUsersPassword').addClass('no-show');
+        $('#completeUsersEdit').addClass('no-show');
     }
 };
 
-function editDeviceWriteIdToken(id, token){
-    idDevice=id;
-    tokenDevice=token;
+function editDeviceWriteIdToken(x){
+    idDevice=x.split(',')[0];
+    tokenDevice=x.split(',')[1];
+    $("#idDevise").attr('value',idDevice);
+    $("#tokenDevise").attr('value',tokenDevice);
+    $("#nameDevise").attr('value',x.split(',')[2]);
+    if(tokenDevice=='undefined'){
+        $(".tokenDevise").addClass("no-show")
+    }else{
+        $(".tokenDevise").removeClass("no-show")
+    }
+    console.log(tokenDevice);
 }
 function editDevice(){
     var device = {};
     device.id = idDevice;
-    device.category = $("#editDeviceCategory").val();
-    device.version = $("#editDeviceVersion").val();
-    device.name = $("#newNameUser").val();
+    device.school = $("#editDeviceCategory").val();
+    device.filter2 = $("#editDeviceFilter2").val();
     device.comments = $("#newComment").val();
-    socket.emit('updateDevice', device);
-    console.log(device);
+    if(device.school !=0) {
+        $('#editDevice .close').click();
+        socket.emit('updateDevice', device);
+        $('#errorEditDevice').addClass('no-show');
+        $('#completeEditDevice').removeClass('no-show');
+    }else{
+        $('#errorEditDevice').removeClass('no-show');
+        $('#completeEditDevice').addClass('no-show');
+    }
+    //console.log(device);
 }
 var params = {};
 function sort(place) {
@@ -113,7 +152,7 @@ function sort(place) {
             case 1:
                 (+elem[1].dataset.sort == 1) ? elem[1].dataset.sort = -1 : elem[1].dataset.sort = 1;
                 params = {
-                    "deviceId": +elem[1].dataset.sort
+                    "_id": +elem[1].dataset.sort
                 };
                 break;
             case 2:
@@ -147,41 +186,89 @@ function sort(place) {
     }
 
     return params
-};
-
-
+}
+function uploadChangeApk(){
+    $('#uploadApk').click();
+}
+function uploadChangeKidroid(){
+    $('#uploadKidroid').click();
+}
+function getFilter(query,name){
+    socket.emit("getFilter",{name:name,params:query})
+}
+function deployAPK(){
+    var apk = {};
+    apk.version = $("#selectVersionApkToDeploy").val().split(' ')[0];
+    apk.build = $("#selectVersionApkToDeploy").val().split(' ')[1];
+    apk.school = $("#selectCategory").val();
+    apk.filter = $("#customFilter").val();
+    apk.devices = $('input:checkbox.checkboxWarning:checked').map(function() {return this.value;}).get();
+    socket.emit("deployApk",apk)
+    console.log(apk);
+}
+function deployKidroid(){
+    var kidroid = {};
+    kidroid.version = $("#kidroidVersionDeploy").val().split(' ')[0];
+    kidroid.school = $("#selectCategory").val();
+    kidroid.filter = $("#customFilter").val();
+    kidroid.devices = $('input:checkbox.checkboxWarning:checked').map(function() {return this.value;}).get();
+    socket.emit("deployKidroid",kidroid)
+}
 function find(sort) {
+    console.log(sort);
     var device = {};
     device.sort = (!sort)?{}:sort;
     device.search = $("#DeviceNameIDSerial").val();
     device.status = $("#selectStatus").val();
-    device.category = $("#selectCategory").val();
+    device.school = $("#selectCategory").val();
+    device.filter2 = $("#customFilter").val();
     device.build = $("#marionetteVersion").val();
+    device.limit = itemsPerPage = $("#ItemsPerPage").val();
     socket.emit('getDevicesByParams', device);
+    socket.emit('getDeviceIdByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
+    console.log(data);
 };
+var acrivePage;
 function page(i) {
+    acrivePage=i;
     var device = {};
+    var data = {};
+    data.limit = itemsPerPage = $("#ItemsPerPage").val();
     device.sort = sort();
-    device.search = $("#DeviceNameIDSerial").val();
-    device.status = $("#selectStatus").val();
-    device.category = $("#selectCategory").val();
-    device.build = $("#marionetteVersion").val();
-    device.page = i*10-10;
-    socket.emit('getDevicesByParams', device);
+    device.search = data.search = $("#DeviceNameIDSerial").val();
+    device.status = data.status = $("#selectStatus").val();
+    device.school = data.school = $("#selectCategory").val();
+    device.filter2 =data.filter2 =  $("#customFilter").val();
+    device.build = data.build = $("#marionetteVersion").val();
+    if(data.limit==10 || i==1) {
+        device.page = data.page = i * 10 - 10;
+    }else if(data.limit==20 && i!=1){
+        device.page = data.page = i * 20 -20;
+    }else if(data.limit==50 && i!=1){
+        device.page = data.page = i * 50 -50;
+    }
+    socket.emit('getDevicesByParams', data);
     socket.emit('getDevicesQuantityByParams', device);
+    console.log(device);
 };
 function addDevice() {
     var device = {};
     device.category = $("#addSelectCategory").val();
     device.build = $("#addSelectVersion").val();
-    device.numberDevice = $("#amountDevice").val();
+    device.numberDevice = number = $("#amountDevice").val();
+    device.filter = $("#filter2").val();
+    console.log(device);
     if (device.category != 0 && device.version !=0)  {
         socket.emit('createDevice', device);
         $('#errorAddDevice').addClass('no-show');
+        $('#completeAddDevice').removeClass('no-show');
+        $('#idDeviceCreate').attr('rows',''+ number + '');
+
         //console.log('yes');
     } else{
         $('#errorAddDevice').removeClass('no-show');
+        $('#completeAddDevice').addClass('no-show');
     }
 };
 
@@ -198,6 +285,7 @@ function finsDeviceSchedule(){
     //console.log(device);
 }
 $(document).ready( function() {
+    itemsPerPage = $("#ItemsPerPage").val();
     $("#checkAllSchedule").click( function() {
         if($('#checkAllSchedule').prop('checked')){
             $('.checkSchedule:enabled').prop('checked', true);
@@ -307,34 +395,37 @@ function createSchedule(){
     //console.log(device);
 }
 
-function dellDevice(){
-    var device ={};
-    device.devices = $('input:checkbox:checked').map(function() {return this.value;}).get();
-    socket.emit('removeDevice', device.devices)
-    //console.log(device.devices);
-}
 function dellUsers(){
     var device ={};
     device.devices = $('input:checkbox.checkAllUsers:checked').map(function() {return this.value;}).get();
-    socket.emit('removeUsers', device.devices)
+    socket.emit('removeUsers', device.devices);
+    //console.log(device.devices);
+}
+
+//TODO ���������� �� ����������� ������� ��������
+function dellFilter(){
+    console.log("dellFilter");
+    var filter ={};
+    filter.filters = $('input:checkbox.checkAllFilters:checked').map(function() {return this.value;}).get();
+    filter.name = "Filter2";
+    if(filter.filters.length >=1){
+        socket.emit('removeFilters', filter);
+    }
     //console.log(device.devices);
 }
 function dellCategory(){
-    var device ={};
-    device.devices = $('input:checkbox.checkAllCategory:checked').map(function() {return this.value;}).get();
-    socket.emit('removeCategory', device.devices)
-    //console.log(device.devices);
-}
-function dellFilters(){
-    var device ={};
-    device.devices = $('input:checkbox.checkAllFilters:checked').map(function() {return this.value;}).get();
-    socket.emit('removeFilters', device.devices)
-    //console.log(device.devices);
+     console.log("dellCategory");
+    var category ={};
+    category.filters = $('input:checkbox.checkAllCategory:checked').map(function() {return this.value;}).get();
+    category.name = "School";
+    if(category.filters.length >=1){
+        socket.emit('removeFilters', category);
+    }
 }
 function delMarionetteAPK(){
     var device ={};
     device.devices = $('input:checkbox.checkAllMarionetteAPK:checked').map(function() {return this.value;}).get();
-    socket.emit('removeMarionetteAPK', device.devices)
+    socket.emit('removeMarionetteAPK', device.devices);
     //console.log(device.devices);
 }
 function delKidroidVersion(){
@@ -345,7 +436,7 @@ function delKidroidVersion(){
 }
 
 $(document).ready(function () {
-    $('#closeScheduleModal').click(function(){
+    $('#closeScheduleModal, #closeScheduleModal1').click(function(){
        $('#editSchedule').removeClass('.in')
            .attr('aria-hidden', true)
            .css('z-index','-1')
@@ -354,7 +445,9 @@ $(document).ready(function () {
     });
 })
 $(document).ready(function () {
-    $('#closeIdTextarea').click(function(){
+    $('#closeIdTextarea, #closeIdTextarea1').click(function(){
+       $('#addDevice').css('display','block');
+       $('#closeAddDevice').click();
        $('#idDevice').removeClass('.in')
            .attr('aria-hidden', true)
            .css('z-index','-1')
@@ -370,3 +463,10 @@ $(window).scroll(function(){
 });
 
 //===================
+//$(document).ready(function () {
+//    <div class="clndr-controls">
+//    <div class="clndr-previous-button">&lsaquo;</div>
+//    <div class="month"><%= month %></div>
+//    <div class="clndr-next-button">&rsaquo;</div>
+//    </div>
+//}

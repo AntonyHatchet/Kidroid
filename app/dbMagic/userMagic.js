@@ -7,6 +7,7 @@ var Version = require('../models/apk_models');
 var Kidroid = require('../models/kidroidModel');
 var Device = require('../models/device');
 var Filters = require('../models/filters');
+var fs = require('fs-extra');
 
 
 module.exports = {
@@ -55,21 +56,19 @@ module.exports = {
     },
     updateDeviceInfo: function (data, callback) {
 
-        Device.findOne({"deviceId": data.id}, function (err, category) {
+        Device.findOne({"_id": data.id}, function (err, category) {
 
             if (err) return console.log(err,"updateDeviceInfo Device.findOne err");
 
             if (category != null) {
                 // Нашли такой ID, создаем дату для записи в БД.
                 var update = {
-                    "name": data.name,
                     "comment": data.comments,
-                    "school": data.category,
-                    "apkToUpdate": data.version,
-                    "updateRequired" : true
+                    "school": data.school,
+                    "filter2": data.filter2
                 };
                 //Пишем в БД к ID из запроса
-                Device.update({"deviceId": data.id}, {$set: update},{$upsert: true}, function (err, updated) {
+                Device.update({"_id": data.id}, {$set: update},{$upsert: true}, function (err, updated) {
 
                     if (err) return console.log(err,"updateDeviceInfo Device.update err");
 
@@ -88,32 +87,73 @@ module.exports = {
             }
         });
     },
+    updateUserInfo: function (data, callback) {
+        console.log(data)
+        User.findOne({'local.name': data.newName}, function (err, user) {
+
+            console.log(err,"err",user,"user")
+            // if there are any errors, return the error
+            if (err)
+                return done(err);
+
+            // check to see if theres already a user with that email
+            if (user) {
+                var newUserPassword = new User();
+
+                // set the user's local credentials
+                newUserPassword.local.password = newUserPassword.generateHash(data.newPassword);
+
+                // save the user
+                User.update({'local.name': data.newName},{$set:{'local.password':newUserPassword.local.password}},function (err) {
+                    if (err)
+                        throw err;
+                    module.exports.findAllUsers(function(err,data){
+                        callback(err,data)
+                    })
+                });
+            }
+            if (user == null) {
+                User.findOne({'_id': data.id}, function (err, user) {
+                    if (err)
+                        return done(err);
+                    if (user) {
+                        var newUserPassword = new User();
+
+                        // set the user's local credentials
+                        newUserPassword.local.password = newUserPassword.generateHash(data.newPassword);
+
+                        // save the user
+                        User.update({'_id': data.id}, {
+                            $set: {
+                                'local.name': data.newName,
+                                'local.password': newUserPassword.local.password
+                            }
+                        }, function (err) {
+                            if (err)
+                                throw err;
+                            module.exports.findAllUsers(function(err,data){
+                                callback(err,data)
+                            })
+                        });
+                    }
+                });
+            }
+        });
+    },
     createNewFilter: function (data, callback) {
-        Filters.findOne({"name": data.name}, function (err, filters) {
+        console.log(data,"createNewFilter data");
+        Filters.update({"name": data.name},{$addToSet:{"params":{"name":data.params}}},{$upsert:true}, function (err, filters) {
 
             if (err) return console.log(err,"createNewFilter Filter.findOne err");
 
-            if (filters == null) {
-                var newFilter = new Filters({
-                    name: data.name,
-                    params: data.param
-                });
+            Filters.find("", function (err, filters) {
 
-                newFilter.save(function (err) {
+                if (err) return console.log(err,"createNewFilter Filter.find err");
 
-                    if (err) return console.log(err,"createNewFilter newFilter.save err");
-
-                    Filters.find("", function (err, filters) {
-
-                        if (err) return console.log(err,"createNewFilter Filter.find err");
-
-                        if (filters != null) {
-                            callback(null, filters)
-                        }
-                    });
-                });
-            }
-            callback(null, filters)
+                if (filters != null) {
+                    callback(null, filters)
+                }
+            });
         })
     },
     findAllFilter: function (callback) {
@@ -126,51 +166,35 @@ module.exports = {
             }
         });
     },
-    findAllCategory: function (callback) {
-        Category.find("", function (err, category) {
+    findFilterByQuery: function (callback,data) {
+        var name = data.name;
+        var query =  {$regex :new RegExp(data.params, 'i')};
 
-            if (err) return console.log(err,"findAllCategory Category.find err");
+        Filters
+            .find({})
+            .where('params.name').equals(query)
+            .select('params.name').equals(query)
+            .exec(function(err,data){console.log(err,data); callback(null, data)});
 
-            if (category != null) {
-                callback(null, category)
-            }
-        });
+
+
+        //Filters.find({"params.$.name": query}), function (err, filters) {
+        //    console.log(filters)
+        //    if (err) return console.log(err,"findAllFilter Filters.find err");
+        //
+        //    if (filters != null) {
+        //        callback(null, filters)
+        //    }
+        //});
     },
-    createSchoolCategory: function (data, callback) {
-        Category.findOne({"name": data.name}, function (err, category) {
-
-            if (err) return console.log(err,"createSchoolCategory Category.findOne err");
-
-            if (category == null) {
-                var newCategory = new Category({
-                    name: data.name
-                });
-
-                newCategory.save(function (err) {
-
-                    if (err) return console.log(err,"createSchoolCategory newCategory.save err");
-
-                    Category.find("", function (err, category) {
-
-                        if (err) return console.log(err,"createSchoolCategory Category.find err");
-
-                        if (category != null) {
-                            callback(null, category)
-                        }
-                    });
-                });
-            }
-            callback(null, category)
-        })
-    },
-    updateSchoolCategory: function (data, callback) {
+    updateFilterParams: function (data, callback) {
         //Пишем в БД к ID из запроса
-        Category.update({"_id": data.id}, {$set: {"name": data.newName}}, function (err, updated) {
+        Filters.update({"params": data.oldName}, {"params":{$push : {"name":data.newName}}}, function (err, updated) {
 
             if (err) return console.log(err,"updateSchoolCategory Category.update err");
 
             if (updated != null){
-                Category.find("", function (err, category) {
+                Filters.find("", function (err, category) {
 
                     if (err) return console.log(err,"updateSchoolCategory Category.find err");
 
@@ -182,14 +206,14 @@ module.exports = {
             // Execute callback passed from route
         });
     },
-    removeSchoolCategory: function (data, callback) {
-        Category.remove({"_id": data}, function (err, category) {
+    removeFilters: function (data, callback) {
+        Filters.update({"name": data.name},{$pull:{"params":data.filter}}, function (err, category) {
 
             if (err) return console.log(err,"removeSchoolCategory Category.remove err");
-
+            console.log(category)
             if (category != null) {
 
-                Category.find("", function (err, category) {
+                Filters.find("", function (err, category) {
 
                     if (err) return console.log(err,"removeSchoolCategory Category.find err");
 
@@ -236,7 +260,7 @@ module.exports = {
             }
         });
     },
-    findLink: function (build,callback) {
+    findLinkApk: function (build,callback) {
 
         Version.find({'apk.build':+build},{"_id":0,"link":1}, function (err, data) {
 
@@ -248,7 +272,19 @@ module.exports = {
             }
         });
     },
-    createVersion: function (data, callback) {
+    findLinkKidroid: function (build,callback) {
+
+        Kidroid.find({'loader':build},{"_id":0,"link":1}, function (err, data) {
+
+            if (err) return console.log(err,"findLink Version.find err");
+
+            if (data != null) {
+                console.log(data,"Link data");
+                callback(null, data)
+            }
+        });
+    },
+    createVersionApk: function (data, callback) {
         console.log(data,"createVersion data")
         Version.findOne({"apk.build": data.build}, function (err, category) {
 
@@ -283,6 +319,38 @@ module.exports = {
             callback(null, 0)
         })
     },
+    createVersionKidroid: function (data, callback) {
+        console.log(data,"createVersionKidroid data")
+        Kidroid.findOne({"loader": data.loader}, function (err, category) {
+
+            if (err) return console.log(err,"createVersionKidroid Version.findOne err");
+
+            if (category == null) {
+                var newVersion = new Kidroid({
+                    loader: data.loader,
+                    default: false,
+                    link: data.link,
+                    user: data.user,
+                    date: new Date()
+                });
+
+                newVersion.save(function (err) {
+
+                    if (err) return console.log(err,"createVersionKidroid newVersion.save err");
+
+                    Kidroid.find("", function (err, category) {
+
+                        if (err) return console.log(err,"createVersionKidroid Version.find err");
+
+                        if (category != null) {
+                            callback(null, category)
+                        }
+                    });
+                });
+            }
+            callback(null, 0)
+        })
+    },
     makeDefault: function (location ,id, callback) {
 
         location.update({},{$set:{"default":false}}, function (err, data) {
@@ -296,20 +364,51 @@ module.exports = {
             })
         })
     },
-    removeVersion: function (data, callback) {
-        Version.find({"_id": data}, function (err, category) {
+    removeApkVersion: function (data, callback) {
+        Version.findOne({"_id": data}, function (err, version) {
 
             if (err) return console.log(err,"removeVersion Version.remove err");
 
-            if (category != null) {
+            if (version != null) {
 
-                Version.find("", function (err, category) {
+                Version.remove({"_id": version._id}, function (err, remove) {
 
                     if (err) return console.log(err,"removeVersion Version.find err");
 
-                    if (category != null) {
+                    if (remove != null) {
 
-                        callback(null, category)
+                        fs.remove(version.link, function (err) {
+                            if (err) return console.error(err,"fs.move");
+                            console.log("success remove Marionette version! #"+ version.apk)
+                            module.exports.findAllVersion(function(allMarionette){
+                                callback(err, allMarionette)
+                            })
+                        });
+
+                    }
+                });
+            }
+        });
+    },
+    removeKidroidVersion: function (data, callback) {
+        Kidroid.findOne({"_id": data}, function (err, version) {
+            console.log(version,"version.link")
+            if (err) return console.log(err,"removeVersion Version.remove err");
+
+            if (version != null) {
+
+                Kidroid.remove({"_id": version._id}, function (err, remove) {
+
+                    if (err) return console.log(err,"removeVersion Version.find err");
+
+                    if (remove != null) {
+                        fs.remove(version.link, function (err) {
+                            if (err) return console.error(err,"fs.move");
+                            console.log("success remove Kidroid version! #"+ version.loader)
+                            module.exports.findAllVersion(function(allKidroid){
+                                callback(err, allKidroid)
+                            })
+                        });
 
                     }
                 });

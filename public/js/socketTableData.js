@@ -6,12 +6,13 @@ socket.on('displayData', function (data) {
     //console.log(data.length);
     html = '';
     for (i in data){
-        var checkbox = "<td><input type='checkbox' class='checkboxWarning' value="+ data[i].deviceId +"></td>";
-        var deviceId = "<td>" + data[i].deviceId + "</td>";
+        //console.log(data);
+        var checkbox = "<td><input type='checkbox' class='checkboxWarning' value="+ data[i]._id +"></td>";
+        var deviceId = "<td>" + data[i]._id + "</td>";
         var deviceName = "<td>"+ data[i].name + "<p>(Android v." +data[i].android +")</p></td>";
         var update = (!data[i].updateRequired)? "": "*Pending update (v"+data[i].apkToUpdate.version+" build "+data[i].apkToUpdate.build+")";
-        var apkVersion = "<td>" + ((!data[i].apk.version >=1 )? "-" : data[i].apk.version +" (Build "+data[i].apk.build + ")") + "<p>"+ update +"</p></td>";
-        var loaderVersion = "<td>"+ ((data[i].loader >= 1)? data[i].loader: '-') +"</td>";
+        var apkVersion = "<td>" + ((!+data[i].apk.build >=1 )? "-" : data[i].apk.version +" (Build "+data[i].apk.build + ")") + "<p>"+ update +"</p></td>";
+        var loaderVersion = "<td>"+ ((data[i].loader != 0)? data[i].loader: '-') +"</td>";
         var status = "<td>" + data[i].status + "</td>";
         if(data[i].longitude!=0||data[i].latitude!=0) {
             var map = "<button id='buttonMap' href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>Location</button>";
@@ -21,34 +22,57 @@ socket.on('displayData', function (data) {
             var map ="<p></p>"
             //console.log('no-map');
         }
-        var edit = "<button href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(" + data[i].deviceId +")'>Edit</button> ";
+        var edit = "<button href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(\"" + data[i]._id + "," + data[i].token + "," + data[i].name + "\")'>Edit</button> ";
         //var deleteDevice = "<button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].deviceId + "\")\')>Delete</button>";
         var options = "<td><div class='btn-group' role='group'>" + map + edit + "</div></td>";
         html += "<tr>" +checkbox+deviceId+deviceName+apkVersion+loaderVersion+status+options+ "</tr>";
     }
     $("#deviceTable").html(html);
 });
-
+var itemsPerPage;
 socket.on('quantity', function (data) {
     //console.log(data);
+    var onePage=acrivePage-2;
+    var lastPage=acrivePage+2;
     $("h4").html(data + " devices found:");
     $("#deployCount").html(" ("+data+")");
     $("#deployCountKidroid").html(" ("+data+")");
-    html = '<nav><ul class="pagination">';
-    Page = Math.ceil(data / 10);
-    for (var j = 1; j <= Page; j++)
-        html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>";
-    $("#pagination").html(html);
-});
-
-socket.on('category', function (school) {
-    html = '';
-    for (var i = 0; i < school.length; i++) {
-        category.pushData(school[i].name);
-        html += "<tr><td style=\'display: none\'>" + school[i]._id + "</td><td><input type='checkbox' class='checkAllCategory' placeholder='- School -' value="+ school[i]._id +"></td><td>" + school[i].name + "</td><td><a href='#editCategory' role='button' class='btn btn-primary' data-toggle='modal' onclick='renameCategoryId(\"" + school[i]._id + ',' + school[i].name + "\")'>Edit</a></td></tr>";
+    html = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>';
+    Page = Math.ceil(data / itemsPerPage);
+    if(onePage >= 2 && lastPage<Page) { // мы гдек то в середине
+        for (var j = onePage; j <= lastPage; j++)
+            if (j == acrivePage) {
+                html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            } else {
+                html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            }
+        ;
+    }else if(lastPage>=Page && onePage>=Page-5 && onePage>0 && Page>=5){ // если мы в конце страниц и перывая страница не ушла в минус
+        for (var j = Page-4; j <= Page; j++)
+            if (j == acrivePage) {
+                html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            } else {
+                html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            }
+        ;
+    }else if(Page<5){ //страниц мало
+        for (var j = 1; j <= Page; j++)
+            if (j == acrivePage) {
+                html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            } else {
+                html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            }
+        ;
+    }else{ //Юнный падаван только начал свой путь
+        for (var j = 1; j <= 5; j++)
+            if (j == acrivePage) {
+                html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            } else {
+                html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
+            }
+        ;
     }
-    $("#tableFilter").html(html);
-    startAutoComplete(category.getArray(),".category")
+    $("#pagination").html(html+ '<li><a onclick=page('+ Page +') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>');
 });
 
 socket.on('category', function (date) {
@@ -62,9 +86,11 @@ socket.on('category', function (date) {
 
 socket.on('version', function (date) {
     //console.log(date,"kidroidVersion");
-    html = '<option value="" style="color:#cccccc">- Kidroid Loader version -</option>';
-    for (var i = 0; i < date.kidroid.length; i++) {
-        html += "<option>" + date.kidroid[i].loader +"</option>";
+        html = '<option value="" style="color:#cccccc">- Kidroid Loader version -</option>';
+    if(date.kidroid.length) {
+        for (var i = 0; i < date.kidroid.length; i++) {
+            html += "<option>" + date.kidroid[i].loader + "</option>";
+        }
     }
     $("#kidroidVersion,#kidroidVersionDeploy").html(html);
 });
@@ -99,19 +125,23 @@ socket.on('status', function (date) {
 socket.on('users', function (data) {
     //console.log(data);
     html = '';
-    for (i in data)
-        html += "<tr><td><input type='checkbox' id='checkAllUsers" + data[i]._id + "' class='checkAllUsers' value='" + data[i]._id + "'></td><td>" + data[i].local.name + "</td><td><a href='#editUsers' role='button' class='btn btn-primary' data-toggle='modal' onclick='editUsers(\"" + data[i]._id + "\")'>Edit</a></td></tr>";
+    for (i in data){
+        var checkbox = "<td><input type='checkbox' id='checkAllUsers" + data[i]._id + "' class='checkAllUsers' value='" + data[i]._id + "'></td>";
+        var name = "<td>" + data[i].local.name + "</td>";
+        var editName = "<td><div class='btn-group'><a href='#editUsers' role='button' class='btn btn-primary' data-toggle='modal' onclick='editUsers(\"" + data[i]._id +" , " +data[i].local.name + "\")'>Edit user</a>";
+        html += "<tr>"+checkbox+name+editName+"</tr>";}
     $("#userTable").html(html);
 });
 
 socket.on('allDeviceCreated', function (data) {
-    if (data.deviceId){
+    if (data._id){
         $('#idDevice').addClass('in')
             .attr('aria-hidden', false)
             .css('z-index','1050')
             .css('opacity','1')
             .css('display','block');
-        $("#idDeviceCreate").append("ID " +data.deviceId+"\n")
+        $('#addDevice').css('display','none');
+        $("#idDeviceCreate").append("ID " +data._id+"\n")
         //TODO сделать вывод созданного колличества устройств
         $("#numberIdDevice").replaceWith( "Devices has been added successfully" );
     }
@@ -124,22 +154,63 @@ socket.on('error', function (date) {
 });
 
 socket.on('deviceScheduled', function (data) {
-    //console.log(data);
+    console.log(data);
     html = '';
     for (i in data)
-        html += "<tr><td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i].deviceId + "'  value='" + data[i].deviceId + "'></td><td>" + data[i].deviceId + "</td><td>" + data[i].school + "</td><td>" + data[i].apk_version + "</td><td></td><td></td></tr>";
+        var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td>"
+        var id = "<td>" + data[i]._id + "</td>"
+        var school = "<td>" + data[i].school + "</td>"
+        var apk_vers = "<td>" + data[i].apk.version + "</td>"
+        html += "<tr>"+checkbox+id+school+apk_vers+ "<td></td><td></td></tr>";
+    $("#tableSchedule").html(html);
+});
+socket.on('deviceForDeploy', function (data) {
+    console.log(data,"deviceForDeploy");
+    html = '';
+    for (i in data)
+        var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td>"
+        var id = "<td>" + data[i]._id + "</td>"
+        var school = "<td>" + data[i].school + "</td>"
+        var apk_vers = "<td>" + data[i].apk.version + "</td>"
+        html += "<tr>"+checkbox+id+school+apk_vers+"<td></td><td></td></tr>";
     $("#tableSchedule").html(html);
 });
 
 socket.on('filters', function (data) {
-    //console.log(data);
-    html = '';
-    for (i in data)
-        html += "<tr><td><input type='checkbox' class='checkAllFilters' id='checkSchedule" + data[i].id + "'  value='" + data[i].id + "'></td><td>" + data[i].name + "</td><td>" + data[i].params + "</td></tr>";
-    $("#filtersTable").html(html);
+
+    for (i in data) {
+        html = '';
+        if (data[i].name === "School") {
+            $("#firstFilter").html(data[i].name);
+            for (var j = 0; j < data[i].params.length; j++) {
+                school.pushData(data[i].params[j]);
+                var name = "<td>" + data[i].params[j] + "</td>"
+                console.log(data[i].params[j]);
+                var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[j] + "\")\'>Edit</a></td>";
+                var checkbox = "<td><input type='checkbox' class='checkAllCategory' id='checkSchedule'  value='"+ data[i].params[j] +"'></td>"
+                html += "<tr>" + checkbox + name + editButton + "</tr>";
+            }
+            startAutoComplete(school.getArray(),".category");
+            $("#tableFilter").html(html);
+        }
+        if (data[i].name === "Filter2") {
+            html = '';
+            $("#secondFilter").html(data[i].name);
+            for (var f = 0; f < data[i].params.length; f++) {
+                filter2.pushData(data[i].params[f]);
+                var name = "<td>" + data[i].params[f] + "</td>"
+                var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[f] + "\")'>Edit</a></td>";
+                var checkbox = "<td><input type='checkbox' class='checkAllFilters' id='checkSchedule'  value='"+ data[i].params[f] +"'></td>"
+                html += "<tr>" + checkbox + name + editButton + "</tr>";
+            }
+            startAutoComplete(filter2.getArray(),".filter2");
+            $("#filtersTable").html(html);
+        }
+    }
 });
 
 socket.on('allSchedule', function (data) {
+    console.log(data)
     var options = {
         year: 'numeric',
         month: 'long',
@@ -150,27 +221,42 @@ socket.on('allSchedule', function (data) {
         minute: 'numeric',
         second: 'numeric'
     };
-    html = '<ul>';
-    for (i in data)
+    html = '';
+    for (i in data) {
         var date = new Date(data[i].timeStart);
-        html += "<tr><td>" + date.toLocaleString("en", options) + " (" +data[i].name+ ")" + "</td><td>" + data[i].devices + "</td><td>" + data[i].versionToUpdate + "</td><td></td></tr>";
-    $("#allSchedule").html(html);
+        var name = data[i].name;
+        var version = "v"+data[i].versionToUpdate.version+" build "+data[i].versionToUpdate.build;
+        var total = data[i].deviceToUpdate;
+        var updated = data[i].deviceUpdated;
+        var school = data[i].school;
+        var filter = data[i].filter;
+        var type = data[i].type;
+        html += "<tr><td>" + date.toLocaleString("en", options) + " (" + name + ")" + "</td><td>" + type + "</td><td>" + version + "</td><td>" + total + "</td><td>" + updated + "</td><td>" + school + "</td><td>" + filter + "</td></tr>";
+        $("#allSchedule").html(html);
+    }
+});
+socket.on('userName', function (data){
+    $("#userName").html(' Signed in as: ' +data);
 });
 
 socket.on('getVersionDeploy', function (data) {
     var defaultVersion;
-    for (var i = 0; i < data.kidroid.length; i++) {
-        if (data.kidroid[i].default){
-            defaultVersion = data.kidroid[i];
+    if(data.length) {
+        for (var i = 0; i < data.kidroid.length; i++) {
+            if (data.kidroid[i].default) {
+                defaultVersion = data.kidroid[i];
+            }
         }
     }
-    html = "<option>" + defaultVersion.loader +" current"+"</option>";
-    for (var j = 0; j < data.kidroid.length; j++) {
-        if (data.kidroid[j] != defaultVersion)
-        html += "<option>" + data.kidroid[j].loader +"</option>";
+    if(defaultVersion!=undefined){
+        html = "<option>" + defaultVersion.loader +" current"+"</option>";
+        for (var j = 0; j < data.kidroid.length; j++) {
+            if (data.kidroid[j] != defaultVersion)
+            html += "<option>" + data.kidroid[j].loader +"</option>";
+        }
+        $("#selectDefaultKidroidVersion").html(html);
+        $("#kidroidVersionDeploy").html(html);
     }
-    $("#selectDefaultKidroidVersion").html(html);
-    $("#kidroidVersionDeploy").html(html);
 });
 
 socket.on('getVersionDeploy', function (data) {
@@ -180,13 +266,15 @@ socket.on('getVersionDeploy', function (data) {
             defaultVersion = data.apk[i];
         }
     }
-    html = "<option>" + defaultVersion.apk.build +" current"+"</option>";
-    for (var j = 0; j < data.apk.length; j++) {
-        if (data.apk[j] != defaultVersion)
-            html += "<option>" + data.apk[j].apk.build +"</option>";
+    if(defaultVersion!=undefined) {
+        html = "<option>" + defaultVersion.apk.version + " " + defaultVersion.apk.build + " current" + "</option>";
+        for (var j = 0; j < data.apk.length; j++) {
+            if (data.apk[j] != defaultVersion)
+                html += "<option>" + defaultVersion.apk.version + " " + defaultVersion.apk.build + "</option>";
+        }
+        $("#selectDefaultApkVersion, #addSelectVersion").html(html);
+        $("#selectVersionApkToDeploy").html(html);
     }
-    $("#selectDefaultApkVersion, #addSelectVersion").html(html);
-    $("#selectVersionApkToDeploy").html(html);
 });
 socket.on('getVersionDeploy', function (data) {
     var apk = "";
@@ -201,28 +289,41 @@ socket.on('getVersionDeploy', function (data) {
         minute: 'numeric',
         second: 'numeric'
     };
-    for (var i = 0; i < data.apk.length; i++) {
-        var dateApk = new Date(data.apk[i].date);
-        var checkBox = "<td ><input type='checkbox' class='checkAllMarionetteAPK' value=" + data.apk[i]._id + "></td>";
-        var name = '<td class="name">'+ dateApk.toLocaleString("en", options) + ' (' + data.apk[i].user + ')</td>';
-        var version = '<td class="version">'+ data.apk[i].apk.version + '</td>';
-        var build = '<td class="build">'+  data.apk[i].apk.build + '</td>';
-        apk += '<tr>'+checkBox+name+version+build+'</tr>';
+    if(data.apk.length){
+        for (var i = 0; i < data.apk.length; i++) {
+            var dateApk = new Date(data.apk[i].date);
+            var checkBox = "<td ><input type='checkbox' class='checkAllMarionetteAPK' value=" + data.apk[i]._id + "></td>";
+            var name = '<td class="name">'+ dateApk.toLocaleString("en", options) + ' (' + data.apk[i].user + ')</td>';
+            var version = '<td class="version">'+ data.apk[i].apk.version + '</td>';
+            var build = '<td class="build">'+  data.apk[i].apk.build + '</td>';
+            apk += '<tr>'+checkBox+name+version+build+'</tr>';
+        }
     }
-    for (var j = 0; j < data.kidroid.length; j++) {
-        var dateKidroid = new Date(data.kidroid[i].date);
-        var checkBoxKid = "<td ><input type=checkbox class='checkAllKidroidVersion' value=" + data.kidroid[i]._id + "></td>";
-        var nameKid = '<td class="name">'+ dateKidroid.toLocaleString("en", options) + ' (' + data.kidroid[i].user + ')</td>';
-        var versionKid = '<td class="version">'+ data.kidroid[i].loader + '</td>';
-        var buildKid = '<td class="build">'+  data.kidroid[i].loader + '</td>';
-        var optionsdKid = '<td class="build"></td>';
-        kidroid += '<tr>'+checkBoxKid+nameKid+versionKid+buildKid+optionsdKid+'</tr>';
-    }
-    $("#settingKidroidVersionTable").html(kidroid);
     $("#settingApkVersionTable").html(apk);
+    if(data.kidroid.length) {
+        for (var j = 0; j < data.kidroid.length; j++) {
+            var dateKidroid = new Date(data.kidroid[j].date);
+            var checkBoxKid = "<td ><input type=checkbox class='checkAllKidroidVersion' value=" + data.kidroid[j]._id + "></td>";
+            var nameKid = '<td class="name">' + dateKidroid.toLocaleString("en", options) + ' (' + data.kidroid[j].user + ')</td>';
+            var versionKid = '<td class="version">' + data.kidroid[j].loader + '</td>';
+            var optionsdKid = '<td class="build"></td>';
+            kidroid += '<tr>' + checkBoxKid + nameKid + versionKid + '</tr>';
+        }
+    }
+    console.log(kidroid);
+    $("#settingKidroidVersionTable").html(kidroid);
 });
 
-var category =  {
+var school =  {
+    pushData:function(data){
+        this.array.push(data)
+    },
+    getArray:function(){
+        return  this.array
+    },
+    array: []
+};
+var filter2 =  {
     pushData:function(data){
         this.array.push(data)
     },
@@ -259,3 +360,10 @@ function startAutoComplete(array,className){
         lookup: Array
     });
 }
+socket.on("getFilterBack",function(filters){
+    console.log(filters)
+    for (i in filters){
+        console.log(filters[i].params,"getFilterBack")
+    }
+
+});

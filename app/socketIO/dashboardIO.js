@@ -12,8 +12,8 @@ module.exports = function (server,sessionMiddleware) {
     });
     io.on('connection', function (socket) {
         var userName;
+        var devicesToDeploy;
         if(socket.request.session.passport != undefined) {
-            console.log("user.findUser");
             user.findUser(socket.request.session.passport.user, function (err, data) {
                 if (err) {
                     console.log(err);
@@ -41,12 +41,6 @@ module.exports = function (server,sessionMiddleware) {
             }
             io.emit('displayData', data);
         });
-        user.findCategory(function (err, data) {
-            if (err) {
-                console.log(err);
-            }
-            io.emit('category', data);
-        });
         user.findAllVersion(function (err, data) {
             if (err) {
                 console.log(err);
@@ -72,19 +66,26 @@ module.exports = function (server,sessionMiddleware) {
             }
             io.emit('allSchedule', data);
         });
+        user.getDeviceIdByParams(function (err, callback) {
+            if (err) {
+                console.log(err,"getDeviceIdByParams first");
+            }
+            devicesToDeploy = callback;
+        });
         //UPDATE
-        socket.on('updateCategory', function (categoryParams) {
+        socket.on('editCategory', function (categoryParams) {
 
-                user.updateCategory(categoryParams, function (err, callback) {
+                user.updateFilter(categoryParams, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('category', callback);
+                    io.emit('filters', callback);
                 });
             }
         );
 
         socket.on('updateDevice', function (params) {
+                console.log(params);
                 user.updateDevice(params, function (err, callback) {
                     if (err) {
                         console.log(err);
@@ -102,21 +103,65 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
-        //CREATE
-        // Создаем категорию
-        socket.on('createCategory', function (categoryName) {
-
-                user.createCategory(categoryName, function (err, callback) {
+        socket.on('updateUser', function (params) {
+                user.updateUserInfo(params, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('category', callback);
+                    io.emit('users', callback);
+                });
+            }
+        );
+        //CREATE
+        // Создаем категорию
+        socket.on('createFilter', function (filterParams) {
+                user.createFilter(filterParams, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('filters', callback);
                 });
             }
         );
         socket.on('createSchedule', function (params) {
                 params.name = userName;
                 cron.newSchedule(params, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('allSchedule', callback);
+                });
+            }
+        );
+
+        socket.on('deployApk', function (data) {
+                var deploy={};
+                deploy.name = userName;
+                deploy.date = new Date();
+                deploy.devices = (data.devices.length !=0)?data.devices:devicesToDeploy;
+                deploy.build = data.build;
+                deploy.version = data.version;
+                deploy.type = "Marionette APK";
+                deploy.school = data.school;
+                deploy.filter = data.filter;
+                cron.newSchedule(deploy, function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    io.emit('allSchedule', callback);
+                });
+            }
+        );
+        socket.on('deployKidroid', function (version) {
+                var deploy={};
+                deploy.name = userName;
+                deploy.date = new Date();
+                deploy.devices = (version.devices.length !=0)?version.devices:devicesToDeploy;
+                deploy.version = version.version;
+                deploy.type = "Kidroid Loader";
+                deploy.school = version.school;
+                deploy.filter = version.filter;
+                cron.newSchedule(deploy, function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
@@ -140,17 +185,17 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
-        socket.on('createFilter', function (filterData) {
-                console.log(filterData);
-                user.createFilter(filterData, function (err, callback) {
+        //GET
+        socket.on('getFilter', function (data) {
+                user.findFilter(function (err, data) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('filters', callback);
-                });
+
+                    io.emit('getFilterBack', data);
+                },data);
             }
         );
-        //GET
         socket.on('getCategory', function () {
                 user.findCategory(function (err, data) {
                     if (err) {
@@ -170,21 +215,23 @@ module.exports = function (server,sessionMiddleware) {
             }
         );
         socket.on('getDeviceIdByParams', function (params) {
-                user.getDeviceIdByParams(params, function (err, callback) {
+                user.getDeviceIdByParams(function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('deviceScheduled', callback);
-                });
+                    devicesToDeploy = callback;
+                },params);
             }
         );
         // Запрос устройств на страницу по колличеству
         socket.on('getDevicesByParams', function (params) {
+                console.log(params,"getDevicesByParams")
                 user.getDevice(function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
                     io.emit('displayData', callback);
+                    io.emit('deviceForDeploy', callback);
                 },params);
             }
         );
@@ -199,24 +246,13 @@ module.exports = function (server,sessionMiddleware) {
             }
         );
         //REMOVE
-        socket.on('removeVersion', function (id) {
-                for (var i = 0; i < id.length; i++) {
-                    user.removeVersion(id[i], function (err, callback) {
+        socket.on('removeFilters', function (data) {
+                for (var i = 0; i < data.filters.length; i++) {
+                    user.removeFilters({name:data.name,filter:data.filters[i]}, function (err, callback) {
                         if (err) {
                             console.log(err);
                         }
-                        io.emit('displayData', callback);
-                    });
-                }
-            }
-        );
-        socket.on('removeCategory', function (categoryID) {
-                for (var i = 0; i < categoryID.length; i++) {
-                    user.removeCategory(categoryID[i], function (err, callback) {
-                        if (err) {
-                            console.log(err);
-                        }
-                        io.emit('category', callback);
+                        io.emit('filters', callback);
                     });
                 }
             }
@@ -238,7 +274,21 @@ module.exports = function (server,sessionMiddleware) {
                         if (err) {
                             console.log(err);
                         }
-                        io.emit('users', callback);
+                        console.log(callback,"removeMarionetteAPK");
+                        io.emit('version', callback);
+                        io.emit('getVersionDeploy', callback);
+                    });
+                }
+            }
+        );
+        socket.on('removeKidroidVersion', function (id) {
+                for (var i = 0; i < id.length; i++) {
+                    user.removeKidroid(id[i], function (err, callback) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        io.emit('version', callback);
+                        io.emit('getVersionDeploy', callback);
                     });
                 }
             }
