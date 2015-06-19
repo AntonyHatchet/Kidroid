@@ -241,13 +241,14 @@ socket.on('userName', function (data){
 
 socket.on('getVersionDeploy', function (data) {
     var defaultVersion;
-    if(data.length) {
+    if(data.kidroid.length) {
         for (var i = 0; i < data.kidroid.length; i++) {
             if (data.kidroid[i].default) {
                 defaultVersion = data.kidroid[i];
             }
         }
     }
+    console.log(data.kidroid.length);
     if(defaultVersion!=undefined){
         html = "<option>" + defaultVersion.loader +" current"+"</option>";
         for (var j = 0; j < data.kidroid.length; j++) {
