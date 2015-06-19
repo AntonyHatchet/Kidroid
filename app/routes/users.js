@@ -159,16 +159,14 @@ module.exports = {
                     }
                 });
                 unzipParsrer.on('close', function(){
-                    console.log("unzipParsrer")
                     var zip = {
                         CheckSum: function(path,callback){
                             var checkNumber=[];
                             var sumArr = fs.readFileSync(path+"list.md5", 'utf8').split("\r\n");
-                            console.log("sumArr",sumArr)
-                            for(var i in sumArr){
+                            for(var i=0;i< sumArr.length;i++){
                                 sumArr[i]= sumArr[i].slice(sumArr[i].indexOf(':')+1)
                             }
-                            function check(callback,apk,files){
+                            function check(cb,apk,files){
                                 var shasum = crypto.createHash('md5');
                                 var s = fs.createReadStream(path+apk);
                                 s.on('data', function (d) {
@@ -176,7 +174,8 @@ module.exports = {
                                 });
                                 s.on('end', function () {
                                     var d = shasum.digest('hex');
-                                    callback(null,(d==files))
+                                    console.log("d",(d==files))
+                                    cb(null,(d==files))
                                 });
 
                             }
@@ -187,7 +186,7 @@ module.exports = {
                                        if(err)throw new err;
                                         if(data){
                                             checkNumber.push(data);
-                                            if(checkNumber.length===sumArr.length){
+                                           if(checkNumber.length===sumArr.length){
                                                 return callback(null,true);
                                             }
                                         }
@@ -211,6 +210,7 @@ module.exports = {
                                 kidroid.user = req.user.local.name;
                                 fs.exists('./public/uploads/Kidroid-APK/'+kidroid.loader + ".zip", function (exists) {
                                     if(!exists){
+                                        console.log(exists,"exists");
                                         fs.move(bufer+"/zip/"+filename, kidroid.link, function (err) {
                                             if (err) return console.error(err,"fs.move");
                                             console.log("success move!")
@@ -267,6 +267,9 @@ module.exports = {
         });
     },
     makeDefaultVersion: function(location,id,callback){
+        if (location === "Apk"){
+            location = "Version";
+        }
         userMagic.makeDefault(location,id,function (err, version) {
 
             if (err) return console.log(err,"makeDefaultVersion userMagic.makeDefault err");

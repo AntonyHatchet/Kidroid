@@ -357,7 +357,7 @@ module.exports = {
 
             if (err) return console.log(err,"makeDefault location.update err");
 
-            location.update({"_id": data.id},{$set:{"default":false}}, function(err,data){
+            location.update({"_id": data.id},{$set:{"default":true}}, function(err,data){
                 if (err) return console.log(err,"makeDefault location.update 2 err");
 
                 callback(err,data)
