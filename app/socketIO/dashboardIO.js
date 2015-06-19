@@ -287,6 +287,7 @@ module.exports = function (server,sessionMiddleware) {
                         if (err) {
                             console.log(err);
                         }
+                        console.log(callback,"removeKidroidVersion");
                         io.emit('version', callback);
                         io.emit('getVersionDeploy', callback);
                     });

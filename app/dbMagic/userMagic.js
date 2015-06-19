@@ -142,7 +142,7 @@ module.exports = {
     },
     createNewFilter: function (data, callback) {
         console.log(data,"createNewFilter data");
-        Filters.update({"name": data.name},{$addToSet:{"params":{"name":data.params}}},{$upsert:true}, function (err, filters) {
+        Filters.update({"name": data.name},{"params":{$addToSet:data.params}},{$upsert:true}, function (err, filters) {
 
             if (err) return console.log(err,"createNewFilter Filter.findOne err");
 
@@ -380,8 +380,8 @@ module.exports = {
                         fs.remove(version.link, function (err) {
                             if (err) return console.error(err,"fs.move");
                             console.log("success remove Marionette version! #"+ version.apk)
-                            module.exports.findAllVersion(function(allMarionette){
-                                callback(err, allMarionette)
+                            module.exports.findAllVersion(function(err,allMarionette){
+                                callback(null, allMarionette)
                             })
                         });
 
@@ -405,8 +405,9 @@ module.exports = {
                         fs.remove(version.link, function (err) {
                             if (err) return console.error(err,"fs.move");
                             console.log("success remove Kidroid version! #"+ version.loader)
-                            module.exports.findAllVersion(function(allKidroid){
-                                callback(err, allKidroid)
+                            module.exports.findAllVersion(function(err,allKidroid){
+
+                                callback(null, allKidroid)
                             })
                         });
 
