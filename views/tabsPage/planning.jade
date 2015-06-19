@@ -1,0 +1,57 @@
+//
+   Created by nikolay_ivanisenko on 19.06.2015.
+
+//===========TABS planning================
+#planning(class='tab-content')
+    h2 Planning
+    div(class='calendar')
+
+    //#allSchedule
+    //============MODAL EDIT Schedule=====================
+    div(class="modal" id="editSchedule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" id='closeScheduleModal' data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Edit Schedule
+                div(class="modal-body")
+                    form
+                        .form-inline
+                            .form-group
+                                div(id='dateSchedule')
+                            .form-group
+                                input(class="form-control" id='timeSchedule' type='time' required)
+                        .form-group
+                        select(class="form-control" id="scheduleDeviceVersion" required)
+                        hr
+                        form
+                                .row.form-group
+                                    .col-xs-3
+                                        input(class="form-control" type='text' id='idStart' placeholder='start id')
+                                    .col-xs-3
+                                        input(class="form-control" type='text' id='idEnd' placeholder='end id')
+                                .form-group
+                                    input(class="form-control category" id="autocomplete-dynamic")
+                                .form-group
+                                    select(class="form-control" id="scheduleDeviceVersionFilter")
+                                    button(class="btn btn-primary right" onclick='finsDeviceSchedule()') Find
+                        hr
+                        #tableScheduleFind
+                            table(class='table table-hover table-bordered table-striped')
+                                thead
+                                    tr
+                                        td.checkColum(data-value="0")
+                                            input(type='checkbox' id='checkAllSchedule')
+                                        th id
+                                        th school
+                                        th apk_version
+                                        th update
+                                        th status
+                                tbody(id='tableSchedule')
+
+                div(class="modal-footer")
+                    #errorAddSchedule(class='no-show') error
+                    .btn-group
+                        button(id="closeScheduleModal1" class="btn btn-danger") Close
+                        button(onclick="createSchedule()" class="btn btn-primary") Create
