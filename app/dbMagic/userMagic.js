@@ -351,13 +351,21 @@ module.exports = {
             callback(null, 0)
         })
     },
-    makeDefault: function (location ,id, callback) {
-
-        location.update({},{$set:{"default":false}}, function (err, data) {
+    makeDefault: function (params, callback) {
+        console.log(params,"params");
+            var location;
+            if (params.type == "Kidroid" ){
+                console.log("console.log(location) is Kidroid");
+                location = Kidroid;
+            }else if (params.type == "Apk" ){
+                location = Version;
+                console.log("console.log(location) is Apk");
+            }
+        location.update({},{$set:{"default":false}},{"multi":true}, function (err, data) {
 
             if (err) return console.log(err,"makeDefault location.update err");
 
-            location.update({"_id": data.id},{$set:{"default":true}}, function(err,data){
+            location.update({"_id": params.id},{$set:{"default":true}}, function(err,data){
                 if (err) return console.log(err,"makeDefault location.update 2 err");
 
                 callback(err,data)
