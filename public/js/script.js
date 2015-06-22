@@ -130,7 +130,7 @@ function inputNewNameUser() {
 };
 function validPassword(data){
     if($("#addPasswordUsers").val()!=$("#addPassword2Users").val()){
-        alert('error');
+        $('#errorAddUsersPassword').removeClass('no-show');
         return false;}
 }
 function editDeviceWriteIdToken(x){
