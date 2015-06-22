@@ -438,7 +438,7 @@ function setDefaultApk(){
     var device = {}
     device.id = $('#selectDefaultApkVersion').val();
     device.type = 'APK';
-    socket.emit('makeDefaultVersion', device.type, device.id);
+    socket.emit('makeDefaultVersion', "'"+device.type+ "',"+ device.id);
 }
 function setDefault(){
     var device = {}
