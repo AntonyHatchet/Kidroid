@@ -345,7 +345,7 @@ module.exports = {
             if (params.type == "Kidroid" ){
                 console.log("console.log(location) is Kidroid");
                 location = Kidroid;
-            }else if (params.type == "Apk" ){
+            }else if (params.type == "APK" ){
                 location = Version;
                 console.log("console.log(location) is Apk");
             }
