@@ -456,8 +456,8 @@ function setDefaultApk(){
     device.id = $('#selectDefaultApkVersion option:selected').attr('data-id');
     device.version = $('#selectDefaultApkVersion').val();
     device.type = 'APK';
-    if(device.version.split(' ')[1]== 'current'){
-        console.log(device);
+    if(device.version.split(' ')[2]== 'current'){
+        console.log('no');
     }else{
         console.log(device);
         socket.emit('makeDefaultVersion', device);
@@ -470,7 +470,7 @@ function setDefault(){
     device.version = $('#selectDefaultKidroidVersion').val();
     device.type = 'Kidroid';
     if(device.version.split(' ')[1]== 'current'){
-        //console.log('no');
+        console.log('no');
     }else{
         //console.log('yes');
         socket.emit('makeDefaultVersion', device);
