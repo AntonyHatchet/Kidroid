@@ -34,12 +34,24 @@ socket.on('quantity', function (data) {
     //console.log(data);
     var onePage=acrivePage-2;
     var lastPage=acrivePage+2;
+    var nextPage=acrivePage+1;
+    var prevPage=acrivePage-1;
+    //if(acrivePage==1){
+    //    $("#prevPage").addClass('no-show');
+    //    $("#nextPage").removeClass('no-show');
+    //}else if(acrivePage==Page){
+    //    $("#nextPage").addClass('no-show');
+    //    $("#prevPage").removeClass('no-show');
+    //}else{
+    //    $("#prevPage").removeClass('no-show');
+    //    $("#nextPage").removeClass('no-show');
+    //}
     $("h4").html(data + " devices found:");
     $("#deployCount").html(" ("+data+")");
     $("#deployCountKidroid").html(" ("+data+")");
-    html = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>';
+    html = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">...</span></a> </li><li id="prevPage"><a onclick=\'page(' +prevPage+ ')\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>';
     Page = Math.ceil(data / itemsPerPage);
-    if(onePage >= 2 && lastPage<Page) { // мы гдек то в середине
+    if(onePage >= 2 && lastPage<Page) { // мы где то в середине
         for (var j = onePage; j <= lastPage; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
@@ -47,7 +59,7 @@ socket.on('quantity', function (data) {
                 html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
             }
         ;
-    }else if(lastPage>=Page && onePage>=Page-5 && onePage>0 && Page>=5){ // если мы в конце страниц и перывая страница не ушла в минус
+    }else if(lastPage>=Page && onePage>=Page-5 && onePage>0 && Page>=5){ // если мы в конце страниц и первая страница не ушла в минус
         for (var j = Page-4; j <= Page; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
@@ -67,12 +79,12 @@ socket.on('quantity', function (data) {
         for (var j = 1; j <= 5; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
-            } else {
+            }else {
                 html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
             }
         ;
     }
-    $("#pagination").html(html+ '<li><a onclick=page('+ Page +') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>');
+    $("#pagination").html(html+ '<li id="nextPage"><a onclick=page('+ nextPage +') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li><li><a onclick=page('+ Page +') aria-label="Next"><span aria-hidden="true">...</span></a></li>');
 });
 
 socket.on('category', function (date) {
