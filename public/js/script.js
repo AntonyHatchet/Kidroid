@@ -128,7 +128,11 @@ function inputNewNameUser() {
         $('#completeUsersEdit').addClass('no-show');
     }
 };
-
+function validPassword(data){
+    if($("#addPasswordUsers").val()!=$("#addPassword2Users").val()){
+        alert('error');
+        return false;}
+}
 function editDeviceWriteIdToken(x){
     idDevice=x.split(',')[0];
     tokenDevice=x.split(',')[1];
