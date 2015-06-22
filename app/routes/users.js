@@ -266,21 +266,19 @@ module.exports = {
             callback(null, version);
         });
     },
-    makeDefaultVersion: function(location,id,callback){
-        if (location === "Apk"){
-            location = "Version";
-        }
-        userMagic.makeDefault(location,id,function (err, version) {
+    makeDefaultVersion: function(params,callback){
+        userMagic.makeDefault(params,function (err, data) {
 
             if (err) return console.log(err,"makeDefaultVersion userMagic.makeDefault err");
 
-            module.exports.getDefaultVersion(function(err,versions){
-                callback(null, versions);
-            })
-        });
-    },
-    getDefaultVersion: function(callback){
+            if(data != null){
+                userMagic.findAllVersion(function(err,versions){
+                    if (err) return console.log(err,"makeDefaultVersion findAllVersion err");
+                    callback(null, versions);
+                })
 
+            }
+        });
     },
     findLink: function (version,type,callback) {
         console.log(version,type,"some data")
