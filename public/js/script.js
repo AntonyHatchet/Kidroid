@@ -7,6 +7,21 @@
 $(document).ready(function () {
 
 
+    if(location.hash) {
+        $('ul.tabsMy li').removeClass('active');
+        $('.tab-content').removeClass('current');
+        $('a[href=' + location.hash + ']').tab('show');
+        $(location.hash).addClass('current');
+    }
+
+    $(document.body).on("click", "a[data-toggle]", function(event) {
+        location.hash = this.getAttribute("href");
+    });
+
+    $(window).on('popstate', function() {
+        var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
+        $('a[href=' + anchor + ']').tab('show');
+    });
 
     $('ul.tabsMy li').click(function () {
         var tab_id = $(this).attr('data-tab');
@@ -223,6 +238,7 @@ function find(sort) {
     device.school = $("#selectCategory").val();
     device.filter2 = $("#customFilter").val();
     device.build = $("#marionetteVersion").val();
+    device.loader = $("#kidroidVersion").val();
     device.limit = itemsPerPage = $("#ItemsPerPage").val();
     socket.emit('getDevicesByParams', device);
     socket.emit('getDeviceIdByParams', device);
@@ -241,6 +257,7 @@ function page(i) {
     device.school = data.school = $("#selectCategory").val();
     device.filter2 =data.filter2 =  $("#customFilter").val();
     device.build = data.build = $("#marionetteVersion").val();
+    device.loader = $("#kidroidVersion").val();
     if(data.limit==10 || i==1) {
         device.page = data.page = i * 10 - 10;
     }else if(data.limit==20 && i!=1){

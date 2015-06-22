@@ -13,9 +13,9 @@
                 .col-xs-2
                     select(id='selectStatus' class="span2 form-control input-sm" onchange="find()")
                 .col-xs-2
-                    input(id="selectCategory" placeholder='- School -' class="span2 form-control category input-sm" onkeyup="getFilter(this.value,'School')")
+                    input(id="selectCategory" placeholder='- School -' class="span2 form-control category input-sm" onkeyup="getFilter(this.value,'School');find()" onchange="find()" )
                 .col-xs-2
-                    input(id="customFilter" placeholder='- Filter2 -' class="span2 form-control filter2 input-sm" onkeyup="getFilter(this.value, 'Filter2')")
+                    input(id="customFilter" placeholder='- Filter2 -' class="span2 form-control filter2 input-sm" onkeyup="getFilter(this.value, 'Filter2');find()" onchange="find()")
                 .col-xs-2
                     select(id="marionetteVersion" class="span2 form-control input-sm" onchange="find()")
                 .col-xs-2
