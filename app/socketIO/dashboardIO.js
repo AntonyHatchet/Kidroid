@@ -304,8 +304,8 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
-        socket.on('makeDefaultVersion', function (location,id) {
-                user.makeDefaultVersion(location,id,function (err, data) {
+        socket.on('makeDefaultVersion', function (params) {
+                user.makeDefaultVersion(params,function (err, data) {
                     if (err) {
                         console.log(err);
                     }

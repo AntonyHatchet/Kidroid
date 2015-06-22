@@ -341,7 +341,6 @@ module.exports = {
         })
     },
     makeDefault: function (params, callback) {
-        console.log(params,"params");
             var location;
             if (params.type == "Kidroid" ){
                 console.log("console.log(location) is Kidroid");
@@ -355,9 +354,11 @@ module.exports = {
             if (err) return console.log(err,"makeDefault location.update err");
 
             location.update({"_id": params.id},{$set:{"default":true}}, function(err,data){
+
                 if (err) return console.log(err,"makeDefault location.update 2 err");
 
-                callback(err,data)
+                callback(null,data)
+
             })
         })
     },
