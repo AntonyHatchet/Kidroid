@@ -228,8 +228,8 @@ socket.on('allSchedule', function (data) {
         var version = "v"+data[i].versionToUpdate.version+" build "+data[i].versionToUpdate.build;
         var total = data[i].deviceToUpdate;
         var updated = data[i].deviceUpdated;
-        var school = data[i].school;
-        var filter = data[i].filter;
+        var school = (data[i].school =="")?"-":data[i].school;
+        var filter = (data[i].filter =="")?"-":data[i].filter;
         var type = data[i].type;
         html += "<tr><td>" + date.toLocaleString("en", options) + " (" + name + ")" + "</td><td>" + type + "</td><td>" + version + "</td><td>" + total + "</td><td>" + updated + "</td><td>" + school + "</td><td>" + filter + "</td></tr>";
         $("#allSchedule").html(html);
@@ -250,7 +250,7 @@ socket.on('getVersionDeploy', function (data) {
     }
     console.log(data.kidroid.length);
     if(defaultVersion!=undefined){
-        html = "<option data-id='"+defaultVersion._id+"'>" + defaultVersion.loader +" current"+"</option>";
+        html = "<option data-id='"+defaultVersion._id+"'>" + defaultVersion.loader +" (current)"+"</option>";
         for (var j = 0; j < data.kidroid.length; j++) {
             if (data.kidroid[j] != defaultVersion)
             html += "<option data-id='"+data.kidroid[j]._id+"'>" + data.kidroid[j].loader +"</option>";
@@ -268,7 +268,7 @@ socket.on('getVersionDeploy', function (data) {
         }
     }
     if(defaultVersion!=undefined) {
-        html = "<option data-id='"+defaultVersion._id+"'>" + defaultVersion.apk.version + " " + defaultVersion.apk.build + " current" + "</option>";
+        html = "<option data-id='"+defaultVersion._id+"'>" + defaultVersion.apk.version + " " + defaultVersion.apk.build + " (current)" + "</option>";
         for (var j = 0; j < data.apk.length; j++) {
             if (data.apk[j] != defaultVersion)
                 html += "<option data-id='"+data.apk[j]._id+"'>" + data.apk[j].apk.version + " " + data.apk[j].apk.build + "</option>";

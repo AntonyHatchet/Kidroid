@@ -88,46 +88,35 @@ module.exports = {
         });
     },
     updateUserInfo: function (data, callback) {
-        console.log(data)
-        User.findOne({'local.name': data.newName}, function (err, user) {
+        User.findOne({'local.name': data.newName}, function (err, newNameUser) {
 
-            console.log(err,"err",user,"user")
             // if there are any errors, return the error
             if (err)
                 return done(err);
 
             // check to see if theres already a user with that email
-            if (user) {
-                var newUserPassword = new User();
-
-                // set the user's local credentials
-                newUserPassword.local.password = newUserPassword.generateHash(data.newPassword);
-
-                // save the user
-                User.update({'local.name': data.newName},{$set:{'local.password':newUserPassword.local.password}},function (err) {
-                    if (err)
-                        throw err;
-                    module.exports.findAllUsers(function(err,data){
-                        callback(err,data)
-                    })
-                });
+            if (newNameUser) {
+                callback(err,{type:"error"})
             }
-            if (user == null) {
+            if (newNameUser == null) {
                 User.findOne({'_id': data.id}, function (err, user) {
                     if (err)
                         return done(err);
                     if (user) {
-                        var newUserPassword = new User();
+                        var query;
+                        if(data.newPassword){
+                            var newUserPassword = new User();
 
-                        // set the user's local credentials
-                        newUserPassword.local.password = newUserPassword.generateHash(data.newPassword);
-
-                        // save the user
-                        User.update({'_id': data.id}, {
-                            $set: {
+                            // set the user's local credentials
+                            newUserPassword.local.password = newUserPassword.generateHash(data.newPassword);
+                            query = {
                                 'local.name': data.newName,
                                 'local.password': newUserPassword.local.password
                             }
+                        }else query = {'local.name': data.newName};
+                        // save the user
+                        User.update({'_id': data.id}, {
+                            $set:query
                         }, function (err) {
                             if (err)
                                 throw err;
