@@ -57,7 +57,7 @@ legend{
     width: inherit;
     border: none;
 }
-.form-search select,.form-search input{
+.form-search select,.form-search input, .form-search button{
     margin-left: 30px;
 }
 .pagination li{

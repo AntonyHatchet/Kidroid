@@ -434,7 +434,19 @@ function delKidroidVersion(){
     socket.emit('removeKidroidVersion', device.devices)
     //console.log(device.devices);
 }
-
+function setDefaultApk(){
+    var device = {}
+    device.id = $('#selectDefaultApkVersion').val();
+    device.type = 'APK';
+    socket.emit('makeDefaultVersion', device.type, device.id);
+}
+function setDefault(){
+    var device = {}
+    device.id = $('#selectDefaultKidroidVersion').val();
+    device.type = 'Kidroid';
+    socket.emit('makeDefaultVersion', "'"+device.type+ "',"+ device.id);
+    console.log("'"+device.type+ "',"+ device.id);
+}
 $(document).ready(function () {
     $('#closeScheduleModal, #closeScheduleModal1').click(function(){
        $('#editSchedule').removeClass('.in')
