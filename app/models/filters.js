@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 
 var FilterSchema = mongoose.Schema({
     name: String,
-    params: Array
+    params: [String]
 });
 
 module.exports = mongoose.model('Filter', FilterSchema, "filter");

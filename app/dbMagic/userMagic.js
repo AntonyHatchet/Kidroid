@@ -142,7 +142,7 @@ module.exports = {
     },
     createNewFilter: function (data, callback) {
         console.log(data,"createNewFilter data");
-        Filters.update({"name": data.name},{"params":{$addToSet:data.params}},{$upsert:true}, function (err, filters) {
+        Filters.update({"name": data.name},{$addToSet:{"params":data.params}},{$upsert:true}, function (err, filters) {
 
             if (err) return console.log(err,"createNewFilter Filter.findOne err");
 
@@ -167,29 +167,18 @@ module.exports = {
         });
     },
     findFilterByQuery: function (callback,data) {
-        var name = data.name;
         var query =  {$regex :new RegExp(data.params, 'i')};
+        Filters.aggregate({"$match":{"params":query}},{"$unwind":"$params"},{"$match":{"params":query}}, function (err, filters) {
+            if (err) return console.log(err,"findAllFilter Filters.find err");
 
-        Filters
-            .find({})
-            .where('params.name').equals(query)
-            .select('params.name').equals(query)
-            .exec(function(err,data){console.log(err,data); callback(null, data)});
-
-
-
-        //Filters.find({"params.$.name": query}), function (err, filters) {
-        //    console.log(filters)
-        //    if (err) return console.log(err,"findAllFilter Filters.find err");
-        //
-        //    if (filters != null) {
-        //        callback(null, filters)
-        //    }
-        //});
+            if (filters != null) {
+                callback(null, filters)
+            }
+        });
     },
     updateFilterParams: function (data, callback) {
         //Пишем в БД к ID из запроса
-        Filters.update({"params": data.oldName}, {"params":{$push : {"name":data.newName}}}, function (err, updated) {
+        Filters.update({"params": data.oldName}, {$set:{"params.$":data.newName}}, function (err, updated) {
 
             if (err) return console.log(err,"updateSchoolCategory Category.update err");
 
