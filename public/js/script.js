@@ -436,16 +436,17 @@ function delKidroidVersion(){
 }
 function setDefaultApk(){
     var device = {}
-    device.id = $('#selectDefaultApkVersion').val();
+    device.version = $('#selectDefaultApkVersion').val();
     device.type = 'APK';
-    socket.emit('makeDefaultVersion', "'"+device.type+ "',"+ device.id);
+    //if()
+    socket.emit('makeDefaultVersion', device);
 }
 function setDefault(){
     var device = {}
-    device.id = $('#selectDefaultKidroidVersion').val();
+    device.version = $('#selectDefaultKidroidVersion').val();
     device.type = 'Kidroid';
-    socket.emit('makeDefaultVersion', "'"+device.type+ "',"+ device.id);
-    console.log("'"+device.type+ "',"+ device.id);
+    socket.emit('makeDefaultVersion', device);
+    console.log(device);
 }
 $(document).ready(function () {
     $('#closeScheduleModal, #closeScheduleModal1').click(function(){
