@@ -9,7 +9,7 @@
         #filter
             form(class='row')
                 .col-xs-2
-                    input(type="text" id="DeviceNameIDSerial" class='form-control input-sm' placeholder='Device name/ID/Serial' onkeyup="find()")
+                    input(type="text" id="DeviceNameIDSerial" class='form-control input-sm' placeholder='Device name/ID' onkeyup="find()")
                 .col-xs-2
                     select(id='selectStatus' class="span2 form-control input-sm" onchange="find()")
                 .col-xs-2
@@ -60,7 +60,11 @@
                 .col-sm-8
                     .col-sm-4
                         select(id="selectVersionApkToDeploy" class="span2 form-control")
-                    button(class="col-sm-2 btn btn-primary" onclick='deployAPK()') Start
+                    //button(class="col-sm-2 btn btn-primary" onclick='deployAPK()') Start
+                    a(data-target="#confirmationApk" role="button" class="col-sm-2 btn btn-primary" data-toggle="modal") Start
+                    .col-sm-4
+                        div(id='completeDeployApk' class='alert alert-success no-show .col-lg-1')
+
     #deployKidroid
         fieldset
             legend Kidroid Loader Deploy:
@@ -70,7 +74,10 @@
                 .col-sm-8
                     .col-sm-4
                         select(id="kidroidVersionDeploy" class="span2 form-control")
-                    button(class="col-sm-2 btn btn-primary" onclick='deployKidroid()') Start
+                    //button(class="col-sm-2 btn btn-primary" onclick='deployKidroid()') Start
+                    a(data-target="#confirmationKidroid" role="button" class="col-sm-2 btn btn-primary" data-toggle="modal") Start
+                    .col-sm-4
+                        div(id='completeDeployKidroid' class='alert alert-success no-show .col-lg-1')
     //============MODAL Add new device=====================
     div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
         .modal-dialog.modal-sm
@@ -228,6 +235,30 @@
                         //button(type="button" class="close" data-dismiss="alert") &times;
                         p Device is edit
                     button(class="btn btn-primary" onclick='editDevice()') Save
+    //============MODAL confirmation Apk=====================
+    div(class="modal" id="confirmationApk" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Are you sure, you want to initialize the deploy process?
+                div(class="modal-body")
+                div(class="modal-footer")
+                    button(type="button" class="btn btn-danger left" data-dismiss="modal" aria-label="Close") No
+                    button(class="btn btn-primary" onclick='deployAPK()' data-dismiss="modal") Yes
+    //============MODAL confirmation Kidroid=====================
+    div(class="modal" id="confirmationKidroid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Are you sure, you want to initialize the deploy process?
+                div(class="modal-body")
+                div(class="modal-footer")
+                    button(type="button" class="btn btn-danger left" data-dismiss="modal" aria-label="Close") No
+                    button(class="btn btn-primary" onclick='deployKidroid()' data-dismiss="modal") Yes
     //============MODAL maps=====================
     div(class="modal" id="map" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: -1; opacity: 0 ")
         .modal-dialog.modal-lg
