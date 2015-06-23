@@ -180,23 +180,28 @@ socket.on('error', function (date) {
 socket.on('deviceScheduled', function (data) {
     console.log(data);
     html = '';
-    for (i in data)
-        var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td>"
-        var id = "<td>" + data[i]._id + "</td>"
-        var school = "<td>" + data[i].school + "</td>"
-        var apk_vers = "<td>" + data[i].apk.version + "</td>"
-        html += "<tr>"+checkbox+id+school+apk_vers+ "<td></td><td></td></tr>";
+    if(!_.isNull(data)) {
+        for (var i = 0; i < data.length; i++) {
+            var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td>"
+            var id = "<td>" + data[i]._id + "</td>"
+            var school = "<td>" + data[i].school + "</td>"
+            var apk_vers = "<td>" + data[i].apk.version + "</td>"
+            html += "<tr>" + checkbox + id + school + apk_vers + "<td></td><td></td></tr>";
+        }
+    }
     $("#tableSchedule").html(html);
 });
 socket.on('deviceForDeploy', function (data) {
-    //console.log(data,"deviceForDeploy");
     html = '';
-    for (i in data)
-        var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td>"
-        var id = "<td>" + data[i]._id + "</td>"
-        var school = "<td>" + data[i].school + "</td>"
-        var apk_vers = "<td>" + data[i].apk.version + "</td>"
-        html += "<tr>"+checkbox+id+school+apk_vers+"<td></td><td></td></tr>";
+    if(!_.isNull(data)) {
+        for (var i = 0; i < data.length; i++) {
+            var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td>"
+            var id = "<td>" + data[i]._id + "</td>"
+            var school = "<td>" + data[i].school + "</td>"
+            var apk_vers = "<td>" + data[i].apk.version + "</td>"
+            html += "<tr>" + checkbox + id + school + apk_vers + "<td></td><td></td></tr>";
+        }
+    }
     $("#tableSchedule").html(html);
 });
 
