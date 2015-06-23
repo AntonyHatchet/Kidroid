@@ -276,7 +276,7 @@ function page(i) {
     }
     socket.emit('getDevicesByParams', data);
     socket.emit('getDevicesQuantityByParams', device);
-    console.log(device);
+    //console.log(device);
 };
 function addDevice() {
     var device = {};

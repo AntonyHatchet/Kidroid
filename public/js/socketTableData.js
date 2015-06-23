@@ -49,8 +49,11 @@ socket.on('quantity', function (data) {
     $("h4").html(data + " devices found:");
     $("#deployCount").html(" ("+data+")");
     $("#deployCountKidroid").html(" ("+data+")");
-    html = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">...</span></a> </li><li id="prevPage"><a onclick=\'page(' +prevPage+ ')\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>';
+    html = '';
     Page = Math.ceil(data / itemsPerPage);
+    if(acrivePage==undefined){
+        acrivePage=1;
+    }
     if(onePage >= 2 && lastPage<Page) { // мы где то в середине
         for (var j = onePage; j <= lastPage; j++)
             if (j == acrivePage) {
@@ -84,7 +87,16 @@ socket.on('quantity', function (data) {
             }
         ;
     }
-    $("#pagination").html(html+ '<li id="nextPage"><a onclick=page('+ nextPage +') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li><li><a onclick=page('+ Page +') aria-label="Next"><span aria-hidden="true">...</span></a></li>');
+    console.log(acrivePage);
+    var prevButton = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">...</span></a> </li><li id="prevPage"><a onclick=\'page(' +prevPage+ ')\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>'
+    var nextButton = '<li><a onclick=page(' + nextPage + ') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li><li><a onclick=page('+ Page +') aria-label="Next"><span aria-hidden="true">...</span></a></li>'
+    if(acrivePage==1 || acrivePage==undefined){
+        $("#pagination").html('<nav><ul class="pagination">'+html+nextButton);
+    }else if(acrivePage==Page){
+        $("#pagination").html(prevButton+html);
+    }else{
+        $("#pagination").html(prevButton+html+nextButton);
+    }
 });
 
 socket.on('category', function (date) {
@@ -177,7 +189,7 @@ socket.on('deviceScheduled', function (data) {
     $("#tableSchedule").html(html);
 });
 socket.on('deviceForDeploy', function (data) {
-    console.log(data,"deviceForDeploy");
+    //console.log(data,"deviceForDeploy");
     html = '';
     for (i in data)
         var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td>"
@@ -197,7 +209,7 @@ socket.on('filters', function (data) {
             for (var j = 0; j < data[i].params.length; j++) {
                 school.pushData(data[i].params[j]);
                 var name = "<td>" + data[i].params[j] + "</td>"
-                console.log(data[i].params[j]);
+                //console.log(data[i].params[j]);
                 var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[j] + "\")\'>Edit</a></td>";
                 var checkbox = "<td><input type='checkbox' class='checkAllCategory' id='checkSchedule'  value='"+ data[i].params[j] +"'></td>"
                 html += "<tr>" + checkbox + name + editButton + "</tr>";
@@ -222,7 +234,7 @@ socket.on('filters', function (data) {
 });
 
 socket.on('allSchedule', function (data) {
-    console.log(data)
+    //console.log(data)
     var options = {
         year: 'numeric',
         month: 'long',
@@ -260,7 +272,7 @@ socket.on('getVersionDeploy', function (data) {
             }
         }
     }
-    console.log(data.kidroid.length);
+    //console.log(data.kidroid.length);
     if(defaultVersion!=undefined){
         html = "<option data-id='"+defaultVersion._id+"'>" + defaultVersion.loader +" (current)"+"</option>";
         for (var j = 0; j < data.kidroid.length; j++) {
@@ -323,7 +335,7 @@ socket.on('getVersionDeploy', function (data) {
             kidroid += '<tr>' + checkBoxKid + nameKid + versionKid + '</tr>';
         }
     }
-    console.log(kidroid);
+    //console.log(kidroid);
     $("#settingKidroidVersionTable").html(kidroid);
 });
 
