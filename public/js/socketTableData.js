@@ -103,7 +103,7 @@ socket.on('category', function (date) {
     //console.log(date, "category");
     html = '<option value="" style="color:#cccccc">- Select school -</option>';
     for (var i = 0; i < date.length; i++) {
-        html += "<option>" + date[i].name + "</option>";
+        html += "<option onclick='find()'>" + date[i].name + "</option>";
     }
     $("#addSelectCategory, #editDeviceCategory, #scheduleDeviceCategory").html(html);
 });
@@ -113,7 +113,7 @@ socket.on('version', function (date) {
         html = '<option value="" style="color:#cccccc">- Kidroid Loader version -</option>';
     if(date.kidroid.length) {
         for (var i = 0; i < date.kidroid.length; i++) {
-            html += "<option>" + date.kidroid[i].loader + "</option>";
+            html += "<option onclick='find()'>" + date.kidroid[i].loader + "</option>";
         }
     }
     $("#kidroidVersion,#kidroidVersionDeploy").html(html);
@@ -207,27 +207,23 @@ socket.on('filters', function (data) {
         if (data[i].name === "School") {
             $("#firstFilter").html(data[i].name);
             for (var j = 0; j < data[i].params.length; j++) {
-                school.pushData(data[i].params[j]);
                 var name = "<td>" + data[i].params[j] + "</td>"
                 //console.log(data[i].params[j]);
                 var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[j] + "\")\'>Edit</a></td>";
                 var checkbox = "<td><input type='checkbox' class='checkAllCategory' id='checkSchedule'  value='"+ data[i].params[j] +"'></td>"
                 html += "<tr>" + checkbox + name + editButton + "</tr>";
             }
-            startAutoComplete(school.getArray(),".category");
             $("#tableFilter").html(html);
         }
         if (data[i].name === "Filter2") {
             html = '';
             $("#secondFilter").html(data[i].name);
             for (var f = 0; f < data[i].params.length; f++) {
-                filter2.pushData(data[i].params[f]);
                 var name = "<td>" + data[i].params[f] + "</td>"
                 var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[f] + "\")'>Edit</a></td>";
-                var checkbox = "<td><input type='checkbox' class='checkAllFilters' id='checkSchedule'  value='"+ data[i].params[f] +"'></td>"
+                var checkbox = "<td><input type='checkbox' class='checkAllFilters' id='checkSchedule'  value='" + data[i].params[f] + "'></td>"
                 html += "<tr>" + checkbox + name + editButton + "</tr>";
             }
-            startAutoComplete(filter2.getArray(),".filter2");
             $("#filtersTable").html(html);
         }
     }
@@ -339,55 +335,44 @@ socket.on('getVersionDeploy', function (data) {
     $("#settingKidroidVersionTable").html(kidroid);
 });
 
-var school =  {
-    pushData:function(data){
-        this.array.push(data)
-    },
-    getArray:function(){
-        return  this.array
-    },
-    array: []
-};
-var filter2 =  {
-    pushData:function(data){
-        this.array.push(data)
-    },
-    getArray:function(){
-        return  this.array
-    },
-    array: []
-};
-function startAutoComplete(array,className){
-
-    var Array = $.map(array, function (value, key) { return { value: value, data: key }; });
-
-// Setup jQuery ajax mock:
-    $.mockjax({
-        url: '*',
-        responseTime: 2000,
-        response: function (settings) {
-            var query = settings.data.query,
-                queryLowerCase = query.toLowerCase(),
-                re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi'),
-                suggestions = $.grep(Array, function (categorySchool) {
-                    return re.test(categorySchool.value);
-                }),
-                response = {
-                    query: query,
-                    suggestions: suggestions
-                };
-
-            this.responseText = JSON.stringify(response);
+function FilterArray() {
+    var array =  [];
+    return {
+        pushData:function(data){
+            array.push(data)
+        },
+        getArray:function(){
+            return  array
+        },
+        resetArray: function(){
+            array = [];
         }
-    });
-    $(className).autocomplete({
-        lookup: Array
-    });
-}
-socket.on("getFilterBack",function(filters){
-    console.log(filters)
-    for (i in filters){
-        console.log(filters[i].params,"getFilterBack")
     }
+};
 
+var setFilterArray = new FilterArray();
+
+function startAutoComplete(array,filterFieldId,inputId){
+    document.getElementById(filterFieldId).innerHTML = '';
+    for(var i=0; i < array.length; i++){
+        document.getElementById(filterFieldId).insertAdjacentHTML('beforeend','<div class="col-xs-12 autocomplete">'+array[i]+'</div>')
+    }
+    document.getElementById(filterFieldId).addEventListener('click',function(event){
+
+        document.getElementById(inputId).value =  event.target.innerText;
+        find();
+        document.getElementById(filterFieldId).innerHTML = '';
+
+    });
+    setFilterArray.resetArray()
+}
+
+socket.on("getFilterBack",function(filters){
+    for (i in filters){
+        setFilterArray.pushData(filters[i].params);
+    }
+    if(filters[0].name === "School"){
+        startAutoComplete(setFilterArray.getArray(),"schoolFilter","selectCategory");
+    }else
+    startAutoComplete(setFilterArray.getArray(),"customFilters","customFilter")
 });

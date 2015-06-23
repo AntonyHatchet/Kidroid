@@ -5,8 +5,6 @@
 
 
 $(document).ready(function () {
-
-
     if(location.hash) {
         $('ul.tabsMy li').removeClass('active');
         $('.tab-content').removeClass('current');

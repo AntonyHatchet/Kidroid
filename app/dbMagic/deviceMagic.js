@@ -54,7 +54,6 @@ module.exports = {
     },
     getDevice: function (callback,params) {
         if (params!=undefined) {
-            console.log(params,"Find getDevice")
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
             var _id = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             var school = {$regex: new RegExp(params.school, 'i')};

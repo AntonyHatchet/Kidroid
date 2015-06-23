@@ -149,3 +149,8 @@ legend{
 .apk{
     margin-bottom: 15px;
 }
+.autocomplete{
+    cursor: pointer;
+    background-color: #63615e;
+    margin: 0;
+}
