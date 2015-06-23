@@ -359,7 +359,8 @@ var setFilterArray = new FilterArray();
 
 function startAutoComplete(array,filterFieldId,inputId){
     document.getElementById(filterFieldId).innerHTML = '';
-    for(var i=0; i < array.length; i++){
+    var counter = (array.length <= 5)?array.length:5;
+    for(var i=0; i < counter; i++){
         document.getElementById(filterFieldId).insertAdjacentHTML('beforeend','<div class="col-xs-12 autocomplete">'+array[i]+'</div>')
     }
     document.getElementById(filterFieldId).addEventListener('click',function(event){
@@ -373,11 +374,16 @@ function startAutoComplete(array,filterFieldId,inputId){
 }
 
 socket.on("getFilterBack",function(filters){
-    for (i in filters){
-        setFilterArray.pushData(filters[i].params);
-    }
     if(filters[0].name === "School"){
+        for (i in filters){
+            setFilterArray.pushData(filters[i].params);
+        }
         startAutoComplete(setFilterArray.getArray(),"schoolFilter","selectCategory");
-    }else
-    startAutoComplete(setFilterArray.getArray(),"customFilters","customFilter")
+    }else if(filters[0].name === "Filter2") {
+        for (i in filters){
+            setFilterArray.pushData(filters[i].params);
+        }
+        startAutoComplete(setFilterArray.getArray(), "customFilters", "customFilter")
+    }
+    return
 });
