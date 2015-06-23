@@ -154,6 +154,13 @@ legend{
 }
 .autocomplete{
     cursor: pointer;
-    background-color: #63615e;
+    /*background-color: #63615e;*/
     margin: 0;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #F2F2F2;
+    border-bottom: 1px solid #F2F2F2;
+}
+.autocomplete:hover {
+    background: #F9F9F9;
 }
