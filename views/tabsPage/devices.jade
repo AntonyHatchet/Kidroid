@@ -12,6 +12,11 @@
                     input(type="text" id="DeviceNameIDSerial" class='form-control input-sm' placeholder='Device name/ID' onkeyup="find()")
                 .col-xs-2
                     select(id='selectStatus' class="span2 form-control input-sm" onchange="find()")
+                        option(value="") - Select status -
+                        option  Unregistered
+                        option  Registered
+                        option Online
+                        option  Offline
                 .col-xs-2
                     input(id="selectCategory" placeholder='- School -' class="span2 form-control category input-sm" onkeyup="getFilter(this.value,'School');find()" onchange="find()" )
                 .col-xs-2

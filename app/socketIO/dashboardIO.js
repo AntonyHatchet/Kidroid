@@ -214,13 +214,13 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
-        socket.on('getDeviceIdByParams', function (params) {
-                user.getDeviceIdByParams(function (err, callback) {
+        socket.on('requestLogLimit', function (limit) {
+                cron.getAllSchedule(function (err, data) {
                     if (err) {
                         console.log(err);
                     }
-                    devicesToDeploy = callback;
-                },params);
+                    io.emit('allSchedule', data);
+                },null,limit); // отправл€ем Null как заглушку дл€ переменной params
             }
         );
         // «апрос устройств на страницу по колличеству
@@ -232,6 +232,16 @@ module.exports = function (server,sessionMiddleware) {
                     }
                     io.emit('displayData', callback);
                     io.emit('deviceForDeploy', callback);
+                },params);
+            }
+        );
+        socket.on('getDevicesQuantityByParams', function (params) {
+                user.getAllDeviceQuantity(function (err, callback) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log(callback);
+                    io.emit('quantity', callback);
                 },params);
             }
         );

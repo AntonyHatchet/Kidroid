@@ -74,12 +74,13 @@ module.exports = {
         });
 
     },
-    getAllSchedule: function (callback,status){
+    getAllSchedule: function (callback,status,limit){
         status = (!status)? {$exists:true}:status;
+        limit = (!limit)? 10:limit;
         Cron.find({"status":status}, function (err, jobs) {
             if (err) return console.log(err, "getAllSchedule");
             callback(null, jobs);
-        })
+        }).limit(limit)
     },
     checkScheduleStatus: function (id,callback){
         Cron.findOne({"_id":id}, function (err, job) {

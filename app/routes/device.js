@@ -10,7 +10,7 @@ module.exports = {
             if (err) return console.log(err,"checkStatus deviceMagic.getAllDevice err");
 
             data.forEach(function(device){
-                var time = (new Date - device.timestamp)/60000;
+                var time = (new Date() - device.timestamp)/60000;
                 if (time > 30){
                     deviceMagic.updateDeviceStatus(device._id);
                 }
@@ -32,7 +32,7 @@ module.exports = {
     },
 //Регистрация девайса
     getRegistrationDevice: function (req, res) {
-        console.log(req.body);
+
         deviceMagic.regDevice({id: req.body.id}, function (err, next) {
 
             if (err) return console.log(err,"getRegistrationDevice deviceMagic.regDevice err");

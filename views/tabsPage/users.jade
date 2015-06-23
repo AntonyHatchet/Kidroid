@@ -67,9 +67,9 @@
                             .col-sm-9
                                 input(name='password' class="form-control" id='addPasswordUsers' type='password' placeholder='password' required)
                         .form-group
-                            label(for="addPassword2Users").col-sm-3.control-label Password:
+                            label(for="addPassword2Users").col-sm-3.control-label Confirm:
                             .col-sm-9
-                                input(name='password2' class="form-control" id='addPassword2Users' type='password' placeholder='password' required)
+                                input(name='password2' class="form-control" id='addPassword2Users' type='password' placeholder='confirm password' required)
                     .modal-footer
                         button(class="btn btn-primary" type='submit' onclick="return validPassword(this.form)") Add user
                         div(id='errorAddUsersPassword' class='alert alert-danger no-show')
