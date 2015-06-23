@@ -224,7 +224,6 @@ socket.on('filters', function (data) {
                 var checkbox = "<td><input type='checkbox' class='checkAllFilters' id='checkSchedule'  value='"+ data[i].params[f] +"'></td>"
                 html += "<tr>" + checkbox + name + editButton + "</tr>";
             }
-            startAutoComplete(filter2.getArray(),".filter2");
             $("#filtersTable").html(html);
         }
     }
