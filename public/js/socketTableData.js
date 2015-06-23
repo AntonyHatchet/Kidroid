@@ -137,14 +137,14 @@ socket.on('version', function (date) {
     }
     $("#versionTable").html(html);
 });
-//socket.on('status', function (date) {
-//    //console.log(school,"category");
-//    html = '<option value="" style="color:#cccccc">- Select status -</option>';
-//    for (var i = 0; i < date.length; i++) {
-//        html += "<option>" +date[i]+"</option>";
-//    }
-//    $("#selectStatus").html(html);
-//});
+socket.on('status', function (date) {
+    //console.log(school,"category");
+    html = '<option value="" style="color:#cccccc">- Select status -</option>';
+    for (var i = 0; i < date.length; i++) {
+        html += "<option>" +date[i]+"</option>";
+    }
+    $("#selectStatus").html(html);
+});
 
 socket.on('users', function (data) {
     //console.log(data);
@@ -207,18 +207,21 @@ socket.on('filters', function (data) {
         if (data[i].name === "School") {
             $("#firstFilter").html(data[i].name);
             for (var j = 0; j < data[i].params.length; j++) {
+                school.pushData(data[i].params[j]);
                 var name = "<td>" + data[i].params[j] + "</td>"
                 //console.log(data[i].params[j]);
                 var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[j] + "\")\'>Edit</a></td>";
                 var checkbox = "<td><input type='checkbox' class='checkAllCategory' id='checkSchedule'  value='"+ data[i].params[j] +"'></td>"
                 html += "<tr>" + checkbox + name + editButton + "</tr>";
             }
+            startAutoComplete(school.getArray(),".category");
             $("#tableFilter").html(html);
         }
         if (data[i].name === "Filter2") {
             html = '';
             $("#secondFilter").html(data[i].name);
             for (var f = 0; f < data[i].params.length; f++) {
+                filter2.pushData(data[i].params[f]);
                 var name = "<td>" + data[i].params[f] + "</td>"
                 var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[f] + "\")'>Edit</a></td>";
                 var checkbox = "<td><input type='checkbox' class='checkAllFilters' id='checkSchedule'  value='"+ data[i].params[f] +"'></td>"
@@ -336,6 +339,51 @@ socket.on('getVersionDeploy', function (data) {
     $("#settingKidroidVersionTable").html(kidroid);
 });
 
+var school =  {
+    pushData:function(data){
+        this.array.push(data)
+    },
+    getArray:function(){
+        return  this.array
+    },
+    array: []
+};
+var filter2 =  {
+    pushData:function(data){
+        this.array.push(data)
+    },
+    getArray:function(){
+        return  this.array
+    },
+    array: []
+};
+function startAutoComplete(array,className){
+
+    var Array = $.map(array, function (value, key) { return { value: value, data: key }; });
+
+// Setup jQuery ajax mock:
+    $.mockjax({
+        url: '*',
+        responseTime: 2000,
+        response: function (settings) {
+            var query = settings.data.query,
+                queryLowerCase = query.toLowerCase(),
+                re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi'),
+                suggestions = $.grep(Array, function (categorySchool) {
+                    return re.test(categorySchool.value);
+                }),
+                response = {
+                    query: query,
+                    suggestions: suggestions
+                };
+
+            this.responseText = JSON.stringify(response);
+        }
+    });
+    $(className).autocomplete({
+        lookup: Array
+    });
+}
 socket.on("getFilterBack",function(filters){
     console.log(filters)
     for (i in filters){

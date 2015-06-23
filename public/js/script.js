@@ -252,7 +252,6 @@ function find(sort) {
     socket.emit('getDevicesByParams', device);
     socket.emit('getDeviceIdByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
-    console.log(data);
 };
 var acrivePage;
 function page(i) {
