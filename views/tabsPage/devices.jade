@@ -26,16 +26,20 @@
                 .col-xs-2
                     select(id="kidroidVersion" class="span2 form-control input-sm" onchange="find()")
     .col-sm-12
-        h4.col-sm-2
+        h4.col-sm-3
         #add-device.col-sm-2
             a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") Add New Device
-        h5.col-sm-2.col-sm-offset-6
+        h5.col-sm-4.col-sm-offset-3
             label(for="ItemsPerPage").col-sm-7.control-label Items per page:
             .form-group.col-sm-5
                 select(id="ItemsPerPage" onchange="find()")
                     option(value='10') 10
                     option(value='20') 20
                     option(value='50') 50
+        .col-sm-4
+            div(id='completeDeployApk' class='alert alert-success no-show .col-lg-1')
+        .col-sm-4
+            div(id='completeDeployKidroid' class='alert alert-success no-show .col-lg-1')
     .col-lg-12.container-tab
         table(class='table table-hover table-bordered table-striped' id='paged')
             thead(class='tableTarget')
@@ -67,8 +71,6 @@
                         select(id="selectVersionApkToDeploy" class="span2 form-control")
                     //button(class="col-sm-2 btn btn-primary" onclick='deployAPK()') Start
                     a(data-target="#confirmationApk" role="button" class="col-sm-2 btn btn-primary" data-toggle="modal") Start
-                    .col-sm-4
-                        div(id='completeDeployApk' class='alert alert-success no-show .col-lg-1')
 
     #deployKidroid
         fieldset
@@ -250,8 +252,9 @@
                     h3 Are you sure, you want to initialize the deploy process?
                 div(class="modal-body")
                 div(class="modal-footer")
-                    button(type="button" class="btn btn-danger left" data-dismiss="modal" aria-label="Close") No
-                    button(class="btn btn-primary" onclick='deployAPK()' data-dismiss="modal") Yes
+                    .btn-group.center
+                        button(type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close") No
+                        button(class="btn btn-primary" type='submit' onclick='deployAPK()' data-dismiss="modal") Yes
     //============MODAL confirmation Kidroid=====================
     div(class="modal" id="confirmationKidroid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
         .modal-dialog.modal-sm
@@ -262,8 +265,9 @@
                     h3 Are you sure, you want to initialize the deploy process?
                 div(class="modal-body")
                 div(class="modal-footer")
-                    button(type="button" class="btn btn-danger left" data-dismiss="modal" aria-label="Close") No
-                    button(class="btn btn-primary" onclick='deployKidroid()' data-dismiss="modal") Yes
+                    .btn-group.center
+                        button(type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close") No
+                        button(class="btn btn-primary" onclick='deployKidroid()' data-dismiss="modal") Yes
     //============MODAL maps=====================
     div(class="modal" id="map" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: -1; opacity: 0 ")
         .modal-dialog.modal-lg
