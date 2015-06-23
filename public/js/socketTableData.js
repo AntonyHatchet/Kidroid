@@ -87,7 +87,7 @@ socket.on('quantity', function (data) {
             }
         ;
     }
-    console.log(acrivePage);
+    //console.log(acrivePage);
     var prevButton = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">...</span></a> </li><li id="prevPage"><a onclick=\'page(' +prevPage+ ')\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>'
     var nextButton = '<li><a onclick=page(' + nextPage + ') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li><li><a onclick=page('+ Page +') aria-label="Next"><span aria-hidden="true">...</span></a></li>'
     if(acrivePage==1 || acrivePage==undefined){
@@ -103,7 +103,7 @@ socket.on('category', function (date) {
     //console.log(date, "category");
     html = '<option value="" style="color:#cccccc">- Select school -</option>';
     for (var i = 0; i < date.length; i++) {
-        html += "<option onclick='find()'>" + date[i].name + "</option>";
+        html += "<option>" + date[i].name + "</option>";
     }
     $("#addSelectCategory, #editDeviceCategory, #scheduleDeviceCategory").html(html);
 });
@@ -113,7 +113,7 @@ socket.on('version', function (date) {
         html = '<option value="" style="color:#cccccc">- Kidroid Loader version -</option>';
     if(date.kidroid.length) {
         for (var i = 0; i < date.kidroid.length; i++) {
-            html += "<option onclick='find()'>" + date.kidroid[i].loader + "</option>";
+            html += "<option>" + date.kidroid[i].loader + "</option>";
         }
     }
     $("#kidroidVersion,#kidroidVersionDeploy").html(html);

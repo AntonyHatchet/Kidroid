@@ -46,12 +46,13 @@ $(document).ready(function () {
 function createNewCategory() {
     var nameCategory = $("#newCategory").val();
     if(nameCategory !=0){
-        console.log('yes');
+        //console.log('yes');
         socket.emit('createFilter', {"name":"School","params": nameCategory });
         $('#errorCreateSchool').addClass('no-show');
         $('#completeCreateSchool').removeClass('no-show');
+        $('#completeCreateSchool').html('The category '+nameCategory+  ' has been added successful');
     }else{
-        console.log('no');
+        //console.log('no');
         $('#errorCreateSchool').removeClass('no-show');
         $('#completeCreateSchool').addClass('no-show');
     }
@@ -65,6 +66,7 @@ function createNewFilter() {
         socket.emit('createFilter', {"name":"Filter2","params": nameFilter });
         $('#errorCreateFilter').addClass('no-show');
         $('#completeCreateFilter').removeClass('no-show');
+        $('#completeCreateFilter').html('The filter '+nameFilter+  ' has been added successful');
     }else{
         console.log('no');
         $('#errorCreateFilter').removeClass('no-show');
@@ -90,15 +92,22 @@ function inputNewNameCategory() {
     var device = {};
     device.oldName = $("#newNameCategory").attr("data-name");
     device.newName = $("#newNameCategory").val();
-    if(device.newName != 0) {
+    if(device.newName != 0 && device.newName!=device.oldName) {
         //console.log('yes');
         $('#errorEditFilters').addClass('no-show');
         $('#completeEditFilters').removeClass('no-show');
         socket.emit('editCategory', device);
-    }else{
+        $("#completeEditFilters").html('The category '+device.newName+ ' has been saved successfully')
+    }else if(device.newName==device.oldName){
+        $('#errorEditFilters').removeClass('no-show');
+        $('#completeEditFilters').addClass('no-show');
+        $("#errorEditFilters").html('not a change of name')
+    }
+    else{
         //console.log('no');
         $('#errorEditFilters').removeClass('no-show');
         $('#completeEditFilters').addClass('no-show');
+        $("#errorEditFilters").html('All fields must be filled out')
     }
     //console.log(device);
 };
@@ -108,7 +117,7 @@ function inputNewNameUser() {
     device.newName = $("#newNameUsers").val();
     device.newPassword = $("#newNamepassword").val();
     var newPassword2 = $("#newNamepassword2").val();
-    if(device.newPassword == newPassword2 && newPassword2!=0 && device.newName!=0){
+    if(device.newPassword == newPassword2 && device.newName!=0){
         //console.log('yes');
         $('#errorUsersPassword').addClass('no-show');
         $('#errorUsersName').addClass('no-show');

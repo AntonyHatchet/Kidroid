@@ -56,7 +56,6 @@
                     div(id='errorCreateSchool' class='alert alert-danger no-show')
                         p All fields must be filled out
                     div(id='completeCreateSchool' class='alert alert-success no-show')
-                        p School is create
                     button(class="btn btn-primary" onclick="createNewCategory()" type="button") Create
     //============MODAL Create new filter=====================
     div(class="modal" id="createFilter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -76,7 +75,6 @@
                     div(id='errorCreateFilter' class='alert alert-danger no-show')
                         p All fields must be filled out
                     div(id='completeCreateFilter' class='alert alert-success no-show')
-                        p Filter is create
                     button(class="btn btn-primary" onclick="createNewFilter()" type="button") Create
 
     //============MODAL Edit category=====================
@@ -97,7 +95,5 @@
                                 input(type="input" class="form-control" id='newNameCategory' value='name' placeholder='name')
                 div(class="modal-footer")
                     div(id='errorEditFilters' class='alert alert-danger no-show')
-                        p All fields must be filled out
                     div(id='completeEditFilters' class='alert alert-success no-show')
-                        p Name is edit
                     button( type="button" class="btn btn-primary" onclick="inputNewNameCategory()") Save
