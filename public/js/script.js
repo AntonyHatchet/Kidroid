@@ -110,7 +110,7 @@ function inputNewNameUser() {
     device.newName = $("#newNameUsers").val();
     device.newPassword = $("#newNamepassword").val();
     var newPassword2 = $("#newNamepassword2").val();
-    if(device.newPassword == newPassword2 && newPassword2!=0 && device.newName!=0){
+    if(device.newPassword == newPassword2 && device.newName!=0){
         //console.log('yes');
         $('#errorUsersPassword').addClass('no-show');
         $('#errorUsersName').addClass('no-show');
