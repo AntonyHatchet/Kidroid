@@ -18,11 +18,11 @@
                         option Online
                         option  Offline
                 .col-xs-2
-                    input(id="selectCategory" placeholder='- School -' class="span2 form-control category input-sm" onkeyup="getFilter(this.value,'School');find()")
-                    #schoolFilter
+                    input(id="selectCategory" placeholder='- School -' class="span2 form-control category input-sm" onkeyup="getFilter(this,'School');find()")
+                    div
                 .col-xs-2
-                    input(id="customFilter" placeholder='- Filter2 -' class="span2 form-control filter2 input-sm" onkeyup="getFilter(this.value, 'Filter2');find()")
-                    #customFilters
+                    input(id="customFilter" placeholder='- Filter2 -' class="span2 form-control filter2 input-sm" onkeyup="getFilter(this, 'Filter2');find()")
+                    div
                 .col-xs-2
                     select(id="marionetteVersion" class="span2 form-control input-sm" onchange="find()")
                 .col-xs-2
@@ -100,11 +100,13 @@
                         .form-group
                             label(for="addSelectCategory").col-sm-3.control-label School:
                             .col-sm-9
-                                input(id="addSelectCategory" placeholder='- School -' class="span2 form-control category")
+                                input(id="addSelectCategory" placeholder='- School -' class="span2 form-control category" onkeyup="getFilter(this,'School')")
+                                div
                         .form-group
                             label(for="filter2").col-sm-3.control-label Filter 2:
                             .col-sm-9
-                                input(id="filter2" placeholder='- Filter 2 -' class="span2 form-control filter2")
+                                input(id="filter2" placeholder='- Filter 2 -' class="span2 form-control filter2" onkeyup="getFilter(this, 'Filter2')")
+                                div
                         .form-group
                             label(for="addSelectVersion").col-sm-4.control-label APK version *:
                             .col-sm-8

@@ -191,8 +191,11 @@ module.exports = function (server,sessionMiddleware) {
                     if (err) {
                         console.log(err);
                     }
-
+                    console.log(data)
                     io.emit('getFilterBack', data);
+
+
+
                 },data);
             }
         );

@@ -341,6 +341,13 @@ socket.on('getVersionDeploy', function (data) {
     $("#settingKidroidVersionTable").html(kidroid);
 });
 
+//Filters
+
+function getFilter(query,name){
+    query.nextSibling.setAttribute('id','Filter');
+    socket.emit("getFilter",{name:name,params:query.value})
+}
+
 function FilterArray() {
     var array =  [];
     return {
@@ -358,8 +365,8 @@ function FilterArray() {
 
 var setFilterArray = new FilterArray();
 
-function startAutoComplete(array,filterFieldId,inputId){
-    filterFieldId =  document.getElementById(filterFieldId);
+function startAutoComplete(array){
+    var filterFieldId =  document.getElementById('Filter');
 
     filterFieldId.innerHTML = '';
 
@@ -371,26 +378,21 @@ function startAutoComplete(array,filterFieldId,inputId){
 
     filterFieldId.addEventListener('click',function(event){
 
-        document.getElementById(inputId).value =  event.target.innerText;
+        filterFieldId.previousSibling.value =  event.target.innerText;
         find();
         filterFieldId.innerHTML = '';
+
     });
     document.addEventListener('click',function(event){
         filterFieldId.innerHTML = '';
+        filterFieldId.setAttribute('id','')
     });
     setFilterArray.resetArray()
 }
 
 socket.on("getFilterBack",function(filters){
-    if(filters[0].name === "School"){
         for (var i in filters){
             setFilterArray.pushData(filters[i].params);
         }
-        startAutoComplete(setFilterArray.getArray(),"schoolFilter","selectCategory");
-    }else if(filters[0].name === "Filter2") {
-        for (i in filters){
-            setFilterArray.pushData(filters[i].params);
-        }
-        startAutoComplete(setFilterArray.getArray(), "customFilters", "customFilter")
-    }
+        startAutoComplete(setFilterArray.getArray())
 });

@@ -219,9 +219,6 @@ function uploadChangeApk(){
 function uploadChangeKidroid(){
     $('#uploadKidroid').click();
 }
-function getFilter(query,name){
-    socket.emit("getFilter",{name:name,params:query})
-}
 function deployAPK(){
     var apk = {};
     apk.version = $("#selectVersionApkToDeploy").val().split(' ')[0];
@@ -284,7 +281,7 @@ function page(i) {
     socket.emit('getDevicesQuantityByParams', device);
     //console.log(device);
 };
-function addDevice() {
+function addDevice( ) {
     var device = {};
     device.category = $("#addSelectCategory").val();
     device.build = $("#addSelectVersion").val();

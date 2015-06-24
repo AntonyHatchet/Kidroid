@@ -157,7 +157,7 @@ module.exports = {
     },
     findFilterByQuery: function (callback,data) {
         var query =  {$regex :new RegExp(data.params, 'i')};
-        Filters.aggregate({"$match":{"params":query}},{"$unwind":"$params"},{"$match":{"params":query}}, function (err, filters) {
+        Filters.aggregate({"$match":{"name":data.name,"params":query}},{"$unwind":"$params"},{"$match":{"params":query}}, function (err, filters) {
             if (err) return console.log(err,"findAllFilter Filters.find err");
 
             if (filters != null) {
