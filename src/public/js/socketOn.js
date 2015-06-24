@@ -1,11 +1,12 @@
 /**
  * Created by anton_gorshenin on 25.05.2015.
  */
+"use strict";
 
 socket.on('displayData', function (data) {
     //console.log(data.length);
-    html = '';
-    for (i in data){
+    var html = '';
+    for (var i in data){
         //console.log(data);
         var checkbox = "<td><input type='checkbox' class='checkboxWarning' value="+ data[i]._id +"></td>";
         var deviceId = "<td>" + data[i]._id + "</td>";
@@ -49,7 +50,7 @@ socket.on('quantity', function (data) {
     $("h4").html(data + " devices found:");
     $("#deployCount").html(" ("+data+")");
     $("#deployCountKidroid").html(" ("+data+")");
-    html = '';
+    var html = '';
     var allPage = Math.ceil(data / itemsPerPage);
     if(acrivePage==undefined){
         acrivePage=1;
@@ -101,7 +102,7 @@ socket.on('quantity', function (data) {
 
 socket.on('category', function (date) {
     //console.log(date, "category");
-    html = '<option value="" style="color:#cccccc">- Select school -</option>';
+    var  html = '<option value="" style="color:#cccccc">- Select school -</option>';
     for (var i = 0; i < date.length; i++) {
         html += "<option>" + date[i].name + "</option>";
     }
@@ -110,7 +111,7 @@ socket.on('category', function (date) {
 
 socket.on('version', function (date) {
     //console.log(date,"kidroidVersion");
-        html = '<option value="" style="color:#cccccc">- Kidroid Loader version -</option>';
+    var html = '<option value="" style="color:#cccccc">- Kidroid Loader version -</option>';
     if(date.kidroid.length) {
         for (var i = 0; i < date.kidroid.length; i++) {
             html += "<option>" + date.kidroid[i].loader + "</option>";
@@ -123,7 +124,7 @@ socket.on('version', function (date) {
     //console.log(school,"category");
     var scheduled = '<option value="Install scheduled" >- Install scheduled -</option>';
     var inProgress = '<option value="Install in progress">- Install in progress -</option>';
-    html = '<option value="" style="color:#cccccc">- Marionette version -</option>' + scheduled + inProgress;
+    var html = '<option value="" style="color:#cccccc">- Marionette version -</option>' + scheduled + inProgress;
     for (var i = 0; i < date.apk.length; i++) {
         html += "<option>" + date.apk[i].apk.version +" "+ date.apk[i].apk.build +"</option>";
     }
@@ -131,7 +132,7 @@ socket.on('version', function (date) {
 });
 socket.on('version', function (date) {
     //console.log(school,"category");
-    html = '';
+    var html = '';
     for (var i = 0; i < date.length; i++) {
         html += "<tr><td>" + date[i].apk.version + "</td><td>" + date[i].apk.build + "</td><td><button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeVersion\",\"" + date[i]._id + "\")\')>Delete</button>";
     }
@@ -139,7 +140,7 @@ socket.on('version', function (date) {
 });
 socket.on('status', function (date) {
     //console.log(school,"category");
-    html = '<option value="" style="color:#cccccc">- Select status -</option>';
+    var html = '<option value="" style="color:#cccccc">- Select status -</option>';
     for (var i = 0; i < date.length; i++) {
         html += "<option>" +date[i]+"</option>";
     }
@@ -148,8 +149,8 @@ socket.on('status', function (date) {
 
 socket.on('users', function (data) {
     //console.log(data);
-    html = '';
-    for (i in data){
+    var html = '';
+    for (var i in data){
         var checkbox = "<td><input type='checkbox' id='checkAllUsers" + data[i]._id + "' class='checkAllUsers' value='" + data[i]._id + "'></td>";
         var name = "<td>" + data[i].local.name + "</td>";
         var editName = "<td><div class='btn-group'><a href='#editUsers' role='button' class='btn btn-primary' data-toggle='modal' onclick='editUsers(\"" + data[i]._id +" , " +data[i].local.name + "\")'>Edit user</a>";
@@ -179,7 +180,7 @@ socket.on('error', function (date) {
 
 socket.on('deviceScheduled', function (data) {
     console.log(data);
-    html = '';
+    var html = '';
     if(!_.isNull(data)) {
         for (var i = 0; i < data.length; i++) {
             var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td>"
@@ -192,7 +193,7 @@ socket.on('deviceScheduled', function (data) {
     $("#tableSchedule").html(html);
 });
 socket.on('deviceForDeploy', function (data) {
-    html = '';
+    var  html = '';
     if(!_.isNull(data)) {
         for (var i = 0; i < data.length; i++) {
             var checkbox = "<td><input type='checkbox' class='checkSchedule' id='checkSchedule" + data[i]._id + "'  value='" + data[i]._id + "'></td>"
@@ -207,8 +208,8 @@ socket.on('deviceForDeploy', function (data) {
 
 socket.on('filters', function (data) {
 
-    for (i in data) {
-        html = '';
+    for (var i in data) {
+        var html = '';
         if (data[i].name === "School") {
             $("#firstFilter").html(data[i].name);
             for (var j = 0; j < data[i].params.length; j++) {
@@ -246,8 +247,8 @@ socket.on('allSchedule', function (data) {
         minute: 'numeric',
         second: 'numeric'
     };
-    html = '';
-    for (i in data) {
+    var html = '';
+    for (var i in data) {
         var date = new Date(data[i].timeStart);
         var name = data[i].name;
         var version = "v"+data[i].versionToUpdate.version+" build "+data[i].versionToUpdate.build;
@@ -275,7 +276,7 @@ socket.on('getVersionDeploy', function (data) {
     }
     //console.log(data.kidroid.length);
     if(defaultVersion!=undefined){
-        html = "<option data-id='"+defaultVersion._id+"'>" + defaultVersion.loader +" (current)"+"</option>";
+        var html = "<option data-id='"+defaultVersion._id+"'>" + defaultVersion.loader +" (current)"+"</option>";
         for (var j = 0; j < data.kidroid.length; j++) {
             if (data.kidroid[j] != defaultVersion)
             html += "<option data-id='"+data.kidroid[j]._id+"'>" + data.kidroid[j].loader +"</option>";
@@ -293,7 +294,7 @@ socket.on('getVersionDeploy', function (data) {
         }
     }
     if(defaultVersion!=undefined) {
-        html = "<option data-id='"+defaultVersion._id+"'>" + defaultVersion.apk.version + " " + defaultVersion.apk.build + " (current)" + "</option>";
+        var html = "<option data-id='"+defaultVersion._id+"'>" + defaultVersion.apk.version + " " + defaultVersion.apk.build + " (current)" + "</option>";
         for (var j = 0; j < data.apk.length; j++) {
             if (data.apk[j] != defaultVersion)
                 html += "<option data-id='"+data.apk[j]._id+"'>" + data.apk[j].apk.version + " " + data.apk[j].apk.build + "</option>";
@@ -359,13 +360,10 @@ var setFilterArray = new FilterArray();
 
 function startAutoComplete(array,filterFieldId,inputId){
     filterFieldId =  document.getElementById(filterFieldId);
-    filterFieldId.parentNode.setAttribute('class','col-xs-2 hoverList');
 
     filterFieldId.innerHTML = '';
 
     var counter = (array.length <= 5)?array.length:5;
-
-    filterFieldId.insertAdjacentHTML('beforeend','<div class="col-xs-12 autocomplete" value="">'+"  "+'</div>');
 
     for(var i=0; i < counter; i++){
         filterFieldId.insertAdjacentHTML('beforeend','<div class="col-xs-12 autocomplete">'+array[i]+'</div>')
@@ -376,19 +374,16 @@ function startAutoComplete(array,filterFieldId,inputId){
         document.getElementById(inputId).value =  event.target.innerText;
         find();
         filterFieldId.innerHTML = '';
-
     });
-
-    var elemsArea = document.getElementsByClassName('hoverList');
-        [].forEach(function(element,index,array){
-      console.log(element,"element",index,"index",array,"array")
+    document.addEventListener('click',function(event){
+        filterFieldId.innerHTML = '';
     });
     setFilterArray.resetArray()
 }
 
 socket.on("getFilterBack",function(filters){
     if(filters[0].name === "School"){
-        for (i in filters){
+        for (var i in filters){
             setFilterArray.pushData(filters[i].params);
         }
         startAutoComplete(setFilterArray.getArray(),"schoolFilter","selectCategory");

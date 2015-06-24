@@ -1,5 +1,5 @@
 var deviceMagic = require('../dbMagic/deviceMagic');
-var user = require('../routes/users.js');
+var user = require('./users.js');
 var server = require('../../config/server.js').address;
 var Cron = require('../dbMagic/cronMagic');
 
