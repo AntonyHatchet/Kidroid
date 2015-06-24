@@ -358,17 +358,30 @@ function FilterArray() {
 var setFilterArray = new FilterArray();
 
 function startAutoComplete(array,filterFieldId,inputId){
-    document.getElementById(filterFieldId).innerHTML = '';
+    filterFieldId =  document.getElementById(filterFieldId);
+    filterFieldId.parentNode.setAttribute('class','col-xs-2 hoverList');
+
+    filterFieldId.innerHTML = '';
+
     var counter = (array.length <= 5)?array.length:5;
+
+    filterFieldId.insertAdjacentHTML('beforeend','<div class="col-xs-12 autocomplete" value="">'+"  "+'</div>');
+
     for(var i=0; i < counter; i++){
-        document.getElementById(filterFieldId).insertAdjacentHTML('beforeend','<div class="col-xs-12 autocomplete">'+array[i]+'</div>')
+        filterFieldId.insertAdjacentHTML('beforeend','<div class="col-xs-12 autocomplete">'+array[i]+'</div>')
     }
-    document.getElementById(filterFieldId).addEventListener('click',function(event){
+
+    filterFieldId.addEventListener('click',function(event){
 
         document.getElementById(inputId).value =  event.target.innerText;
         find();
-        document.getElementById(filterFieldId).innerHTML = '';
+        filterFieldId.innerHTML = '';
 
+    });
+
+    var elemsArea = document.getElementsByClassName('hoverList');
+        [].forEach(function(element,index,array){
+      console.log(element,"element",index,"index",array,"array")
     });
     setFilterArray.resetArray()
 }
@@ -385,5 +398,4 @@ socket.on("getFilterBack",function(filters){
         }
         startAutoComplete(setFilterArray.getArray(), "customFilters", "customFilter")
     }
-    return
 });

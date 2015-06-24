@@ -169,6 +169,9 @@ legend{
     z-index: 100;
     border-left: 1px solid #7a9cd3;
     border-right: 1px solid #7a9cd3;
+    border-radius: 0 0 5px 5px ;
+}
+#schoolFilter div:last-child, #customFilters div:last-child{
     border-bottom: 1px solid #7a9cd3;
     border-radius: 0 0 5px 5px ;
 }
