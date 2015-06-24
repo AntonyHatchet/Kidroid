@@ -46,13 +46,8 @@ gulp.task('style', function() {
         .pipe(gulp.dest('./src//public/stylesheets/'));
 });
 
-gulp.task('jsWatcher', function () {
-    var src = [
-        './src/public/js/src/*.js'
-    ];
-    watch(src, function () {
-            gulp.start('js');
-    });
+gulp.task('default', function () {
+    gulp.start('watcher');
 });
 
 gulp.task('watcher', function () {
