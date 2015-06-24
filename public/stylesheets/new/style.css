@@ -156,11 +156,19 @@ legend{
     cursor: pointer;
     /*background-color: #63615e;*/
     margin: 0;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-top: 1px solid #F2F2F2;
-    border-bottom: 1px solid #F2F2F2;
 }
 .autocomplete:hover {
-    background: #F9F9F9;
+    background: #1e90ff;
+    color: #fff;
+}
+#schoolFilter, #customFilters{
+    right: 15px;
+    left: 15px;
+    position: absolute;
+    background: #fff;
+    z-index: 100;
+    border-left: 1px solid #7a9cd3;
+    border-right: 1px solid #7a9cd3;
+    border-bottom: 1px solid #7a9cd3;
+    border-radius: 0 0 5px 5px ;
 }
