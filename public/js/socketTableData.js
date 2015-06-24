@@ -50,11 +50,11 @@ socket.on('quantity', function (data) {
     $("#deployCount").html(" ("+data+")");
     $("#deployCountKidroid").html(" ("+data+")");
     html = '';
-    Page = Math.ceil(data / itemsPerPage);
+    var allPage = Math.ceil(data / itemsPerPage);
     if(acrivePage==undefined){
         acrivePage=1;
     }
-    if(onePage >= 2 && lastPage<Page) { // мы где то в середине
+    if(onePage >= 2 && lastPage<allPage) { // мы где то в середине
         for (var j = onePage; j <= lastPage; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
@@ -62,16 +62,16 @@ socket.on('quantity', function (data) {
                 html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
             }
         ;
-    }else if(lastPage>=Page && onePage>=Page-5 && onePage>0 && Page>=5){ // если мы в конце страниц и первая страница не ушла в минус
-        for (var j = Page-4; j <= Page; j++)
+    }else if(lastPage>=allPage && onePage>=allPage-5 && onePage>0 && allPage>=5){ // если мы в конце страниц и первая страница не ушла в минус
+        for (var j = allPage-4; j <= allPage; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
             } else {
                 html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
             }
         ;
-    }else if(Page<5){ //страниц мало
-        for (var j = 1; j <= Page; j++)
+    }else if(allPage<5){ //страниц мало
+        for (var j = 1; j <= allPage; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
             } else {
@@ -89,10 +89,10 @@ socket.on('quantity', function (data) {
     }
     //console.log(acrivePage);
     var prevButton = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">...</span></a> </li><li id="prevPage"><a onclick=\'page(' +prevPage+ ')\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>'
-    var nextButton = '<li><a onclick=page(' + nextPage + ') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li><li><a onclick=page('+ Page +') aria-label="Next"><span aria-hidden="true">...</span></a></li>'
+    var nextButton = '<li><a onclick=page(' + nextPage + ') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li><li><a onclick=page('+ allPage +') aria-label="Next"><span aria-hidden="true">...</span></a></li>'
     if(acrivePage==1 || acrivePage==undefined){
         $("#pagination").html('<nav><ul class="pagination">'+html+nextButton);
-    }else if(acrivePage==Page){
+    }else if(acrivePage==allPage){
         $("#pagination").html(prevButton+html);
     }else{
         $("#pagination").html(prevButton+html+nextButton);
