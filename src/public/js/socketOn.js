@@ -55,7 +55,7 @@ socket.on('quantity', function (data) {
     if(acrivePage==undefined){
         acrivePage=1;
     }
-    if(onePage >= 2 && lastPage<allPage) { // мы где то в середине
+    if(onePage >= 2 && lastPage<allPage) { // пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         for (var j = onePage; j <= lastPage; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
@@ -63,7 +63,7 @@ socket.on('quantity', function (data) {
                 html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
             }
         ;
-    }else if(lastPage>=allPage && onePage>=allPage-5 && onePage>0 && allPage>=5){ // если мы в конце страниц и первая страница не ушла в минус
+    }else if(lastPage>=allPage && onePage>=allPage-5 && onePage>0 && allPage>=5){ // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
         for (var j = allPage-4; j <= allPage; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
@@ -71,7 +71,7 @@ socket.on('quantity', function (data) {
                 html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
             }
         ;
-    }else if(allPage<5){ //страниц мало
+    }else if(allPage<5){ //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         for (var j = 1; j <= allPage; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
@@ -79,7 +79,7 @@ socket.on('quantity', function (data) {
                 html += "<li><a onclick='page(" + j + ")'>" + j + "</a></li>"
             }
         ;
-    }else{ //Юнный падаван только начал свой путь
+    }else{ //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         for (var j = 1; j <= 5; j++)
             if (j == acrivePage) {
                 html += "<li class='active'><a onclick='page(" + j + ")'>" + j + "</a></li>"
@@ -167,7 +167,7 @@ socket.on('allDeviceCreated', function (data) {
             .css('display','block');
         $('#addDevice').css('display','none');
         $("#idDeviceCreate").append("ID " +data._id+"\n")
-        //TODO сделать вывод созданного колличества устройств
+        //TODO пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         $("#numberIdDevice").replaceWith( "Devices has been added successfully" );
     }
     $(".idTextarea textarea, .idTextarea textarea p").css({"display":"block"})
@@ -377,8 +377,7 @@ function startAutoComplete(array){
     }
 
     filterFieldId.addEventListener('click',function(event){
-
-        filterFieldId.previousSibling.value =  event.target.innerText;
+        filterFieldId.previousSibling.value =  event.target.innerHTML;
         find();
         filterFieldId.innerHTML = '';
 

@@ -19,40 +19,40 @@ module.exports = function (server,sessionMiddleware) {
                     console.log(err);
                 }
                 userName = data.local.name;
-                io.emit('userName', data.local.name);
+                io.to(socket.id).emit('userName', data.local.name);
             });
         }
         user.findFilter(function (err, callback) {
             if (err) {
                 console.log(err);
             }
-            io.emit('filters', callback);
+            io.to(socket.id).emit('filters', callback);
         });
         user.getAllDeviceQuantity(function (err, data) {
             if (err) {
                 console.log(err);
             }
-            io.emit('quantity', data);
+            io.to(socket.id).emit('quantity', data);
         });
-        //Стартовая отправка первых 10 устройств
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 10 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         user.getDevice(function (err, data) {
             if (err) {
                 console.log(err);
             }
-            io.emit('displayData', data);
+            io.to(socket.id).emit('displayData', data);
         });
         user.findAllVersion(function (err, data) {
             if (err) {
                 console.log(err);
             }
-            io.emit('version', data);
-            io.emit('getVersionDeploy', data);
+            io.to(socket.id).emit('version', data);
+            io.to(socket.id).emit('getVersionDeploy', data);
         });
         device.findAllStatus(function (err, data) {
             if (err) {
                 console.log(err);
             }
-            io.emit('status', data);
+            io.to(socket.id).emit('status', data);
         });
         user.findAllUsers(function (err, data) {
             if (err) {
@@ -113,7 +113,7 @@ module.exports = function (server,sessionMiddleware) {
             }
         );
         //CREATE
-        // Создаем категорию
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         socket.on('createFilter', function (filterParams) {
                 user.createFilter(filterParams, function (err, callback) {
                     if (err) {
@@ -192,7 +192,7 @@ module.exports = function (server,sessionMiddleware) {
                         console.log(err);
                     }
                     console.log(data)
-                    io.emit('getFilterBack', data);
+                    io.to(socket.id).emit('getFilterBack', data);
 
 
 
@@ -204,7 +204,7 @@ module.exports = function (server,sessionMiddleware) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('getCategoryCallback', data);
+                    io.to(socket.id).emit('getCategoryCallback', data);
                 });
             }
         );
@@ -223,18 +223,18 @@ module.exports = function (server,sessionMiddleware) {
                         console.log(err);
                     }
                     io.emit('allSchedule', data);
-                },null,limit); // отправляем Null как заглушку для переменной params
+                },null,limit); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Null пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ params
             }
         );
-        // Запрос устройств на страницу по колличеству
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         socket.on('getDevicesByParams', function (params) {
                 console.log(params,"getDevicesByParams")
                 user.getDevice(function (err, callback) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('displayData', callback);
-                    io.emit('deviceForDeploy', callback);
+                    io.to(socket.id).emit('displayData', callback);
+                    io.to(socket.id).emit('deviceForDeploy', callback);
                 },params);
             }
         );
@@ -244,7 +244,7 @@ module.exports = function (server,sessionMiddleware) {
                         console.log(err);
                     }
                     console.log(callback);
-                    io.emit('quantity', callback);
+                    io.to(socket.id).emit('quantity', callback);
                 },params);
             }
         );
@@ -254,7 +254,7 @@ module.exports = function (server,sessionMiddleware) {
                         console.log(err);
                     }
                     console.log(callback);
-                    io.emit('quantity', callback);
+                    io.to(socket.id).emit('quantity', callback);
                 },params);
             }
         );
@@ -326,7 +326,7 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
-        //Отключение пользователя
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         socket.on('disconnect', function () {
                 console.log('user disconnected');
             }
