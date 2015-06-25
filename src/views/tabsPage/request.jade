@@ -1,0 +1,27 @@
+//
+   Created by nikolay_ivanisenko on 19.06.2015.
+
+//===========TABS requests================
+#requests(class='tab-content')
+    h2 Requests log
+    .col-sm-12
+        h5.col-sm-2.col-sm-offset-4.right
+            label(for="ItemsPerPage").col-sm-7.control-label Items per page:
+            .form-group.col-sm-5
+                select(id="ItemsPerPage")
+                    option(value='0') 10
+                    option(value='20') 20
+                    option(value='50') 50
+    .container-fluid.container-tab
+        table(class='table table-hover table-bordered table-striped')
+            thead(class='tableTarget')
+                tr
+                    th Request info
+                    th Type
+                    th Version
+                    th Devices quantity (Total)
+                    th Devices quantity (Finished)
+                    th School
+                    th Filter2
+            tbody(id='allSchedule')
+    div(id='pagination' class="text-center")

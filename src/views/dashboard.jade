@@ -1,0 +1,77 @@
+//
+   Created by anton_gorshenin on 24.04.2015.
+extends layout
+block content
+    script var socket = io();
+    //#{devices}
+    //#{devices._id.device_id}
+    //#header
+    //    #logo
+    //    #usermenu
+    //        #username
+    //    //=====MENU NEW===============
+    nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+        .navbar-header
+            a.navbar-brand(href='/dashboard') Kidroid Control Console
+        ul.nav.navbar-right.top-nav
+            li.dropdown
+                a.dropdown-toggle(href="#" data-toggle="dropdown")
+                    i.fa.fa-user
+                    span(id='userName')
+                ul.dropdown-menu
+                    li
+                        a(href='/')
+                            i.fa.fa-fw.fa-power-off
+                            span Sign out
+        //    //=====LEFT MENU===============
+        .collapse.navbar-collapse.navbar-ex1-collapse
+            ul.nav.navbar-nav.side-nav.tabsMy
+                li.active(data-tab='devices')
+                    a(href="#")
+                        i.fa.fa-fw.fa-mobile
+                        span  Devices
+                li(data-tab='users')
+                    a(href="#users")
+                        i.fa.fa-fw.fa-user
+                        span  Users
+                li(data-tab='filters')
+                    a(href="#filters")
+                        i.fa.fa-fw.fa-arrows-v
+                        span  Filters
+                li(data-tab='versions')
+                    a(href="#versions")
+                        i.fa.fa-fw.fa-code-fork
+                        span  Versions
+                li(data-tab='requests')
+                    a(href="#requests")
+                        i.fa.fa-fw.fa-edit
+                        span  Request log
+                li(data-tab='planning')
+                    a(href="#planning")
+                        i.fa.fa-fw.fa-calendar-o
+                        span  Planning
+                //li(data-tab='Kidroid settings')
+                    a(href="#")
+                        i.fa.fa-fw.fa-cogs
+                        span  Kidroid settings
+    #page-wrapper.content
+        .container-fluid
+
+
+            script(src="/js/socketOn.js")
+            //===========TABS DEVICES=======================
+            include tabsPage/devices
+            //============TABS FILTERS========================
+            include tabsPage/filters
+            //==========USERS TABS===================
+            include tabsPage/users
+            //===========TABS VERSION================
+            include tabsPage/versions
+            //===========TABS requests================
+            include tabsPage/request
+            //===========TABS planning================
+            include tabsPage/planning
+
+
+
+

@@ -1,0 +1,76 @@
+//
+   Created by nikolay_ivanisenko on 19.06.2015.
+//==========USERS TABS===================
+#users(class='tab-content')
+    h2 Users
+    .container-fluid.container-tab
+        table(class='table table-hover table-bordered table-striped')
+            thead
+                tr
+                    td.checkColum(onclick='sort(this)',data-value="0")
+                        input(type='checkbox' id='checkAllUsers')
+                    //th password
+                    th name
+                    th options
+                    //th remove
+            tbody(id='userTable')
+        .right
+            .btn-group
+                a(href='#addUsers' role="button" class="btn btn-primary" data-toggle="modal") Add New User
+                button( type="button" class="btn btn-danger" onclick="dellUsers()") Delete
+    //============MODAL Edit users=====================
+    div(class="modal" id="editUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Edit users
+                div(class="modal-body")
+                    form.form-horizontal
+                        .form-group
+                            label(for="newNameUsers").col-sm-3.control-label Name:
+                            .col-sm-9
+                                input(type="input" class="form-control" id='newNameUsers' placeholder='name')
+                        .form-group
+                            label(for="newNamepassword").col-sm-3.control-label Password:
+                            .col-sm-9
+                                input(type="password" class="form-control" id='newNamepassword' placeholder='password*')
+                        .form-group
+                            label(for="newNamepassword2").col-sm-3.control-label Confirm:
+                            .col-sm-9
+                                input(type="password" class="form-control" id='newNamepassword2' placeholder='confirm password*')
+                div(class="modal-footer")
+                    div(id='errorUsersPassword' class='alert alert-danger no-show')
+                        p Passwords are different
+                    div(id='errorUsersName' class='alert alert-danger no-show')
+                        p All fields must be filled out
+                    div(id='completeUsersEdit' class='alert alert-success no-show')
+                        p Users is edit
+                    button( type="button" class="btn btn-primary" onclick="inputNewNameUser()") Save
+    //============MODAL Add new user=====================
+    div(class="modal" id="addUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Add new user
+                form(class="form-horizontal" method='post' action="/signup")
+                    div(class="modal-body")
+                        .form-group
+                            label(for="addNameUsers").col-sm-3.control-label Name:
+                            .col-sm-9
+                                input(name='name' class="form-control" id='addNameUsers' type='text' placeholder='name' required)
+                        .form-group
+                            label(for="addPasswordUsers").col-sm-3.control-label Password:
+                            .col-sm-9
+                                input(name='password' class="form-control" id='addPasswordUsers' type='password' placeholder='password' required)
+                        .form-group
+                            label(for="addPassword2Users").col-sm-3.control-label Confirm:
+                            .col-sm-9
+                                input(name='password2' class="form-control" id='addPassword2Users' type='password' placeholder='confirm password' required)
+                    .modal-footer
+                        button(class="btn btn-primary" type='submit' onclick="return validPassword(this.form)") Add user
+                        div(id='errorAddUsersPassword' class='alert alert-danger no-show')
+                            p Passwords are different

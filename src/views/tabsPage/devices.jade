@@ -1,0 +1,304 @@
+//
+   Created by nikolay_ivanisenko on 19.06.2015.
+
+//===========TABS DEVICES=======================
+#devices(class='tab-content current row')
+    h2 Devices
+    fieldset
+        legend Filter:
+        #filter
+            form(class='row')
+                .col-xs-2
+                    input(type="text" id="DeviceNameIDSerial" class='form-control input-sm' placeholder='Device name/ID' onkeyup="find()")
+                .col-xs-2
+                    select(id='selectStatus' class="span2 form-control input-sm" onchange="find()")
+                        option(value="") - Select status -
+                        option  Unregistered
+                        option  Registered
+                        option Online
+                        option  Offline
+                .col-xs-2
+                    input(id="selectCategory" placeholder='- School -' class="span2 form-control category input-sm" onkeyup="getFilter(this,'School');find()")
+                    div
+                .col-xs-2
+                    input(id="customFilter" placeholder='- Filter2 -' class="span2 form-control filter2 input-sm" onkeyup="getFilter(this, 'Filter2');find()")
+                    div
+                .col-xs-2
+                    select(id="marionetteVersion" class="span2 form-control input-sm" onchange="find()")
+                .col-xs-2
+                    select(id="kidroidVersion" class="span2 form-control input-sm" onchange="find()")
+    .col-sm-12
+        h4.col-sm-3
+        #add-device.col-sm-2
+            a(data-target="#addDevice" role="button" class="btn btn-primary" data-toggle="modal") Add New Device
+        h5.col-sm-4.col-sm-offset-3
+            label(for="ItemsPerPage").col-sm-7.control-label Items per page:
+            .form-group.col-sm-5
+                select(id="ItemsPerPage" onchange="find()")
+                    option(value='10') 10
+                    option(value='20') 20
+                    option(value='50') 50
+        .col-sm-4
+            div(id='completeDeployApk' class='alert alert-success no-show .col-lg-1')
+        .col-sm-4
+            div(id='completeDeployKidroid' class='alert alert-success no-show .col-lg-1')
+    .col-lg-12.container-tab
+        table(class='table table-hover table-bordered table-striped' id='paged')
+            thead(class='tableTarget')
+                tr
+                    th.checkColum
+                        input(type="checkbox" id="checkboxWarning" value="option1")
+                    th(onclick='find(sort(this))',data-sort="1",data-id="1") ID#
+                        .glyphicon.glyphicon-sort.right
+                    th(onclick='find(sort(this))',data-sort="1",data-id="2") Device Name
+                        .glyphicon.glyphicon-sort.right
+                    th(onclick='find(sort(this))',data-sort="1",data-id="3") APK version
+                        .glyphicon.glyphicon-sort.right
+                    th(onclick='find(sort(this))',data-sort="1",data-id="4") Loader version
+                        .glyphicon.glyphicon-sort.right
+                    th(onclick='find(sort(this))',data-sort="1",data-id="5") Device status
+                        .glyphicon.glyphicon-sort.right
+                    th Options
+            tbody(id='deviceTable')
+                //button(class='btn btn-danger' type='button' onclick="dellDevice()") Delete
+    div(id='pagination' class="text-center")
+    #deployApk
+        fieldset
+            legend Marionette Deploy: (APK Deploy)
+            form(class='deployApk form-inline col-sm-12')
+                label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
+                    span(id="deployCount")
+                .col-sm-8
+                    .col-sm-4
+                        select(id="selectVersionApkToDeploy" class="span2 form-control")
+                    //button(class="col-sm-2 btn btn-primary" onclick='deployAPK()') Start
+                    a(data-target="#confirmationApk" role="button" class="col-sm-2 btn btn-primary" data-toggle="modal") Start
+
+    #deployKidroid
+        fieldset
+            legend Kidroid Loader Deploy:
+            form(class='deployApk form-inline col-sm-12')
+                label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
+                    span(id="deployCountKidroid")
+                .col-sm-8
+                    .col-sm-4
+                        select(id="kidroidVersionDeploy" class="span2 form-control")
+                    //button(class="col-sm-2 btn btn-primary" onclick='deployKidroid()') Start
+                    a(data-target="#confirmationKidroid" role="button" class="col-sm-2 btn btn-primary" data-toggle="modal") Start
+                    .col-sm-4
+                        div(id='completeDeployKidroid' class='alert alert-success no-show .col-lg-1')
+    //============MODAL Add new device=====================
+    div(class="modal" id="addDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" id='closeAddDevice' class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h2 Add new device(s)
+                div(class="modal-body")
+                    form.form-horizontal
+                        .form-group
+                            label(for="addSelectCategory").col-sm-3.control-label School:
+                            .col-sm-9
+                                input(id="addSelectCategory" placeholder='- School -' class="span2 form-control category" onkeyup="getFilter(this,'School')")
+                                div
+                        .form-group
+                            label(for="filter2").col-sm-3.control-label Filter 2:
+                            .col-sm-9
+                                input(id="filter2" placeholder='- Filter 2 -' class="span2 form-control filter2" onkeyup="getFilter(this, 'Filter2')")
+                                div
+                        .form-group
+                            label(for="addSelectVersion").col-sm-4.control-label APK version *:
+                            .col-sm-8
+                                select(id="addSelectVersion" class="form-control")
+                        .form-group
+                            label(for="amountDevice").col-sm-5.control-label Device amount *:
+                            .col-sm-7
+                                input(id='amountDevice' type="number", name='number' min="1" value='1' class="form-control")
+                        .form-group
+                            label(for="commentDevice").col-sm-3.control-label Comment:
+                            .col-sm-9
+                                textarea(id='commentDevice' class="form-control" rows="3")
+                div(class="modal-footer")
+                    //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                    div(id='errorAddDevice' class='alert alert-danger no-show .col-lg-1')
+                        //button(type="button" class="close" data-dismiss="alert") &times;
+                        p All fields must be filled out
+                    div(id='completeAddDevice' class='alert alert-success no-show .col-lg-1')
+                        //button(type="button" class="close" data-dismiss="alert") &times;
+                        p Devices are adding
+                    button(class="btn btn-primary .col-lg-6" onclick='addDevice()') Add
+    //============MODAL ID device=====================
+    //div(class="modal" id="idDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+    //    .modal-dialog.modal-sm
+    //        .modal-content
+    //            div(class="modal-header")
+    //                button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+    //                    span(aria-hidden="true") &times;
+    //                h3(id='numberIdDevice')
+    //            div(class="modal-body idTextarea")
+    //    legend Marionette Deploy: (APK Deploy)
+    //    form(class='deployApk form-inline col-sm-12')
+    //        label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
+    //            span(id="deployCount")
+    //        .col-sm-8
+    //            .col-sm-3
+    //                select(id="selectVersionApkToDeploy" class="span2 form-control")
+    //            button(class="col-sm-2 btn btn-primary" type="button" onclick='deployAPK()') Start
+        //============MODAL Add new device ID=====================
+    div(class="modal" id="idDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" onclick="closeIdTextarea1()" id='closeIdTextarea' data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h2 Add new device(s)
+                div(class="modal-body")
+                    form.form-horizontal
+                        .form-group
+                            label(for="commentDevice").col-sm-5.control-label ID's list:
+                            .col-sm-12.margin-top-5
+                                textarea(id='idDeviceCreate' name='idDeviceCreate' class="form-control" onclick="this.select()")
+                    div(class="modal-footer")
+                        #copyClipboardContainer
+                            a(id="copyClipboard" href='javascript:highlight(0)' class="btn btn-primary left") Copy to the clipboard
+                        button(id="closeIdTextarea1" onclick="closeIdTextarea1()" class="btn btn-primary right") Add more devices...
+                        //script.
+                        //    function highlight(x) {
+                        //        document.forms[x].elements[0].focus()
+                        //        document.forms[x].elements[0].select()
+                        //    }
+    //script.
+    //    var clip = new ZeroClipboard.Client();
+    //    clip.setText('');
+    //    clip.addEventListener('complete', function (client, text) {
+    //        alert("Copy: " + text);
+    //    });
+    //    clip.addEventListener('mouseDown', function (client) {
+    //        clip.setText(document.getElementById('idDeviceCreate').innerHTML);
+    //    });
+    //    clip.glue('copyClipboard', 'copyClipboardContainer');
+    //============MODAL delete device=====================
+    div(class="modal" id="deleteDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Delete device
+                div(class="modal-body")
+
+                div(class="modal-footer")
+                    //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                    div(id='errorAddDevice' class='alert alert-danger no-show')
+                        //button(type="button" class="close" data-dismiss="alert") &times;
+                        p All fields must be filled out
+                    button(class="btn btn-primary" onclick='addDevice()') Add
+    //============MODAL EDIT device=====================
+    div(class="modal" id="editDevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Edit device
+                div(class="modal-body")
+
+                    form.form-horizontal
+                        .form-group
+                            label(for="idDevise").col-sm-3.control-label ID:
+                            .col-sm-9
+                                input(id="idDevise" class="form-control" disabled)
+                        .form-group.tokenDevise
+                            label(for="tokenDevise").col-sm-3.control-label Token:
+                            .col-sm-9
+                                input(id="tokenDevise" class="form-control" disabled)
+                        .form-group
+                            label(for="nameDevise").col-sm-3.control-label Name:
+                            .col-sm-9
+                                input(id="nameDevise" class="form-control" disabled)
+                        .form-group
+                            label(for="editDeviceCategory").col-sm-3.control-label School:
+                            .col-sm-9
+                                input(id="editDeviceCategory" placeholder='- School -' class="span2 form-control category")
+                        .form-group
+                            label(for="editDeviceFilter2").col-sm-3.control-label Filter 2:
+                            .col-sm-9
+                                input(id="editDeviceFilter2" placeholder='- Filter2 -' class="span2 form-control filter2")
+                        //.form-group
+                        //    label(for="addSelectVersion").col-sm-4.control-label APK version *:
+                        //    .col-sm-8
+                        //        select(id="editDeviceVersion" class="form-control")
+                        //.form-group
+                            label(for="newNameUser").col-sm-5.control-label Name:
+                            .col-sm-12.margin-top-5
+                                input(type='text' id="newNameUser" name='category' placeholder='Name User' class="form-control")
+                        .form-group
+                            label(for="newComment").col-sm-3.control-label Comment:
+                            .col-sm-9
+                                textarea(type='text' id="newComment" name='category' rows='3' placeholder='Comments' class="form-control")
+                div(class="modal-footer")
+                    //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                    div(id='errorEditDevice' class='alert alert-danger no-show')
+                        //button(type="button" class="close" data-dismiss="alert") &times;
+                        p All fields must be filled out
+                    div(id='completeEditDevice' class='alert alert-success no-show')
+                        //button(type="button" class="close" data-dismiss="alert") &times;
+                        p Device is edit
+                    button(class="btn btn-primary" onclick='editDevice()') Save
+    //============MODAL confirmation Apk=====================
+    div(class="modal" id="confirmationApk" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Are you sure, you want to initialize the deploy process?
+                div(class="modal-body")
+                div(class="modal-footer")
+                    .btn-group.center
+                        button(type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close") No
+                        button(class="btn btn-primary" type='submit' onclick='deployAPK()' data-dismiss="modal") Yes
+    //============MODAL confirmation Kidroid=====================
+    div(class="modal" id="confirmationKidroid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Are you sure, you want to initialize the deploy process?
+                div(class="modal-body")
+                div(class="modal-footer")
+                    .btn-group.center
+                        button(type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close") No
+                        button(class="btn btn-primary" onclick='deployKidroid()' data-dismiss="modal") Yes
+    //============MODAL maps=====================
+    div(class="modal" id="map" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: -1; opacity: 0 ")
+        .modal-dialog.modal-lg
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Maps
+                div(class="modal-body")
+                    #maps(class="panel-body")
+                        script.
+                            var map = L.map('maps').setView([55.7422, 37.5719], 10);
+                            // add an OpenStreetMap tile layer
+                            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            }).addTo(map);
+                            // add a marker in the given location, attach some popup content to it and open the popup
+                            var mark = L.marker([55.7422, 37.5719]);
+
+    //===========Script maps========================
+    script.
+        function showmap(i, j) {
+            mark.addTo(map)
+            map.setView([i, j], 12);
+            mark.setLatLng(L.latLng(i, j)).update()
+            $('.map').css('z-index', '1050');
+            if(i==0||j==0){
+                $('#buttonMap').addClass('no-show');
+            }
+        }

@@ -1,0 +1,99 @@
+//
+   Created by nikolay_ivanisenko on 19.06.2015.
+//============TABS FILTERS========================
+#filters(class='tab-content')
+    h2 Filters
+    div(class='tabbable')
+        .col-sm-12
+            ul(class='nav nav-tabs')
+                li(role="presentation" data-tab="filtersSchool" class="active")
+                    a#firstFilter School
+                li(role="presentation" data-tab='filtersAdd')
+                    a#secondFilter Filter 2
+        #filtersSchool(class='nav-tab-content current')
+            #add-category.right
+                    //button(class='btn btn-primary') add new category...
+            .container-fluid.container-tab
+                table(class='table table-hover table-bordered table-striped')
+                    thead
+                        tr
+                            td.checkColum(onclick='sort(this)',data-value="0")
+                                input(type='checkbox' id='checkAllCategory')
+                            th(colspan='2') Name
+                    tbody(id='tableFilter')
+                .right
+                    .btn-group
+                        a(href='#createCategory' role="button" class="btn btn-primary" data-toggle="modal") Add new school...
+                        button(class="btn btn-danger" onclick="dellCategory()" type="button") Delete
+        #filtersAdd(class='nav-tab-content')
+            .container-fluid.container-tab
+                table(class='table table-hover table-bordered table-striped')
+                    thead
+                        tr
+                            td.checkColum(onclick='sort(this)',data-value="0")
+                                input(type='checkbox' id='checkAllFilters')
+                            th Name
+                    tbody(id='filtersTable')
+                .right
+                    .btn-group
+                        a(href='#createFilter' role="button" class="btn btn-primary" data-toggle="modal") Add new filter2...
+                        button(class="btn btn-danger" onclick="dellFilter()" type="button") Delete
+    //============MODAL Create new category=====================
+    div(class="modal" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Create new school
+                div(class="modal-body")
+                    form.form-horizontal
+                        .form-group
+                            label(for="newCategory").col-sm-3.control-label Name:
+                            .col-sm-9
+                                input(class="form-control" id="newCategory" name='category')
+                div(class="modal-footer")
+                    div(id='errorCreateSchool' class='alert alert-danger no-show')
+                        p All fields must be filled out
+                    div(id='completeCreateSchool' class='alert alert-success no-show')
+                    button(class="btn btn-primary" onclick="createNewCategory()" type="button") Create
+    //============MODAL Create new filter=====================
+    div(class="modal" id="createFilter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Create new filter2
+                div(class="modal-body")
+                    form.form-horizontal
+                        .form-group
+                            label(for="newCategory").col-sm-3.control-label Name:
+                            .col-sm-9
+                                input(class="form-control" id="paramFilter" name='category')
+                div(class="modal-footer")
+                    div(id='errorCreateFilter' class='alert alert-danger no-show')
+                        p All fields must be filled out
+                    div(id='completeCreateFilter' class='alert alert-success no-show')
+                    button(class="btn btn-primary" onclick="createNewFilter()" type="button") Create
+
+    //============MODAL Edit category=====================
+    div(class="modal" id="editFilters" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h3 Edit category
+                        #idCategory
+                            p
+                div(class="modal-body")
+                    form.form-horizontal
+                        .form-group
+                            label(for="newNameCategory").col-sm-3.control-label Name:
+                            .col-sm-9
+                                input(type="input" class="form-control" id='newNameCategory' value='name' placeholder='name')
+                div(class="modal-footer")
+                    div(id='errorEditFilters' class='alert alert-danger no-show')
+                    div(id='completeEditFilters' class='alert alert-success no-show')
+                    button( type="button" class="btn btn-primary" onclick="inputNewNameCategory()") Save
