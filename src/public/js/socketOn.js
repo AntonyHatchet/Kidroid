@@ -106,7 +106,7 @@ socket.on('category', function (date) {
     for (var i = 0; i < date.length; i++) {
         html += "<option>" + date[i].name + "</option>";
     }
-    $("#addSelectCategory, #editDeviceCategory, #scheduleDeviceCategory").html(html);
+    $("#addSelectCategory, #editDeviceCategory, #scheduleDeviceCategory, #selectCategoryPlanning").html(html);
 });
 
 socket.on('version', function (date) {

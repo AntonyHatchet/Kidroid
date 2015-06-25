@@ -22,8 +22,11 @@
                                 div(id='dateSchedule')
                             .form-group
                                 input(class="form-control" id='timeSchedule' type='time' required)
+                        br
                         .form-group
-                        select(class="form-control" id="scheduleDeviceVersion" required)
+                            label(for="scheduleDeviceVersion").col-sm-3.control-label Version:
+                            .col-sm-9
+                                select(class="form-control" id="scheduleDeviceVersion" required)
                         hr
                         form
                                 .row.form-group
@@ -32,9 +35,19 @@
                                     .col-xs-3
                                         input(class="form-control" type='text' id='idEnd' placeholder='end id')
                                 .form-group
-                                    input(class="form-control category" id="autocomplete-dynamic")
+                                    label(for="selectCategoryPlanning").col-sm-3.control-label School:
+                                    .col-sm-9
+                                        input(id="selectCategoryPlanning" placeholder='- School -' class="span2 form-control category input-sm" onkeyup="getFilter(this,'School');find()")
+                                        div
                                 .form-group
-                                    select(class="form-control" id="scheduleDeviceVersionFilter")
+                                    label(for="customFilterPlanning").col-sm-3.control-label Filter2:
+                                    .col-sm-9
+                                        input(id="customFilterPlanning" placeholder='- Filter2 -' class="span2 form-control filter2 input-sm" onkeyup="getFilter(this, 'Filter2');find()")
+                                        div
+                                .form-group
+                                    label(for="scheduleDeviceVersionFilter").col-sm-3.control-label Version:
+                                    .col-sm-9
+                                        select(class="form-control" id="scheduleDeviceVersionFilter")
                                     button(class="btn btn-primary right" onclick='finsDeviceSchedule()') Find
                         hr
                         #tableScheduleFind

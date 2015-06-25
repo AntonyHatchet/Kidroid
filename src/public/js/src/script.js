@@ -51,6 +51,7 @@ function createNewCategory() {
         $('#errorCreateSchool').addClass('no-show');
         $('#completeCreateSchool').removeClass('no-show');
         $('#completeCreateSchool').html('The category '+nameCategory+  ' has been added successful');
+        setTimeout(function(){$('#completeCreateSchool').fadeOut('fast')},3000);
     }else{
         //console.log('no');
         $('#errorCreateSchool').removeClass('no-show');
@@ -67,6 +68,7 @@ function createNewFilter() {
         $('#errorCreateFilter').addClass('no-show');
         $('#completeCreateFilter').removeClass('no-show');
         $('#completeCreateFilter').html('The filter '+nameFilter+  ' has been added successful');
+        setTimeout(function(){$('#completeCreateFilter').fadeOut('fast')},3000);
     }else{
         console.log('no');
         $('#errorCreateFilter').removeClass('no-show');
@@ -98,16 +100,19 @@ function inputNewNameCategory() {
         $('#completeEditFilters').removeClass('no-show');
         socket.emit('editCategory', device);
         $("#completeEditFilters").html('The category '+device.newName+ ' has been saved successfully')
+        setTimeout(function(){$('#completeEditFilters').fadeOut('fast')},3000);
     }else if(device.newName==device.oldName){
         $('#errorEditFilters').removeClass('no-show');
         $('#completeEditFilters').addClass('no-show');
         $("#errorEditFilters").html('not a change of name')
+        setTimeout(function(){$('#errorEditFilters').fadeOut('fast')},3000);
     }
     else{
         //console.log('no');
         $('#errorEditFilters').removeClass('no-show');
         $('#completeEditFilters').addClass('no-show');
         $("#errorEditFilters").html('All fields must be filled out')
+        setTimeout(function(){$('#errorEditFilters').fadeOut('fast')},3000);
     }
     //console.log(device);
 };
@@ -124,11 +129,13 @@ function inputNewNameUser() {
         $('#completeUsersEdit').removeClass('no-show');
         $('.close').click();
         return socket.emit('updateUser', device);
+        setTimeout(function(){$('#completeUsersEdit').fadeOut('fast')},3000);
     }if(device.newPassword != newPassword2 ){
         $('#errorUsersPassword').removeClass('no-show');
         $('#errorUsersName').addClass('no-show');
         $('#completeUsersEdit').addClass('no-show');
         return newPassword2;
+
     }else{
         $('#errorUsersName').removeClass('no-show');
         $('#errorUsersPassword').addClass('no-show');
@@ -497,17 +504,15 @@ $(document).ready(function () {
            .css('display','none');
     });
 })
-$(document).ready(function () {
-    $('#closeIdTextarea, #closeIdTextarea1').click(function(){
+function closeIdTextarea1(){
        $('#addDevice').css('display','block');
-       $('#closeAddDevice').click();
        $('#idDevice').removeClass('.in')
            .attr('aria-hidden', true)
            .css('z-index','-1')
            .css('opacity','0')
            .css('display','none');
-    });
-})
+
+}
 
 $(window).scroll(function(){
 //box one
