@@ -129,6 +129,18 @@ function inputNewNameUser() {
         $('#errorUsersPassword').addClass('no-show');
         $('#errorUsersName').addClass('no-show');
         $('#completeUsersEdit').removeClass('no-show');
+        if(oldNameUser!=device.newName && newPassword2==0){
+            $('#completeUsersEdit').html('name changed');
+        }
+        else if(oldNameUser!=device.newName && newPassword2!=0){
+            $('#completeUsersEdit').html('name and password changed');
+        }
+        else if((oldNameUser==device.newName && newPassword2==0)){
+            $('#completeUsersEdit').html('field is not changed');
+        }else
+        {
+            $('#completeUsersEdit').html('password changed');
+        }
         //$('.close').click();
         return socket.emit('updateUser', device);
         setTimeout(function(){$('#completeUsersEdit').fadeOut('fast')},3000);
