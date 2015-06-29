@@ -79,6 +79,7 @@ function createNewFilter() {
 var idDevice;
 var tokenDevice;
 var newUsersId;
+var oldNameUser;
 
 function editFilters(context) {
     //$("#newNameCategory").val(context.parentNode.parentNode.childNodes[1].innerText).attr("data-name",context.parentNode.parentNode.childNodes[1].innerText);
@@ -87,7 +88,8 @@ function editFilters(context) {
 };
 function editUsers(x) {
     newUsersId= x.split(' ')[0];
-    $('#newNameUsers').attr("value",x.split(' ')[2])
+    $('#newNameUsers').attr("value",x.split(' ')[2]);
+    oldNameUser=x.split(' ')[2]
 };
 
 function inputNewNameCategory() {
@@ -123,11 +125,11 @@ function inputNewNameUser() {
     device.newPassword = $("#newNamepassword").val();
     var newPassword2 = $("#newNamepassword2").val();
     if(device.newPassword == newPassword2 && device.newName!=0){
-        //console.log('yes');
+        console.log(oldNameUser);
         $('#errorUsersPassword').addClass('no-show');
         $('#errorUsersName').addClass('no-show');
         $('#completeUsersEdit').removeClass('no-show');
-        $('.close').click();
+        //$('.close').click();
         return socket.emit('updateUser', device);
         setTimeout(function(){$('#completeUsersEdit').fadeOut('fast')},3000);
     }if(device.newPassword != newPassword2 ){
@@ -504,15 +506,17 @@ $(document).ready(function () {
            .css('display','none');
     });
 })
-function closeIdTextarea1(){
-       $('#addDevice').css('display','block');
-       $('#idDevice').removeClass('.in')
-           .attr('aria-hidden', true)
-           .css('z-index','-1')
-           .css('opacity','0')
-           .css('display','none');
+$(document).ready(function () {
+    $('#closeIdTextarea1, #closeIdTextarea').click(function () {
+        $('#addDevice').css('display', 'block');
+        $('#idDevice').removeClass('.in')
+            .attr('aria-hidden', true)
+            .css('z-index', '-1')
+            .css('opacity', '0')
+            .css('display', 'none');
 
-}
+    });
+})
 
 $(window).scroll(function(){
 //box one

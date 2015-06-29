@@ -150,7 +150,7 @@
         .modal-dialog.modal-sm
             .modal-content
                 div(class="modal-header")
-                    button(type="button" class="close" onclick="closeIdTextarea1()" id='closeIdTextarea' data-dismiss="modal" aria-label="Close")
+                    button(type="button" class="close" id='closeIdTextarea' data-dismiss="modal" aria-label="Close")
                         span(aria-hidden="true") &times;
                     h2 Add new device(s)
                 div(class="modal-body")
@@ -162,7 +162,7 @@
                     div(class="modal-footer")
                         #copyClipboardContainer
                             a(id="copyClipboard" href='javascript:highlight(0)' class="btn btn-primary left") Copy to the clipboard
-                        button(id="closeIdTextarea1" onclick="closeIdTextarea1()" class="btn btn-primary right") Add more devices...
+                        button(id="closeIdTextarea1" class="btn btn-primary right") Add more devices...
                         //script.
                         //    function highlight(x) {
                         //        document.forms[x].elements[0].focus()

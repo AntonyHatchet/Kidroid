@@ -89,13 +89,18 @@ socket.on('quantity', function (data) {
         ;
     }
     //console.log(acrivePage);
-    var prevButton = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">...</span></a> </li><li id="prevPage"><a onclick=\'page(' +prevPage+ ')\' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> </li>'
-    var nextButton = '<li><a onclick=page(' + nextPage + ') aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li><li><a onclick=page('+ allPage +') aria-label="Next"><span aria-hidden="true">...</span></a></li>'
-    if(acrivePage==1 || acrivePage==undefined){
+    var prevButton = '<nav><ul class="pagination"><li><a onclick=\'page(1)\' aria-label="Previous"><span aria-hidden="true">...</span></a> </li><li id="prevPage"><a onclick=\'page(' +prevPage+ ')\' aria-label="Previous"><span aria-hidden="true">Previous</span></a> </li>'
+    var nextButton = '<li><a onclick=page(' + nextPage + ') aria-label="Next"><span aria-hidden="true">Next</span></a></li><li><a onclick=page('+ allPage +') aria-label="Next"><span aria-hidden="true">...</span></a></li>'
+    if(acrivePage==1 && allPage>1 || acrivePage==undefined){
+        console.log(allPage);
         $("#pagination").html('<nav><ul class="pagination">'+html+nextButton);
-    }else if(acrivePage==allPage){
+    }else if(acrivePage==allPage && allPage>1){
         $("#pagination").html(prevButton+html);
-    }else{
+    }else if(allPage<=1){
+        console.log("sdfsdf");
+        $("#pagination").html('');
+    }
+    else{
         $("#pagination").html(prevButton+html+nextButton);
     }
 });
