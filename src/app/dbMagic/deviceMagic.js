@@ -253,7 +253,7 @@ module.exports = {
         })
     },
     createDeviceId: function (callback) {
-        var find = Device.find();
+        var find = Device.find().sort({"_id":1});
 
        find.exec(function (err, id) {
            if (err) return console.log(err,"create_id exec");

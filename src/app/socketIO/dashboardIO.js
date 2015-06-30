@@ -223,10 +223,9 @@ module.exports = function (server,sessionMiddleware) {
                         console.log(err);
                     }
                     io.emit('allSchedule', data);
-                },null,limit); // ���������� Null ��� �������� ��� ���������� params
+                },null,limit);
             }
         );
-        // ������ ��������� �� �������� �� �����������
         socket.on('getDevicesByParams', function (params) {
                 console.log(params,"getDevicesByParams")
                 user.getDevice(function (err, callback) {

@@ -93,7 +93,7 @@
         rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\n\\]|\\.)*?)\2)\]/g;
 
     /**
-     * Used to match `RegExp` [special characters](http://www.regular-expressions.info/characters.html#special).
+     * Used to match `RegExp` [special characters](http://www.js.regular-expressions.info/characters.html#special).
      * In addition to special characters the forward slash is escaped to allow for
      * easier `eval` use and `Function` compilation.
      */
@@ -8238,7 +8238,7 @@
          * `thisArg` and invoked with two argument; (value [, index|key, object]).
          *
          * **Note:** This method is loosely based on the
-         * [structured clone algorithm](http://www.w3.org/TR/html5/infrastructure.html#internal-structured-cloning-algorithm).
+         * [structured clone algorithm](http://www.js.w3.org/TR/html5/infrastructure.html#internal-structured-cloning-algorithm).
          * The enumerable properties of `arguments` objects and objects created by
          * constructors other than `Object` are cloned to plain `Object` objects. An
          * empty object is returned for uncloneable values such as functions, DOM nodes,
@@ -8302,7 +8302,7 @@
          * and invoked with two argument; (value [, index|key, object]).
          *
          * **Note:** This method is loosely based on the
-         * [structured clone algorithm](http://www.w3.org/TR/html5/infrastructure.html#internal-structured-cloning-algorithm).
+         * [structured clone algorithm](http://www.js.w3.org/TR/html5/infrastructure.html#internal-structured-cloning-algorithm).
          * The enumerable properties of `arguments` objects and objects created by
          * constructors other than `Object` are cloned to plain `Object` objects. An
          * empty object is returned for uncloneable values such as functions, DOM nodes,
@@ -10562,7 +10562,7 @@
          * object is provided it takes precedence over `_.templateSettings` values.
          *
          * **Note:** In the development build `_.template` utilizes
-         * [sourceURLs](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/#toc-sourceurl)
+         * [sourceURLs](http://www.js.html5rocks.com/en/tutorials/developertools/sourcemaps/#toc-sourceurl)
          * for easier debugging.
          *
          * For more information on precompiling templates see

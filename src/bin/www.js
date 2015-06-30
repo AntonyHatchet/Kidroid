@@ -1,9 +1,3 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
 var app = require('../app')[0];
 var sessionMiddleware = require('../app')[1];
 //var debug = require('debug')('Kidroid:server');
