@@ -4022,7 +4022,7 @@ if (typeof jQuery === 'undefined') {
 +function ($) {
     'use strict';
 
-    // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
+    // CSS TRANSITION SUPPORT (Shoutout: http://www.js.modernizr.com/)
     // ============================================================
 
     function transitionEnd() {
@@ -7346,7 +7346,7 @@ if (typeof jQuery === 'undefined') {
         rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\n\\]|\\.)*?)\2)\]/g;
 
     /**
-     * Used to match `RegExp` [special characters](http://www.regular-expressions.info/characters.html#special).
+     * Used to match `RegExp` [special characters](http://www.js.regular-expressions.info/characters.html#special).
      * In addition to special characters the forward slash is escaped to allow for
      * easier `eval` use and `Function` compilation.
      */
@@ -15491,7 +15491,7 @@ if (typeof jQuery === 'undefined') {
          * `thisArg` and invoked with two argument; (value [, index|key, object]).
          *
          * **Note:** This method is loosely based on the
-         * [structured clone algorithm](http://www.w3.org/TR/html5/infrastructure.html#internal-structured-cloning-algorithm).
+         * [structured clone algorithm](http://www.js.w3.org/TR/html5/infrastructure.html#internal-structured-cloning-algorithm).
          * The enumerable properties of `arguments` objects and objects created by
          * constructors other than `Object` are cloned to plain `Object` objects. An
          * empty object is returned for uncloneable values such as functions, DOM nodes,
@@ -15555,7 +15555,7 @@ if (typeof jQuery === 'undefined') {
          * and invoked with two argument; (value [, index|key, object]).
          *
          * **Note:** This method is loosely based on the
-         * [structured clone algorithm](http://www.w3.org/TR/html5/infrastructure.html#internal-structured-cloning-algorithm).
+         * [structured clone algorithm](http://www.js.w3.org/TR/html5/infrastructure.html#internal-structured-cloning-algorithm).
          * The enumerable properties of `arguments` objects and objects created by
          * constructors other than `Object` are cloned to plain `Object` objects. An
          * empty object is returned for uncloneable values such as functions, DOM nodes,
@@ -17815,7 +17815,7 @@ if (typeof jQuery === 'undefined') {
          * object is provided it takes precedence over `_.templateSettings` values.
          *
          * **Note:** In the development build `_.template` utilizes
-         * [sourceURLs](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/#toc-sourceurl)
+         * [sourceURLs](http://www.js.html5rocks.com/en/tutorials/developertools/sourcemaps/#toc-sourceurl)
          * for easier debugging.
          *
          * For more information on precompiling templates see
@@ -19622,9 +19622,11 @@ function inputNewNameUser() {
         $('#completeUsersEdit').removeClass('no-show');
         if(oldNameUser!=device.newName && newPassword2==0){
             $('#completeUsersEdit').html('name changed');
+            oldNameUser=device.newName;
         }
         else if(oldNameUser!=device.newName && newPassword2!=0){
             $('#completeUsersEdit').html('name and password changed');
+            oldNameUser=device.newName;
         }
         else if((oldNameUser==device.newName && newPassword2==0)){
             $('#completeUsersEdit').html('field is not changed');
@@ -19799,12 +19801,14 @@ function addDevice( ) {
     device.build = $("#addSelectVersion").val();
     device.numberDevice = number = $("#amountDevice").val();
     device.filter = $("#filter2").val();
-    console.log(device);
     if (device.category != 0 && device.version !=0)  {
         socket.emit('createDevice', device);
+        console.log(device);
         $('#errorAddDevice').addClass('no-show');
         $('#completeAddDevice').removeClass('no-show');
         $('#idDeviceCreate').attr('rows',''+ number + '');
+        //$('#idDevice').css('display','block');
+        //$('#addDevice').css('display','none');
 
         //console.log('yes');
     } else{
