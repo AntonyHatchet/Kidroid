@@ -131,9 +131,11 @@ function inputNewNameUser() {
         $('#completeUsersEdit').removeClass('no-show');
         if(oldNameUser!=device.newName && newPassword2==0){
             $('#completeUsersEdit').html('name changed');
+            oldNameUser=device.newName;
         }
         else if(oldNameUser!=device.newName && newPassword2!=0){
             $('#completeUsersEdit').html('name and password changed');
+            oldNameUser=device.newName;
         }
         else if((oldNameUser==device.newName && newPassword2==0)){
             $('#completeUsersEdit').html('field is not changed');
@@ -308,12 +310,14 @@ function addDevice( ) {
     device.build = $("#addSelectVersion").val();
     device.numberDevice = number = $("#amountDevice").val();
     device.filter = $("#filter2").val();
-    console.log(device);
     if (device.category != 0 && device.version !=0)  {
         socket.emit('createDevice', device);
+        console.log(device);
         $('#errorAddDevice').addClass('no-show');
         $('#completeAddDevice').removeClass('no-show');
         $('#idDeviceCreate').attr('rows',''+ number + '');
+        //$('#idDevice').css('display','block');
+        //$('#addDevice').css('display','none');
 
         //console.log('yes');
     } else{
