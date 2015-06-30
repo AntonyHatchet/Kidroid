@@ -1,0 +1,38 @@
+//
+   Created by nikolay_ivanisenko on 30.06.2015.
+
+#rules(class='tab-content')
+   h2 Firewall rules
+   .radio
+      label
+         input(type='radio' name='radio')
+         span Allow access to all resources, except the black list
+   .radio
+      label
+         input(type='radio' name='radio')
+         span Allow access to the white list resources only
+   .radio
+      label
+         input(type='radio' name='radio')
+         span Allow all
+
+   fieldset
+      legend Black list:
+      form(class='row')
+         .col-xs-6
+            textarea(type="text" class="form-control")
+         .right.col-xs-4.bottom
+            .btn-group
+               button( type="button" class="btn btn-primary" onclick="") add record
+               button( type="button" class="btn btn-danger" onclick="") remove selected
+   fieldset
+      legend White list:
+      form(class='row')
+         .col-xs-6
+            textarea(type="text" class="form-control")
+         .right.col-xs-4.bottom
+            .btn-group
+               button( type="button" class="btn btn-primary" onclick="") add record
+               button( type="button" class="btn btn-danger" onclick="") remove selected
+   .left
+      button( type="button" class="btn btn-primary" onclick="") Save
