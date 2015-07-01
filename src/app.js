@@ -18,7 +18,7 @@ require('./config/passport.js')(passport);
 var app = express();
 
 // view engine setup
-app.set('views', path.join(".",__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
@@ -30,7 +30,7 @@ var sessionMiddleware = session({
     saveUninitialized: true,
     cookie: {secure: false},
     store: new (require("connect-mongo")(session))({
-        url: "mongodb://tester:tester@ds039880.mongolab.com:39880/kidroid",
+        url: dbConfig.url,
         ttl: 60000
     })
 });
@@ -39,7 +39,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(express.static(path.join(".",__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());

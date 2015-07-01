@@ -63,6 +63,7 @@ module.exports = {
                 unzipParsrer.on('close', function(){
                     var zip = {
                         findCheckSum: function(path){
+                            console.log("findCheckSum");
                             var shasum = crypto.createHash('md5');
                             var s = fs.createReadStream(path + "mytextbooks-school-release.apk");
                             s.on('data', function(d) { shasum.update(d); });
@@ -72,12 +73,15 @@ module.exports = {
                             });
                         },
                         readCheckSum : function(path){
+                            console.log("readCheckSum");
                             fs.readFileSync(path+"list.md5", 'utf8').slice(17);
                         },
                         checkSum:function(path){
+                            console.log("checkSum");
                             return (this.findCheckSum(path)===this.readCheckSum(path))
                         },
                         checkVersion:function(path){
+                            console.log("checkVersion");
                             var reader = ApkReader.readFile(path + "mytextbooks-school-release.apk");
                             var manifest = reader.readManifestSync();
                             manifest.inspect = function() {
@@ -97,6 +101,7 @@ module.exports = {
                     if(zip.checkSum(bufer)){
                         if (zip.checkVersion(bufer)){
                             var apk = new zip.checkVersion(bufer);
+                            console.log("")
                             apk.link = './public/uploads/Marionette-APK/'+apk.build + ".zip";
                             apk.user = req.user.local.name;
                             fs.exists('./public/uploads/Marionette-APK/'+apk.build + ".zip", function (exists) {
@@ -131,7 +136,7 @@ module.exports = {
             req.pipe(busboy);
     },
     createVersionKidroid: function (req, res) {
-
+            console.log("readCheckSum");
             function createBufer() {
                 var path =  "./public/uploads/buffer/"+ Math.floor(Math.random() * (1000 - 1)) + 1+"/";
                 this.getPath = function(){
@@ -162,6 +167,7 @@ module.exports = {
                     var zip = {
                         CheckSum: function(path,callback){
                             var checkNumber=[];
+                            console.log('CheckSum');
                             var sumArr = fs.readFileSync(path+"list.md5", 'utf8').split("\r\n");
                             for(var i=0;i< sumArr.length;i++){
                                 sumArr[i]= sumArr[i].slice(sumArr[i].indexOf(':')+1)
@@ -204,6 +210,7 @@ module.exports = {
                     zip.CheckSum(bufer,function(err,callback){
                         if (err)throw err;
                         if (callback){
+                            console.log('CheckSum callback');
                             if (zip.checkVersion(bufer)){
                                 var kidroid = new zip.checkVersion(bufer);
                                 kidroid.link = './public/uploads/Kidroid-APK/'+kidroid.loader + ".zip";

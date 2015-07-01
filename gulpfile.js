@@ -4,20 +4,52 @@ var uglify = require('gulp-uglify');
 var csso = require('gulp-csso');
 var watch = require('gulp-watch');
 var del = require('del');
-var vinylPaths = require('vinyl-paths');
-
+var webpack = require('webpack');
+var webpackConfig = require("./webpack.config.js");
+var compiler = webpack(webpackConfig);
+var fs = require('fs-extra');
+var path = require('path');
 
 gulp.task('build', function() {
     var js = [
-        '!./src//public/js/socketOn.js',
-        './src//public/js/io.js',
-        './src//public/js/moment-2.8.3.js',
-        './src//public/js/*.js'
+        '!./src/public/js/socketOn.js',
+        './src/public/js/io.js',
+        './src/public/js/moment-2.8.3.js',
+        './src/public/js/*.js'
     ];
-    return gulp.src(js)
-        .pipe(concat('all.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('./src/public/js/'));
+    var css = [
+        './src/public/stylesheets/new/*.css',
+        './src/public/stylesheets/plugins/*.css'
+    ];
+    var statics = ['./src/public/fonts','./src/public/img'];
+    var views = './src/views';
+    fs.remove("./build", function (err) {
+        if (err) return console.error(err);
+        gulp.src(js)
+            .pipe(concat('all.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest('./build/public/js/'));
+        gulp.src('./src/public/js/socketOn.js')
+            .pipe(uglify())
+            .pipe(gulp.dest('./build/public/js/'));
+        gulp.src(css)
+            .pipe(concat('all.css'))
+            .pipe(csso())
+            .pipe(gulp.dest('./build/public/stylesheets/'));
+        compiler.run(function (err, stats) {
+            console.log("Server build create successful! "); // по завершению, выводим всю статистику
+            statics.forEach(function(item){
+                    fs.copy(item, path.join('./build/public/', item.split('/').pop()), function (err) {
+                    if (err) return console.error(err)
+                    console.log("copy "+ item.split('/').pop()+" success!");
+                })
+            });
+            fs.copy(views, './build/views', function (err) {
+                if (err) return console.error(err);
+                console.log("copy views success!")
+            })
+        });
+    });
 });
 
 gulp.task('js', function() {
