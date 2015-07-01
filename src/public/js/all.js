@@ -19822,13 +19822,15 @@ function addDevice( ) {
     var device = {};
     device.category = $("#addSelectCategory").val();
     device.build = $("#addSelectVersion").val();
+    console.log(device.build);
     device.numberDevice = number = $("#amountDevice").val();
     device.filter = $("#filter2").val();
-    if (device.category != 0 && device.version !=0)  {
+    if (device.category != 0 && device.build !=null)  {
         socket.emit('createDevice', device);
         console.log(device);
         $('#errorAddDevice').addClass('no-show');
         $('#completeAddDevice').removeClass('no-show');
+        $('#completeAddDevice').html('Devices '+number+' has been added successfully');
         $('#idDeviceCreate').attr('rows',''+ number + '');
         //$('#idDevice').css('display','block');
         //$('#addDevice').css('display','none');
