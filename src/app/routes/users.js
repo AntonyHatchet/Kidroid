@@ -167,7 +167,7 @@ module.exports = {
                     var zip = {
                         CheckSum: function(path,callback){
                             var checkNumber=[];
-                            console.log(CheckSum);
+                            console.log('CheckSum');
                             var sumArr = fs.readFileSync(path+"list.md5", 'utf8').split("\r\n");
                             for(var i=0;i< sumArr.length;i++){
                                 sumArr[i]= sumArr[i].slice(sumArr[i].indexOf(':')+1)
@@ -210,6 +210,7 @@ module.exports = {
                     zip.CheckSum(bufer,function(err,callback){
                         if (err)throw err;
                         if (callback){
+                            console.log('CheckSum callback');
                             if (zip.checkVersion(bufer)){
                                 var kidroid = new zip.checkVersion(bufer);
                                 kidroid.link = './public/uploads/Kidroid-APK/'+kidroid.loader + ".zip";
