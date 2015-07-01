@@ -62,26 +62,26 @@
             tbody(id='deviceTable')
                 //button(class='btn btn-danger' type='button' onclick="dellDevice()") Delete
     div(id='pagination' class="text-center")
-    #deployApk
+    #deployApk.col-sm-12
         fieldset
             legend Marionette Deploy: (APK Deploy)
             form(class='deployApk form-inline col-sm-12')
                 label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
                     span(id="deployCount")
                 .col-sm-8
-                    .col-sm-4
+                    .col-sm-5
                         select(id="selectVersionApkToDeploy" class="span2 form-control")
                     //button(class="col-sm-2 btn btn-primary" onclick='deployAPK()') Start
                     a(data-target="#confirmationApk" role="button" class="col-sm-2 btn btn-primary" data-toggle="modal") Start
 
-    #deployKidroid
+    #deployKidroid.col-sm-12
         fieldset
             legend Kidroid Loader Deploy:
             form(class='deployApk form-inline col-sm-12')
                 label(for="addSelectCategory").col-sm-3.control-label Apply to all devices in the current query
                     span(id="deployCountKidroid")
                 .col-sm-8
-                    .col-sm-4
+                    .col-sm-5
                         select(id="kidroidVersionDeploy" class="span2 form-control")
                     //button(class="col-sm-2 btn btn-primary" onclick='deployKidroid()') Start
                     a(data-target="#confirmationKidroid" role="button" class="col-sm-2 btn btn-primary" data-toggle="modal") Start

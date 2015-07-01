@@ -17,22 +17,34 @@
          span Allow all
 
    fieldset
-      legend Black list:
-      form(class='row')
-         .col-xs-6
-            textarea(type="text" class="form-control")
-         .right.col-xs-4.bottom
+      legend list:
+      .col-xs-6
+         h3 Black list
+         table(class='table table-hover table-bordered table-striped')
+            thead
+               tr
+                  td.checkColum(onclick='sort(this)',data-value="0")
+                     input(type='checkbox' id='checkAllBlackList')
+                  th id
+                  //th remove
+            tbody(id='blackList')
+         .right.col-xs-4
             .btn-group
                button( type="button" class="btn btn-primary" onclick="") add record
                button( type="button" class="btn btn-danger" onclick="") remove selected
-   fieldset
-      legend White list:
-      form(class='row')
-         .col-xs-6
-            textarea(type="text" class="form-control")
-         .right.col-xs-4.bottom
+      .col-xs-6
+         h3 White list
+         table(class='table table-hover table-bordered table-striped')
+            thead
+               tr
+                  td.checkColum(onclick='sort(this)',data-value="0")
+                     input(type='checkbox' id='checkAllWhiteList')
+                  th id
+                  //th remove
+            tbody(id='whiteList')
+         .right.col-xs-4
             .btn-group
                button( type="button" class="btn btn-primary" onclick="") add record
                button( type="button" class="btn btn-danger" onclick="") remove selected
-   .left
-      button( type="button" class="btn btn-primary" onclick="") Save
+      .left
+         button( type="button" class="btn btn-primary" onclick="") Save

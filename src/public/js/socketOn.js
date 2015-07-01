@@ -96,8 +96,9 @@ socket.on('quantity', function (data) {
         $("#pagination").html('<nav><ul class="pagination">'+html+nextButton);
     }else if(acrivePage==allPage && allPage>1){
         $("#pagination").html(prevButton+html);
-    }else if(allPage<=1){
-        console.log("sdfsdf");
+    }
+    else if(allPage<=1){
+        //console.log("sdfsdf");
         $("#pagination").html('');
     }
     else{
