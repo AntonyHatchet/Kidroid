@@ -144,14 +144,14 @@ socket.on('version', function (date) {
     }
     $("#versionTable").html(html);
 });
-socket.on('status', function (date) {
-    //console.log(school,"category");
-    var html = '<option value="" style="color:#cccccc">- Select status -</option>';
-    for (var i = 0; i < date.length; i++) {
-        html += "<option>" +date[i]+"</option>";
-    }
-    $("#selectStatus").html(html);
-});
+//socket.on('status', function (date) {
+//    //console.log(school,"category");
+//    var html = '<option value="" style="color:#cccccc">- Select status -</option>';
+//    for (var i = 0; i < date.length; i++) {
+//        html += "<option>" +date[i]+"</option>";
+//    }
+//    $("#selectStatus").html(html);
+//});
 
 socket.on('users', function (data) {
     //console.log(data);
