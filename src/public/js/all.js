@@ -19735,15 +19735,30 @@ function uploadChangeKidroid(){
 }
 function deployAPK(){
     var apk = {};
-    apk.version = $("#selectVersionApkToDeploy").val().split(' ')[0];
-    apk.build = $("#selectVersionApkToDeploy").val().split(' ')[1];
+    apk.version = $("#selectVersionToDeploy").val().split(' ')[0];
+    console.log(apk.version);
+    apk.build = $("#selectVersionToDeploy").val().split(' ')[1];
     apk.school = $("#selectCategory").val();
     apk.filter = $("#customFilter").val();
     apk.devices = $('input:checkbox.checkboxWarning:checked').map(function() {return this.value;}).get();
-    socket.emit("deployApk", apk);
-    $("#completeDeployApk").removeClass('no-show').css('display', 'block');
-    $("#completeDeployApk").html("The deploy process has been initialized successfully (Type: Kidroid Loader, Version: v"+apk.version+" build "+apk.build+ ")");
-    setTimeout(function(){$('#completeDeployApk').fadeOut('fast')},3000);
+    if($("#selectVersionToDeploy").val()=='0'){
+        $("#errorDeployApk").removeClass('no-show').css('display', 'block');
+        $("#errorDeployApk").html("select version APK");
+        setTimeout(function () {
+            $('#errorDeployApk').fadeOut('fast')
+        }, 3000);
+    }else {
+        socket.emit("deployApk", apk);
+        $("#completeDeployApk").removeClass('no-show').css('display', 'block');
+        $("#completeDeployApk").html("The deploy process has been initialized successfully (Type: Kidroid Loader, Version: v" + apk.version + " build " + apk.build + ")");
+        setTimeout(function () {
+            $('#completeDeployApk').fadeOut('fast')
+        }, 3000);
+    }
+    //socket.emit("deployApk", apk);
+    //$("#completeDeployApk").removeClass('no-show').css('display', 'block');
+    //$("#completeDeployApk").html("The deploy process has been initialized successfully (Type: Kidroid Loader, Version: v"+apk.version+" build "+apk.build+ ")");
+    //setTimeout(function(){$('#completeDeployApk').fadeOut('fast')},3000);
 }
 function deployKidroid(){
     var kidroid = {};
@@ -19751,10 +19766,18 @@ function deployKidroid(){
     kidroid.school = $("#selectCategory").val();
     kidroid.filter = $("#customFilter").val();
     kidroid.devices = $('input:checkbox.checkboxWarning:checked').map(function() {return this.value;}).get();
-    socket.emit("deployKidroid", kidroid);
-    $("#completeDeployKidroid").removeClass('no-show').css('display', 'block');
-    $("#completeDeployKidroid").html("The deploy process has been initialized successfully (Type: Kidroid Loader, Version: v"+kidroid.version+ ")");
-    setTimeout(function(){$('#completeDeployKidroid').fadeOut('fast')},3000);
+    if(kidroid.version==0){
+        $("#errorDeployKidroid").removeClass('no-show').css('display', 'block');
+        $("#errorDeployKidroid").html("select version Kidroid");
+        setTimeout(function(){$('#errorDeployKidroid').fadeOut('fast')},3000);
+    }else {
+        socket.emit("deployKidroid", kidroid);
+        $("#completeDeployKidroid").removeClass('no-show').css('display', 'block');
+        $("#completeDeployKidroid").html("The deploy process has been initialized successfully (Type: Kidroid Loader, Version: v" + kidroid.version + ")");
+        setTimeout(function () {
+            $('#completeDeployKidroid').fadeOut('fast')
+        }, 3000);
+    }
 }
 function find(sort) {
     console.log(sort);

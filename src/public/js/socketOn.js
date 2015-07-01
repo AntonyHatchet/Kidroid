@@ -117,7 +117,7 @@ socket.on('category', function (date) {
 
 socket.on('version', function (date) {
     //console.log(date,"kidroidVersion");
-    var html = '<option value="" style="color:#cccccc">- Kidroid Loader version -</option>';
+    var html = '<option value="0" style="color:#cccccc">- Kidroid Loader version -</option>';
     if(date.kidroid.length) {
         for (var i = 0; i < date.kidroid.length; i++) {
             html += "<option>" + date.kidroid[i].loader + "</option>";
@@ -130,7 +130,7 @@ socket.on('version', function (date) {
     //console.log(school,"category");
     var scheduled = '<option value="Install scheduled" >- Install scheduled -</option>';
     var inProgress = '<option value="Install in progress">- Install in progress -</option>';
-    var html = '<option value="" style="color:#cccccc">- Marionette version -</option>' + scheduled + inProgress;
+    var html = '<option value="0" style="color:#cccccc">- Marionette version -</option>' + scheduled + inProgress;
     for (var i = 0; i < date.apk.length; i++) {
         html += "<option>" + date.apk[i].apk.version +" "+ date.apk[i].apk.build +"</option>";
     }

@@ -40,8 +40,9 @@
                     option(value='50') 50
         .col-sm-4
             div(id='completeDeployApk' class='alert alert-success no-show .col-lg-1')
-        .col-sm-4
             div(id='completeDeployKidroid' class='alert alert-success no-show .col-lg-1')
+            div(id='errorDeployApk' class='alert alert-danger no-show .col-lg-1')
+            div(id='errorDeployKidroid' class='alert alert-danger no-show .col-lg-1')
     .col-lg-12.container-tab
         table(class='table table-hover table-bordered table-striped' id='paged')
             thead(class='tableTarget')
@@ -70,7 +71,7 @@
                     span(id="deployCount")
                 .col-sm-8
                     .col-sm-6
-                        select(id="selectVersionApkToDeploy" class="span2 form-control")
+                        select(id="selectVersionToDeploy" class="span2 form-control")
                     //button(class="col-sm-2 btn btn-primary" onclick='deployAPK()') Start
                     a(data-target="#confirmationApk" role="button" class="col-sm-2 btn btn-primary" data-toggle="modal") Start
 
