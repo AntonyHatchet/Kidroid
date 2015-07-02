@@ -6,27 +6,32 @@
 socket.on('displayData', function (data) {
     //console.log(data.length);
     var html = '';
-    for (var i in data){
-        //console.log(data);
-        var checkbox = "<td><input type='checkbox' class='checkboxWarning' value="+ data[i]._id +"></td>";
-        var deviceId = "<td>" + data[i]._id + "</td>";
-        var deviceName = "<td>"+ data[i].name + "<p>(Android v." +data[i].android +")</p></td>";
-        var update = (!data[i].updateRequired)? "": "*Pending update (v"+data[i].apkToUpdate.version+" build "+data[i].apkToUpdate.build+")";
-        var apkVersion = "<td>" + ((!+data[i].apk.build >=1 )? "-" : data[i].apk.version +" (Build "+data[i].apk.build + ")") + "<p>"+ update +"</p></td>";
-        var loaderVersion = "<td>"+ ((data[i].loader != 0)? data[i].loader: '-') +"</td>";
-        var status = "<td>" + data[i].status + "</td>";
-        if(data[i].longitude!=0||data[i].latitude!=0) {
-            var map = "<button id='buttonMap' href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>Location</button>";
-            //console.log('map');
+    if(data==0){
+        //console.log('no');
+        $('#paged').html('Devices not found')
+    }else {
+        for (var i in data) {
+            //console.log(data);
+            var checkbox = "<td><input type='checkbox' class='checkboxWarning' value=" + data[i]._id + "></td>";
+            var deviceId = "<td>" + data[i]._id + "</td>";
+            var deviceName = "<td>" + data[i].name + "<p>(Android v." + data[i].android + ")</p></td>";
+            var update = (!data[i].updateRequired) ? "" : "*Pending update (v" + data[i].apkToUpdate.version + " build " + data[i].apkToUpdate.build + ")";
+            var apkVersion = "<td>" + ((!+data[i].apk.build >= 1 ) ? "-" : data[i].apk.version + " (Build " + data[i].apk.build + ")") + "<p>" + update + "</p></td>";
+            var loaderVersion = "<td>" + ((data[i].loader != 0) ? data[i].loader : '-') + "</td>";
+            var status = "<td>" + data[i].status + "</td>";
+            if (data[i].longitude != 0 || data[i].latitude != 0) {
+                var map = "<button id='buttonMap' href='#map' data-toggle='modal' class='btn btn-default' onclick='showmap(" + data[i].longitude + "," + data[i].latitude + ")'>Location</button>";
+                //console.log('map');
+            }
+            else {
+                var map = "<p></p>"
+                //console.log('no-map');
+            }
+            var edit = "<button href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(\"" + data[i]._id + "," + data[i].token + "," + data[i].name + "\")'>Edit</button> ";
+            //var deleteDevice = "<button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].deviceId + "\")\')>Delete</button>";
+            var options = "<td><div class='btn-group' role='group'>" + map + edit + "</div></td>";
+            html += "<tr>" + checkbox + deviceId + deviceName + apkVersion + loaderVersion + status + options + "</tr>";
         }
-        else{
-            var map ="<p></p>"
-            //console.log('no-map');
-        }
-        var edit = "<button href='#editDevice' role='button' class='btn btn-primary' data-toggle='modal' onclick='editDeviceWriteIdToken(\"" + data[i]._id + "," + data[i].token + "," + data[i].name + "\")'>Edit</button> ";
-        //var deleteDevice = "<button class='btn btn-danger' type='button' onclick=\'socket.emit(\"removeDevice\",\"" + data[i].deviceId + "\")\')>Delete</button>";
-        var options = "<td><div class='btn-group' role='group'>" + map + edit + "</div></td>";
-        html += "<tr>" +checkbox+deviceId+deviceName+apkVersion+loaderVersion+status+options+ "</tr>";
     }
     $("#deviceTable").html(html);
 });
@@ -123,7 +128,7 @@ socket.on('version', function (date) {
             html += "<option>" + date.kidroid[i].loader + "</option>";
         }
     }
-    $("#kidroidVersion,#kidroidVersionDeploy").html(html);
+    $("#kidroidVersion,#kidroidVersionDeploy,#selectDefaultKidroidVersion").html(html);
 });
 
 socket.on('version', function (date) {
@@ -134,7 +139,7 @@ socket.on('version', function (date) {
     for (var i = 0; i < date.apk.length; i++) {
         html += "<option>" + date.apk[i].apk.version +" "+ date.apk[i].apk.build +"</option>";
     }
-    $("#marionetteVersion,#selectVersionToDeploy, #editDeviceVersion, #scheduleDeviceVersion, #scheduleDeviceVersionFilter").html(html);
+    $("#marionetteVersion,#selectVersionToDeploy, #selectDefaultApkVersion, #editDeviceVersion, #scheduleDeviceVersion, #scheduleDeviceVersionFilter, #addSelectVersion").html(html);
 });
 socket.on('version', function (date) {
     //console.log(school,"category");
@@ -154,6 +159,9 @@ socket.on('version', function (date) {
 //});
 
 socket.on('users', function (data) {
+    if(data==0){
+        $('#userTable').html('Users not found')
+    }else
     //console.log(data);
     var html = '';
     for (var i in data){
@@ -215,6 +223,7 @@ socket.on('deviceForDeploy', function (data) {
 socket.on('filters', function (data) {
 
     for (var i in data) {
+        console.log(data);
         var html = '';
         if (data[i].name === "School") {
             $("#firstFilter").html(data[i].name);
@@ -242,29 +251,33 @@ socket.on('filters', function (data) {
 });
 
 socket.on('allSchedule', function (data) {
-    //console.log(data)
-    var options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        weekday: 'long',
-        hour: 'numeric',
-        hour12: false,
-        minute: 'numeric',
-        second: 'numeric'
-    };
-    var html = '';
-    for (var i in data) {
-        var date = new Date(data[i].timeStart);
-        var name = data[i].name;
-        var version = "v"+data[i].versionToUpdate.version+" build "+data[i].versionToUpdate.build;
-        var total = data[i].deviceToUpdate;
-        var updated = data[i].deviceUpdated;
-        var school = (data[i].school =="")?"-":data[i].school;
-        var filter = (data[i].filter =="")?"-":data[i].filter;
-        var type = data[i].type;
-        html += "<tr><td>" + date.toLocaleString("en", options) + " (" + name + ")" + "</td><td>" + type + "</td><td>" + version + "</td><td>" + total + "</td><td>" + updated + "</td><td>" + school + "</td><td>" + filter + "</td></tr>";
-        $("#allSchedule").html(html);
+    if(data==0){
+        $('#allSchedule').html('request not found')
+    }else {
+        //console.log(data)
+        var options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long',
+            hour: 'numeric',
+            hour12: false,
+            minute: 'numeric',
+            second: 'numeric'
+        };
+        var html = '';
+        for (var i in data) {
+            var date = new Date(data[i].timeStart);
+            var name = data[i].name;
+            var version = "v" + data[i].versionToUpdate.version + " build " + data[i].versionToUpdate.build;
+            var total = data[i].deviceToUpdate;
+            var updated = data[i].deviceUpdated;
+            var school = (data[i].school == "") ? "-" : data[i].school;
+            var filter = (data[i].filter == "") ? "-" : data[i].filter;
+            var type = data[i].type;
+            html += "<tr><td>" + date.toLocaleString("en", options) + " (" + name + ")" + "</td><td>" + type + "</td><td>" + version + "</td><td>" + total + "</td><td>" + updated + "</td><td>" + school + "</td><td>" + filter + "</td></tr>";
+            $("#allSchedule").html(html);
+        }
     }
 });
 socket.on('userName', function (data){
@@ -293,6 +306,7 @@ socket.on('getVersionDeploy', function (data) {
 });
 
 socket.on('getVersionDeploy', function (data) {
+    console.log(data);
     var defaultVersion;
     for (var i = 0; i < data.apk.length; i++) {
         if (data.apk[i].default){
