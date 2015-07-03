@@ -14,6 +14,10 @@ module.exports = function (app, passport) {
         res.render('index.jade', {message: req.flash('loginMessage')});
     });
 
+    app.on('error', function (err) {
+        console.log("ERRRRR", err)
+    });
+
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/dashboard', // redirect to the secure profile section
         failureRedirect: '/failure', // redirect back to the signup page if there is an error

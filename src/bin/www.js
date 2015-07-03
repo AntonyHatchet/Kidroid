@@ -2,6 +2,8 @@ var app = require('../app')[0];
 var sessionMiddleware = require('../app')[1];
 //var debug = require('debug')('Kidroid:server');
 var http = require('http');
+var fs = require('fs-extra');
+var path = require('path');
 
 /**
  * Get port from environment and store in Express.
@@ -49,6 +51,10 @@ function normalizePort(val) {
 /**
  * Event listener for HTTP server "error" event.
  */
+process.on('uncaughtException', function (err) {
+    var loger = fs.createOutputStream(path.join(__dirname, 'logs'));
+    loger.write(JSON.stringify(err))
+});
 
 function onError(error) {
     if (error.syscall !== 'listen') {
@@ -68,6 +74,10 @@ function onError(error) {
         case 'EADDRINUSE':
             console.error(bind + ' is already in use');
             process.exit(1);
+            break;
+        case 'ENOENT':
+            console.error('ENOENT is already in use');
+            //process.exit(1);
             break;
         default:
             throw error;

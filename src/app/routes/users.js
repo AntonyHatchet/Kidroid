@@ -65,7 +65,13 @@ module.exports = {
                         findCheckSum: function(path){
                             console.log("findCheckSum");
                             var shasum = crypto.createHash('md5');
-                            var s = fs.createReadStream(path + "mytextbooks-school-release.apk");
+                            try {
+                                var s = fs.createReadStream(path + "mytextbooks-school-release.apk");
+                            } catch (err) {
+                                if (err) {
+                                  console.log("error occured");
+                                }
+                            }
                             s.on('data', function(d) { shasum.update(d); });
                             s.on('end', function() {
                                 var d = shasum.digest('hex');
@@ -82,50 +88,60 @@ module.exports = {
                         },
                         checkVersion:function(path){
                             console.log("checkVersion");
-                            var reader = ApkReader.readFile(path + "mytextbooks-school-release.apk");
-                            var manifest = reader.readManifestSync();
-                            manifest.inspect = function() {
-                                Object.defineProperty(this,{
-                                    versionCode: function() {
-                                        return this.versionCode;
-                                    },
-                                    versionName: function() {
-                                        return this.versionName;
-                                    }
-                                });
-                            };
-                            return {version:manifest.versionName.slice(0,3), build:manifest.versionCode}
+                            try {
+                                var reader = ApkReader.readFile(path + "mytextbooks-school-release.apk");
+                                var manifest = reader.readManifestSync();
+                                manifest.inspect = function() {
+                                    Object.defineProperty(this,{
+                                        versionCode: function() {
+                                            return this.versionCode;
+                                        },
+                                        versionName: function() {
+                                            return this.versionName;
+                                        }
+                                    });
+                                };
+                                return {version:manifest.versionName.slice(0,3), build:manifest.versionCode}
+                            } catch (err) {
+                                if (err) {
+                                    console.log("error occured");
+                                    res.end()
+                                }
+                            }
                         }
                     };
+                    setTimeout(start,1000);
+                    function start(){
+                        if(zip.checkSum(bufer)){
+                            if (zip.checkVersion(bufer)){
+                                var apk = new zip.checkVersion(bufer);
+                                console.log("checkVersion apk", apk)
+                                apk.link = './public/uploads/Marionette-APK/'+apk.build + ".zip";
+                                apk.user = req.user.local.name;
+                                fs.exists('./public/uploads/Marionette-APK/'+apk.build + ".zip", function (exists) {
+                                    if(!exists){
+                                        fs.move(bufer+"/zip/"+filename, apk.link, function (err) {
+                                            if (err) return console.error(err,"fs.move");
+                                            console.log("success move!")
+                                        });
+                                        userMagic.createVersionApk(apk, function(err,cb){
+                                            if (err) return console.error(err,"users.createVersion APK");
+                                            console.log(cb,"createVersion APK callback");
+                                            fs.remove(bufer, function (err) {
+                                                if (err) return console.error(err);
 
-                    if(zip.checkSum(bufer)){
-                        if (zip.checkVersion(bufer)){
-                            var apk = new zip.checkVersion(bufer);
-                            console.log("")
-                            apk.link = './public/uploads/Marionette-APK/'+apk.build + ".zip";
-                            apk.user = req.user.local.name;
-                            fs.exists('./public/uploads/Marionette-APK/'+apk.build + ".zip", function (exists) {
-                                if(!exists){
-                                    fs.move(bufer+"/zip/"+filename, apk.link, function (err) {
-                                        if (err) return console.error(err,"fs.move");
-                                        console.log("success move!")
-                                    });
-                                    userMagic.createVersionApk(apk, function(err,cb){
-                                        if (err) return console.error(err,"users.createVersion APK");
-                                        console.log(cb,"createVersion APK callback");
-                                        fs.remove(bufer, function (err) {
-                                            if (err) return console.error(err);
-
-                                            console.log('success remove!')
+                                                console.log('success remove!')
+                                            })
                                         })
-                                    })
-                                }
-                                res.end();
-                            });
+                                    }
+                                    res.end();
+                                });
 
+                            }
                         }
                     }
-                });
+
+                    });
                 file.pipe(fs.createOutputStream(bufer+"/zip/"+filename));
             });
             busboy.on('finish', function() {
@@ -207,37 +223,40 @@ module.exports = {
                         }
                     };
                     //
-                    zip.CheckSum(bufer,function(err,callback){
-                        if (err)throw err;
-                        if (callback){
-                            console.log('CheckSum callback');
-                            if (zip.checkVersion(bufer)){
-                                var kidroid = new zip.checkVersion(bufer);
-                                kidroid.link = './public/uploads/Kidroid-APK/'+kidroid.loader + ".zip";
-                                kidroid.user = req.user.local.name;
-                                fs.exists('./public/uploads/Kidroid-APK/'+kidroid.loader + ".zip", function (exists) {
-                                    if(!exists){
-                                        console.log(exists,"exists");
-                                        fs.move(bufer+"/zip/"+filename, kidroid.link, function (err) {
-                                            if (err) return console.error(err,"fs.move");
-                                            console.log("success move!")
-                                        });
-                                        userMagic.createVersionKidroid(kidroid, function(err,cb){
-                                            if (err) return console.error(err,"users.createVersion APK");
-                                            console.log(cb,"createVersion APK callback");
-                                            fs.remove(bufer, function (err) {
-                                                if (err) return console.error(err);
+                    setTimeout(startKidroid,1000);
+                    function startKidroid(){
+                        zip.CheckSum(bufer,function(err,callback){
+                            if (err)throw err;
+                            if (callback){
+                                console.log('CheckSum callback');
+                                if (zip.checkVersion(bufer)){
+                                    var kidroid = new zip.checkVersion(bufer);
+                                    kidroid.link = './public/uploads/Kidroid-APK/'+kidroid.loader + ".zip";
+                                    kidroid.user = req.user.local.name;
+                                    fs.exists('./public/uploads/Kidroid-APK/'+kidroid.loader + ".zip", function (exists) {
+                                        if(!exists){
+                                            console.log(exists,"exists");
+                                            fs.move(bufer+"/zip/"+filename, kidroid.link, function (err) {
+                                                if (err) return console.error(err,"fs.move");
+                                                console.log("success move!")
+                                            });
+                                            userMagic.createVersionKidroid(kidroid, function(err,cb){
+                                                if (err) return console.error(err,"users.createVersion APK");
+                                                console.log(cb,"createVersion APK callback");
+                                                fs.remove(bufer, function (err) {
+                                                    if (err) return console.error(err);
 
-                                                console.log('success remove!')
+                                                    console.log('success remove!')
+                                                })
                                             })
-                                        })
-                                    }
-                                    res.end();
-                                });
+                                        }
+                                        res.end();
+                                    });
 
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 });
                 file.pipe(fs.createOutputStream(bufer+"/zip/"+filename));
             });
