@@ -285,42 +285,48 @@ socket.on('userName', function (data){
 });
 
 socket.on('getVersionDeploy', function (data) {
-    var defaultVersion;
-    if(data.kidroid.length) {
-        for (var i = 0; i < data.kidroid.length; i++) {
-            if (data.kidroid[i].default) {
-                defaultVersion = data.kidroid[i];
+    console.log(data,"Kidroid");
+    if(data.kidroid.length !=0) {
+        var defaultVersion;
+        if (data.kidroid.length) {
+            for (var i = 0; i < data.kidroid.length; i++) {
+                if (data.kidroid[i].default) {
+                    defaultVersion = data.kidroid[i];
+                }
             }
         }
-    }
-    //console.log(data.kidroid.length);
-    if(defaultVersion!=undefined){
-        var html = "<option data-id='"+defaultVersion._id+"'>" + defaultVersion.loader +" (current)"+"</option>";
-        for (var j = 0; j < data.kidroid.length; j++) {
-            if (data.kidroid[j] != defaultVersion)
-            html += "<option data-id='"+data.kidroid[j]._id+"'>" + data.kidroid[j].loader +"</option>";
+        //console.log(data.kidroid.length);
+        if (defaultVersion != undefined) {
+            var html = "<option data-id='" + defaultVersion._id + "'>" + defaultVersion.loader + " (current)" + "</option>";
+            for (var j = 0; j < data.kidroid.length; j++) {
+                if (data.kidroid[j] != defaultVersion)
+                    html += "<option data-id='" + data.kidroid[j]._id + "'>" + data.kidroid[j].loader + "</option>";
+            }
+            $("#selectDefaultKidroidVersion").html(html);
+            $("#kidroidVersionDeploy").html(html);
         }
-        $("#selectDefaultKidroidVersion").html(html);
-        $("#kidroidVersionDeploy").html(html);
     }
+
 });
 
 socket.on('getVersionDeploy', function (data) {
-    console.log(data);
-    var defaultVersion;
-    for (var i = 0; i < data.apk.length; i++) {
-        if (data.apk[i].default){
-            defaultVersion = data.apk[i];
+    console.log(data,"Marionette");
+    if(data.apk.length !=0) {
+        var defaultVersion;
+        for (var i = 0; i < data.apk.length; i++) {
+            if (data.apk[i].default) {
+                defaultVersion = data.apk[i];
+            }
         }
-    }
-    if(defaultVersion!=undefined) {
-        var html = "<option data-id='"+defaultVersion._id+"'>" + defaultVersion.apk.version + " " + defaultVersion.apk.build + " (current)" + "</option>";
-        for (var j = 0; j < data.apk.length; j++) {
-            if (data.apk[j] != defaultVersion)
-                html += "<option data-id='"+data.apk[j]._id+"'>" + data.apk[j].apk.version + " " + data.apk[j].apk.build + "</option>";
+        if (defaultVersion != undefined) {
+            var html = "<option data-id='" + defaultVersion._id + "'>" + defaultVersion.apk.version + " " + defaultVersion.apk.build + " (current)" + "</option>";
+            for (var j = 0; j < data.apk.length; j++) {
+                if (data.apk[j] != defaultVersion)
+                    html += "<option data-id='" + data.apk[j]._id + "'>" + data.apk[j].apk.version + " " + data.apk[j].apk.build + "</option>";
+            }
+            $("#selectDefaultApkVersion, #addSelectVersion").html(html);
+            $("#selectVersionApkToDeploy").html(html);
         }
-        $("#selectDefaultApkVersion, #addSelectVersion").html(html);
-        $("#selectVersionApkToDeploy").html(html);
     }
 });
 socket.on('getVersionDeploy', function (data) {
