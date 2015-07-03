@@ -17,9 +17,8 @@
          span Allow all
 
    fieldset
-      legend list:
+      legend Black list
       .col-xs-6
-         h3 Black list
          table(class='table table-hover table-bordered table-striped')
             thead
                tr
@@ -30,10 +29,11 @@
             tbody(id='blackList')
          .right.col-xs-4
             .btn-group
-               button( type="button" class="btn btn-primary" onclick="") add record
+               a(href="#addBlackList" type="button" class="btn btn-primary" onclick="" data-toggle="modal") add record
                button( type="button" class="btn btn-danger" onclick="") remove selected
+   fieldset
+      legend White list
       .col-xs-6
-         h3 White list
          table(class='table table-hover table-bordered table-striped')
             thead
                tr
@@ -44,7 +44,56 @@
             tbody(id='whiteList')
          .right.col-xs-4
             .btn-group
-               button( type="button" class="btn btn-primary" onclick="") add record
+               a(href="#addWhiteList" type="button" class="btn btn-primary" onclick="" data-toggle="modal") add record
                button( type="button" class="btn btn-danger" onclick="") remove selected
-      .left
-         button( type="button" class="btn btn-primary" onclick="") Save
+   .left
+      button( type="button" class="btn btn-primary" onclick="") Save
+
+
+         //============MODAL Add new device=====================
+   div(class="modal" id="addBlackList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" id='closeAddBlackList' class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h2 Add ID in black list
+                div(class="modal-body")
+                    form.form-horizontal
+                        .form-group
+                            label(for="addSelectCategory").col-sm-3.control-label add id:
+                            .col-sm-9
+                                input(id="addSelectCategory" placeholder='id' class="span2 form-control category")
+                div(class="modal-footer")
+                    //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                    div(id='errorAddBlackList' class='alert alert-danger no-show .col-lg-1')
+                        //button(type="button" class="close" data-dismiss="alert") &times;
+                        p All fields must be filled out
+                    div(id='completeAddBlackList' class='alert alert-success no-show .col-lg-1')
+                        //button(type="button" class="close" data-dismiss="alert") &times;
+                        p Devices are adding
+                    button(class="btn btn-primary .col-lg-6" onclick='addBlackList()') Add
+
+         //============MODAL Add new device=====================
+   div(class="modal" id="addWhiteList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
+        .modal-dialog.modal-sm
+            .modal-content
+                div(class="modal-header")
+                    button(type="button" id='closeAddWhiteList' class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h2 Add ID in white list
+                div(class="modal-body")
+                    form.form-horizontal
+                        .form-group
+                            label(for="addSelectCategory").col-sm-3.control-label add id:
+                            .col-sm-9
+                                input(id="addSelectCategory" placeholder='id' class="span2 form-control category")
+                div(class="modal-footer")
+                    //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
+                    div(id='errorAddWhiteList' class='alert alert-danger no-show .col-lg-1')
+                        //button(type="button" class="close" data-dismiss="alert") &times;
+                        p All fields must be filled out
+                    div(id='completeAddWhiteList' class='alert alert-success no-show .col-lg-1')
+                        //button(type="button" class="close" data-dismiss="alert") &times;
+                        p Devices are adding
+                    button(class="btn btn-primary .col-lg-6" onclick='addWhiteList()') Add

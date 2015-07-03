@@ -48,14 +48,14 @@ function createNewCategory() {
     if(nameCategory !=0){
         //console.log('yes');
         socket.emit('createFilter', {"name":"School","params": nameCategory });
-        $('#errorCreateSchool').addClass('no-show');
-        $('#completeCreateSchool').removeClass('no-show');
+        $('#errorCreateSchool').css('display','none');
+        $('#completeCreateSchool').css('display','block');
         $('#completeCreateSchool').html('The category '+nameCategory+  ' has been added successful');
         setTimeout(function(){$('#completeCreateSchool').fadeOut('fast')},3000);
     }else{
         //console.log('no');
-        $('#errorCreateSchool').removeClass('no-show');
-        $('#completeCreateSchool').addClass('no-show');
+        $('#errorCreateSchool').css('display','block');
+        $('#completeCreateSchool').css('display','none');
     }
 
     //console.log(nameCategory);
@@ -65,14 +65,14 @@ function createNewFilter() {
     var nameFilter = $("#paramFilter").val();
     if(nameFilter !=0){
         socket.emit('createFilter', {"name":"Filter2","params": nameFilter });
-        $('#errorCreateFilter').addClass('no-show');
-        $('#completeCreateFilter').removeClass('no-show');
+        $('#errorCreateFilter').css('display','none');
+        $('#completeCreateFilter').css('display','block');
         $('#completeCreateFilter').html('The filter '+nameFilter+  ' has been added successful');
         setTimeout(function(){$('#completeCreateFilter').fadeOut('fast')},3000);
     }else{
         console.log('no');
-        $('#errorCreateFilter').removeClass('no-show');
-        $('#completeCreateFilter').addClass('no-show');
+        $('#errorCreateFilter').css('display','block');
+        $('#completeCreateFilter').css('display','none');
     };
 };
 //TODO =====================
@@ -90,6 +90,7 @@ function editUsers(x) {
     newUsersId= x.split(' ')[0];
     $('#newNameUsers').attr("value",x.split(' ')[2]);
     oldNameUser=x.split(' ')[2]
+    $('.form-horizontal').trigger( 'reset' )
 };
 
 function inputNewNameCategory() {
@@ -98,22 +99,22 @@ function inputNewNameCategory() {
     device.newName = $("#newNameCategory").val();
     if(device.newName != 0 && device.newName!=device.oldName) {
         //console.log('yes');
-        $('#errorEditFilters').addClass('no-show');
-        $('#completeEditFilters').removeClass('no-show');
+        $('#errorEditFilters').css('display','none');
+        $('#completeEditFilters').css('display','block');
         socket.emit('editCategory', device);
         $("#completeEditFilters").html('The category '+device.newName+ ' has been saved successfully')
         setTimeout(function(){$('#completeEditFilters').fadeOut('fast')},3000);
     }else if(device.newName==device.oldName){
-        $('#errorEditFilters').removeClass('no-show');
-        $('#completeEditFilters').addClass('no-show');
+        $('#errorEditFilters').css('display','block');
+        $('#completeEditFilters').css('display','none');
         $("#errorEditFilters").html('not a change of name')
         setTimeout(function(){$('#errorEditFilters').fadeOut('fast')},3000);
     }
     else{
         //console.log('no');
-        $('#errorEditFilters').removeClass('no-show');
-        $('#completeEditFilters').addClass('no-show');
-        $("#errorEditFilters").html('All fields must be filled out')
+        $('#errorEditFilters').css('display','block');
+        $('#completeEditFilters').css('display','none');
+        $("#errorEditFilters").html('Not all fields required')
         setTimeout(function(){$('#errorEditFilters').fadeOut('fast')},3000);
     }
     //console.log(device);
@@ -126,41 +127,47 @@ function inputNewNameUser() {
     var newPassword2 = $("#newNamepassword2").val();
     if(device.newPassword == newPassword2 && device.newName!=0){
         console.log(oldNameUser);
-        $('#errorUsersPassword').addClass('no-show');
-        $('#errorUsersName').addClass('no-show');
-        $('#completeUsersEdit').removeClass('no-show');
+        $('#errorUsersPassword').css('display','none');
+        $('#errorUsersName').css('display','none');
+        $('#completeUsersEdit').css('display','block');
         if(oldNameUser!=device.newName && newPassword2==0){
             $('#completeUsersEdit').html('name changed');
             oldNameUser=device.newName;
+            setTimeout(function(){$('#completeUsersEdit').fadeOut('fast')},3000);
         }
         else if(oldNameUser!=device.newName && newPassword2!=0){
             $('#completeUsersEdit').html('name and password changed');
             oldNameUser=device.newName;
+            setTimeout(function(){$('#completeUsersEdit').fadeOut('fast')},3000);
         }
         else if((oldNameUser==device.newName && newPassword2==0)){
             $('#completeUsersEdit').html('field is not changed');
+            setTimeout(function(){$('#completeUsersEdit').fadeOut('fast')},3000);
         }else
         {
             $('#completeUsersEdit').html('password changed');
+            setTimeout(function(){$('#completeUsersEdit').fadeOut('fast')},3000);
         }
         //$('.close').click();
         return socket.emit('updateUser', device);
         setTimeout(function(){$('#completeUsersEdit').fadeOut('fast')},3000);
     }if(device.newPassword != newPassword2 ){
-        $('#errorUsersPassword').removeClass('no-show');
-        $('#errorUsersName').addClass('no-show');
-        $('#completeUsersEdit').addClass('no-show');
+        $('#errorUsersPassword').css('display','block');
+        $('#errorUsersName').css('display','none');
+        $('#completeUsersEdit').css('display','none');
+        setTimeout(function(){$('#errorUsersPassword').fadeOut('fast')},3000);
         return newPassword2;
 
     }else{
-        $('#errorUsersName').removeClass('no-show');
-        $('#errorUsersPassword').addClass('no-show');
-        $('#completeUsersEdit').addClass('no-show');
+        $('#errorUsersName').css('display','block');
+        $('#errorUsersPassword').css('display','none');
+        $('#completeUsersEdit').css('display','none');
+        setTimeout(function(){$('#errorUsersName').fadeOut('fast')},3000);
     }
 };
 function validPassword(data){
     if($("#addPasswordUsers").val()!=$("#addPassword2Users").val()){
-        $('#errorAddUsersPassword').removeClass('no-show');
+        $('#errorAddUsersPassword').css('display','block');
         return false;}
 }
 function editDeviceWriteIdToken(x){
@@ -185,11 +192,11 @@ function editDevice(){
     if(device.school !=0) {
         $('#editDevice .close').click();
         socket.emit('updateDevice', device);
-        $('#errorEditDevice').addClass('no-show');
-        $('#completeEditDevice').removeClass('no-show');
+        $('#errorEditDevice').css('display','none');
+        $('#completeEditDevice').css('display','block');
     }else{
-        $('#errorEditDevice').removeClass('no-show');
-        $('#completeEditDevice').addClass('no-show');
+        $('#errorEditDevice').css('display','block');
+        $('#completeEditDevice').css('display','none');
     }
     //console.log(device);
 }
@@ -251,14 +258,14 @@ function deployAPK(){
     apk.filter = $("#customFilter").val();
     apk.devices = $('input:checkbox.checkboxWarning:checked').map(function() {return this.value;}).get();
     if(apk.version==0){
-        $("#errorDeployApk").removeClass('no-show').css('display', 'block');
+        $("#errorDeployApk").css('display','block').css('display', 'block');
         $("#errorDeployApk").html("select version APK");
         setTimeout(function () {
             $('#errorDeployApk').fadeOut('fast')
         }, 3000);
     }else {
         //socket.emit("deployApk", apk);
-        $("#completeDeployApk").removeClass('no-show').css('display', 'block');
+        $("#completeDeployApk").css('display','block').css('display', 'block');
         $("#completeDeployApk").html("The deploy process has been initialized successfully (Type: Kidroid Loader, Version: v" + apk.version + " build " + apk.build + ")");
         setTimeout(function () {
             $('#completeDeployApk').fadeOut('fast')
@@ -272,12 +279,12 @@ function deployKidroid(){
     kidroid.filter = $("#customFilter").val();
     kidroid.devices = $('input:checkbox.checkboxWarning:checked').map(function() {return this.value;}).get();
     if(kidroid.version==0){
-        $("#errorDeployKidroid").removeClass('no-show').css('display', 'block');
+        $("#errorDeployKidroid").css('display','block').css('display', 'block');
         $("#errorDeployKidroid").html("select version Kidroid");
         setTimeout(function(){$('#errorDeployKidroid').fadeOut('fast')},3000);
     }else {
         socket.emit("deployKidroid", kidroid);
-        $("#completeDeployKidroid").removeClass('no-show').css('display', 'block');
+        $("#completeDeployKidroid").css('display','block').css('display', 'block');
         $("#completeDeployKidroid").html("The deploy process has been initialized successfully (Type: Kidroid Loader, Version: v" + kidroid.version + ")");
         setTimeout(function () {
             $('#completeDeployKidroid').fadeOut('fast')
@@ -303,21 +310,20 @@ var acrivePage;
 function page(i) {
     acrivePage=i;
     var device = {};
-    var data = {};
-    data.limit = itemsPerPage = $("#ItemsPerPage").val();
+    device.limit = itemsPerPage = $("#ItemsPerPage").val();
     device.sort = sort();
-    device.search = data.search = $("#DeviceNameIDSerial").val();
-    device.status = data.status = $("#selectStatus").val();
-    device.school = data.school = $("#selectCategory").val();
-    device.filter2 =data.filter2 =  $("#customFilter").val();
-    device.build = data.build = $("#marionetteVersion").val();
+    device.search =  $("#DeviceNameIDSerial").val();
+    device.status =  $("#selectStatus").val();
+    device.school =  $("#selectCategory").val();
+    device.filter2 = $("#customFilter").val();
+    device.build =  $("#marionetteVersion").val();
     device.loader = $("#kidroidVersion").val();
-    if(data.limit==10 || i==1) {
-        device.page = data.page = i * 10 - 10;
-    }else if(data.limit==20 && i!=1){
-        device.page = data.page = i * 20 -20;
-    }else if(data.limit==50 && i!=1){
-        device.page = data.page = i * 50 -50;
+    if(device.limit==10 || i==1) {
+        device.page =  i * 10 - 10;
+    }else if(device.limit==20 && i!=1){
+        device.page =  i * 20 -20;
+    }else if(device.limit==50 && i!=1){
+        device.page =  i * 50 -50;
     }
     socket.emit('getDevicesByParams', data);
     socket.emit('getDevicesQuantityByParams', device);
@@ -329,19 +335,21 @@ function addDevice( ) {
     device.build = $("#addSelectVersion").val();
     device.numberDevice = number = $("#amountDevice").val();
     device.filter = $("#filter2").val();
-    if (device.category != 0 && device.version !=0)  {
+    if (device.category != 0 && device.build !=0)  {
         socket.emit('createDevice', device);
         console.log(device);
-        $('#errorAddDevice').addClass('no-show');
-        $('#completeAddDevice').removeClass('no-show');
+        $('#errorAddDevice').css('display','none');
+        $('#completeAddDevice').css('display','block');
         $('#idDeviceCreate').attr('rows',''+ number + '');
+        setTimeout(function(){$('#completeAddDevice').fadeOut('fast')},3000);
         //$('#idDevice').css('display','block');
         //$('#addDevice').css('display','none');
 
         //console.log('yes');
     } else{
-        $('#errorAddDevice').removeClass('no-show');
-        $('#completeAddDevice').addClass('no-show');
+        $('#errorAddDevice').css('display','block');
+        $('#completeAddDevice').css('display','none');
+        setTimeout(function(){$('#errorAddDevice').fadeOut('fast')},3000);
     }
 };
 
@@ -452,7 +460,7 @@ function createSchedule(){
     //console.log(device.devices);
 
     if (device.devices ==0 || device.date == ''){
-        $('#errorAddSchedule').removeClass('no-show');
+        $('#errorAddSchedule').css('display','block');
 
     }
     else {
@@ -462,7 +470,7 @@ function createSchedule(){
             .css('z-index','-1')
             .css('opacity','0')
             .css('display','none');
-        $('#errorAddSchedule').addClass('no-show');
+        $('#errorAddSchedule').css('display','none');
         //console.log(device.devices);
     }
     //console.log(device);
@@ -487,7 +495,7 @@ function dellFilter(){
     //console.log(device.devices);
 }
 function dellCategory(){
-     console.log("dellCategory");
+    console.log("dellCategory");
     var category ={};
     category.filters = $('input:checkbox.checkAllCategory:checked').map(function() {return this.value;}).get();
     category.name = "School";
@@ -534,11 +542,11 @@ function setDefault(){
 }
 $(document).ready(function () {
     $('#closeScheduleModal, #closeScheduleModal1').click(function(){
-       $('#editSchedule').removeClass('.in')
-           .attr('aria-hidden', true)
-           .css('z-index','-1')
-           .css('opacity','0')
-           .css('display','none');
+        $('#editSchedule').removeClass('.in')
+            .attr('aria-hidden', true)
+            .css('z-index','-1')
+            .css('opacity','0')
+            .css('display','none');
     });
 })
 $(document).ready(function () {
@@ -558,7 +566,11 @@ $(window).scroll(function(){
     var $win = $(window);
     $('#tab').css('left', -$win.scrollLeft());
 });
-
+//============reset forms==========
+function resetForm(){
+    jQuery('form')[0].reset();
+    console.log('reset')
+}
 //===================
 //$(document).ready(function () {
 //    <div class="clndr-controls">

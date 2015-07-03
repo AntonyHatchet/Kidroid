@@ -82,6 +82,9 @@ legend{
 .right{
     float: right;
 }
+.rightText{
+    text-align: right;
+}
 .center{
     margin-right: 140px;
 }
