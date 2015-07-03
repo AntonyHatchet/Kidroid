@@ -227,7 +227,6 @@ module.exports = function (server,sessionMiddleware) {
             }
         );
         socket.on('getDevicesByParams', function (params) {
-                console.log(params,"getDevicesByParams")
                 user.getDevice(function (err, callback) {
                     if (err) {
                         console.log(err);

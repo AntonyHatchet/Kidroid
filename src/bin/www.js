@@ -51,9 +51,28 @@ function normalizePort(val) {
 /**
  * Event listener for HTTP server "error" event.
  */
-process.on('uncaughtException', function (err) {
-    var loger = fs.createOutputStream(path.join(__dirname, 'logs'));
-    loger.write(JSON.stringify(err))
+process.on('uncaughtException', function (event) {
+    var options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric'
+    };
+    var date = new Date().toLocaleString("ru",options);
+    console.log(event);
+    fs.readJson(path.join(__dirname +"/"+ date, 'logs.json'), function (err, packageObj) {
+        if (err) {
+            var errObject= {};
+            errObject[new Date()]= event;
+            fs.outputJson(path.join(__dirname +"/"+ date, 'logs.json'), errObject, function (err) {
+                console.log(err)
+            })
+        }else if (!err)
+        packageObj[new Date()] = event;
+        fs.writeJson(path.join(__dirname +"/"+ date, 'logs.json'), packageObj, function (err) {
+            console.log(err)
+        })
+    })
+
 });
 
 function onError(error) {

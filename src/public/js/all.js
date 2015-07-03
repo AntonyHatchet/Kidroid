@@ -13671,12 +13671,12 @@ if (typeof jQuery === 'undefined') {
          * _([1, 2]).forEach(function(n) {
      *   console.log(n);
      * }).value();
-         * // => logs each value from left to right and returns the array
+         * // => logs.json each value from left to right and returns the array
          *
          * _.forEach({ 'a': 1, 'b': 2 }, function(n, key) {
      *   console.log(n, key);
      * });
-         * // => logs each value-key pair and returns the object (iteration order is not guaranteed)
+         * // => logs.json each value-key pair and returns the object (iteration order is not guaranteed)
          */
         var forEach = createForEach(arrayEach, baseEach);
 
@@ -13697,7 +13697,7 @@ if (typeof jQuery === 'undefined') {
          * _([1, 2]).forEachRight(function(n) {
      *   console.log(n);
      * }).value();
-         * // => logs each value from right to left and returns the array
+         * // => logs.json each value from right to left and returns the array
          */
         var forEachRight = createForEach(arrayEachRight, baseEachRight);
 
@@ -14493,7 +14493,7 @@ if (typeof jQuery === 'undefined') {
          * _.defer(function(stamp) {
      *   console.log(_.now() - stamp);
      * }, _.now());
-         * // => logs the number of milliseconds it took for the deferred function to be invoked
+         * // => logs.json the number of milliseconds it took for the deferred function to be invoked
          */
         var now = nativeNow || function() {
                 return new Date().getTime();
@@ -14522,7 +14522,7 @@ if (typeof jQuery === 'undefined') {
          * _.forEach(saves, function(type) {
      *   asyncSave({ 'type': type, 'complete': done });
      * });
-         * // => logs 'done saving!' after the two async saves have completed
+         * // => logs.json 'done saving!' after the two async saves have completed
          */
         function after(n, func) {
             if (typeof func != 'function') {
@@ -14674,7 +14674,7 @@ if (typeof jQuery === 'undefined') {
          *
          * _.bindAll(view);
          * jQuery('#docs').on('click', view.onClick);
-         * // => logs 'clicked docs' when the element is clicked
+         * // => logs.json 'clicked docs' when the element is clicked
          */
         var bindAll = restParam(function(object, methodNames) {
             methodNames = methodNames.length ? baseFlatten(methodNames) : functions(object);
@@ -15015,7 +15015,7 @@ if (typeof jQuery === 'undefined') {
          * _.defer(function(text) {
      *   console.log(text);
      * }, 'deferred');
-         * // logs 'deferred' after one or more milliseconds
+         * // logs.json 'deferred' after one or more milliseconds
          */
         var defer = restParam(function(func, args) {
             return baseDelay(func, 1, args);
@@ -15037,7 +15037,7 @@ if (typeof jQuery === 'undefined') {
          * _.delay(function(text) {
      *   console.log(text);
      * }, 1000, 'later');
-         * // => logs 'later' after one second
+         * // => logs.json 'later' after one second
          */
         var delay = restParam(function(func, wait, args) {
             return baseDelay(func, wait, args);
@@ -16548,7 +16548,7 @@ if (typeof jQuery === 'undefined') {
          * _.forIn(new Foo, function(value, key) {
      *   console.log(key);
      * });
-         * // => logs 'a', 'b', and 'c' (iteration order is not guaranteed)
+         * // => logs.json 'a', 'b', and 'c' (iteration order is not guaranteed)
          */
         var forIn = createForIn(baseFor);
 
@@ -16575,7 +16575,7 @@ if (typeof jQuery === 'undefined') {
          * _.forInRight(new Foo, function(value, key) {
      *   console.log(key);
      * });
-         * // => logs 'c', 'b', and 'a' assuming `_.forIn ` logs 'a', 'b', and 'c'
+         * // => logs.json 'c', 'b', and 'a' assuming `_.forIn ` logs.json 'a', 'b', and 'c'
          */
         var forInRight = createForIn(baseForRight);
 
@@ -16604,7 +16604,7 @@ if (typeof jQuery === 'undefined') {
          * _.forOwn(new Foo, function(value, key) {
      *   console.log(key);
      * });
-         * // => logs 'a' and 'b' (iteration order is not guaranteed)
+         * // => logs.json 'a' and 'b' (iteration order is not guaranteed)
          */
         var forOwn = createForOwn(baseForOwn);
 
@@ -16631,7 +16631,7 @@ if (typeof jQuery === 'undefined') {
          * _.forOwnRight(new Foo, function(value, key) {
      *   console.log(key);
      * });
-         * // => logs 'b' and 'a' assuming `_.forOwn` logs 'a' and 'b'
+         * // => logs.json 'b' and 'a' assuming `_.forOwn` logs.json 'a' and 'b'
          */
         var forOwnRight = createForOwn(baseForOwnRight);
 

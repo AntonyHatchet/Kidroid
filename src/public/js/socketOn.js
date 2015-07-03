@@ -6,7 +6,8 @@
 socket.on('displayData', function (data) {
     //console.log(data.length);
     var html = '';
-    if(data==0){
+    console.log(data,"displayData");
+    if(data.length==0){
         //console.log('no');
         $('#paged').html('Devices not found')
     }else {
@@ -298,7 +299,7 @@ socket.on('getVersionDeploy', function (data) {
         }
         //console.log(data.kidroid.length);
         if (defaultVersion != undefined) {
-            html += "<option data-id='" + defaultVersion._id + "'>" + defaultVersion.loader + " (current)" + "</option>";
+            html = "<option data-id='" + defaultVersion._id + "'>" + defaultVersion.loader + " (current)" + "</option>";
         }
         for (var j = 0; j < data.kidroid.length; j++) {
             if (data.kidroid[j] != defaultVersion)
@@ -313,6 +314,7 @@ socket.on('getVersionDeploy', function (data) {
 socket.on('getVersionDeploy', function (data) {
     var html = '<option value="0" style="color:#cccccc">- Marionette version -</option>';
     if(data.apk.length !=0) {
+
         var defaultVersion;
         for (var i = 0; i < data.apk.length; i++) {
             if (data.apk[i].default) {
@@ -320,7 +322,7 @@ socket.on('getVersionDeploy', function (data) {
             }
         }
         if (defaultVersion != undefined) {
-            html += "<option data-id='" + defaultVersion._id + "'>" + defaultVersion.apk.version + " " + defaultVersion.apk.build + " (current)" + "</option>";
+            html = "<option data-id='" + defaultVersion._id + "'>" + defaultVersion.apk.version + " " + defaultVersion.apk.build + " (current)" + "</option>";
         }
             for (var j = 0; j < data.apk.length; j++) {
                 if (data.apk[j] != defaultVersion)

@@ -84,6 +84,7 @@ module.exports = {
             .exec(function (err, Devices) {
                 if (err) return console.log(err,"getQuantity Device.count err");
                 // Execute callback
+
                 callback(null, Devices);
             });
     },
