@@ -19735,30 +19735,26 @@ function uploadChangeKidroid(){
 }
 function deployAPK(){
     var apk = {};
-    apk.version = $("#selectVersionToDeploy").val().split(' ')[0];
+    apk.version = $("#selectVersionApkToDeploy").val().split(' ')[0];
     console.log(apk.version);
-    apk.build = $("#selectVersionToDeploy").val().split(' ')[1];
+    apk.build = $("#selectVersionApkToDeploy").val().split(' ')[1];
     apk.school = $("#selectCategory").val();
     apk.filter = $("#customFilter").val();
     apk.devices = $('input:checkbox.checkboxWarning:checked').map(function() {return this.value;}).get();
-    if($("#selectVersionToDeploy").val()=='0'){
+    if(apk.version==0){
         $("#errorDeployApk").removeClass('no-show').css('display', 'block');
         $("#errorDeployApk").html("select version APK");
         setTimeout(function () {
             $('#errorDeployApk').fadeOut('fast')
         }, 3000);
     }else {
-        socket.emit("deployApk", apk);
+        //socket.emit("deployApk", apk);
         $("#completeDeployApk").removeClass('no-show').css('display', 'block');
         $("#completeDeployApk").html("The deploy process has been initialized successfully (Type: Kidroid Loader, Version: v" + apk.version + " build " + apk.build + ")");
         setTimeout(function () {
             $('#completeDeployApk').fadeOut('fast')
         }, 3000);
     }
-    //socket.emit("deployApk", apk);
-    //$("#completeDeployApk").removeClass('no-show').css('display', 'block');
-    //$("#completeDeployApk").html("The deploy process has been initialized successfully (Type: Kidroid Loader, Version: v"+apk.version+" build "+apk.build+ ")");
-    //setTimeout(function(){$('#completeDeployApk').fadeOut('fast')},3000);
 }
 function deployKidroid(){
     var kidroid = {};
@@ -19822,15 +19818,13 @@ function addDevice( ) {
     var device = {};
     device.category = $("#addSelectCategory").val();
     device.build = $("#addSelectVersion").val();
-    console.log(device.build);
     device.numberDevice = number = $("#amountDevice").val();
     device.filter = $("#filter2").val();
-    if (device.category != 0 && device.build !=null)  {
+    if (device.category != 0 && device.version !=0)  {
         socket.emit('createDevice', device);
         console.log(device);
         $('#errorAddDevice').addClass('no-show');
         $('#completeAddDevice').removeClass('no-show');
-        $('#completeAddDevice').html('Devices '+number+' has been added successfully');
         $('#idDeviceCreate').attr('rows',''+ number + '');
         //$('#idDevice').css('display','block');
         //$('#addDevice').css('display','none');
