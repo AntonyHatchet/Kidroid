@@ -16,7 +16,7 @@
             tbody(id='userTable')
         .right
             .btn-group
-                a(href='#addUsers' role="button" class="btn btn-primary" data-toggle="modal") Add New User
+                a(href='#addUsers' role="button" class="btn btn-primary" data-toggle="modal" ) Add New User
                 button( type="button" class="btn btn-danger" onclick="dellUsers()") Delete
     //============MODAL Edit users=====================
     div(class="modal" id="editUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -27,7 +27,7 @@
                         span(aria-hidden="true") &times;
                     h3 Edit users
                 div(class="modal-body")
-                    form.form-horizontal
+                    form(id='editUserForm').form-horizontal
                         .form-group
                             label(for="newNameUsers").col-sm-3.control-label Name:
                             .col-sm-9

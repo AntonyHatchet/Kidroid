@@ -128,7 +128,7 @@ socket.on('version', function (date) {
             html += "<option>" + date.kidroid[i].loader + "</option>";
         }
     }
-    $("#kidroidVersion").html(html);
+    $("#kidroidVersion,#kidroidVersionDeploy,#selectDefaultKidroidVersion").html(html);
 });
 
 socket.on('version', function (date) {
@@ -167,7 +167,7 @@ socket.on('users', function (data) {
     for (var i in data){
         var checkbox = "<td><input type='checkbox' id='checkAllUsers" + data[i]._id + "' class='checkAllUsers' value='" + data[i]._id + "'></td>";
         var name = "<td>" + data[i].local.name + "</td>";
-        var editName = "<td><div class='btn-group'><a href='#editUsers' role='button' class='btn btn-primary' data-toggle='modal' onclick='editUsers(\"" + data[i]._id +" , " +data[i].local.name + "\")'>Edit user</a>";
+        var editName = "<td><div class='btn-group'><a href='#editUsers' type='reset' form='editUserForm' role='button' class='btn btn-primary' data-toggle='modal' onclick='editUsers(\"" + data[i]._id +" , " +data[i].local.name + "\")'>Edit user</a>";
         html += "<tr>"+checkbox+name+editName+"</tr>";}
     $("#userTable").html(html);
 });
@@ -230,7 +230,7 @@ socket.on('filters', function (data) {
             for (var j = 0; j < data[i].params.length; j++) {
                 var name = "<td>" + data[i].params[j] + "</td>"
                 //console.log(data[i].params[j]);
-                var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[j] + "\")\'>Edit</a></td>";
+                var editButton = "<td><a href='#editFilters' type='reset' form='editCategoryForm' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[j] + "\")\'>Edit</a></td>";
                 var checkbox = "<td><input type='checkbox' class='checkAllCategory' id='checkSchedule'  value='"+ data[i].params[j] +"'></td>"
                 html += "<tr>" + checkbox + name + editButton + "</tr>";
             }
@@ -241,7 +241,7 @@ socket.on('filters', function (data) {
             $("#secondFilter").html(data[i].name);
             for (var f = 0; f < data[i].params.length; f++) {
                 var name = "<td>" + data[i].params[f] + "</td>"
-                var editButton = "<td><a href='#editFilters' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[f] + "\")'>Edit</a></td>";
+                var editButton = "<td><a href='#editFilters' type='reset' form='editCategoryForm' role='button' class='btn btn-primary' data-toggle='modal' onclick='editFilters(\"" + data[i].params[f] + "\")'>Edit</a></td>";
                 var checkbox = "<td><input type='checkbox' class='checkAllFilters' id='checkSchedule'  value='" + data[i].params[f] + "'></td>"
                 html += "<tr>" + checkbox + name + editButton + "</tr>";
             }
