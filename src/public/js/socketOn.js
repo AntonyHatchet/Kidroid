@@ -6,12 +6,12 @@
 socket.on('displayData', function (data) {
     //console.log(data.length);
     var html = '';
-    console.log(data,"displayData");
-    if(data.length==0){
+    console.log(data.length,"displayData");
+    if(!data.length){
         //console.log('no');
-        $('#paged').html('Devices not found')
+        html = "<td colspan='7' class='text-center'><h3>Device not found!</h3></td>"
     }else {
-        for (var i in data) {
+        for (var i = 0; i< data.length;i++) {
             //console.log(data);
             var checkbox = "<td><input type='checkbox' class='checkboxWarning' value=" + data[i]._id + "></td>";
             var deviceId = "<td>" + data[i]._id + "</td>";
@@ -136,7 +136,7 @@ socket.on('version', function (date) {
     //console.log(school,"category");
     var scheduled = '<option value="Install scheduled" >- Install scheduled -</option>';
     var inProgress = '<option value="Install in progress">- Install in progress -</option>';
-    var html = '<option value="0" style="color:#cccccc">- Marionette version -</option>' + scheduled + inProgress;
+    var html = '<option value="" style="color:#cccccc">- Marionette version -</option>' + scheduled + inProgress;
     for (var i = 0; i < date.apk.length; i++) {
         html += "<option>" + date.apk[i].apk.version +" "+ date.apk[i].apk.build +"</option>";
     }
@@ -224,7 +224,7 @@ socket.on('deviceForDeploy', function (data) {
 socket.on('filters', function (data) {
 
     for (var i in data) {
-        console.log(data);
+        //console.log("filters",data);
         var html = '';
         if (data[i].name === "School") {
             $("#firstFilter").html(data[i].name);

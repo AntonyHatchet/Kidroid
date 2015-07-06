@@ -34,7 +34,6 @@ module.exports = function (server,sessionMiddleware) {
             }
             io.to(socket.id).emit('quantity', data);
         });
-        //��������� �������� ������ 10 ���������
         user.getDevice(function (err, data) {
             if (err) {
                 console.log(err);

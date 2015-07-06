@@ -7,7 +7,6 @@ module.exports = {
     // Получаем из БД общее колличество записей
     getQuantity: function (callback,params) {
         if (params!=undefined) {
-            console.log(params,"Find getQuantity")
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
             var _id = (isNaN(params.search)) ? {$exists: true}:{$gte:+params.search};
             var school = {$regex: new RegExp(params.school, 'i')};
@@ -62,10 +61,11 @@ module.exports = {
             var apkStatus=  (isNaN(params.build.split(' ')[1])) ? params.build :{$exists: true};
             var status = params.status;
             var page = params.page;
-            var limit = params.limit;
+            var limit = +params.limit;
             var sort = params.sort;
             var loader = params.loader;
-
+            console.log("params to find", params)
+            console.log("apkStatus to find", apkStatus)
         }
         Device
             .find({})
@@ -84,7 +84,7 @@ module.exports = {
             .exec(function (err, Devices) {
                 if (err) return console.log(err,"getQuantity Device.count err");
                 // Execute callback
-
+                console.log(Devices,"exec getDevice")
                 callback(null, Devices);
             });
     },

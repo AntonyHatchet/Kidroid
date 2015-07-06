@@ -302,6 +302,7 @@ function find(sort) {
     device.build = $("#marionetteVersion").val();
     device.loader = $("#kidroidVersion").val();
     device.limit = itemsPerPage = $("#ItemsPerPage").val();
+    console.log(device,"find");
     socket.emit('getDevicesByParams', device);
     socket.emit('getDeviceIdByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
