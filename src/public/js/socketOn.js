@@ -423,3 +423,36 @@ socket.on("getFilterBack",function(filters){
         }
         startAutoComplete(setFilterArray.getArray())
 });
+
+socket.on("FirewallList",function(Lists){
+
+    var stateList = document.getElementById('blackList');
+    var blackList = document.getElementById('blackList');
+    var whiteList = document.getElementById('whiteList');
+
+    Lists[0].blackList.forEach(function(item){
+        var blackListTr = document.createElement('tr');
+        blackListTr.innerHTML = "<td><input type='checkbox' data-value="+item+"/></td><td>"+item+"</td>";
+        blackList.appendChild(blackListTr);
+    });
+
+    Lists[0].whiteList.forEach(function(item){
+        var whiteListTr = document.createElement('tr');
+        whiteListTr.innerHTML = "<td><input type='checkbox' data-value="+item+"/></td><td>"+item+"</td>";
+        whiteList.appendChild(whiteListTr);
+    });
+
+    switch(Lists[0].access){
+        case true:
+            console.log("true",Lists[0].access);
+            break;
+        case false:
+            console.log("false",Lists[0].access);
+            break;
+        case null:
+            console.log("null",Lists[0].access);
+            break;
+        default:
+            throw new Error("FirewallList undefined case");
+    }
+});

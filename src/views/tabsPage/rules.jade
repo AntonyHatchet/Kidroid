@@ -15,37 +15,39 @@
       label
          input(type='radio' name='radio')
          span Allow all
-
-   fieldset
-      legend Black list
-      .col-xs-6
-         table(class='table table-hover table-bordered table-striped')
-            thead
-               tr
-                  td.checkColum(onclick='sort(this)',data-value="0")
-                     input(type='checkbox' id='checkAllBlackList')
-                  th id
-                  //th remove
-            tbody(id='blackList')
-         .right.col-xs-4
-            .btn-group
-               a(href="#addBlackList" type="button" class="btn btn-primary" onclick="" data-toggle="modal") add record
-               button( type="button" class="btn btn-danger" onclick="") remove selected
-   fieldset
-      legend White list
-      .col-xs-6
-         table(class='table table-hover table-bordered table-striped')
-            thead
-               tr
-                  td.checkColum(onclick='sort(this)',data-value="0")
-                     input(type='checkbox' id='checkAllWhiteList')
-                  th id
-                  //th remove
-            tbody(id='whiteList')
-         .right.col-xs-4
-            .btn-group
-               a(href="#addWhiteList" type="button" class="btn btn-primary" onclick="" data-toggle="modal") add record
-               button( type="button" class="btn btn-danger" onclick="") remove selected
+   .container-fluid
+       fieldset.col-xs-5
+          legend Black list
+          .col-xs-12
+             table(class='table table-hover table-bordered table-striped col-xs-6')
+                thead
+                   tr
+                      td.checkColum(onclick='sort(this)',data-value="0")
+                         input(type='checkbox' id='checkAllBlackList')
+                      th IP
+                      //th remove
+                tbody(id='blackList')
+                    tr
+             .right
+                .btn-group
+                   a(href="#addBlackList" type="button" class="btn btn-primary" onclick="" data-toggle="modal") add record
+                   button( type="button" class="btn btn-danger" onclick="") remove selected
+       fieldset.col-xs-5
+          legend White list
+          .col-xs-12
+             table(class='table table-hover table-bordered table-striped')
+                thead
+                   tr
+                      td.checkColum(onclick='sort(this)',data-value="0")
+                         input(type='checkbox' id='checkAllWhiteList')
+                      th IP
+                      //th remove
+                tbody(id='whiteList')
+                   tr
+             .right
+                .btn-group
+                   a(href="#addWhiteList" type="button" class="btn btn-primary" onclick="" data-toggle="modal") add record
+                   button( type="button" class="btn btn-danger" onclick="") remove selected
    .left
       button( type="button" class="btn btn-primary" onclick="") Save
 
@@ -57,13 +59,13 @@
                 div(class="modal-header")
                     button(type="button" id='closeAddBlackList' class="close" data-dismiss="modal" aria-label="Close")
                         span(aria-hidden="true") &times;
-                    h2 Add ID in black list
+                    h2 Add IP in black list
                 div(class="modal-body")
                     form.form-horizontal
                         .form-group
-                            label(for="addSelectCategory").col-sm-3.control-label add id:
+                            label(for="addSelectCategory").col-sm-3.control-label add ip:
                             .col-sm-9
-                                input(id="addSelectCategory" placeholder='id' class="span2 form-control category")
+                                input(id="addIpToBlackList" placeholder='ip' class="span2 form-control category")
                 div(class="modal-footer")
                     //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
                     div(id='errorAddBlackList' class='alert alert-danger no-show .col-lg-1')
@@ -72,7 +74,7 @@
                     div(id='completeAddBlackList' class='alert alert-success no-show .col-lg-1')
                         //button(type="button" class="close" data-dismiss="alert") &times;
                         p Devices are adding
-                    button(class="btn btn-primary .col-lg-6" onclick='addBlackList()') Add
+                    button(class="btn btn-primary .col-lg-6" onclick='firewallRules.addBlackList()') Add
 
          //============MODAL Add new device=====================
    div(class="modal" id="addWhiteList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -81,13 +83,13 @@
                 div(class="modal-header")
                     button(type="button" id='closeAddWhiteList' class="close" data-dismiss="modal" aria-label="Close")
                         span(aria-hidden="true") &times;
-                    h2 Add ID in white list
+                    h2 Add IP in white list
                 div(class="modal-body")
                     form.form-horizontal
                         .form-group
-                            label(for="addSelectCategory").col-sm-3.control-label add id:
+                            label(for="addSelectCategory").col-sm-3.control-label add ip:
                             .col-sm-9
-                                input(id="addSelectCategory" placeholder='id' class="span2 form-control category")
+                                input(id="addIpToWhiteList" placeholder='ip' class="span2 form-control category")
                 div(class="modal-footer")
                     //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
                     div(id='errorAddWhiteList' class='alert alert-danger no-show .col-lg-1')
@@ -96,4 +98,4 @@
                     div(id='completeAddWhiteList' class='alert alert-success no-show .col-lg-1')
                         //button(type="button" class="close" data-dismiss="alert") &times;
                         p Devices are adding
-                    button(class="btn btn-primary .col-lg-6" onclick='addWhiteList()') Add
+                    button(class="btn btn-primary .col-lg-6" onclick='firewallRules.addWhiteList()') Add

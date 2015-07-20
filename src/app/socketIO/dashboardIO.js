@@ -71,6 +71,12 @@ module.exports = function (server,sessionMiddleware) {
             }
             devicesToDeploy = callback;
         });
+        user.getAllLists(function (err, Lists) {
+            if (err) throw new Error(err);
+            if (Lists){
+                io.emit('FirewallList', Lists);
+            }
+        });
         //UPDATE
         socket.on('editCategory', function (categoryParams) {
 
@@ -323,7 +329,48 @@ module.exports = function (server,sessionMiddleware) {
                 });
             }
         );
-        //���������� ������������
+        // Firewall rules
+        socket.on('saveAccessState', function(accessParams,callback){
+            user.makeDefaultVersion(accessParams,function (err, message) {
+                if (err) throw new Error(err);
+                console.log(message, "saveAccessState");
+                socket.emit('getAllFirewallList', null);
+                callback(null, message);
+            });
+        });
+        socket.on('addBlackList', function(IP,callback){
+            user.blackList(IP,function (err, message) {
+                if (err) throw new Error(err);
+                console.log(message, "addBlackList");
+                socket.emit('getAllFirewallList', null);
+                callback(null, message);
+            });
+        });
+        socket.on('addWhiteList', function(IP,callback){
+            user.whiteList(IP,function (err, message) {
+                if (err) throw new Error(err);
+                console.log(message, "addWhiteList");
+                socket.emit('getAllFirewallList', null);
+                callback(null, message);
+            });
+        });
+        socket.on('removeIP', function(IP,callback){
+            user.makeDefaultVersion(IP,function (err, message) {
+                if (err) throw new Error(err);
+                console.log(message, "removeIP");
+                socket.emit('getAllFirewallList', null);
+                callback(null, message);
+            });
+        });
+        socket.on('getAllFirewallList', function(){
+            user.getAllLists(function (err, Lists) {
+                if (err) throw new Error(err);
+                if (Lists){
+                    io.emit('FirewallList', Lists);
+                }
+            });
+        });
+        //user disconnect
         socket.on('disconnect', function () {
                 console.log('user disconnected');
             }

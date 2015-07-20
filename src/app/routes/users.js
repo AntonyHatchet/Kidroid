@@ -458,5 +458,37 @@ module.exports = {
 
             callback(null, category);
         });
+    },
+
+    //Firewall rules
+    removeIP: function (IP, callback) {
+        userMagic.removeIPFormList(IP, function (err, message) {
+            if (err) throw new Error(err,"removeIP  Firewall rules");
+            callback(null, message);
+        });
+    },
+    whiteList: function (IP, callback) {
+        userMagic.addIPToWhiteList(IP, function (err, message) {
+            if (err) throw new Error(err,"removeIP  Firewall rules");
+            callback(null, message);
+        });
+    },
+    blackList: function (IP, callback) {
+        userMagic.addIPToBlackList(IP, function (err, message) {
+            if (err) throw new Error(err,"removeIP  Firewall rules");
+            callback(null, message);
+        });
+    },
+    changeFirewallState: function (state, callback) {
+        userMagic.changeState(state, function (err, message) {
+            if (err) throw new Error(err,"removeIP  Firewall rules");
+            callback(null, message);
+        });
+    },
+    getAllLists: function (callback) {
+        userMagic.getLists(function (err, lists) {
+            if (err) throw new Error(err,"removeIP  Firewall rules");
+            callback(null, lists);
+        });
     }
 };

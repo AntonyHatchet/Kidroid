@@ -541,6 +541,40 @@ function setDefault(){
         socket.emit('makeDefaultVersion', device);
     }
 }
+//Firewall rules
+var firewallRules = {
+    getLists: function(){
+        socket.emit('getAllFirewallList', null)
+    },
+    saveAccess: function(accessParams){
+        socket.emit('saveAccessState', accessParams, function(err,message){
+            if (err) throw new Error(err);
+            console.log(message)
+        });
+    },
+    addBlackList: function(){
+        var ipBlack = document.getElementById('addIpToBlackList').value;
+        this.emitChanges.call(this,"addBlackList",ipBlack)
+    },
+    addWhiteList: function(){
+        var ipWhite = document.getElementById('addIpToWhiteList').value;
+        this.emitChanges.call(this,"addWhiteList",ipWhite)
+    },
+    removeFromList: function(IP){
+        socket.emit('removeIP',IP, function(err,message){
+            if (err) throw new Error(err);
+        })
+    },
+    emitChanges: function(emitName,params){
+        socket.emit(emitName, params, function(err,message){
+            if (err) throw new Error(err);
+            if (message.text === "IP already in list"){
+                alert(message.text)
+            }else
+                this.getLists();
+        });
+    }
+};
 $(document).ready(function () {
     $('#closeScheduleModal, #closeScheduleModal1').click(function(){
         $('#editSchedule').removeClass('.in')

@@ -4,6 +4,7 @@
 var User = require('../models/user');
 var Category = require('../models/category');
 var Version = require('../models/apk_models');
+var Firewall = require('../models/firewall');
 var Kidroid = require('../models/kidroidModel');
 var Device = require('../models/device');
 var Filters = require('../models/filters');
@@ -391,7 +392,7 @@ module.exports = {
                     if (remove != null) {
                         fs.remove(version.link, function (err) {
                             if (err) return console.error(err,"fs.move");
-                            console.log("success remove Kidroid version! #"+ version.loader)
+                            console.log("success remove Kidroid version! #"+ version.loader);
                             module.exports.findAllVersion(function(err,allKidroid){
 
                                 callback(null, allKidroid)
@@ -402,5 +403,52 @@ module.exports = {
                 });
             }
         });
+    },
+    //Firewall rules
+    getLists: function (callback) {
+        Firewall
+            .find({})
+            .exec(function (err, Lists) {
+                if (err) return console.log(err,"get_id Device.find err");
+                // Execute callback
+                callback(null,Lists)
+            });
+    },
+    addIPToWhiteList: function (ip,callback) {
+        Firewall
+            .find({$or:[{'whiteList':ip},{'blackList':ip}]})
+            .exec(function (err, message) {
+                if (err) return console.log(err,"get_id Device.find err");
+                if (message.length === 0){
+                    Firewall.update({},{$addToSet: { 'whiteList': ip }},{upsert: true},function(err,messages){
+                        if (err) return console.log(err,"addIPToWhiteList");
+                        // Execute callback
+                        console.log(messages,"Firewall lists");
+                        callback(null,messages)
+                    })
+                }else if (message){
+                    console.log('IP found in base', message);
+                    callback(null, {'text':"IP already in list",'message': message} )
+                }
+            });
+    },
+    addIPToBlackList: function (ip,callback) {
+        Firewall
+            .find({$or:[{'whiteList':ip},{'blackList':ip}]})
+            .exec(function (err, message) {
+                if (err) return console.log(err,"get_id Device.find err");
+                if (message.length === 0){
+                    Firewall.update({},{$addToSet: { 'blackList': ip }},{upsert: true},function(err,messages){
+                        if (err) return console.log(err,"addIPToBlackList");
+                        // Execute callback
+                        console.log(messages,"Firewall lists");
+                        callback(null,messages)
+                    })
+                }else if (message){
+                    console.log('IP found in base', message);
+                    callback(null, {'text':"IP already in list",'message': message} )
+                }
+            });
     }
 };
+
