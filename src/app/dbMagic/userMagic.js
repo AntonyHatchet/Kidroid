@@ -62,13 +62,13 @@ module.exports = {
             if (err) return console.log(err,"updateDeviceInfo Device.findOne err");
 
             if (category != null) {
-                // Нашли такой ID, создаем дату для записи в БД.
+                // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ ID, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ.
                 var update = {
                     "comment": data.comments,
                     "school": data.school,
                     "filter2": data.filter2
                 };
-                //Пишем в БД к ID из запроса
+                //пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅ ID пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 Device.update({"_id": data.id}, {$set: update},{$upsert: true}, function (err, updated) {
 
                     if (err) return console.log(err,"updateDeviceInfo Device.update err");
@@ -167,7 +167,7 @@ module.exports = {
         });
     },
     updateFilterParams: function (data, callback) {
-        //Пишем в БД к ID из запроса
+        //пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅ ID пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Filters.update({"params": data.oldName}, {$set:{"params.$":data.newName}}, function (err, updated) {
 
             if (err) return console.log(err,"updateSchoolCategory Category.update err");
@@ -414,6 +414,16 @@ module.exports = {
                 callback(null,Lists)
             });
     },
+    changeState: function (state,callback) {
+        console.log(state);
+        Firewall
+            .update({},{ $set: { access: state }})
+            .exec(function (err, message) {
+                if (err) return console.log(err,"get_id Device.find err");
+                // Execute callback
+                callback(null,message)
+            });
+    },
     addIPToWhiteList: function (ip,callback) {
         Firewall
             .find({$or:[{'whiteList':ip},{'blackList':ip}]})
@@ -449,6 +459,16 @@ module.exports = {
                     callback(null, {'text':"IP already in list",'message': message} )
                 }
             });
+    },
+    removeIPFormList: function (ip,callback) {
+        Firewall.update({},{$pull:{'blackList': ip}},function(err,messages){
+            if (err) return console.log(err,"removeIPFormList");
+            // Execute callback
+            console.log(messages,"Firewall lists");
+            Firewall.update({},{$pull:{'whiteList': ip}},function(err,messages){
+                callback(null,messages)
+            });
+        })
     }
 };
 

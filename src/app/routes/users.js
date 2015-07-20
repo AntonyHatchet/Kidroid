@@ -9,10 +9,10 @@ var ApkReader = require('node-apk-parser');
 var util = require('util');
 
 
-// TODO при рефакторинге перепесиать повторяющиеся функции создания и удаления на одну функцию с указанием типа данных.
+// TODO пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
 module.exports = {
-    //ПОЛЬЗОВАТЕЛИ
-    //Поиск всех пользователей
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     findUser: function (id,callback) {
         userMagic.findById(id, function (err, user) {
             callback(err, user);
@@ -34,7 +34,7 @@ module.exports = {
             callback(null, data);
         });
     },
-    // ВЕРСИИ
+    // пїЅпїЅпїЅпїЅпїЅпїЅ
     createVersionAPK: function (req, res) {
 
             function createBufer() {
@@ -283,7 +283,7 @@ module.exports = {
             callback(null, category);
         });
     },
-    //Поиск всех версий
+    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     findAllVersion: function (callback) {
         userMagic.findAllVersion(function (err, version) {
 
@@ -324,8 +324,8 @@ module.exports = {
             });
         }
     },
-    // УСТРОЙСТВА
-    // Выводим общее количество устройств
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     getAllDeviceQuantity: function (callback,params) {
         deviceMagic.getQuantity(function (err, Quantity) {
 
@@ -334,7 +334,7 @@ module.exports = {
             callback(null, Quantity);
         },params);
     },
-    //Удаляем девайс
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     removeDevice: function (id, callback) {
         deviceMagic.removeDevice(id, function (err, data) {
 
@@ -343,7 +343,7 @@ module.exports = {
             callback(null, data);
         });
     },
-    // Запускаем поиск устройств c параметрами
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ c пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     getDevice: function (callback,params) {
         deviceMagic.getDevice(function (err, Devices) {
 
@@ -360,7 +360,7 @@ module.exports = {
             callback(null, Devices);
         },params);
     },
-    //Создаем запросы к БД на добавление устройств
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     createDevice: function (params, callback,end) {
         uploader(0);
         function uploader(i) {
@@ -431,8 +431,8 @@ module.exports = {
             },data);
         }else throw new error;
     },
-    //КАТЕГОРИИ
-    //Добавление категорий
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     createFilter: function (params, callback) {
         userMagic.createNewFilter(params, function (err, filters) {
 
@@ -441,7 +441,7 @@ module.exports = {
             callback(null, filters);
         });
     },
-    //Обновление категорий
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     updateFilter: function (params, callback) {
         userMagic.updateFilterParams(params, function (err, category) {
 
@@ -450,7 +450,7 @@ module.exports = {
             callback(null, category);
         });
     },
-    //Удаление категорий
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     removeFilters: function (category, callback) {
         userMagic.removeFilters(category, function (err, category) {
 
@@ -461,7 +461,7 @@ module.exports = {
     },
 
     //Firewall rules
-    removeIP: function (IP, callback) {
+    removeIpFromLists: function (IP, callback) {
         userMagic.removeIPFormList(IP, function (err, message) {
             if (err) throw new Error(err,"removeIP  Firewall rules");
             callback(null, message);

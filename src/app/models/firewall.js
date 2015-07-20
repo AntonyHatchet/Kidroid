@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var Firewall = mongoose.Schema({
     whiteList: Array,
     blackList: Array,
-    access:Boolean
+    access: String
 });
 
 module.exports = mongoose.model('Firewall', Firewall, "firewall");

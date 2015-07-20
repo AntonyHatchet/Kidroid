@@ -544,26 +544,53 @@ function setDefault(){
 //Firewall rules
 var firewallRules = {
     getLists: function(){
-        socket.emit('getAllFirewallList', null)
+        return this.emitChanges("getAllFirewallList");
     },
-    saveAccess: function(accessParams){
-        socket.emit('saveAccessState', accessParams, function(err,message){
-            if (err) throw new Error(err);
-            console.log(message)
+    saveAccess: function(e){
+        var state = document.getElementById('state').querySelectorAll('input[type="radio"]');
+        [].forEach.call(state,function(item){
+            if (item.checked) {
+                //console.log(item.getAttribute('data-name'))
+                firewallRules.emitChanges.call(this,"saveAccessState",item.getAttribute('data-name'));
+            }
         });
     },
-    addBlackList: function(){
+    addBlackList: function(e){
+        if(e)e.preventDefault();
         var ipBlack = document.getElementById('addIpToBlackList').value;
-        this.emitChanges.call(this,"addBlackList",ipBlack)
+        if (this.validateIP("addBlackList",ipBlack)){
+            this.emitChanges.call(this,"addBlackList",ipBlack)
+        }
     },
-    addWhiteList: function(){
+    addWhiteList: function(e){
+        if(e)e.preventDefault();
         var ipWhite = document.getElementById('addIpToWhiteList').value;
-        this.emitChanges.call(this,"addWhiteList",ipWhite)
+        if (this.validateIP("addWhiteList",ipWhite)){
+            this.emitChanges.call(this,"addWhiteList",ipWhite)
+        }
     },
-    removeFromList: function(IP){
-        socket.emit('removeIP',IP, function(err,message){
-            if (err) throw new Error(err);
-        })
+    validateIP: function(element,inputText){
+        var allertMessage = document.createElement('p');
+        var ipFormat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+        if(inputText.match(ipFormat))
+        {
+            document.getElementById(element).querySelector(".alert-success").style.display = 'block';
+            document.getElementById(element).querySelector(".alert-danger").style.display = '';
+            return true;
+        }
+        else
+        {
+            document.getElementById(element).querySelector(".alert-success").style.display = '';
+            document.getElementById(element).querySelector(".alert-danger").style.display = 'block';
+            return false;
+        }
+    } ,
+    removeFromList: function(element){
+        var IP = document.getElementById(element).querySelectorAll('input[type="checkbox"]:checked');
+
+        [].forEach.call(IP,function(item){
+            firewallRules.emitChanges.call(this,"removeIP",item.getAttribute('data-value'));
+        });
     },
     emitChanges: function(emitName,params){
         socket.emit(emitName, params, function(err,message){
@@ -571,7 +598,7 @@ var firewallRules = {
             if (message.text === "IP already in list"){
                 alert(message.text)
             }else
-                this.getLists();
+                firewallRules.getLists();
         });
     }
 };

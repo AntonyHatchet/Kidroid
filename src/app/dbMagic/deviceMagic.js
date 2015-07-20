@@ -4,7 +4,7 @@
 var Device = require('../models/device');
 
 module.exports = {
-    // Получаем из БД общее колличество записей
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     getQuantity: function (callback,params) {
         if (params!=undefined) {
             var name = (isNaN(params.search))? {$regex: new RegExp(params.search, 'i')}:{$exists: true};
@@ -32,7 +32,7 @@ module.exports = {
                 callback(null, Devices);
             });
     },
-    //Поиск устройств согласно запросам
+    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     getAllDevice: function (callback) {
         Device.find({"online":true},function (err, Devices) {
             if (err) return console.log(err,"getAllDevice Device.find err");
@@ -84,7 +84,7 @@ module.exports = {
             .exec(function (err, Devices) {
                 if (err) return console.log(err,"getQuantity Device.count err");
                 // Execute callback
-                console.log(Devices,"exec getDevice")
+                //console.log(Devices,"exec getDevice")
                 callback(null, Devices);
             });
     },
@@ -123,7 +123,7 @@ module.exports = {
                 callback(null,devicesArray)
             });
     },
-    // Проверка на наличее ID и флага не зарегестрирован в БД
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ID пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ
     regDevice: function (id, callback) {
 
         var device = Device;
@@ -134,7 +134,7 @@ module.exports = {
         });
 
     },
-    //Авторизация планшета
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     authDevice: function (deviceInfo, callback) {
         var device = Device;
         device.findOne({
@@ -146,7 +146,7 @@ module.exports = {
             callback(null, device);
         });
     },
-    // Находим версию по ИД устройства
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     findVersion: function (deviceInfo, callback) {
         var device = Device;
         device.findOne({"_id": +deviceInfo.id}, {
@@ -216,12 +216,12 @@ module.exports = {
 
     updateDevice: function (deviceInfo, callback) {
 
-        //Поиск в БД, ID полученного из запроса
+        //пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ, ID пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Device.findOne({"_id": deviceInfo.device_id}, function (err, device) {
             if (err) return console.log(err,"updateDevice Device.findOne err");
 
             if (device != null) {
-                // Нашли такой ID, создаем дату для записи в БД.
+                // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ ID, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ.
                 var update = {
                     "timestamp": new Date(),
                     "latitude": [+deviceInfo.latitude],
@@ -236,7 +236,7 @@ module.exports = {
                     "name": deviceInfo.name
                 };
 
-                //Пишем в БД к ID из запроса
+                //пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅ ID пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 Device.update({"_id": deviceInfo.device_id}, {$set: update}, {upsert: true}, function (err, updated) {
                     if (err) return console.log(err,"updateDevice Device.update err");
                     console.log("updated", updated);

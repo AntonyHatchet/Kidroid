@@ -3,18 +3,21 @@
 
 #rules(class='tab-content')
    h2 Firewall rules
-   .radio
-      label
-         input(type='radio' name='radio' checked='checked')
-         span Allow access to all resources, except the black list
-   .radio
-      label
-         input(type='radio' name='radio')
-         span Allow access to the white list resources only
-   .radio
-      label
-         input(type='radio' name='radio')
-         span Allow all
+   #state.container-fluid
+       .radio
+          label
+             input(type='radio' name='radio' data-name='black')
+             span Allow access to all resources, except the black list
+       .radio
+          label
+             input(type='radio' name='radio' data-name='white')
+             span Allow access to the white list resources only
+       .radio
+          label
+             input(type='radio' name='radio' data-name='all')
+             span Allow all
+       .left
+           button( type="button" class="btn btn-primary" onclick="firewallRules.saveAccess()") Save
    .container-fluid
        fieldset.col-xs-5
           legend Black list
@@ -22,7 +25,7 @@
              table(class='table table-hover table-bordered table-striped col-xs-6')
                 thead
                    tr
-                      td.checkColum(onclick='sort(this)',data-value="0")
+                      td.checkColum
                          input(type='checkbox' id='checkAllBlackList')
                       th IP
                       //th remove
@@ -31,7 +34,7 @@
              .right
                 .btn-group
                    a(href="#addBlackList" type="button" class="btn btn-primary" onclick="" data-toggle="modal") add record
-                   button( type="button" class="btn btn-danger" onclick="") remove selected
+                   button( type="button" class="btn btn-danger" onclick="firewallRules.removeFromList('blackList')") remove selected
        fieldset.col-xs-5
           legend White list
           .col-xs-12
@@ -47,10 +50,7 @@
              .right
                 .btn-group
                    a(href="#addWhiteList" type="button" class="btn btn-primary" onclick="" data-toggle="modal") add record
-                   button( type="button" class="btn btn-danger" onclick="") remove selected
-   .left
-      button( type="button" class="btn btn-primary" onclick="") Save
-
+                   button( type="button" class="btn btn-danger" onclick="firewallRules.removeFromList('whiteList')") remove selected
 
          //============MODAL Add new device=====================
    div(class="modal" id="addBlackList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;")
@@ -70,10 +70,10 @@
                     //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
                     div(id='errorAddBlackList' class='alert alert-danger no-show .col-lg-1')
                         //button(type="button" class="close" data-dismiss="alert") &times;
-                        p All fields must be filled out
+                        p Address is not valid
                     div(id='completeAddBlackList' class='alert alert-success no-show .col-lg-1')
                         //button(type="button" class="close" data-dismiss="alert") &times;
-                        p Devices are adding
+                        p Address is valid
                     button(class="btn btn-primary .col-lg-6" onclick='firewallRules.addBlackList()') Add
 
          //============MODAL Add new device=====================
@@ -85,7 +85,7 @@
                         span(aria-hidden="true") &times;
                     h2 Add IP in white list
                 div(class="modal-body")
-                    form.form-horizontal
+                    form.form-horizontal(onsubmit="firewallRules.addWhiteList()")
                         .form-group
                             label(for="addSelectCategory").col-sm-3.control-label add ip:
                             .col-sm-9
@@ -94,8 +94,8 @@
                     //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
                     div(id='errorAddWhiteList' class='alert alert-danger no-show .col-lg-1')
                         //button(type="button" class="close" data-dismiss="alert") &times;
-                        p All fields must be filled out
+                        p Address is not valid
                     div(id='completeAddWhiteList' class='alert alert-success no-show .col-lg-1')
                         //button(type="button" class="close" data-dismiss="alert") &times;
-                        p Devices are adding
-                    button(class="btn btn-primary .col-lg-6" onclick='firewallRules.addWhiteList()') Add
+                        p Address is valid
+                    button(class="btn btn-primary .col-lg-6" onclick='firewallRules.addWhiteList();') Add

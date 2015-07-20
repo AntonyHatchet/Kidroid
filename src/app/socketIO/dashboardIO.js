@@ -331,10 +331,8 @@ module.exports = function (server,sessionMiddleware) {
         );
         // Firewall rules
         socket.on('saveAccessState', function(accessParams,callback){
-            user.makeDefaultVersion(accessParams,function (err, message) {
+            user.changeFirewallState(accessParams,function (err, message) {
                 if (err) throw new Error(err);
-                console.log(message, "saveAccessState");
-                socket.emit('getAllFirewallList', null);
                 callback(null, message);
             });
         });
@@ -355,7 +353,7 @@ module.exports = function (server,sessionMiddleware) {
             });
         });
         socket.on('removeIP', function(IP,callback){
-            user.makeDefaultVersion(IP,function (err, message) {
+            user.removeIpFromLists(IP,function (err, message) {
                 if (err) throw new Error(err);
                 console.log(message, "removeIP");
                 socket.emit('getAllFirewallList', null);

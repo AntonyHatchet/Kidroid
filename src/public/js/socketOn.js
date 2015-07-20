@@ -426,31 +426,35 @@ socket.on("getFilterBack",function(filters){
 
 socket.on("FirewallList",function(Lists){
 
-    var stateList = document.getElementById('blackList');
     var blackList = document.getElementById('blackList');
     var whiteList = document.getElementById('whiteList');
+    blackList.innerHTML="";
+    whiteList.innerHTML="";
 
     Lists[0].blackList.forEach(function(item){
         var blackListTr = document.createElement('tr');
-        blackListTr.innerHTML = "<td><input type='checkbox' data-value="+item+"/></td><td>"+item+"</td>";
+        blackListTr.innerHTML = "<td><input type='checkbox' data-value="+item+"></td><td>"+item+"</td>";
         blackList.appendChild(blackListTr);
     });
 
     Lists[0].whiteList.forEach(function(item){
         var whiteListTr = document.createElement('tr');
-        whiteListTr.innerHTML = "<td><input type='checkbox' data-value="+item+"/></td><td>"+item+"</td>";
+        whiteListTr.innerHTML = "<td><input type='checkbox' data-value="+item+"></td><td>"+item+"</td>";
         whiteList.appendChild(whiteListTr);
     });
 
     switch(Lists[0].access){
-        case true:
+        case "white":
             console.log("true",Lists[0].access);
+            document.querySelector('input[data-name="white"]').setAttribute('checked','checked');
             break;
-        case false:
+        case "black":
             console.log("false",Lists[0].access);
+            document.querySelector('input[data-name="black"]').setAttribute('checked','checked');
             break;
-        case null:
+        case "all":
             console.log("null",Lists[0].access);
+            document.querySelector('input[data-name="all"]').setAttribute('checked','checked');
             break;
         default:
             throw new Error("FirewallList undefined case");
