@@ -19691,8 +19691,8 @@ function editDevice(){
     }
     //console.log(device);
 }
-var params = {};
 function sort(place) {
+    var params = {};
     var elem = document.getElementById('paged').getElementsByTagName('th');
     if (place) {
         switch (+place.dataset.id) {
@@ -19817,7 +19817,7 @@ function page(i) {
     }else if(device.limit==50 && i!=1){
         device.page =  i * 50 -50;
     }
-    socket.emit('getDevicesByParams', data);
+    socket.emit('getDevicesByParams', device);
     socket.emit('getDevicesQuantityByParams', device);
     //console.log(device);
 };
