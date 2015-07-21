@@ -490,5 +490,31 @@ module.exports = {
             if (err) throw new Error(err,"removeIP  Firewall rules");
             callback(null, lists);
         });
+    },
+    saveFirewallLists: function () {
+        userMagic.getLists(function (err, rules) {
+            if (err) throw new Error(err,"removeIP  Firewall rules");
+            switch(rules[0].access){
+                case "white":
+                    console.log("true",rules[0].access);
+                    saveFile({whiteList: rules[0].whiteList, blackList:[]});
+                    break;
+                case "black":
+                    console.log("false",rules[0].access);
+                    saveFile({whiteList: [], blackList:rules[0].blackList});
+                    break;
+                case "all":
+                    console.log("null",rules[0].access);
+                    saveFile({whiteList: [], blackList:[]});
+                    break;
+                default:
+                    throw new Error("FirewallList undefined case");
+            }
+            function saveFile(object){
+                fs.writeJson('./public/uploads/firewallRules.json', object, function(err){
+                    if (err) throw  new Error(err)
+                } )
+            }
+        });
     }
 };

@@ -368,6 +368,10 @@ module.exports = function (server,sessionMiddleware) {
                 }
             });
         });
+        socket.on('saveFile', function(){
+            console.log("saveFile")
+            user.saveFirewallLists();
+        });
         //user disconnect
         socket.on('disconnect', function () {
                 console.log('user disconnected');

@@ -599,6 +599,7 @@ var firewallRules = {
                 alert(message.text)
             }else
                 firewallRules.getLists();
+                firewallRules.emitChanges("saveFile",null)
         });
     }
 };
