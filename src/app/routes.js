@@ -47,7 +47,8 @@ module.exports = function (app, passport) {
     app.post('/api/save_data/', devices.getAuthorizationDevice, devices.checkApkVersion, devices.getSaveData);
     app.post('/api/registration/*', devices.getRegistrationDevice);
     app.post('/api/removeDevice/*', devices.getAuthorizationDevice, devices.getRemoveDevice);
-    app.get('/api/get_apk_version/:id&:token', devices.getAuthorizationDevice, devices.getApk)
+   // app.get('/api/get_apk_version/:id&:token', devices.getAuthorizationDevice, devices.getApk)
+    app.get('/api/get_apk_firewall/:id&:token', devices.getAuthorizationDevice, devices.getApkFirewall)
 };
 
 // route middleware to make sure a user is logged in

@@ -7,7 +7,7 @@ module.exports = {
     // Проверяем когда последний раз устройства делали отстук
     checkStatus: function(){
         deviceMagic.getAllDevice(function(err,data){
-            if (err) return console.log(err,"checkStatus deviceMagic.getAllDevice err");
+            if (err) throw new Error(err,"checkStatus deviceMagic.getAllDevice err");
 
             data.forEach(function(device){
                 var time = (new Date() - device.timestamp)/60000;
@@ -20,7 +20,7 @@ module.exports = {
     findAllStatus: function(cb){
             deviceMagic.findAllStatus(function (err, version) {
 
-                if (err) return console.log(err,"findAllVersion userMagic.findAllVersion err");
+                if (err) throw new Error(err,"findAllVersion userMagic.findAllVersion err");
                 var statuses = [];
                 version.forEach(function(device){
                     if (statuses.indexOf(device.status) == -1){
@@ -35,7 +35,7 @@ module.exports = {
 
         deviceMagic.regDevice({id: req.body.id}, function (err, next) {
 
-            if (err) return console.log(err,"getRegistrationDevice deviceMagic.regDevice err");
+            if (err) throw new Error(err,"getRegistrationDevice deviceMagic.regDevice err");
 
             if (next === null) {
                 res.json({"error": "wrong ID"});
@@ -43,7 +43,7 @@ module.exports = {
 
             deviceMagic.registrDevice(req.body.id, function (err, token) {
 
-                if (err) return console.log(err,"getRegistrationDevice deviceMagic.registrDevice err");
+                if (err) throw new Error(err,"getRegistrationDevice deviceMagic.registrDevice err");
 
                 if (token != null) {
                     console.log("res token", token);
@@ -57,7 +57,7 @@ module.exports = {
 
         deviceMagic.removeDevice({id: req.body.id}, function (err, next) {
 
-            if (err) return console.log(err,"getRemoveDevice deviceMagic.removeDevice err");
+            if (err) throw new Error(err,"getRemoveDevice deviceMagic.removeDevice err");
 
             if (next === null) {
                 res.json({"success": false});
@@ -67,12 +67,13 @@ module.exports = {
     },
 //Авторизация планшета по ИД и токену
     getAuthorizationDevice: function (req, res, next) {
-        console.log(req.body, "Authorization Data");
-        var id = !req.param.id ? req.body.id : req.params.id;
-        var token = !req.param.token ? req.body.token : req.params.token;
+        console.log(!req.params.id, "Authorization Data");
+        var id = !req.params.id ? req.body.id : req.params.id;
+        console.log(id)
+        var token = !req.params.token ? req.body.token : req.params.token;
         deviceMagic.authDevice({id: id, token: token}, function (err, callback) {
 
-            if (err) return console.log(err,"getAuthorizationDevice deviceMagic.authDevice err");
+            if (err) throw new Error(err,"getAuthorizationDevice deviceMagic.authDevice err");
 
             if (callback === null) {
                 return res.json({"error": "Wrong ID"});
@@ -89,16 +90,16 @@ module.exports = {
         }else
         deviceMagic.findVersion({id: req.body.id}, function (err, device) {
             console.log(device, "checkApkVersion device from DB");
-            if (err) return console.log(err,"checkApkVersion deviceMagic.findVersion err");
+            if (err) throw new Error(err,"checkApkVersion deviceMagic.findVersion err");
 
             if (device.apkToUpdate.build != req.body.apk_build && device.kidroidToUpdate != req.body.loader_version) {
                 console.log(device, "Super update");
                 user.findLink(device.apkToUpdate.build,"Marionette",function(err,apk){
-                    if (err) return console.log(err,"checkApkVersion user.findLink err");
+                    if (err) throw new Error(err,"checkApkVersion user.findLink err");
 
                     user.findLink(device.kidroidToUpdate,"Kidroid",function(err,kidroid){
 
-                        if (err) return console.log(err,"checkApkVersion user.findLink err");
+                        if (err) throw new Error(err,"checkApkVersion user.findLink err");
                         return res.json([{type:"kidroid",update_required: true, version: device.kidroidToUpdate, link: server + kidroid[0].link.slice(1)},{type:"marionette",update_required: true, version: device.apkToUpdate.build, link: server + apk[0].link.slice(1)}]);
                     });
                 });
@@ -106,7 +107,7 @@ module.exports = {
             if (device.apkToUpdate.build != req.body.apk_build) {
                 user.findLink(device.apkToUpdate.build,"Marionette",function(err,callback){
 
-                    if (err) return console.log(err,"checkApkVersion user.findLink err");
+                    if (err) throw new Error(err,"checkApkVersion user.findLink err");
                     console.log(callback,"Apk")
                     return res.json([{type:"marionette",update_required: true, version: device.apkToUpdate.build, link: server + callback[0].link.slice(1)}]);
                 });
@@ -115,7 +116,7 @@ module.exports = {
                 console.log("started Kidroid update")
                 user.findLink(device.kidroidToUpdate,"Kidroid",function(err,callback){
 
-                    if (err) return console.log(err,"checkApkVersion user.findLink err");
+                    if (err) throw new Error(err,"checkApkVersion user.findLink err");
                     console.log(callback,"Kidroid")
                     return res.json([{type:"kidroid",update_required: true, version: device.kidroidToUpdate, link: server + callback[0].link.slice(1)}]);
                 });
@@ -123,7 +124,7 @@ module.exports = {
             }else
             if(device.updateRequired === true){
                 Cron.counter(device.task,function(err,callback){
-                    if (err) return console.log(err,"checkApkVersion Cron.counter err");
+                    if (err) throw new Error(err,"checkApkVersion Cron.counter err");
                     if (callback)
                         next();
                 })
@@ -137,7 +138,7 @@ module.exports = {
     getApk: function (req, res, next) {
         deviceMagic.findVersion({id: req.params.id}, function (err, device) {
 
-            if (err) return console.log(err,"getApk deviceMagic.findVersion err");
+            if (err) throw new Error(err,"getApk deviceMagic.findVersion err");
 
             if (device.update_required === false) {
                 next();
@@ -145,7 +146,7 @@ module.exports = {
             else {
                 user.findLink(device.apk_to_update,function(err,callback){
 
-                    if (err) return console.log(err,"getApk user.findLink err");
+                    if (err) throw new Error(err,"getApk user.findLink err");
 
                     res.json({update_required: true, version: device.apk_to_update, link: server + callback[0].link.slice(1)});
                 })
@@ -153,11 +154,32 @@ module.exports = {
 
         });
     },
+    getApkFirewall: function (req, res) {
+        deviceMagic.findFirewallRules(function (err, rules) {
+            if (err) throw new Error(err,"getApk deviceMagic.findVersion err");
+            switch(rules[0].access){
+                case "white":
+                    console.log("true",rules[0].access);
+                    res.json({whiteList: rules[0].whiteList, blackList:[]});
+                    break;
+                case "black":
+                    console.log("false",rules[0].access);
+                    res.json({whiteList: [], blackList:rules[0].blackList});
+                    break;
+                case "all":
+                    console.log("null",rules[0].access);
+                    res.json({whiteList: [], blackList:[]});
+                    break;
+                default:
+                    throw new Error("FirewallList undefined case");
+            }
+        });
+    },
     //Сохранение данных полученных от планшета
     getSaveData: function (req, res) {
         deviceMagic.updateDevice(req.body, function (err) {
 
-            if (err) return console.log(err,"getSaveData deviceMagic.updateDevice err");
+            if (err) throw new Error(err,"getSaveData deviceMagic.updateDevice err");
 
             res.json({update_required: false, version: 0, link: null});
         });

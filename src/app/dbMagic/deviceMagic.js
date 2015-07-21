@@ -2,6 +2,7 @@
  * Created by anton_gorshenin on 24.04.2015.
  */
 var Device = require('../models/device');
+var Firewall = require('../models/firewall');
 
 module.exports = {
     // �������� �� �� ����� ����������� �������
@@ -251,6 +252,12 @@ module.exports = {
         Device.update({"_id": deviceInfo}, {$set:{"online":false}}, function (err, updated) {
             if (err) return console.log(err,"updateDeviceStatus err");
             console.log("This device is offline status updated", updated);
+        })
+    },
+    findFirewallRules: function (callback) {
+        Firewall.find({}, function (err, lists) {
+            if (err) return console.log(err,"updateDeviceStatus err");
+            callback(null, lists)
         })
     },
     createDeviceId: function (callback) {
