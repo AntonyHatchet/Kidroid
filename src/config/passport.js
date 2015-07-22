@@ -28,7 +28,7 @@ module.exports = function (passport) {
 
                 // find a user whose email is the same as the forms email
                 // we are checking to see if the user trying to login already exists
-                User.findOne({'local.name': name}, function (err, user) {
+                User.findOne({'local.name': name.toLowerCase()}, function (err, user) {
                     // if there are any errors, return the error
                     if (err)
                         return done(err);
@@ -43,14 +43,14 @@ module.exports = function (passport) {
                         var newUser = new User();
 
                         // set the user's local credentials
-                        newUser.local.name = name;
+                        newUser.local.name = name.toLowerCase();
                         newUser.local.password = newUser.generateHash(password);
 
                         // save the user
                         newUser.save(function (err) {
                             if (err)
                                 throw err;
-                            return done(null, newUser);
+                            return done(null);
                         });
                     }
 
@@ -89,7 +89,7 @@ module.exports = function (passport) {
 
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
-            User.findOne({'local.name': name}, function (err, user) {
+            User.findOne({'local.name': name.toLowerCase()}, function (err, user) {
                 // if there are any errors, return the error before anything else
                 if (err)
                     return done(err);

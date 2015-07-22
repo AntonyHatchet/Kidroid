@@ -110,6 +110,12 @@ socket.on('quantity', function (data) {
     else{
         $("#pagination").html(prevButton+html+nextButton);
     }
+    if (data === 0){
+        document.getElementById('deployApk').querySelector('a').setAttribute('disabled','disabled');
+        document.getElementById('deployKidroid').querySelector('a').setAttribute('disabled','disabled');
+    }else{
+        document.getElementById('deployApk').querySelector('a').removeAttribute('disabled');
+        document.getElementById('deployKidroid').querySelector('a').removeAttribute('disabled');}
 });
 
 socket.on('category', function (date) {

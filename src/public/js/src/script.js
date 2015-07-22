@@ -83,19 +83,23 @@ var oldNameUser;
 
 function editFilters(context) {
     //$("#newNameCategory").val(context.parentNode.parentNode.childNodes[1].innerText).attr("data-name",context.parentNode.parentNode.childNodes[1].innerText);
-    $("#newNameCategory").attr("data-name",context).attr("value",context).attr("placeholder",context);
+    //$("#newNameCategory").attr("data-name",context).attr("value",context).attr("placeholder",context);
+    var elem = document.getElementById('newNameCategory');
+    elem.setAttribute("data-name",context);
+    elem.value= context;
     //console.log(context);
 };
 function editUsers(x) {
     newUsersId= x.split(' ')[0];
     $('#newNameUsers').attr("value",x.split(' ')[2]);
-    oldNameUser=x.split(' ')[2]
+    oldNameUser=x.split(' ')[2];
     $('.form-horizontal').trigger( 'reset' )
 };
 
 function inputNewNameCategory() {
     var device = {};
-    device.oldName = $("#newNameCategory").attr("data-name");
+    //device.oldName = $("#newNameCategory").attr("data-name");
+    device.oldName = document.getElementById('newNameCategory').getAttribute('data-name');
     device.newName = $("#newNameCategory").val();
     if(device.newName != 0 && device.newName!=device.oldName) {
         //console.log('yes');
@@ -611,7 +615,7 @@ $(document).ready(function () {
             .css('opacity','0')
             .css('display','none');
     });
-})
+});
 $(document).ready(function () {
     $('#closeIdTextarea1, #closeIdTextarea').click(function () {
         $('#addDevice').css('display', 'block');
@@ -622,23 +626,4 @@ $(document).ready(function () {
             .css('display', 'none');
 
     });
-})
-
-$(window).scroll(function(){
-//box one
-    var $win = $(window);
-    $('#tab').css('left', -$win.scrollLeft());
 });
-//============reset forms==========
-function resetForm(){
-    jQuery('form')[0].reset();
-    console.log('reset')
-}
-//===================
-//$(document).ready(function () {
-//    <div class="clndr-controls">
-//    <div class="clndr-previous-button">&lsaquo;</div>
-//    <div class="month"><%= month %></div>
-//    <div class="clndr-next-button">&rsaquo;</div>
-//    </div>
-//}

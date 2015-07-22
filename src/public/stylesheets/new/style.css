@@ -163,6 +163,7 @@ legend{
     cursor: pointer;
     /*background-color: #63615e;*/
     margin: 0;
+    font-weight: bold;
 }
 .autocomplete:hover {
     background: #1e90ff;

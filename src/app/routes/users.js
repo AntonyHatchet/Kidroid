@@ -9,10 +9,7 @@ var ApkReader = require('node-apk-parser');
 var util = require('util');
 
 
-// TODO ��� ������������ ����������� ������������� ������� �������� � �������� �� ���� ������� � ��������� ���� ������.
 module.exports = {
-    //������������
-    //����� ���� �������������
     findUser: function (id,callback) {
         userMagic.findById(id, function (err, user) {
             callback(err, user);
