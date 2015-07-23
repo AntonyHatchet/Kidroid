@@ -371,6 +371,7 @@ module.exports = {
                             school: params.category,
                             version: params.version,
                             build: params.build,
+                            kidroid: params.kidroidBuild,
                             filter2: params.filter
                         },
                         function (err,savedDevice) {

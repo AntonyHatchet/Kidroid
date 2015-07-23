@@ -181,7 +181,8 @@ module.exports = {
             "status": "Unregistered",
             "name": "Test Name",
             "android": 4.4,
-            "filter2": deviceInfo.filter2
+            "filter2": deviceInfo.filter2,
+            "kidroidToUpdate": deviceInfo.kidroid
         });
         newDevice.save(function (err) {
             if (err) return console.log(err,"saveDevice newDevice.save err");
@@ -218,11 +219,10 @@ module.exports = {
     updateDevice: function (deviceInfo, callback) {
 
         //����� � ��, ID ����������� �� �������
-        Device.findOne({"_id": deviceInfo.device_id}, function (err, device) {
+        Device.findOne({"_id": +deviceInfo.id}, function (err, device) {
             if (err) return console.log(err,"updateDevice Device.findOne err");
 
             if (device != null) {
-                // ����� ����� ID, ������� ���� ��� ������ � ��.
                 var update = {
                     "timestamp": new Date(),
                     "latitude": [+deviceInfo.latitude],
@@ -238,7 +238,7 @@ module.exports = {
                 };
 
                 //����� � �� � ID �� �������
-                Device.update({"_id": deviceInfo.device_id}, {$set: update}, {upsert: true}, function (err, updated) {
+                Device.update({"_id": deviceInfo.id}, {$set: update}, {upsert: true}, function (err, updated) {
                     if (err) return console.log(err,"updateDevice Device.update err");
                     console.log("updated", updated);
                 });

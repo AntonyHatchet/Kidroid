@@ -2,7 +2,7 @@
  * Created by nikolay_ivanisenko on 25.05.2015.
  */
 
-
+"use strict";
 
 $(document).ready(function () {
     if(location.hash) {
@@ -44,13 +44,14 @@ $(document).ready(function () {
 
 });
 function createNewCategory() {
-    var nameCategory = $("#newCategory").val();
+    var nameCategory = document.getElementById('newCategory').value;
     if(nameCategory !=0){
         //console.log('yes');
         socket.emit('createFilter', {"name":"School","params": nameCategory });
         $('#errorCreateSchool').css('display','none');
         $('#completeCreateSchool').css('display','block');
         $('#completeCreateSchool').html('The category '+nameCategory+  ' has been added successful');
+        document.getElementById('newCategory').value = '';
         setTimeout(function(){$('#completeCreateSchool').fadeOut('fast')},3000);
     }else{
         //console.log('no');
@@ -68,6 +69,7 @@ function createNewFilter() {
         $('#errorCreateFilter').css('display','none');
         $('#completeCreateFilter').css('display','block');
         $('#completeCreateFilter').html('The filter '+nameFilter+  ' has been added successful');
+        document.getElementById('paramFilter').value = '';
         setTimeout(function(){$('#completeCreateFilter').fadeOut('fast')},3000);
     }else{
         console.log('no');
@@ -338,19 +340,16 @@ function addDevice( ) {
     var device = {};
     device.category = $("#addSelectCategory").val();
     device.build = $("#addSelectVersion").val();
-    device.numberDevice = number = $("#amountDevice").val();
+    device.kidroidBuild = $("#addSelectVersionKidroid").val();
+    device.numberDevice = $("#amountDevice").val();
     device.filter = $("#filter2").val();
-    if (device.category != 0 && device.build !=0)  {
+    if (device.category != 0 && device.build !=0 && device.kidroidBuild !=0)  {
         socket.emit('createDevice', device);
         console.log(device);
         $('#errorAddDevice').css('display','none');
         $('#completeAddDevice').css('display','block');
-        $('#idDeviceCreate').attr('rows',''+ number + '');
+        $('#idDeviceCreate').attr('rows',''+ device.numberDevice + '');
         setTimeout(function(){$('#completeAddDevice').fadeOut('fast')},3000);
-        //$('#idDevice').css('display','block');
-        //$('#addDevice').css('display','none');
-
-        //console.log('yes');
     } else{
         $('#errorAddDevice').css('display','block');
         $('#completeAddDevice').css('display','none');

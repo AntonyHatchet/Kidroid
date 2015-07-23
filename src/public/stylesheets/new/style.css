@@ -23,9 +23,9 @@
 .modal-sm {
     width: 400px!important;
 }
-/*#map{*/
-    /*display: block!important;*/
-/*}*/
+#map{
+    display: block!important;
+}
 #maps{
     height: 500px;
 }

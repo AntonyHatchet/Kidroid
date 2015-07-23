@@ -312,9 +312,7 @@ socket.on('getVersionDeploy', function (data) {
                 html += "<option data-id='" + data.kidroid[j]._id + "'>" + data.kidroid[j].loader + "</option>";
         }
     }
-    $("#selectDefaultKidroidVersion").html(html);
-    $("#kidroidVersionDeploy").html(html);
-
+    $("#selectDefaultKidroidVersion, #kidroidVersionDeploy, #addSelectVersionKidroid ").html(html);
 });
 
 socket.on('getVersionDeploy', function (data) {
