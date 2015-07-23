@@ -131,20 +131,28 @@ module.exports = {
         });
     },
     createNewFilter: function (data, callback) {
-        console.log(data,"createNewFilter data");
-        Filters.update({"name": data.name},{$addToSet:{"params":data.params}},{$upsert:true}, function (err, filters) {
+        Filters.findOne({"name": data.name,"params":data.params},function(err, filters){
+            if (err) throw new Error(err);
+            console.log(filters,"filters")
+            if (filters!=null){
+                callback(null,"Filter already exists")
+            }else{
+                Filters.update({"name": data.name},{$addToSet:{"params":data.params}},{$upsert:true}, function (err, filters) {
 
-            if (err) return console.log(err,"createNewFilter Filter.findOne err");
+                    if (err) return console.log(err,"createNewFilter Filter.findOne err");
 
-            Filters.find("", function (err, filters) {
+                    Filters.find("", function (err, filters) {
 
-                if (err) return console.log(err,"createNewFilter Filter.find err");
+                        if (err) return console.log(err,"createNewFilter Filter.find err");
 
-                if (filters != null) {
-                    callback(null, filters)
-                }
-            });
-        })
+                        if (filters != null) {
+                            callback(null, filters)
+                        }
+                    });
+                })
+            }
+        });
+
     },
     findAllFilter: function (callback) {
         Filters.find("", function (err, filters) {

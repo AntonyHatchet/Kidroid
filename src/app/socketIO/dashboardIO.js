@@ -119,12 +119,18 @@ module.exports = function (server,sessionMiddleware) {
         );
         //CREATE
         // ������� ���������
-        socket.on('createFilter', function (filterParams) {
-                user.createFilter(filterParams, function (err, callback) {
+        socket.on('createFilter', function (filterParams,callback) {
+                user.createFilter(filterParams, function (err, filters) {
                     if (err) {
                         console.log(err);
                     }
-                    io.emit('filters', callback);
+                    console.log(filters);
+                    if (filters === "Filter already exists"){
+                        callback(null,false)
+                    }else{
+                        callback(null,true)
+                    }
+                        io.emit('filters', filters);
                 });
             }
         );

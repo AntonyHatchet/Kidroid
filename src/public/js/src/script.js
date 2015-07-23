@@ -5,8 +5,9 @@
 "use strict";
 
 $(document).ready(function () {
+    var li = $('ul.tabsMy li');
     if(location.hash) {
-        $('ul.tabsMy li').removeClass('active');
+        li.removeClass('active');
         $('.tab-content').removeClass('current');
         $('a[href=' + location.hash + ']').tab('show');
         $(location.hash).addClass('current');
@@ -21,7 +22,7 @@ $(document).ready(function () {
         $('a[href=' + anchor + ']').tab('show');
     });
 
-    $('ul.tabsMy li').click(function () {
+    li.click(function () {
         var tab_id = $(this).attr('data-tab');
 
         $('ul.tabsMy li').removeClass('active');
@@ -32,10 +33,10 @@ $(document).ready(function () {
     })
 
 
-    $('ul.nav-tabs li').click(function () {
+    li.click(function () {
         var tab_id = $(this).attr('data-tab');
 
-        $('ul.nav-tabs li').removeClass('active');
+        li.removeClass('active');
         $('.nav-tab-content').removeClass('current');
 
         $(this).addClass('active');
@@ -47,12 +48,20 @@ function createNewCategory() {
     var nameCategory = document.getElementById('newCategory').value;
     if(nameCategory !=0){
         //console.log('yes');
-        socket.emit('createFilter', {"name":"School","params": nameCategory });
-        $('#errorCreateSchool').css('display','none');
-        $('#completeCreateSchool').css('display','block');
-        $('#completeCreateSchool').html('The category '+nameCategory+  ' has been added successful');
-        document.getElementById('newCategory').value = '';
-        setTimeout(function(){$('#completeCreateSchool').fadeOut('fast')},3000);
+        socket.emit('createFilter', {"name":"School","params": nameCategory }, function(err,callback){
+            if (err) throw new Error(err);
+            if (callback){
+                $('#errorCreateSchool').css('display','none');
+                $('#completeCreateSchool').css('display','block').html('The category '+nameCategory+  ' has been added successful');
+                document.getElementById('newCategory').value = '';
+                setTimeout(function(){$('#completeCreateSchool').fadeOut('fast')},3000);
+            }else{
+                $('#completeCreateSchool').css('display','none');
+                $('#errorCreateSchool').css('display','block').html('The category '+nameCategory+  ' has already exists');
+                document.getElementById('newCategory').value = '';
+                setTimeout(function(){$('#completeCreateSchool').fadeOut('fast')},3000);
+            }
+        });
     }else{
         //console.log('no');
         $('#errorCreateSchool').css('display','block');
@@ -65,12 +74,20 @@ function createNewCategory() {
 function createNewFilter() {
     var nameFilter = $("#paramFilter").val();
     if(nameFilter !=0){
-        socket.emit('createFilter', {"name":"Filter2","params": nameFilter });
-        $('#errorCreateFilter').css('display','none');
-        $('#completeCreateFilter').css('display','block');
-        $('#completeCreateFilter').html('The filter '+nameFilter+  ' has been added successful');
-        document.getElementById('paramFilter').value = '';
-        setTimeout(function(){$('#completeCreateFilter').fadeOut('fast')},3000);
+        socket.emit('createFilter', {"name":"Filter2","params": nameFilter }, function(err,callback){
+            if (err) throw new Error(err);
+            if (callback){
+                $('#errorCreateFilter').css('display','none');
+                $('#completeCreateFilter').css('display','block').html('The filter '+nameFilter+  ' has been added successful');
+                document.getElementById('paramFilter').value = '';
+                setTimeout(function(){$('#completeCreateFilter').fadeOut('fast')},3000);
+            }else{
+                $('#completeCreateFilter').css('display','none');
+                $('#errorCreateFilter').css('display','block').html('The category '+nameFilter+  ' has already exists');
+                document.getElementById('paramFilter').value = '';
+                setTimeout(function(){$('#completeCreateSchool').fadeOut('fast')},3000);
+            }
+        });
     }else{
         console.log('no');
         $('#errorCreateFilter').css('display','block');
