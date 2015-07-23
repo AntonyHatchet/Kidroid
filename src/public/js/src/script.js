@@ -2,12 +2,11 @@
  * Created by nikolay_ivanisenko on 25.05.2015.
  */
 
-"use strict";
-
 $(document).ready(function () {
-    var li = $('ul.tabsMy li');
+    var myLi = $('ul.tabsMy li');
+    var navLi = $('ul.nav-tabs li');
     if(location.hash) {
-        li.removeClass('active');
+        myLi.removeClass('active');
         $('.tab-content').removeClass('current');
         $('a[href=' + location.hash + ']').tab('show');
         $(location.hash).addClass('current');
@@ -22,7 +21,7 @@ $(document).ready(function () {
         $('a[href=' + anchor + ']').tab('show');
     });
 
-    li.click(function () {
+    myLi.click(function () {
         var tab_id = $(this).attr('data-tab');
 
         $('ul.tabsMy li').removeClass('active');
@@ -33,10 +32,10 @@ $(document).ready(function () {
     })
 
 
-    li.click(function () {
+    navLi.click(function () {
         var tab_id = $(this).attr('data-tab');
 
-        li.removeClass('active');
+        navLi.removeClass('active');
         $('.nav-tab-content').removeClass('current');
 
         $(this).addClass('active');
