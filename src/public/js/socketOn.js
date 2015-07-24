@@ -375,13 +375,9 @@ socket.on('getVersionDeploy', function (data) {
 
 //Filters
 
-function getFilter(query,name){
-    query.nextSibling.setAttribute('id','Filter');
-    socket.emit("getFilter",{name:name,params:query.value})
-}
-
 function FilterArray() {
     var array =  [];
+    var magicLetters = [];
     return {
         pushData:function(data){
             array.push(data)
@@ -397,19 +393,30 @@ function FilterArray() {
 
 var setFilterArray = new FilterArray();
 
-function startAutoComplete(array){
+
+function getFilter(query,name){
+    query.nextSibling.setAttribute('id','Filter');
+    socket.emit("getFilter",{name:name,params:query.value}, function(err,filters){
+        for (var i in filters){
+            setFilterArray.pushData(filters[i].params);
+        }
+        startAutoComplete(setFilterArray.getArray(),query.value)
+    })
+}
+
+function startAutoComplete(array,letters){
     var filterFieldId =  document.getElementById('Filter');
 
     filterFieldId.innerHTML = '';
 
     var counter = (array.length <= 5)?array.length:5;
-
     for(var i=0; i < counter; i++){
-        filterFieldId.insertAdjacentHTML('beforeend','<div class="col-xs-12 autocomplete">'+array[i]+'</div>')
+       var filter = array[i].toLowerCase().replace(letters.toLowerCase(),"<b>"+letters.toLowerCase()+"</b>");
+        filterFieldId.insertAdjacentHTML('beforeend','<div class="col-xs-12 autocomplete" data-filter="'+array[i]+'">'+filter+'</div>');
     }
 
     filterFieldId.addEventListener('click',function(event){
-        filterFieldId.previousSibling.value =  event.target.innerHTML;
+        filterFieldId.previousSibling.value =  event.target.getAttribute('data-filter');
         find();
         filterFieldId.innerHTML = '';
 
@@ -421,12 +428,7 @@ function startAutoComplete(array){
     setFilterArray.resetArray()
 }
 
-socket.on("getFilterBack",function(filters){
-        for (var i in filters){
-            setFilterArray.pushData(filters[i].params);
-        }
-        startAutoComplete(setFilterArray.getArray())
-});
+//Firewall
 
 socket.on("FirewallList",function(Lists){
 

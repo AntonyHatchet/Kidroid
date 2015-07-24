@@ -565,7 +565,7 @@ var firewallRules = {
     getLists: function(){
         return this.emitChanges("getAllFirewallList");
     },
-    saveAccess: function(e){
+    saveAccess: function(){
         var state = document.getElementById('state').querySelectorAll('input[type="radio"]');
         [].forEach.call(state,function(item){
             if (item.checked) {
@@ -606,12 +606,14 @@ var firewallRules = {
         {
             document.getElementById(element).querySelector(".alert-success").style.display = 'block';
             document.getElementById(element).querySelector(".alert-danger").style.display = '';
+            setTimeout(document.getElementById(element).querySelector(".alert-success").style.display = '',3000);
             return true;
         }
         else
         {
             document.getElementById(element).querySelector(".alert-success").style.display = '';
             document.getElementById(element).querySelector(".alert-danger").style.display = 'block';
+            setTimeout(document.getElementById(element).querySelector(".alert-danger").style.display = '',3000);
             return false;
         }
     } ,
@@ -621,12 +623,14 @@ var firewallRules = {
         {
             document.getElementById(element).querySelector(".alert-success").style.display = 'block';
             document.getElementById(element).querySelector(".alert-danger").style.display = '';
+            setTimeout(document.getElementById(element).querySelector(".alert-success").style.display = '',3000);
             return true;
         }
         else
         {
             document.getElementById(element).querySelector(".alert-success").style.display = '';
             document.getElementById(element).querySelector(".alert-danger").style.display = 'block';
+            setTimeout(document.getElementById(element).querySelector(".alert-danger").style.display = '',3000);
             return false;
         }
     } ,

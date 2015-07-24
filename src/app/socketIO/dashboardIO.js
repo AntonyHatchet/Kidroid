@@ -197,16 +197,14 @@ module.exports = function (server,sessionMiddleware) {
             }
         );
         //GET
-        socket.on('getFilter', function (data) {
+        socket.on('getFilter', function (data,callback) {
                 user.findFilter(function (err, data) {
                     if (err) {
                         console.log(err);
                     }
-                    console.log(data)
-                    io.to(socket.id).emit('getFilterBack', data);
-
-
-
+                    callback(null, data)
+                    //console.log(data)
+                    //io.to(socket.id).emit('getFilterBack', data);
                 },data);
             }
         );
