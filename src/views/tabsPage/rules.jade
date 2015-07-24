@@ -63,9 +63,15 @@
                 div(class="modal-body")
                     form.form-horizontal
                         .form-group
-                            label(for="addSelectCategory").col-sm-3.control-label add ip:
+                            label(for="addIpToBlackList").col-sm-3.control-label add ip:
                             .col-sm-9
                                 input(id="addIpToBlackList" placeholder='ip' class="span2 form-control category")
+                        p
+                            b or
+                        .form-group
+                            label(for="addDomainToBlackList").col-sm-3.control-label domain:
+                            .col-sm-9
+                                input(id="addDomainToBlackList" placeholder='domain' class="span2 form-control category")
                 div(class="modal-footer")
                     //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
                     div(id='errorAddBlackList' class='alert alert-danger no-show .col-lg-1')
@@ -90,6 +96,12 @@
                             label(for="addSelectCategory").col-sm-3.control-label add ip:
                             .col-sm-9
                                 input(id="addIpToWhiteList" placeholder='ip' class="span2 form-control category")
+                        p
+                            b or
+                        .form-group
+                            label(for="addDomainToWhiteList").col-sm-3.control-label domain:
+                            .col-sm-9
+                                input(id="addDomainToWhiteList" placeholder='domain' class="span2 form-control category")
                 div(class="modal-footer")
                     //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
                     div(id='errorAddWhiteList' class='alert alert-danger no-show .col-lg-1')

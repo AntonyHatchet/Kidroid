@@ -576,16 +576,24 @@ var firewallRules = {
     },
     addBlackList: function(e){
         if(e)e.preventDefault();
-        var ipBlack = document.getElementById('addIpToBlackList').value;
-        if (this.validateIP("addBlackList",ipBlack)){
-            this.emitChanges.call(this,"addBlackList",ipBlack)
+        var black = (document.getElementById('addIpToBlackList').value != 0)?document.getElementById('addIpToBlackList').value:document.getElementById('addDomainToBlackList').value;
+        switch(document.getElementById('addIpToBlackList').value){
+            case "":
+                this.emitChanges.call(this,"addBlackList",black);
+                break;
+            default:
+                this.validateIP("addBlackList",black)? this.emitChanges.call(this,"addBlackList",black):false;
         }
     },
     addWhiteList: function(e){
         if(e)e.preventDefault();
-        var ipWhite = document.getElementById('addIpToWhiteList').value;
-        if (this.validateIP("addWhiteList",ipWhite)){
-            this.emitChanges.call(this,"addWhiteList",ipWhite)
+        var white = (document.getElementById('addIpToWhiteList').value != 0)?document.getElementById('addIpToWhiteList').value:document.getElementById('addDomainToWhiteList').value;
+        switch(document.getElementById('addIpToWhiteList').value){
+            case "":
+                this.emitChanges.call(this,"addWhiteList",white);
+                break;
+            default:
+                this.validateIP("addWhiteList",white)? this.emitChanges.call(this,"addBlackList",white):false;
         }
     },
     validateIP: function(element,inputText){
