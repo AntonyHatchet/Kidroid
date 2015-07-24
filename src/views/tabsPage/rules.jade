@@ -76,10 +76,10 @@
                     //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
                     div(id='errorAddBlackList' class='alert alert-danger no-show .col-lg-1')
                         //button(type="button" class="close" data-dismiss="alert") &times;
-                        p Address is not valid
+                        p The IP/Domain entered is invalid.
                     div(id='completeAddBlackList' class='alert alert-success no-show .col-lg-1')
                         //button(type="button" class="close" data-dismiss="alert") &times;
-                        p Address is valid
+                        p The IP/Domain has been added successfully.
                     button(class="btn btn-primary .col-lg-6" onclick='firewallRules.addBlackList()') Add
 
          //============MODAL Add new device=====================
@@ -89,7 +89,7 @@
                 div(class="modal-header")
                     button(type="button" id='closeAddWhiteList' class="close" data-dismiss="modal" aria-label="Close")
                         span(aria-hidden="true") &times;
-                    h2 Add IP in white list
+                    h2 Add IP/Domain
                 div(class="modal-body")
                     form.form-horizontal(onsubmit="firewallRules.addWhiteList()")
                         .form-group
@@ -106,8 +106,8 @@
                     //button(class="btn btn-default" data-dismiss="modal" aria-hidden="true") Close
                     div(id='errorAddWhiteList' class='alert alert-danger no-show .col-lg-1')
                         //button(type="button" class="close" data-dismiss="alert") &times;
-                        p Address is not valid
+                        p The IP/Domain entered is invalid.
                     div(id='completeAddWhiteList' class='alert alert-success no-show .col-lg-1')
                         //button(type="button" class="close" data-dismiss="alert") &times;
-                        p Address is valid
+                        p The IP/Domain has been added successfully
                     button(class="btn btn-primary .col-lg-6" onclick='firewallRules.addWhiteList();') Add

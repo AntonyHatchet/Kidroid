@@ -35,7 +35,7 @@ module.exports = {
     createVersionAPK: function (req, res) {
 
             function createBufer() {
-                var path =  "./public/uploads/buffer/"+ Math.floor(Math.random() * (1000 - 1)) + 1+"/";
+                var path =  "./public/get/buffer/"+ Math.floor(Math.random() * (1000 - 1)) + 1+"/";
                 this.getPath = function(){
                     return path
                 };
@@ -113,9 +113,9 @@ module.exports = {
                             if (zip.checkVersion(bufer)){
                                 var apk = new zip.checkVersion(bufer);
                                 console.log("checkVersion apk", apk)
-                                apk.link = './public/uploads/Marionette-APK/'+apk.build + ".zip";
+                                apk.link = './public/get/Marionette-APK/'+apk.build + ".zip";
                                 apk.user = req.user.local.name;
-                                fs.exists('./public/uploads/Marionette-APK/'+apk.build + ".zip", function (exists) {
+                                fs.exists('./public/get/Marionette-APK/'+apk.build + ".zip", function (exists) {
                                     if(!exists){
                                         fs.move(bufer+"/zip/"+filename, apk.link, function (err) {
                                             if (err) return console.error(err,"fs.move");
@@ -151,7 +151,7 @@ module.exports = {
     createVersionKidroid: function (req, res) {
             console.log("readCheckSum");
             function createBufer() {
-                var path =  "./public/uploads/buffer/"+ Math.floor(Math.random() * (1000 - 1)) + 1+"/";
+                var path =  "./public/get/buffer/"+ Math.floor(Math.random() * (1000 - 1)) + 1+"/";
                 this.getPath = function(){
                     return path
                 };
@@ -228,9 +228,9 @@ module.exports = {
                                 console.log('CheckSum callback');
                                 if (zip.checkVersion(bufer)){
                                     var kidroid = new zip.checkVersion(bufer);
-                                    kidroid.link = './public/uploads/Kidroid-APK/'+kidroid.loader + ".zip";
+                                    kidroid.link = './public/get/Kidroid-APK/'+kidroid.loader + ".zip";
                                     kidroid.user = req.user.local.name;
-                                    fs.exists('./public/uploads/Kidroid-APK/'+kidroid.loader + ".zip", function (exists) {
+                                    fs.exists('./public/get/Kidroid-APK/'+kidroid.loader + ".zip", function (exists) {
                                         if(!exists){
                                             console.log(exists,"exists");
                                             fs.move(bufer+"/zip/"+filename, kidroid.link, function (err) {
@@ -509,7 +509,7 @@ module.exports = {
                     throw new Error("FirewallList undefined case");
             }
             function saveFile(object){
-                fs.writeJson('./public/uploads/firewallRules.json', object, function(err){
+                fs.writeJson('./public/get/firewallRules.json', object, function(err){
                     if (err) throw  new Error(err)
                 } )
             }

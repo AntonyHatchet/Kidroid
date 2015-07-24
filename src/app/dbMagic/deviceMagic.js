@@ -261,13 +261,12 @@ module.exports = {
         })
     },
     createDeviceId: function (callback) {
-        var find = Device.find().sort({"_id":1});
+        var find = Device.find().sort({"_id":-1}).limit(1);
 
-       find.exec(function (err, id) {
+       find.exec(function (err, device) {
            if (err) return console.log(err,"create_id exec");
-
             // Execute callback
-            id = (!id[id.length - 1])? id = 1:id[id.length - 1]._id += 1;
+            var id = (device!=0)?++device[0]._id:1;
             callback(null,id)
         })
     },

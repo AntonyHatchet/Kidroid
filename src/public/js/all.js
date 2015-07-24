@@ -19944,10 +19944,10 @@ function addDevice( ) {
     var device = {};
     device.category = $("#addSelectCategory").val();
     device.build = $("#addSelectVersion").val();
-    device.kidroidBuild = $("#addSelectVersionKidroid").val();
+    device.kidroidBuild = $("#addSelectVersionKidroid").val().split(' ')[0];
     device.numberDevice = $("#amountDevice").val();
     device.filter = $("#filter2").val();
-    if (device.category != 0 && device.build !=0 && device.kidroidBuild !=0)  {
+    if (device.build !=0 && device.kidroidBuild !=0)  {
         socket.emit('createDevice', device);
         console.log(device);
         $('#errorAddDevice').css('display','none');
@@ -20167,10 +20167,12 @@ var firewallRules = {
         var black = (document.getElementById('addIpToBlackList').value != 0)?document.getElementById('addIpToBlackList').value:document.getElementById('addDomainToBlackList').value;
         switch(document.getElementById('addIpToBlackList').value){
             case "":
-                this.emitChanges.call(this,"addBlackList",black);
+                this.validateDomain("addBlackList",black)?this.emitChanges.call(this,"addBlackList",black):false;
+                this.clearField("addBlackList");
                 break;
             default:
                 this.validateIP("addBlackList",black)? this.emitChanges.call(this,"addBlackList",black):false;
+                this.clearField("addBlackList");
         }
     },
     addWhiteList: function(e){
@@ -20178,16 +20180,32 @@ var firewallRules = {
         var white = (document.getElementById('addIpToWhiteList').value != 0)?document.getElementById('addIpToWhiteList').value:document.getElementById('addDomainToWhiteList').value;
         switch(document.getElementById('addIpToWhiteList').value){
             case "":
-                this.emitChanges.call(this,"addWhiteList",white);
+                this.validateDomain("addWhiteList",white)? this.emitChanges.call(this,"addWhiteList",white):false;
+                this.clearField("addWhiteList");
                 break;
             default:
-                this.validateIP("addWhiteList",white)? this.emitChanges.call(this,"addBlackList",white):false;
+                this.validateIP("addWhiteList",white)? this.emitChanges.call(this,"addWhiteList",white):false;
+                this.clearField("addWhiteList");
         }
     },
     validateIP: function(element,inputText){
-        var allertMessage = document.createElement('p');
         var ipFormat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
         if(inputText.match(ipFormat))
+        {
+            document.getElementById(element).querySelector(".alert-success").style.display = 'block';
+            document.getElementById(element).querySelector(".alert-danger").style.display = '';
+            return true;
+        }
+        else
+        {
+            document.getElementById(element).querySelector(".alert-success").style.display = '';
+            document.getElementById(element).querySelector(".alert-danger").style.display = 'block';
+            return false;
+        }
+    } ,
+    validateDomain: function(element,inputText){
+        var domenFormat = /^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|([a-zA-Z0-9][a-zA-Z0-9-_]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,6}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})$/;
+        if(inputText.match(domenFormat))
         {
             document.getElementById(element).querySelector(".alert-success").style.display = 'block';
             document.getElementById(element).querySelector(".alert-danger").style.display = '';
@@ -20216,6 +20234,12 @@ var firewallRules = {
                 firewallRules.getLists();
                 firewallRules.emitChanges("saveFile",null)
         });
+    },
+    clearField: function(id){
+        var element = document.getElementById(id).querySelectorAll("input");
+        [].forEach.call(element,function(item){
+            item.value= '';
+        })
     }
 };
 $(document).ready(function () {

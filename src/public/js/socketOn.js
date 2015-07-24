@@ -187,7 +187,7 @@ socket.on('allDeviceCreated', function (data) {
             .css('opacity','1')
             .css('display','block');
         $('#addDevice').css('display','none');
-        $("#idDeviceCreate").append("ID " +data._id+"\n")
+        $("#idDeviceCreate").append(data._id+"\n");
         //TODO ������� ����� ���������� ����������� ���������
         $("#numberIdDevice").replaceWith( "Devices has been added successfully" );
     }
